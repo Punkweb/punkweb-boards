@@ -1,0 +1,9 @@
+pillow
+psycopg2
+django>=1.10
+django-cors-headers
+djangorestframework>=3.5
+django-markdown
+
+# Dev tools
+django-extensions

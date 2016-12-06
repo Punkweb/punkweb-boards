@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_markdown %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="pageContent">
+
+  {% for category in categories %}
+  <div class="card">
+    <div class="card__title">
+      <a href="{% url 'parent_category' category.parent.id %}">{{category.parent.name}}</a>
+    </div>
+    <div class="card__body">
+      <div class="tableComponent">
+        <table class="tableComponent__table">
+          <thead>
+            <tr>
+              <th width="60%">
+              </th>
+              <th width="10%">
+                Posts
+              </th>
+              <th width="30%">
+                Last Post
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for child in category.children %}
+            <tr>
+              <td>
+                <a href="{% url 'child_category' child.category.id %}">{{child.category.name}}</a>
+                {{child.category.description|markdown}}
+              </td>
+              <td>
+                {{child.num_posts}}
+              </td>
+              <td style="text-align: right;">
+                {% if child.last_post %}
+                <a href="{% url 'post' child.last_post.id %}">{{child.last_post.title}}</a>
+                <p>{{child.last_post.created}}</p>
+                <p>by <a href="{% url 'profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
+                {% else %}
+                <p>No Posts</p>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock %}

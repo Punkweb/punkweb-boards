@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_markdown %}
+
+{% block title %}{{post.title}}{% endblock %}
+
+{% block content %}
+
+<div class="pageContent">
+
+  <div class="card">
+    <div class="card__title">
+      {{post.title}}
+    </div>
+    <div class="card__body">
+      <div class="tableComponent">
+        <table class="tableComponent__table">
+          <tr>
+            <td class="align-center" width="15%">
+              <img src="/media/{{post.user.image}}" width="75" height="75" />
+              <p>
+                {{post.user}}
+              </p>
+            </td>
+            <td>
+              {{post.content|markdown_safe}}
+              <div style="padding: 2rem 0;">
+                <p>Posted: {{ post.created|date:"D d M Y" }} at {{ post.created|time:"H:i" }}</p>
+                <p>Edited: {{ post.modified|date:"D d M Y" }} at {{ post.modified|time:"H:i" }}</p>
+              </div>
+            </td>
+          </tr>
+          {% if comments %}
+          {% for comment in comments %}
+          <tr>
+            <td class="align-center" width="15%">
+              <img src="/media/{{comment.user.image}}" width="75" height="75" />
+              <p>{{comment.user}}</p>
+            </td>
+            <td class="content">
+              {{comment.content|markdown}}
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="2">
+              <h4>No comments.  Be the first to post!</h4>
+            </td>
+          </tr>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

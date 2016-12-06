@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_markdown %}
+
+{% block title %}{{parent.name}}{% endblock %}
+
+{% block content %}
+
+<div class="pageContent">
+  <div class="card">
+    <div class="card__title">
+      {{parent.name}}
+    </div>
+    <div class="card__body">
+      <div class="tableComponent">
+        <table class="tableComponent__table">
+          <thead>
+            <tr>
+              <th width="80%">
+                Category
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for category in children %}
+          <tr>
+            <td>
+              <a href="{% url 'child_category' category.id %}">{{category.name}}</a>
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
