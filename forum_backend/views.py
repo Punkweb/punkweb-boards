@@ -1,13 +1,16 @@
 from django.views.generic import TemplateView
-from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from apps.users.models import EmailUser
-from apps.board.models import ParentCategory, ChildCategory, Post, Comment
+from apps.board.models import ParentCategory, ChildCategory, Post, Comment, Shout
 
 
 class HomePage(TemplateView):
     template_name = 'pages/home.html'
 
     def get(self, request, *args, **kwargs):
+        shouts = Shout.objects.all()
+
         category_groups = []
         parent_categories = ParentCategory.objects.all()
         for parent_category in parent_categories:
@@ -26,6 +29,7 @@ class HomePage(TemplateView):
                 'children': children_groups
             })
         context = {
+            'shouts': shouts,
             'categories': category_groups
         }
         return self.render_to_response(context)
@@ -104,9 +108,8 @@ class ProfilePage(TemplateView):
     def get(self, request, *args, **kwargs):
         user = EmailUser.objects.get(id=self.kwargs.get('uuid'))
 
-        if user != self.request.user:
-            print('here')
-            return redirect('me')
+        if user == self.request.user:
+            return HttpResponseRedirect(reverse('me'))
 
         context = {
             'user': user

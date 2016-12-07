@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'rest_framework',
-    'corsheaders',
     'apps.common',
     'apps.users',
     'apps.board',
@@ -56,11 +54,6 @@ REST_FRAMEWORK = {
     ),
     'PAGE_SIZE': 100,
 }
-
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    '127.0.0.1:9000'
-)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

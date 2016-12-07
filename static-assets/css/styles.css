@@ -160,7 +160,7 @@ a:active, a:hover {
 }
 .card__title__sub {
   border-bottom: 2px solid #ced4da;
-  padding: 8px 16px;
+  padding: 16px 16px;
 }
 .card__footer {
   text-align: center;

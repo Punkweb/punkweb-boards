@@ -49,3 +49,14 @@ class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
 
     def __str__(self):
         return '{}\'s comment on {} {}'.format(self.user, self.post, self.created)
+
+
+class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
+    user = models.ForeignKey(EmailUser, blank=False, null=False)
+    content = BBCodeTextField(max_length=280, blank=False, null=False)
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return str(self.user)

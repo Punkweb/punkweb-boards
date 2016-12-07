@@ -17,9 +17,7 @@
       <a href="{% url 'child_category' category.id %}">{{category.name}}</a>
     </div>
     <div class="card__title__sub">
-      <p>
         {{category.description.rendered}}
-      </p>
     </div>
     <div class="card__body">
       <div class="tableComponent">
@@ -49,7 +47,9 @@
             {% else %}
             <tr>
               <td>
-                Empty Category - <a href="{% url 'parent_category' category.parent.id %}">Go back</a>
+                Empty Category
+                <br/>
+                Go back to <a href="{% url 'parent_category' category.parent.id %}">{{category.parent.name}}</a>
               </td>
             </tr>
             {% endif %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.board.models import ParentCategory, ChildCategory, Post, Comment
+from apps.board.models import ParentCategory, ChildCategory, Post, Comment, Shout
 
 
 class ChildCategoryInline(admin.TabularInline):
@@ -36,3 +36,4 @@ admin.site.register(ParentCategory, ParentCategoryAdmin)
 # admin.site.register(ChildCategory, ChildCategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment)
+admin.site.register(Shout)

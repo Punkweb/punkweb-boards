@@ -17,21 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 
-from rest_framework.routers import DefaultRouter
-
 from forum_backend import settings
-from apps.board.views import ParentCategoryViewSet, ChildCategoryViewSet, \
-    PostViewSet, CommentViewSet
 from apps.users.views import EmailUserViewSet
 from forum_backend.views import HomePage, ParentCategoryPage, ChildCategoryPage, \
     PostPage, MyProfilePage, ProfilePage, ProfileSettingsPage
-
-router = DefaultRouter()
-router.register(r'users', EmailUserViewSet)
-router.register(r'parent_categories', ParentCategoryViewSet)
-router.register(r'child_categories', ChildCategoryViewSet)
-router.register(r'posts', PostViewSet)
-router.register(r'comments', CommentViewSet)
 
 urlpatterns = [
     url(r'^$', HomePage.as_view(), name='home'),
@@ -43,9 +32,7 @@ urlpatterns = [
         ParentCategoryPage.as_view(), name='parent_category'),
     url(r'^child_category/(?P<uuid>[^/]+)/$',
         ChildCategoryPage.as_view(), name='child_category'),
-    url(r'^api/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
