@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load django_markdown %}
+{% load bbcode_tags %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
 
 <div class="pageContent">
-
+  <ol class="breadcrumb">
+    <li class="active">Forum</li>
+  </ol>
   {% for category in categories %}
   <div class="card">
     <div class="card__title">
@@ -19,11 +21,12 @@
           <thead>
             <tr>
               <th width="60%">
+                Category
               </th>
-              <th width="10%">
+              <th class="align-center" width="10%">
                 Posts
               </th>
-              <th width="30%">
+              <th class="align-right" width="30%">
                 Last Post
               </th>
             </tr>
@@ -33,12 +36,12 @@
             <tr>
               <td>
                 <a href="{% url 'child_category' child.category.id %}">{{child.category.name}}</a>
-                {{child.category.description|markdown}}
+                <p>{{child.category.description.rendered}}</p>
               </td>
-              <td>
+              <td class="align-center">
                 {{child.num_posts}}
               </td>
-              <td style="text-align: right;">
+              <td class="align-right">
                 {% if child.last_post %}
                 <a href="{% url 'post' child.last_post.id %}">{{child.last_post.title}}</a>
                 <p>{{child.last_post.created}}</p>

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load django_markdown %}
+{% load bbcode_tags %}
 
 {% block title %}{{category.name}}{% endblock %}
 
@@ -16,19 +16,24 @@
     <div class="card__title">
       <a href="{% url 'child_category' category.id %}">{{category.name}}</a>
     </div>
+    <div class="card__title__sub">
+      <p>
+        {{category.description.rendered}}
+      </p>
+    </div>
     <div class="card__body">
       <div class="tableComponent">
         <table class="tableComponent__table">
-          <thead>
+          <!-- <thead>
             <tr>
-              <th width="80%">
+              <th>
                 Title
               </th>
-              <th width="20%">
+              <th>
                 User
               </th>
             </tr>
-          </thead>
+          </thead> -->
           <tbody>
             {% if posts %}
             {% for post in posts %}
@@ -36,8 +41,8 @@
               <td>
                 <a href="{% url 'post' post.id %}">{{post.title}}</a>
               </td>
-              <td>
-                {{post.user}}
+              <td width="25%">
+                <a href="{% url 'profile' post.user.id %}">{{post.user}}</a>
               </td>
             </tr>
             {% endfor %}

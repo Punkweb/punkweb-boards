@@ -1,12 +1,12 @@
 from django.db import models
-from django_markdown.models import MarkdownField
+from precise_bbcode.fields import BBCodeTextField
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
 from apps.users.models import EmailUser
 
 
 class ParentCategory(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False, unique=True)
-    description = MarkdownField()
+    description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
 
     class Meta:
@@ -21,7 +21,7 @@ class ChildCategory(UUIDPrimaryKey):
     parent = models.ForeignKey(
         ParentCategory, blank=True, null=True, default=None)
     name = models.CharField(max_length=96, blank=False, null=False)
-    description = MarkdownField()
+    description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
 
     class Meta:
@@ -36,7 +36,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(EmailUser, blank=False, null=False)
     category = models.ForeignKey(ChildCategory, blank=False, null=False)
     title = models.CharField(max_length=96, blank=False, null=False)
-    content = MarkdownField()
+    content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     def __str__(self):
         return self.title
@@ -45,7 +45,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
 class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(EmailUser, blank=False, null=False)
     post = models.ForeignKey(Post, blank=False, null=False)
-    content = MarkdownField()
+    content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     def __str__(self):
         return '{}\'s comment on {} {}'.format(self.user, self.post, self.created)

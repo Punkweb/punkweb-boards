@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load django_markdown %}
+{% load bbcode_tags %}
 
 {% block title %}{{parent.name}}{% endblock %}
 
@@ -15,22 +15,28 @@
     <div class="card__title">
       {{parent.name}}
     </div>
+    <div class="card__title__sub">
+      <p>{{parent.description.rendered}}</p>
+    </div>
     <div class="card__body">
       <div class="tableComponent">
         <table class="tableComponent__table">
-          <thead>
+          <!-- <thead>
             <tr>
-              <th width="80%">
+              <th>
                 Category
               </th>
             </tr>
-          </thead>
+          </thead> -->
           <tbody>
           {% if children %}
           {% for category in children %}
           <tr>
             <td>
               <a href="{% url 'child_category' category.id %}">{{category.name}}</a>
+              <p>
+                {{category.description.rendered}}
+              </p>
             </td>
           </tr>
           {% endfor %}

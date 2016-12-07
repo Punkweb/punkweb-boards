@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load django_markdown %}
+{% load bbcode_tags %}
 
 {% block title %}{{post.title}}{% endblock %}
 
@@ -29,11 +29,11 @@
                 <span style="font-size: 24px;">{{post.user}}</span> - {{post.created|date}}
               </p>
               <p>
-                {{post.content|markdown_safe}}
+                {{post.content.rendered}}
               </p>
-              <hr/>
+              <hr style="border-color: #ced4da; border-width: 2px;" />
               <p>
-                {{post.user.signature|markdown_safe}}
+                {{post.user.signature.rendered}}
               </p>
               <!-- <div style="padding: 2rem 0;">
                 <p>Posted: {{ post.created|date:"D d M Y" }} at {{ post.created|time:"H:i" }}</p>
@@ -52,11 +52,11 @@
                 <span style="font-size: 24px;">{{comment.user}}</span> - {{comment.created|date}}
               </p>
               <p>
-                {{comment.content|markdown_safe}}
+                {{comment.content.rendered}}
               </p>
-              <hr/>
+              <hr style="border-color: #ced4da; border-width: 2px;" />
               <p>
-                {{comment.user.signature|markdown_safe}}
+                {{comment.user.signature.rendered}}
               </p>
             </td>
           </tr>

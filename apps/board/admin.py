@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django_markdown.admin import MarkdownField, AdminMarkdownWidget
 from apps.board.models import ParentCategory, ChildCategory, Post, Comment
 
 
@@ -31,11 +30,6 @@ class PostAdmin(admin.ModelAdmin):
     ]
     list_display = ('title', 'category', 'user')
     ordering = ('title', )
-    formfield_overrides = {
-        MarkdownField: {
-            'widget': AdminMarkdownWidget
-        }
-    }
 
 
 admin.site.register(ParentCategory, ParentCategoryAdmin)

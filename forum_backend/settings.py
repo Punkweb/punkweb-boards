@@ -43,10 +43,8 @@ INSTALLED_APPS = [
     'apps.common',
     'apps.users',
     'apps.board',
-    'django_markdown',
+    'precise_bbcode',
 ]
-
-MARKDOWN_EDITOR_SKIN = 'simple'
 
 # Auth Configuration
 AUTH_USER_MODEL = 'users.EmailUser'
@@ -126,25 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-MARKDOWN_DEUX_STYLES = {
-    "default": {
-        "extras": {
-            "html-classes": {"pre": "prettyprint"},
-        },
-        "safe_mode": "escape",
-    },
-    "trusted": {
-        "extras": {
-            "code-friendly": None,
-            "html-classes": {"pre": "prettyprint"},
-        },
-        # Allow raw HTML (WARNING: don't use this for user-generated markdown for your site!).
-        "safe_mode": False,
-    }
-}
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

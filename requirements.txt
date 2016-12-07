@@ -3,7 +3,7 @@ psycopg2
 django>=1.10
 django-cors-headers
 djangorestframework>=3.5
-django-markdown
+django-precise-bbcode
 
 # Dev tools
 django-extensions
