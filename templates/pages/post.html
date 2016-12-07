@@ -17,7 +17,7 @@
         <table class="tableComponent__table">
           <tr>
             <td class="align-center" width="15%">
-              <img src="/media/{{post.user.image}}" width="75" height="75" />
+              <img src="/media/{{post.user.image}}" />
               <p>
                 {{post.user}}
               </p>
@@ -34,7 +34,7 @@
           {% for comment in comments %}
           <tr>
             <td class="align-center" width="15%">
-              <img src="/media/{{comment.user.image}}" width="75" height="75" />
+              <img src="/media/{{comment.user.image}}" />
               <p>{{comment.user}}</p>
             </td>
             <td class="content">

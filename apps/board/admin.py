@@ -20,8 +20,15 @@ class ParentCategoryAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'order', )
 #     ordering = ('order', )
 
+class CommentInline(admin.TabularInline):
+    model = Comment
+    ordering = ('created', )
+
 
 class PostAdmin(admin.ModelAdmin):
+    inlines = [
+        CommentInline
+    ]
     list_display = ('title', 'category', 'user')
     ordering = ('title', )
     formfield_overrides = {

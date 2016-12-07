@@ -4,6 +4,10 @@ body {
   min-width: 320px;
   width: 100%; }
 
+/** {
+  border: 1px solid red;
+}*/
+
 /* List styling */
 ul {
   list-style: none;
@@ -153,18 +157,18 @@ a:active, a:hover {
   font-weight: 500;
   border: 2px solid #1c7cd6;
   border-radius: 2px;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 16px;
   width: 100%; }
   .card__title {
     font-weight: 800;
     padding: 8px 16px;
-    text-align: center;
+    text-align: left;
     text-transform: uppercase; }
   .card__body {
-    padding: 8px 16px;
     text-align: left; }
   .card__footer {
-    padding: 8px 16px;
     text-align: center; }
 
 /**
@@ -195,7 +199,7 @@ a:active, a:hover {
 /* Table component
 *******************************************************************************/
 .tableComponent {
-  margin: 16px 0; }
+  margin-bottom: 16px 0; }
   .tableComponent__header {
     color: #f8f9fa;
     font-weight: 800;
@@ -249,7 +253,7 @@ a:active, a:hover {
 /* List Component
 *******************************************************************************/
 .listComponent {
-  margin: 8px 0;
+  margin-bottom: 8px;
   width: 100%; }
   .listComponent__header {
     font-weight: bold;
@@ -258,7 +262,6 @@ a:active, a:hover {
     text-transform: uppercase; }
   .listComponent ul {
     list-style: none;
-    padding: 0;
     margin: 0; }
     .listComponent ul li {
       padding: 12px 16px; }
