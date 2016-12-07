@@ -1,8 +1,6 @@
 pillow
 psycopg2
 django>=1.10
-django-cors-headers
-djangorestframework>=3.5
 django-precise-bbcode
 
 # Dev tools
