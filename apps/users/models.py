@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
 	PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
+from django_markdown.models import MarkdownField
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
 
 
@@ -28,6 +29,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 	email = models.EmailField(unique=True, blank=False)
 	username = models.CharField(max_length=16, unique=True, blank=False)
 	image = models.ImageField(upload_to="user_images", null=True, blank=True)
+	signature = MarkdownField()
 	gender = models.CharField(null=True, blank=True, max_length=1,
 		choices=GENDER_CHOICES, default=None)
 	birthdate = models.DateField(

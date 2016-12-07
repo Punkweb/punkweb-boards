@@ -7,7 +7,11 @@
 {% block content %}
 
 <div class="pageContent">
-
+  <ol class="breadcrumb">
+    <li><a href="/">Forum</a></li>
+    <li><a href="{% url 'parent_category' category.parent.id %}">{{category.parent.name}}</a></li>
+    <li class="active">{{category.name}}</li>
+  </ol>
   <div class="card">
     <div class="card__title">
       <a href="{% url 'child_category' category.id %}">{{category.name}}</a>
@@ -26,6 +30,7 @@
             </tr>
           </thead>
           <tbody>
+            {% if posts %}
             {% for post in posts %}
             <tr>
               <td>
@@ -36,6 +41,13 @@
               </td>
             </tr>
             {% endfor %}
+            {% else %}
+            <tr>
+              <td>
+                Empty Category - <a href="{% url 'parent_category' category.parent.id %}">Go back</a>
+              </td>
+            </tr>
+            {% endif %}
           </tbody>
         </table>
       </div>

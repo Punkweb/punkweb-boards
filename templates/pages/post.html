@@ -7,7 +7,12 @@
 {% block content %}
 
 <div class="pageContent">
-
+  <ol class="breadcrumb">
+    <li><a href="/">Forum</a></li>
+    <li><a href="{% url 'parent_category' post.category.parent.id %}">{{post.category.parent.name}}</a></li>
+    <li><a href="{% url 'child_category' post.category.id %}">{{post.category.name}}</a></li>
+    <li class="active">{{post.title}}</li>
+  </ol>
   <div class="card">
     <div class="card__title">
       {{post.title}}
@@ -18,16 +23,22 @@
           <tr>
             <td class="align-center" width="15%">
               <img src="/media/{{post.user.image}}" />
-              <p>
-                {{post.user}}
-              </p>
             </td>
             <td>
-              {{post.content|markdown_safe}}
-              <div style="padding: 2rem 0;">
+              <p>
+                <span style="font-size: 24px;">{{post.user}}</span> - {{post.created|date}}
+              </p>
+              <p>
+                {{post.content|markdown_safe}}
+              </p>
+              <hr/>
+              <p>
+                {{post.user.signature|markdown_safe}}
+              </p>
+              <!-- <div style="padding: 2rem 0;">
                 <p>Posted: {{ post.created|date:"D d M Y" }} at {{ post.created|time:"H:i" }}</p>
                 <p>Edited: {{ post.modified|date:"D d M Y" }} at {{ post.modified|time:"H:i" }}</p>
-              </div>
+              </div> -->
             </td>
           </tr>
           {% if comments %}
@@ -35,10 +46,18 @@
           <tr>
             <td class="align-center" width="15%">
               <img src="/media/{{comment.user.image}}" />
-              <p>{{comment.user}}</p>
             </td>
             <td class="content">
-              {{comment.content|markdown}}
+              <p>
+                <span style="font-size: 24px;">{{comment.user}}</span> - {{comment.created|date}}
+              </p>
+              <p>
+                {{comment.content|markdown_safe}}
+              </p>
+              <hr/>
+              <p>
+                {{comment.user.signature|markdown_safe}}
+              </p>
             </td>
           </tr>
           {% endfor %}
