@@ -36,7 +36,7 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 }
 
 /* images can't be wider than their containers */
-img {
+img, iframe {
   max-width: 100%;
 }
 

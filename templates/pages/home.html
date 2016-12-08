@@ -10,10 +10,19 @@
   <ol class="breadcrumb">
     <li class="active">Forum</li>
   </ol>
-  <div>
-  {% for shout in shouts %}
-    <p>{{shout.content.rendered}}</p>
-  {% endfor %}
+  <div class="card">
+    <div class="card__title">
+      <a href="/">Shoutbox</a>
+    </div>
+    <div class="card__body" style="padding: .25rem;">
+    {% for shout in shouts %}
+      <div style="padding: .5rem; border-bottom: 1px solid #ced4da;">
+        <a href="{% url 'profile' shout.user.id %}">{{shout.user.username}}</a>: {{shout.content.rendered}}
+      </div>
+    {% endfor %}
+    <textarea name="name" rows="3" cols="80" placeholder="BBcode supported shout message"></textarea>
+    <input type="button" name="name" value="Submit">
+    </div>
   </div>
   {% for category in categories %}
   <div class="card">

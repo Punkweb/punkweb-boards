@@ -18,60 +18,66 @@
       {{post.title}}
     </div>
     <div class="card__body">
-      <div class="tableComponent">
-        <table class="tableComponent__table">
-          <tr>
-            <td class="align-center" width="15%">
-              <img src="/media/{{post.user.image}}" />
-            </td>
-            <td>
-              <p>
-                <span style="font-size: 24px;"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></span> - {{post.created|date}}
-              </p>
-              <p>
-                {{post.content.rendered}}
-              </p>
-              <hr style="border-color: #ced4da; border-width: 2px;" />
-              <p>
-                {{post.user.signature.rendered}}
-              </p>
-              <!-- <div style="padding: 2rem 0;">
-                <p>Posted: {{ post.created|date:"D d M Y" }} at {{ post.created|time:"H:i" }}</p>
-                <p>Edited: {{ post.modified|date:"D d M Y" }} at {{ post.modified|time:"H:i" }}</p>
-              </div> -->
-            </td>
-          </tr>
-          {% if comments %}
-          {% for comment in comments %}
-          <tr>
-            <td class="align-center" width="15%">
-              <img src="/media/{{comment.user.image}}" />
-            </td>
-            <td class="content">
-              <p>
-                <span style="font-size: 24px;"><a href="{% url 'profile' comment.user.id %}">{{comment.user}}</a></span> - {{comment.created|date}}
-              </p>
-              <p>
-                {{comment.content.rendered}}
-              </p>
-              <hr style="border-color: #ced4da; border-width: 2px;" />
-              <p>
-                {{comment.user.signature.rendered}}
-              </p>
-            </td>
-          </tr>
-          {% endfor %}
-          {% else %}
-          <tr>
-            <td colspan="2">
-              <h4>No comments.  Be the first to post!</h4>
-            </td>
-          </tr>
-          {% endif %}
-        </table>
+      <div style="display: flex;">
+        <div style="width: 15%; padding: .5rem;">
+          <img src="/media/{{post.user.image}}" />
+        </div>
+        <div style="width: 85%; padding: .5rem;">
+          <p>
+            <span style="font-size: 24px;"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></span> - {{post.created|date}}
+          </p>
+          <p>
+            {{post.content.rendered}}
+          </p>
+          <hr style="border-color: #ced4da; border-width: 2px;" />
+          <p>
+            {{post.user.signature.rendered}}
+          </p>
+          <!-- <div style="padding: 2rem 0;">
+            <p>Posted: {{ post.created|date:"D d M Y" }} at {{ post.created|time:"H:i" }}</p>
+            <p>Edited: {{ post.modified|date:"D d M Y" }} at {{ post.modified|time:"H:i" }}</p>
+          </div> -->
+        </div>
       </div>
     </div>
   </div>
+  {% if comments %}
+  {% for comment in comments %}
+
+  <div class="card">
+    <div class="card__body">
+      <div style="display: flex;">
+        <div style="width: 15%; padding: .5rem;">
+          <img src="/media/{{comment.user.image}}" />
+        </div>
+        <div style="width: 85%; padding: .5rem;">
+          <p>
+            <span style="font-size: 24px;"><a href="{% url 'profile' comment.user.id %}">{{comment.user}}</a></span> - {{post.created|date}}
+          </p>
+          <p>
+            {{comment.content.rendered}}
+          </p>
+          <hr style="border-color: #ced4da; border-width: 2px;" />
+          <p>
+            {{comment.user.signature.rendered}}
+          </p>
+          <!-- <div style="padding: 2rem 0;">
+            <p>Posted: {{ comment.created|date:"D d M Y" }} at {{ comment.created|time:"H:i" }}</p>
+            <p>Edited: {{ comment.modified|date:"D d M Y" }} at {{ comment.modified|time:"H:i" }}</p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+
+  <div class="card">
+    <div class="card__body">
+      <h4>No comments.  Be the first to post!</h4>
+    </div>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}
