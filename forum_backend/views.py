@@ -10,7 +10,6 @@ class HomePage(TemplateView):
 
     def get(self, request, *args, **kwargs):
         shouts = Shout.objects.all()
-
         category_groups = []
         parent_categories = ParentCategory.objects.all()
         for parent_category in parent_categories:
@@ -41,7 +40,6 @@ class ParentCategoryPage(TemplateView):
     def get(self, request, *args, **kwargs):
         category = ParentCategory.objects.get(id=self.kwargs.get('uuid'))
         children = ChildCategory.objects.filter(parent__id=category.id)
-
         context = {
             'parent': category,
             'children': children
@@ -55,7 +53,6 @@ class ChildCategoryPage(TemplateView):
     def get(self, request, *args, **kwargs):
         category = ChildCategory.objects.get(id=self.kwargs.get('uuid'))
         posts = Post.objects.filter(category__id=category.id).order_by('created')
-
         context = {
             'category': category,
             'posts': posts
@@ -68,9 +65,7 @@ class PostPage(TemplateView):
 
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(id=self.kwargs.get('uuid'))
-
         comments = Comment.objects.filter(post__id=post.id)
-
         context = {
             'post': post,
             'comments': comments
@@ -83,7 +78,6 @@ class MyProfilePage(TemplateView):
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
-
         context = {
             'user': user
         }
@@ -95,7 +89,6 @@ class ProfileSettingsPage(TemplateView):
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
-
         context = {
             'user': user
         }
@@ -107,11 +100,20 @@ class ProfilePage(TemplateView):
 
     def get(self, request, *args, **kwargs):
         user = EmailUser.objects.get(id=self.kwargs.get('uuid'))
-
         if user == self.request.user:
             return HttpResponseRedirect(reverse('me'))
-
         context = {
             'user': user
+        }
+        return self.render_to_response(context)
+
+
+class ShoutboxPage(TemplateView):
+    template_name = 'pages/shoutbox.html'
+
+    def get(self, request, *args, **kwargs):
+        shouts = Shout.objects.all()
+        context = {
+            'shouts': shouts
         }
         return self.render_to_response(context)

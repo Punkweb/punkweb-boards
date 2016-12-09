@@ -18,12 +18,12 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 
 from forum_backend import settings
-from apps.users.views import EmailUserViewSet
 from forum_backend.views import HomePage, ParentCategoryPage, ChildCategoryPage, \
-    PostPage, MyProfilePage, ProfilePage, ProfileSettingsPage
+    PostPage, MyProfilePage, ProfilePage, ProfileSettingsPage, ShoutboxPage
 
 urlpatterns = [
     url(r'^$', HomePage.as_view(), name='home'),
+    url(r'^shoutbox/$', ShoutboxPage.as_view(), name='shoutbox'),
     url(r'^me/$', MyProfilePage.as_view(), name='me'),
     url(r'^profile_settings/$', ProfileSettingsPage.as_view(), name='profile_settings'),
     url(r'^profile/(?P<uuid>[^/]+)/$', ProfilePage.as_view(), name='profile'),

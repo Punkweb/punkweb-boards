@@ -12,7 +12,7 @@
   </ol>
   <div class="card">
     <div class="card__title">
-      <a href="/">Shoutbox</a>
+      <a href="{% url 'shoutbox' %}">Shoutbox</a>
     </div>
     <div class="card__body" style="padding: .25rem;">
     {% for shout in shouts %}
@@ -20,8 +20,10 @@
         <a href="{% url 'profile' shout.user.id %}">{{shout.user.username}}</a>: {{shout.content.rendered}}
       </div>
     {% endfor %}
-    <textarea name="name" rows="3" cols="80" placeholder="BBcode supported shout message"></textarea>
-    <input type="button" name="name" value="Submit">
+    </div>
+    <div class="card__footer">
+      <textarea name="name" rows="3" cols="80" placeholder="BBcode supported shout message"></textarea>
+      <input type="button" name="name" value="Submit">
     </div>
   </div>
   {% for category in categories %}
