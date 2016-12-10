@@ -9,8 +9,8 @@
 <div class="pageContent">
   <ol class="breadcrumb">
     <li><a href="/">Forum</a></li>
-    <li><a href="{% url 'parent_category' post.category.parent.id %}">{{post.category.parent.name}}</a></li>
-    <li><a href="{% url 'child_category' post.category.id %}">{{post.category.name}}</a></li>
+    <li><a href="{% url 'board:category' post.category.parent.id %}">{{post.category.parent.name}}</a></li>
+    <li><a href="{% url 'board:topic' post.category.id %}">{{post.category.name}}</a></li>
     <li class="active">{{post.title}}</li>
   </ol>
   <div class="card">
@@ -24,7 +24,7 @@
         </div>
         <div style="width: 85%; padding: .5rem;">
           <p>
-            <span style="font-size: 24px;"><a href="{% url 'profile' post.user.id %}">{{post.user}}</a></span> - {{post.created|date}}
+            <span style="font-size: 24px;"><a href="{% url 'users:profile' post.user.id %}">{{post.user}}</a></span> - {{post.created|date}}
           </p>
           <p>
             {{post.content.rendered}}
@@ -52,7 +52,7 @@
         </div>
         <div style="width: 85%; padding: .5rem;">
           <p>
-            <span style="font-size: 24px;"><a href="{% url 'profile' comment.user.id %}">{{comment.user}}</a></span> - {{post.created|date}}
+            <span style="font-size: 24px;"><a href="{% url 'users:profile' comment.user.id %}">{{comment.user}}</a></span> - {{post.created|date}}
           </p>
           <p>
             {{comment.content.rendered}}

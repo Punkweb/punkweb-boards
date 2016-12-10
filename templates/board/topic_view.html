@@ -9,12 +9,12 @@
 <div class="pageContent">
   <ol class="breadcrumb">
     <li><a href="/">Forum</a></li>
-    <li><a href="{% url 'parent_category' category.parent.id %}">{{category.parent.name}}</a></li>
+    <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
     <li class="active">{{category.name}}</li>
   </ol>
   <div class="card">
     <div class="card__title">
-      <a href="{% url 'child_category' category.id %}">{{category.name}}</a>
+      <a href="{% url 'board:topic' category.id %}">{{category.name}}</a>
     </div>
     <div class="card__title__sub">
         {{category.description.rendered}}
@@ -37,10 +37,10 @@
             {% for post in posts %}
             <tr>
               <td>
-                <a href="{% url 'post' post.id %}">{{post.title}}</a>
+                <a href="{% url 'board:post' post.id %}">{{post.title}}</a>
               </td>
               <td width="25%">
-                <a href="{% url 'profile' post.user.id %}">{{post.user}}</a>
+                <a href="{% url 'users:profile' post.user.id %}">{{post.user}}</a>
               </td>
             </tr>
             {% endfor %}
@@ -49,7 +49,7 @@
               <td>
                 Empty Category
                 <br/>
-                Go back to <a href="{% url 'parent_category' category.parent.id %}">{{category.parent.name}}</a>
+                Go back to <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
               </td>
             </tr>
             {% endif %}

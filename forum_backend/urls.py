@@ -18,20 +18,12 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 
 from forum_backend import settings
-from forum_backend.views import HomePage, ParentCategoryPage, ChildCategoryPage, \
-    PostPage, MyProfilePage, ProfilePage, ProfileSettingsPage, ShoutboxPage
+from forum_backend.views import HomePage
 
 urlpatterns = [
     url(r'^$', HomePage.as_view(), name='home'),
-    url(r'^shoutbox/$', ShoutboxPage.as_view(), name='shoutbox'),
-    url(r'^me/$', MyProfilePage.as_view(), name='me'),
-    url(r'^profile_settings/$', ProfileSettingsPage.as_view(), name='profile_settings'),
-    url(r'^profile/(?P<uuid>[^/]+)/$', ProfilePage.as_view(), name='profile'),
-    url(r'^post/(?P<uuid>[^/]+)/$', PostPage.as_view(), name='post'),
-    url(r'^parent_category/(?P<uuid>[^/]+)/$',
-        ParentCategoryPage.as_view(), name='parent_category'),
-    url(r'^child_category/(?P<uuid>[^/]+)/$',
-        ChildCategoryPage.as_view(), name='child_category'),
+    url(r'^board/', include('apps.board.urls', namespace='board')),
+    url(r'^users/', include('apps.users.urls', namespace='users')),
     url(r'^admin/', admin.site.urls),
 ]
 

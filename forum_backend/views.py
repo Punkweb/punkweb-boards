@@ -6,7 +6,7 @@ from apps.board.models import ParentCategory, ChildCategory, Post, Comment, Shou
 
 
 class HomePage(TemplateView):
-    template_name = 'pages/home.html'
+    template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
         shouts = Shout.objects.all()
@@ -30,90 +30,5 @@ class HomePage(TemplateView):
         context = {
             'shouts': shouts,
             'categories': category_groups
-        }
-        return self.render_to_response(context)
-
-
-class ParentCategoryPage(TemplateView):
-    template_name = 'pages/parent_category.html'
-
-    def get(self, request, *args, **kwargs):
-        category = ParentCategory.objects.get(id=self.kwargs.get('uuid'))
-        children = ChildCategory.objects.filter(parent__id=category.id)
-        context = {
-            'parent': category,
-            'children': children
-        }
-        return self.render_to_response(context)
-
-
-class ChildCategoryPage(TemplateView):
-    template_name = 'pages/child_category.html'
-
-    def get(self, request, *args, **kwargs):
-        category = ChildCategory.objects.get(id=self.kwargs.get('uuid'))
-        posts = Post.objects.filter(category__id=category.id).order_by('created')
-        context = {
-            'category': category,
-            'posts': posts
-        }
-        return self.render_to_response(context)
-
-
-class PostPage(TemplateView):
-    template_name = 'pages/post.html'
-
-    def get(self, request, *args, **kwargs):
-        post = Post.objects.get(id=self.kwargs.get('uuid'))
-        comments = Comment.objects.filter(post__id=post.id)
-        context = {
-            'post': post,
-            'comments': comments
-        }
-        return self.render_to_response(context)
-
-
-class MyProfilePage(TemplateView):
-    template_name = 'pages/my_profile.html'
-
-    def get(self, request, *args, **kwargs):
-        user = self.request.user
-        context = {
-            'user': user
-        }
-        return self.render_to_response(context)
-
-
-class ProfileSettingsPage(TemplateView):
-    template_name = 'pages/profile_settings.html'
-
-    def get(self, request, *args, **kwargs):
-        user = self.request.user
-        context = {
-            'user': user
-        }
-        return self.render_to_response(context)
-
-
-class ProfilePage(TemplateView):
-    template_name = 'pages/profile.html'
-
-    def get(self, request, *args, **kwargs):
-        user = EmailUser.objects.get(id=self.kwargs.get('uuid'))
-        if user == self.request.user:
-            return HttpResponseRedirect(reverse('me'))
-        context = {
-            'user': user
-        }
-        return self.render_to_response(context)
-
-
-class ShoutboxPage(TemplateView):
-    template_name = 'pages/shoutbox.html'
-
-    def get(self, request, *args, **kwargs):
-        shouts = Shout.objects.all()
-        context = {
-            'shouts': shouts
         }
         return self.render_to_response(context)
