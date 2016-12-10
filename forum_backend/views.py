@@ -14,7 +14,7 @@ def home_view(request):
                 shout.save()
         else:
             shout_form = ShoutForm()
-        shouts = Shout.objects.all()
+        shouts = Shout.objects.all()[:10]
         category_groups = []
         parent_categories = ParentCategory.objects.all()
         for parent_category in parent_categories:

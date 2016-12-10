@@ -66,7 +66,7 @@ def new_post(request, category_id):
 
 
 def shouts_view(request):
-    shouts = Shout.objects.all()
+    shouts = Shout.objects.all()[:30]
     if request.method == 'POST':
         shout_form = ShoutForm(request.POST)
         if shout_form.is_valid():
