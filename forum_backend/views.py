@@ -1,14 +1,10 @@
-from django.views.generic import TemplateView
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from apps.users.models import EmailUser
-from apps.board.models import ParentCategory, ChildCategory, Post, Comment, Shout
+from django.shortcuts import render
+from django.http import Http404
+from apps.board.models import ParentCategory, ChildCategory, Post, Shout
 
 
-class HomePage(TemplateView):
-    template_name = 'home.html'
-
-    def get(self, request, *args, **kwargs):
+def home_view(request):
+    try:
         shouts = Shout.objects.all()
         category_groups = []
         parent_categories = ParentCategory.objects.all()
@@ -31,4 +27,6 @@ class HomePage(TemplateView):
             'shouts': shouts,
             'categories': category_groups
         }
-        return self.render_to_response(context)
+    except:
+        raise Http404('Error in home_view')
+    return render(request, 'home.html', context)

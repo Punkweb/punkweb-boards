@@ -18,10 +18,10 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 
 from forum_backend import settings
-from forum_backend.views import HomePage
+from forum_backend import views
 
 urlpatterns = [
-    url(r'^$', HomePage.as_view(), name='home'),
+    url(r'^$', views.home_view, name='home'),
     url(r'^board/', include('apps.board.urls', namespace='board')),
     url(r'^users/', include('apps.users.urls', namespace='users')),
     url(r'^admin/', admin.site.urls),
