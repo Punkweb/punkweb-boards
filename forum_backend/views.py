@@ -1,10 +1,19 @@
 from django.shortcuts import render
 from django.http import Http404
 from apps.board.models import ParentCategory, ChildCategory, Post, Shout
+from apps.board.forms import ShoutForm
 
 
 def home_view(request):
     try:
+        if request.method == 'POST':
+            shout_form = ShoutForm(request.POST)
+            if shout_form.is_valid():
+                shout = shout_form.save(commit=False)
+                shout.user = EmailUser.objects.get(id=request.user.id)
+                shout.save()
+        else:
+            shout_form = ShoutForm()
         shouts = Shout.objects.all()
         category_groups = []
         parent_categories = ParentCategory.objects.all()
@@ -24,6 +33,7 @@ def home_view(request):
                 'children': children_groups
             })
         context = {
+            'shout_form': shout_form,
             'shouts': shouts,
             'categories': category_groups
         }

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}New Post{% endblock %}
+
+{% block content %}
+
+<div class="pageContent">
+  <form action="" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Submit" />
+  </form>
+</div>
+
+{% endblock %}

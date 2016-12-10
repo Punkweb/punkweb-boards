@@ -1,6 +1,8 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from apps.users.models import EmailUser
 from .models import ParentCategory, ChildCategory, Post, Shout
+from .forms import PostForm, ShoutForm
 
 
 def category_view(request, category_id):
@@ -49,12 +51,32 @@ def post_view(request, post_id):
     return render(request, 'board/post_view.html', context)
 
 
+def new_post(request, category_id):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = EmailUser.objects.get(id=request.user.id)
+            post.category = ChildCategory.objects.get(id=category_id)
+            post.save()
+            return redirect('home')
+    else:
+        form = PostForm()
+    return render(request, 'board/new_post.html', {'form': form})
+
+
 def shouts_view(request):
-    try:
-        shouts = Shout.objects.all()
-        context = {
-            'shouts': shouts,
-        }
-    except:
-        raise Http404('Error in shouts_view')
+    shouts = Shout.objects.all()
+    if request.method == 'POST':
+        shout_form = ShoutForm(request.POST)
+        if shout_form.is_valid():
+            shout = shout_form.save(commit=False)
+            shout.user = EmailUser.objects.get(id=request.user.id)
+            shout.save()
+    else:
+        shout_form = ShoutForm()
+    context = {
+        'shouts': shouts,
+        'shout_form': shout_form
+    }
     return render(request, 'board/shouts_view.html', context)

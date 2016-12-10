@@ -17,9 +17,10 @@
       <a href="{% url 'board:topic' category.id %}">{{category.name}}</a>
     </div>
     <div class="card__title__sub">
-        {{category.description.rendered}}
+      {{category.description.rendered}}
     </div>
     <div class="card__body">
+      <a href="{% url 'board:new_post' category.id %}">Create New Post</a>
       <div class="tableComponent">
         <table class="tableComponent__table">
           <!-- <thead>

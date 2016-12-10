@@ -23,8 +23,11 @@
     {% endfor %}
     </div>
     <div class="card__footer">
-      <textarea name="name" rows="3" cols="80" placeholder="BBcode supported shout message"></textarea>
-      <input type="button" name="name" value="Submit">
+      <form action="/board/shoutbox/" method="post">
+          {% csrf_token %}
+          {{ shout_form }}
+          <input type="submit" value="Submit" />
+      </form>
     </div>
   </div>
 </div>
