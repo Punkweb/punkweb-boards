@@ -1,23 +1,19 @@
 from django.contrib import admin
-from apps.board.models import ParentCategory, ChildCategory, Post, Comment, Shout
+from apps.board.models import Category, Subcategory, Post, Comment, Shout
 
 
-class ChildCategoryInline(admin.TabularInline):
-    model = ChildCategory
+class SubcategoryInline(admin.TabularInline):
+    model = Subcategory
     ordering = ('order', )
 
 
-class ParentCategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     inlines = [
-        ChildCategoryInline,
+        SubcategoryInline,
     ]
     list_display = ('name', 'order', )
     ordering = ('order', )
 
-
-# class ChildCategoryAdmin(admin.ModelAdmin):
-#     list_display = ('name', 'order', )
-#     ordering = ('order', )
 
 class CommentInline(admin.TabularInline):
     model = Comment
@@ -32,8 +28,7 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ('title', )
 
 
-admin.site.register(ParentCategory, ParentCategoryAdmin)
-# admin.site.register(ChildCategory, ChildCategoryAdmin)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment)
 admin.site.register(Shout)

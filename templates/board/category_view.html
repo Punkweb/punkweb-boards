@@ -6,60 +6,54 @@
 
 {% block content %}
 
-<div class="pageContent">
-  <ol class="breadcrumb">
-    <li><a href="/">Forum</a></li>
-    <li class="active">{{parent.name}}</li>
-  </ol>
-  <div class="card">
-    <div class="card__title">
-      {{parent.name}}
-    </div>
-    <div class="card__title__sub">
-      {{parent.description.rendered}}
-    </div>
-    <div class="card__body">
-      <div class="tableComponent">
-        <table class="tableComponent__table">
-          <thead>
-            <tr>
-              <th width="60%">
-                Topic
-              </th>
-              <th class="align-center" width="10%">
-                Posts
-              </th>
-              <th class="align-right" width="30%">
-                Last Post
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for child in children %}
-            <tr>
-              <td>
-                <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
-                <p>{{child.category.description.rendered}}</p>
-              </td>
-              <td class="align-center">
-                {{child.num_posts}}
-              </td>
-              <td class="align-right">
-                {% if child.last_post %}
-                <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title}}</a>
-                <p>{{child.last_post.created}}</p>
-                <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
-                {% else %}
-                <p>No Posts</p>
-                {% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+<ol class="breadcrumb">
+  <li><a href="/">Forum</a></li>
+  <li class="active">{{parent.name}}</li>
+</ol>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{parent.name}}</h3>
   </div>
+  <div class="panel-body">
+    {{parent.description.rendered}}
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th width="60%">
+          Topic
+        </th>
+        <th class="align-center" width="10%">
+          Posts
+        </th>
+        <th class="align-right" width="30%">
+          Last Post
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for child in children %}
+      <tr>
+        <td>
+          <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
+          <p>{{child.category.description.rendered}}</p>
+        </td>
+        <td class="align-center">
+          {{child.num_posts}}
+        </td>
+        <td class="align-right">
+          {% if child.last_post %}
+          <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title}}</a>
+          <p>{{child.last_post.created}}</p>
+          <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
+          {% else %}
+          <p>No Posts</p>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 

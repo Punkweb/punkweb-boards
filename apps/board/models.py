@@ -4,29 +4,29 @@ from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
 from apps.users.models import EmailUser
 
 
-class ParentCategory(UUIDPrimaryKey):
+class Category(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False, unique=True)
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
 
     class Meta:
-        verbose_name = 'parent category'
-        verbose_name_plural = 'parent categories'
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
 
     def __str__(self):
         return "{}. {}".format(self.order, self.name)
 
 
-class ChildCategory(UUIDPrimaryKey):
+class Subcategory(UUIDPrimaryKey):
     parent = models.ForeignKey(
-        ParentCategory, blank=True, null=True, default=None)
+        Category, blank=True, null=True, default=None)
     name = models.CharField(max_length=96, blank=False, null=False)
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
 
     class Meta:
-        verbose_name = 'child category'
-        verbose_name_plural = 'child categories'
+        verbose_name = 'subcategory'
+        verbose_name_plural = 'subcategories'
 
     def __str__(self):
         return "{}. {}".format(self.order, self.name)
@@ -34,7 +34,7 @@ class ChildCategory(UUIDPrimaryKey):
 
 class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(EmailUser, blank=False, null=False)
-    category = models.ForeignKey(ChildCategory, blank=False, null=False)
+    category = models.ForeignKey(Subcategory, blank=False, null=False)
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 

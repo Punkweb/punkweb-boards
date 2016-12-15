@@ -6,59 +6,70 @@
 
 {% block content %}
 
-<div class="pageContent">
-  <ol class="breadcrumb">
-    <li><a href="/">Forum</a></li>
-    <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
-    <li class="active">{{category.name}}</li>
-  </ol>
-  <div class="card">
-    <div class="card__title">
-      <a href="{% url 'board:topic' category.id %}">{{category.name}}</a>
-    </div>
-    <div class="card__title__sub">
-      {{category.description.rendered}}
-    </div>
-    <div class="card__body">
-      <a href="{% url 'board:new_post' category.id %}">Create New Post</a>
-      <div class="tableComponent">
-        <table class="tableComponent__table">
-          <!-- <thead>
-            <tr>
-              <th>
-                Title
-              </th>
-              <th>
-                User
-              </th>
-            </tr>
-          </thead> -->
-          <tbody>
-            {% if posts %}
-            {% for post in posts %}
-            <tr>
-              <td>
-                <a href="{% url 'board:post' post.id %}">{{post.title}}</a>
-              </td>
-              <td width="25%">
-                <a href="{% url 'users:profile' post.user.id %}">{{post.user}}</a>
-              </td>
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr>
-              <td>
-                Empty Category
-                <br/>
-                Go back to <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
-              </td>
-            </tr>
-            {% endif %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+<ol class="breadcrumb">
+  <li><a href="/">Forum</a></li>
+  <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
+  <li class="active">{{category.name}}</li>
+</ol>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{category.name}}</h3>
   </div>
+  <div class="panel-body">
+    {{category.description.rendered}}
+    <a href="{% url 'board:new_post' category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          Title
+        </th>
+        <th>
+          User
+        </th>
+        <th class="align-center">
+          Comments
+        </th>
+        <th class="align-center">
+          Last Comment
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if posts %}
+      {% for post in posts %}
+      <tr>
+        <td>
+          <a href="{% url 'board:post' post.post.id %}">{{post.post.title}}</a>
+        </td>
+        <td>
+          <a href="{% url 'users:profile' post.post.user.id %}">{{post.post.user}}</a>
+        </td>
+        <td class="align-center">
+          {{post.num_comments}}
+        </td>
+        <td>
+          {% if post.last_comment %}
+          <a href="{% url 'users:profile' post.last_comment.user.id %}">{{post.last_comment.user}}</a>
+          <p>{{post.last_comment.created}}</p>
+          {% else %}
+          <p>No Posts</p>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td>
+          Empty Category
+          <br/>
+          Go back to <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
 </div>
 
 

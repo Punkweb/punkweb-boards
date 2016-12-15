@@ -6,78 +6,75 @@
 
 {% block content %}
 
-<div class="pageContent">
-  <ol class="breadcrumb">
-    <li class="active">Forum</li>
-  </ol>
-  <div class="card">
-    <div class="card__title">
-      <a href="{% url 'board:shoutbox' %}">Shoutbox</a>
-    </div>
-    <div class="card__body" style="padding: .25rem;">
-    {% for shout in shouts %}
-      <div style="padding: .5rem; border-bottom: 1px solid #ced4da;">
-        <a href="{% url 'users:profile' shout.user.id %}">{{shout.user.username}}</a>: {{shout.content.rendered}}
-      </div>
-    {% endfor %}
-    </div>
-    <div class="card__footer">
-      <form action="/board/shoutbox/" method="post">
-          {% csrf_token %}
-          {{ shout_form }}
-          <input type="submit" value="Submit" />
-      </form>
-    </div>
+<ol class="breadcrumb">
+  <li class="active">Forum</li>
+</ol>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><a href="{% url 'board:shoutbox' %}">Shoutbox</a></h3>
   </div>
-  {% for category in categories %}
-  <div class="card">
-    <div class="card__title">
-      <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
+  <!-- <div class="panel-body">
+  {% for shout in shouts %}
+    <div style="padding: .5rem; border-bottom: 1px solid #ced4da;">
+      <a href="{% url 'users:profile' shout.user.id %}">{{shout.user.username}}</a>: {{shout.content.rendered}}
     </div>
-    <div class="card__body">
-      <div class="tableComponent">
-        <table class="tableComponent__table">
-          <thead>
-            <tr>
-              <th width="60%">
-                Topic
-              </th>
-              <th class="align-center" width="10%">
-                Posts
-              </th>
-              <th class="align-right" width="30%">
-                Last Post
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for child in category.children %}
-            <tr>
-              <td>
-                <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
-                <p>{{child.category.description.rendered}}</p>
-              </td>
-              <td class="align-center">
-                {{child.num_posts}}
-              </td>
-              <td class="align-right">
-                {% if child.last_post %}
-                <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title}}</a>
-                <p>{{child.last_post.created}}</p>
-                <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
-                {% else %}
-                <p>No Posts</p>
-                {% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
   {% endfor %}
+  </div>
+  <div class="panel-footer">
+    <form class="form-horizontal" action="/board/shoutbox/" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+      {{ shout_form }}
+      <input class="btn btn-default" type="submit" value="Submit" />
+      </div>
+    </form>
+  </div> -->
 </div>
+
+{% for category in categories %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></h3>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th width="60%">
+          Topic
+        </th>
+        <th class="align-center" width="10%">
+          Posts
+        </th>
+        <th class="align-right" width="30%">
+          Last Post
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for child in category.children %}
+      <tr>
+        <td>
+          <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
+          <p>{{child.category.description.rendered}}</p>
+        </td>
+        <td class="align-center">
+          {{child.num_posts}}
+        </td>
+        <td class="align-right">
+          {% if child.last_post %}
+          <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title}}</a>
+          <p>{{child.last_post.created}}</p>
+          <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
+          {% else %}
+          <p>No Posts</p>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endfor %}
 
 
 {% endblock %}

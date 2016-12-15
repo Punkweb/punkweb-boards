@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
-from apps.board.models import ParentCategory, ChildCategory, Post, Shout
+from apps.board.models import Category, Subcategory, Post, Shout
 from apps.board.forms import ShoutForm
 
 
@@ -16,10 +16,10 @@ def home_view(request):
             shout_form = ShoutForm()
         shouts = Shout.objects.all()[:10]
         category_groups = []
-        parent_categories = ParentCategory.objects.all()
+        parent_categories = Category.objects.all()
         for parent_category in parent_categories:
             children_groups = []
-            children = ChildCategory.objects.filter(parent__id=parent_category.id).order_by('order')
+            children = Subcategory.objects.filter(parent__id=parent_category.id).order_by('order')
             for child in children:
                 child_posts = Post.objects.filter(category__id=child.id).order_by('created')
                 last_post = child_posts.first()
