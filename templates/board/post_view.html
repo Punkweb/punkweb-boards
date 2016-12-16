@@ -5,7 +5,6 @@
 {% block title %}{{post.title}}{% endblock %}
 
 {% block content %}
-
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
   <li><a href="{% url 'board:category' post.category.parent.id %}">{{post.category.parent.name}}</a></li>
@@ -17,65 +16,68 @@
     <h3 class="panel-title">{{post.title}}</h3>
   </div>
   <div class="panel-body">
-    <div style="display: flex;">
-      <div style="width: 15%; padding: .5rem;">
-        <img src="/media/{{post.user.image}}" />
+    <div class="row">
+      <div class="col-md-2">
+        <img src="/media/{{post.user.image}}" alt="" />
       </div>
-      <div style="width: 85%; padding: .5rem;">
-        <p>
-          <span style="font-size: 24px;"><a href="{% url 'users:profile' post.user.id %}">{{post.user}}</a></span> - {{post.created|date}}
-        </p>
-        <p>
-          {{post.content.rendered}}
-        </p>
-        <hr style="border-color: #ced4da; border-width: 2px;" />
-        <p>
-          {{post.user.signature.rendered}}
-        </p>
-        <!-- <div style="padding: 2rem 0;">
-          <p>Posted: {{ post.created|date:"D d M Y" }} at {{ post.created|time:"H:i" }}</p>
-          <p>Edited: {{ post.modified|date:"D d M Y" }} at {{ post.modified|time:"H:i" }}</p>
-        </div> -->
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-md-4">
+            <h3><a href="{% url 'users:profile' post.user.id %}">{{post.user}}</a></h3>
+          </div>
+          <div class="col-md-4 col-md-offset-4">
+            <h3 class="align-right">{{post.created|date}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="well">
+              {{post.content.rendered}}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            {{post.user.signature.rendered}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 {% if comments %}
 {% for comment in comments %}
-
 <div class="panel panel-primary">
   <div class="panel-body">
-    <div style="display: flex;">
-      <div style="width: 15%; padding: .5rem;">
-        <img src="/media/{{comment.user.image}}" />
+    <div class="row">
+      <div class="col-md-2">
+        <img src="/media/{{comment.user.image}}" alt="" />
       </div>
-      <div style="width: 85%; padding: .5rem;">
-        <p>
-          <span style="font-size: 24px;"><a href="{% url 'users:profile' comment.user.id %}">{{comment.user}}</a></span> - {{post.created|date}}
-        </p>
-        <p>
-          {{comment.content.rendered}}
-        </p>
-        <hr style="border-color: #ced4da; border-width: 2px;" />
-        <p>
-          {{comment.user.signature.rendered}}
-        </p>
-        <!-- <div style="padding: 2rem 0;">
-          <p>Posted: {{ comment.created|date:"D d M Y" }} at {{ comment.created|time:"H:i" }}</p>
-          <p>Edited: {{ comment.modified|date:"D d M Y" }} at {{ comment.modified|time:"H:i" }}</p>
-        </div> -->
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-md-4">
+            <h3><a href="{% url 'users:profile' comment.user.id %}">{{comment.user}}</a></h3>
+          </div>
+          <div class="col-md-4 col-md-offset-4">
+            <h3 class="align-right">{{comment.created|date}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="well">
+              {{comment.content.rendered}}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            {{comment.user.signature.rendered}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 {% endfor %}
-{% else %}
-
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">No comments.  Be the first to add a comment!</h3>
-  </div>
-</div>
 {% endif %}
-
 {% endblock %}

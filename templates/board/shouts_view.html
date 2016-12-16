@@ -12,9 +12,9 @@
 </ol>
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title"><a href="/">Shoutbox</a></h3>
+    <h3 class="panel-title">Shoutbox</h3>
   </div>
-  <div class="panel-body" style="padding: .25rem;">
+  <div class="panel-body">
     <ul class="list-group">
       {% for shout in shouts %}
       <li class="list-group-item"><a href="{% url 'users:profile' shout.user.id %}">{{shout.user.username}}</a>: {{shout.content.rendered}}</li>

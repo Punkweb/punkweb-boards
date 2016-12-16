@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'precise_bbcode',
     'apps.common',
     'apps.users',
     'apps.board',
-    'precise_bbcode',
 ]
 
 # Auth Configuration

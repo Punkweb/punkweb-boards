@@ -6,24 +6,21 @@ from .forms import PostForm, ShoutForm
 
 
 def category_view(request, category_id):
-    try:
-        parent = Category.objects.get(id=category_id)
-        children_groups = []
-        children = Subcategory.objects.filter(parent__id=parent.id).order_by('order')
-        for child in children:
-            child_posts = Post.objects.filter(category__id=child.id).order_by('created')
-            last_post = child_posts.first()
-            children_groups.append({
-                'category': child,
-                'num_posts': len(child_posts),
-                'last_post': last_post
-            })
-        context = {
-            'parent': parent,
-            'children': children_groups
-        }
-    except:
-        raise Http404('Category does not exist')
+    parent = Category.objects.get(id=category_id)
+    children_groups = []
+    children = Subcategory.objects.filter(parent__id=parent.id).order_by('order')
+    for child in children:
+        child_posts = Post.objects.filter(category__id=child.id).order_by('created')
+        last_post = child_posts.first()
+        children_groups.append({
+            'category': child,
+            'num_posts': len(child_posts),
+            'last_post': last_post
+        })
+    context = {
+        'parent': parent,
+        'children': children_groups
+    }
     return render(request, 'board/category_view.html', context)
 
 

@@ -83,33 +83,13 @@ html, body {
 /* Profile
 *******************************************************************************/
 .profile__avi {
-  border: 2px solid #495057;
-  margin-top: 1rem;
   height: 200px;
   width: 200px;
-  border-radius: 100%;
-  -webkit-box-shadow: 0 8px 6px -6px black;
-  -moz-box-shadow: 0 8px 6px -6px black;
-  box-shadow: 0 8px 6px -6px black;
-}
-.profile__banner {
-  margin-left: -2rem;
-  margin-right: -2rem;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
-}
-.profile__user {
-  margin-left: 2rem;
-  margin-right: 2rem;
 }
 .profile__user h1 {
   font-weight: 800;
   color: #f1f3f5;
   text-shadow: 2px 2px 4px #000000;
-}
-.profile__wrapper {
-  border-bottom: 3px solid #212529;
 }
 
 

@@ -30,51 +30,99 @@
     </form>
   </div> -->
 </div>
-
-{% for category in categories %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title"><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></h3>
+<div class="row">
+  <div class="col-md-9">
+    {% for category in categories %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></h3>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              Topic
+            </th>
+            <th class="align-center" width="10%">
+              Posts
+            </th>
+            <th class="align-right" width="30%">
+              Last Post
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for child in category.children %}
+          <tr>
+            <td>
+              <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
+              <p>{{child.category.description.rendered}}</p>
+            </td>
+            <td class="align-center">
+              {{child.num_posts}}
+            </td>
+            <td class="align-right">
+              {% if child.last_post %}
+              <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title}}</a>
+              <p>{{child.last_post.created}}</p>
+              <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
+              {% else %}
+              <p>No Posts</p>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endfor %}
   </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th width="60%">
-          Topic
-        </th>
-        <th class="align-center" width="10%">
-          Posts
-        </th>
-        <th class="align-right" width="30%">
-          Last Post
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for child in category.children %}
-      <tr>
-        <td>
-          <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
-          <p>{{child.category.description.rendered}}</p>
-        </td>
-        <td class="align-center">
-          {{child.num_posts}}
-        </td>
-        <td class="align-right">
-          {% if child.last_post %}
-          <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title}}</a>
-          <p>{{child.last_post.created}}</p>
-          <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
-          {% else %}
-          <p>No Posts</p>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Side section</h3>
+      </div>
+      <div class="panel-body">
+      </div>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Side section</h3>
+      </div>
+      <div class="panel-body">
+      </div>
+    </div>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Side section</h3>
+      </div>
+      <div class="panel-body">
+      </div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Side section</h3>
+      </div>
+      <div class="panel-body">
+      </div>
+    </div>
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title">Side section</h3>
+      </div>
+      <div class="panel-body">
+      </div>
+    </div>
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Side section</h3>
+      </div>
+      <div class="panel-body">
+      </div>
+    </div>
+  </div>
 </div>
-{% endfor %}
+
 
 
 {% endblock %}
