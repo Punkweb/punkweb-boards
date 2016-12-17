@@ -1,7 +1,13 @@
+django>=1.10
 pillow
 psycopg2
-django>=1.10
 django-precise-bbcode
+
+# Scss
+# Make sure that you have sass executable installed. See SASS official site for details.
+libsass
+django-compressor
+django-sass-processor
 
 # Dev tools
 django-extensions

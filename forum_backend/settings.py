@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'precise_bbcode',
+    'sass_processor',
     'apps.common',
     'apps.users',
     'apps.board',
@@ -150,4 +151,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # Other finders..
+    'sass_processor.finders.CssFinder',
 )
