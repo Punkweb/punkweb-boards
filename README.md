@@ -2,8 +2,8 @@
 Django forum boards with django-bbcode support.
 
 
-<!-- # State of the forums
+# State of the forums
 
-![Forum home]( "Forum Home")
+![Forum home](https://raw.githubusercontent.com/shakedown-street/django-boards/master/gh-images/home.png "Forum Home")
 
-![Forum post]( "Forum Post") -->
+![Forum post](https://raw.githubusercontent.com/shakedown-street/django-boards/master/gh-images/post.png "Forum Post")
