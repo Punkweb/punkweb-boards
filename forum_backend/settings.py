@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
 # Auth Configuration
 AUTH_USER_MODEL = 'users.EmailUser'
+LOGIN_REDIRECT_URL = 'home'
+
 
 # 3rd party framework configuration
 REST_FRAMEWORK = {

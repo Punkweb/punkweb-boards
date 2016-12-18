@@ -50,6 +50,10 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 	def __str__(self):
 		return self.username
 
+	@property
+	def num_posts(self):
+		return len(self.posts.all()) + len(self.comments.all())
+
 	def get_full_name(self):
 		return self.username
 

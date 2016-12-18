@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">Login</div>
+  </div>
+  <div class="panel-body">
+    <div class="well col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4">
+      <form method="post">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+            {{ form.username.errors }}
+            <label for="{{ form.username.id_for_label }}">Email</label>
+            <br/>
+            {{ form.username }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.password.errors }}
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            <br/>
+            {{ form.password }}
+        </div>
+        {{ form.non_field_errors }}
+        <br/>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

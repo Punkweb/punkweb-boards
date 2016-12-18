@@ -40,7 +40,12 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 }
 
 /* images can't be wider than their containers */
-img, iframe, textarea {
+img, iframe {
+  max-width: 100%;
+}
+
+input[type=name], input[type=email], input[type=text], input[type=tel],
+input[type=number], input[type=password], textarea, select {
   max-width: 100%;
 }
 
@@ -55,7 +60,8 @@ pre {
   white-space: pre-wrap;
 }
 
-input[type="text"], textarea {
+input[type=name], input[type=email], input[type=text], input[type=tel],
+input[type=number], input[type=password], textarea, select {
   border: 1px solid $oc-blue-8;
   border-left: 4px solid $oc-blue-8;
   resize: vertical;

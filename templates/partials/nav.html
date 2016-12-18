@@ -13,6 +13,7 @@
       <ul class="nav navbar-nav">
         <!-- -->
       </ul>
+      {% if user.is_authenticated %}
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
@@ -20,10 +21,16 @@
             <li><a href="{% url 'users:me' %}">View Provile</a></li>
             <li><a href="{% url 'users:settings' %}">Settings</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/">Logout</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
           </ul>
         </li>
       </ul>
+      {% else %}
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'users:register' %}">Sign Up</a></li>
+        <li><a href="{% url 'users:login' %}">Login</a></li>
+      </ul>
+      {% endif %}
     </div>
   </div>
 </nav>

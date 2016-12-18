@@ -33,7 +33,7 @@ class Subcategory(UUIDPrimaryKey):
 
 
 class Post(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(EmailUser, blank=False, null=False)
+    user = models.ForeignKey(EmailUser, related_name='posts', blank=False, null=False)
     category = models.ForeignKey(Subcategory, blank=False, null=False)
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
@@ -43,7 +43,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
 
 
 class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(EmailUser, blank=False, null=False)
+    user = models.ForeignKey(EmailUser, related_name='comments', blank=False, null=False)
     post = models.ForeignKey(Post, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 

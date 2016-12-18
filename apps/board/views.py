@@ -10,7 +10,7 @@ def category_view(request, category_id):
     children_groups = []
     children = Subcategory.objects.filter(parent__id=parent.id).order_by('order')
     for child in children:
-        child_posts = Post.objects.filter(category__id=child.id).order_by('created')
+        child_posts = Post.objects.filter(category__id=child.id).order_by('-created')
         last_post = child_posts.first()
         children_groups.append({
             'category': child,
@@ -27,9 +27,9 @@ def category_view(request, category_id):
 def topic_view(request, category_id):
     category = Subcategory.objects.get(id=category_id)
     post_groups = []
-    posts = Post.objects.filter(category__id=category_id)
+    posts = Post.objects.filter(category__id=category_id).order_by('-created')
     for post in posts:
-        comments = Comment.objects.filter(post_id=post.id).order_by('created')
+        comments = Comment.objects.filter(post_id=post.id).order_by('-created')
         last_comment = comments.first()
         group = {
             'post': post,
