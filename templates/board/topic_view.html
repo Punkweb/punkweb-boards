@@ -53,7 +53,7 @@
         <td class="align-right">
           {% if post.last_comment %}
           <a href="{% url 'users:profile' post.last_comment.user.id %}">{{post.last_comment.user}}</a>
-          <p>{{post.last_comment.created}}</p>
+          <p>{{post.last_comment.created|date:'D, M d, Y'}}</p>
           {% else %}
           <p>No Posts</p>
           {% endif %}
