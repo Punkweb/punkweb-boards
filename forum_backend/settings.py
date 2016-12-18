@@ -92,8 +92,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'forum_backend.wsgi.application'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -158,3 +156,7 @@ STATICFILES_FINDERS = (
     # Other finders..
     'sass_processor.finders.CssFinder',
 )
+
+# Crispy forms
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
