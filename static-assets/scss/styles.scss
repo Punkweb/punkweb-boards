@@ -1,14 +1,17 @@
+@import 'open-color';
+
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  min-width: 640px;
   width: 100%;
 }
 
-/** {
-  border: 1px solid red;
-}*/
+html, body {
+  font-size: 100%;
+  font-family: Helvetica, sans-serif;
+  font-weight: 500;
+}
 
 /* List styling */
 ul {
@@ -37,7 +40,7 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 }
 
 /* images can't be wider than their containers */
-img, iframe {
+img, iframe, textarea {
   max-width: 100%;
 }
 
@@ -47,14 +50,32 @@ table {
 }
 
 pre {
+  background-color: $oc-gray-4;
   font-family: monospace;
   white-space: pre-wrap;
 }
 
-html, body {
-  font-size: 100%;
-  font-family: Helvetica, sans-serif;
-  font-weight: 500;
+.well {
+  background-color: $oc-gray-8;
+  border: 2px solid $oc-blue-8;
+}
+
+input[type="text"], textarea {
+  background-color: $oc-gray-8;
+  border: 1px solid $oc-blue-8;
+  border-left: 4px solid $oc-blue-8;
+  color: $oc-gray-2;
+  resize: vertical;
+}
+
+input[type="button"], input[type="submit"], button {
+  background-color: $oc-blue-8;
+  border: none;
+  color: $oc-gray-2;
+  padding: .5rem 1rem;
+  &:hover {
+    background-color: $oc-blue-7;
+  }
 }
 
 /* Table Alignment Helpers
@@ -96,12 +117,78 @@ html, body {
 /* Colors
 *******************************************************************************/
 body {
-  background-image: url(/media/bg.png);
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-color: $oc-gray-9;
+}
+
+.navbar {
+  background-color: $oc-gray-9;
+  border: none;
+  border-bottom: 1px solid $oc-blue-8;
+  border-radius: 0;
+}
+
+.breadcrumb {
+  background-color: $oc-gray-8;
+  color: $oc-gray-2;
+
+  li a {
+    color: $oc-blue-5;
+  }
+  .active {
+    color: $oc-gray-2;
+  }
+}
+
+.table {
+  border: none;
+  thead {
+    border: none;
+  }
+  thead tr {
+    border: none;
+  }
+  thead tr th {
+    border: none;
+    border-bottom: 2px solid $oc-gray-8;
+  }
+  tbody tr td {
+    border: none;
+    border-top: 2px solid $oc-gray-8;
+  }
 }
 
 .panel {
-  background-color: rgba(255, 255, 255, .80)
-}
+  background-color: $oc-gray-9;
+  color: $oc-gray-5;
+  .panel-heading {
+    color: $oc-gray-2;}}
+.panel-default {
+  border: 1px solid $oc-gray-8;
+  .panel-heading {
+    background-color: $oc-gray-8;
+    border-bottom: 1px solid $oc-gray-8;}}
+.panel-primary {
+  border: 1px solid $oc-blue-8;
+  .panel-heading {
+    background-color: $oc-blue-8;
+    border-bottom: 1px solid $oc-blue-8;}}
+.panel-success {
+  border: 1px solid $oc-green-8;
+  .panel-heading {
+    background-color: $oc-green-8;
+    border-bottom: 1px solid $oc-green-8;}}
+.panel-info {
+  border: 1px solid $oc-indigo-8;
+  .panel-heading {
+    background-color: $oc-indigo-8;
+    border-bottom: 1px solid $oc-indigo-8;}}
+.panel-warning {
+  border: 1px solid $oc-yellow-8;
+  .panel-heading {
+    background-color: $oc-yellow-8;
+    border-bottom: 1px solid $oc-yellow-8;}}
+.panel-danger {
+  border: 1px solid $oc-red-8;
+  .panel-heading {
+    background-color: $oc-red-8;
+    border-bottom: 1px solid $oc-red-8; }}

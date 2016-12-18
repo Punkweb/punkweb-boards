@@ -11,29 +11,27 @@
   <li><a href="{% url 'board:topic' post.category.id %}">{{post.category.name}}</a></li>
   <li class="active">{{post.title}}</li>
 </ol>
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">{{post.title}}</h3>
   </div>
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-2 col-md-offset-0 col-xs-4 col-xs-offset-4 align-center--all">
+        <h3><a href="{% url 'users:profile' post.user.id %}">{{post.user.username}}</a></h3>
         <img src="/media/{{post.user.image}}" alt="" />
       </div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-md-4">
-            <h3><a href="{% url 'users:profile' post.user.id %}">{{post.user}}</a></h3>
-          </div>
-          <div class="col-md-4 col-md-offset-4">
-            <h3 class="align-right">{{post.created|date}}</h3>
-          </div>
-        </div>
+      <div class="col-md-10 col-xs-12">
         <div class="row">
           <div class="col-md-12">
             <div class="well">
               {{post.content.rendered}}
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h5 class="align-right">{{post.created|date}}</h5>
           </div>
         </div>
         <div class="row">
@@ -47,26 +45,24 @@
 </div>
 {% if comments %}
 {% for comment in comments %}
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-2 col-md-offset-0 col-xs-4 col-xs-offset-4 align-center--all">
+        <h3><a href="{% url 'users:profile' comment.user.id %}">{{comment.user.username}}</a></h3>
         <img src="/media/{{comment.user.image}}" alt="" />
       </div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-md-4">
-            <h3><a href="{% url 'users:profile' comment.user.id %}">{{comment.user}}</a></h3>
-          </div>
-          <div class="col-md-4 col-md-offset-4">
-            <h3 class="align-right">{{comment.created|date}}</h3>
-          </div>
-        </div>
+      <div class="col-md-10 col-xs-12">
         <div class="row">
           <div class="col-md-12">
             <div class="well">
               {{comment.content.rendered}}
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h5 class="align-right">{{comment.created|date}}</h5>
           </div>
         </div>
         <div class="row">
@@ -80,4 +76,8 @@
 </div>
 {% endfor %}
 {% endif %}
+
+
+{% include 'partials/new_comment.html' %}
+
 {% endblock %}

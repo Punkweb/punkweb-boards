@@ -1,0 +1,20 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-md-2 col-xs-2 align-center--all">
+        <h4>{{user.username}}</h4>
+        <img src="/media/{{user.image}}" alt="" />
+      </div>
+      <div class="col-md-10 col-xs-10">
+        <textarea style="width: 100%;" rows="8"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-6 align-right--all">
+        <button>Post Reply</button>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

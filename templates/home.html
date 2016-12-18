@@ -9,7 +9,7 @@
 <ol class="breadcrumb">
   <li class="active">Forum</li>
 </ol>
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><a href="{% url 'board:shoutbox' %}">Shoutbox</a></h3>
   </div>
@@ -31,9 +31,9 @@
   </div> -->
 </div>
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 col-xs-9">
     {% for category in categories %}
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></h3>
       </div>
@@ -63,8 +63,8 @@
             </td>
             <td class="align-right">
               {% if child.last_post %}
-              <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title}}</a>
-              <p>{{child.last_post.created}}</p>
+              <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title|truncatechars_html:20}}</a>
+              <p>{{child.last_post.created|date:"M/d/y"}}</p>
               <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
               {% else %}
               <p>No Posts</p>
@@ -77,7 +77,7 @@
     </div>
     {% endfor %}
   </div>
-  <div class="col-md-3">
+  <div class="col-md-3 col-xs-3">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Side section</h3>

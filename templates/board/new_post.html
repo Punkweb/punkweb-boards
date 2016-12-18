@@ -6,10 +6,19 @@
 
 {% block content %}
 
-<form action="" method="post">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="Submit" />
-</form>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      Create new post
+    </div>
+  </div>
+  <div class="panel-body">
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+</div>
 
 {% endblock %}
