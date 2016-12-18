@@ -27,5 +27,6 @@ def profile_view(request, user_id):
     if request.user.id == user.id:
         return redirect('users:me')
     context = {
+        'user': user
     }
     return render(request, 'users/profile_page.html', context)

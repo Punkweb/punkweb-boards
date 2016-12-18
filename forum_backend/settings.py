@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'precise_bbcode',
     'sass_processor',
+    'crispy_forms',
     'apps.common',
     'apps.users',
     'apps.board',
@@ -91,6 +92,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'forum_backend.wsgi.application'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

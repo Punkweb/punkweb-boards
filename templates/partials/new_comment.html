@@ -1,3 +1,6 @@
+{% load crispy_forms_tags %}
+
+
 <div class="panel panel-default">
   <div class="panel-body">
     {% if user.is_authenticated %}
@@ -7,12 +10,11 @@
         <img src="/media/{{user.image}}" alt="" />
       </div>
       <div class="col-md-10 col-xs-10">
-        <textarea style="width: 100%;" rows="8"></textarea>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-6 align-right--all">
-        <button>Post Reply</button>
+        <form method="post">
+          {% csrf_token %}
+          {{ comment_form|crispy }}
+          <input type="submit" class="btn btn-success form-control" value="Submit" />
+        </form>
       </div>
     </div>
     {% endif %}

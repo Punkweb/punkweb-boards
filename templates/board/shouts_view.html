@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load bbcode_tags %}
+{% load crispy_forms_tags %}
 
 {% block title %}Shoutbox{% endblock %}
 
@@ -24,8 +25,8 @@
   <div class="panel-footer">
     <form action="/board/shoutbox/" method="post">
       {% csrf_token %}
-      {{ shout_form }}
-      <input type="submit" value="Submit" />
+      {{ shout_form|crispy }}
+      <input type="submit" class="btn btn-success form-control" value="Submit" />
     </form>
   </div>
 </div>

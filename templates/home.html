@@ -6,26 +6,10 @@
 
 {% block content %}
 
-<div class="panel panel-default">
+<div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title"><a href="{% url 'board:shoutbox' %}">Shoutbox</a></h3>
   </div>
-  <!-- <div class="panel-body">
-  {% for shout in shouts %}
-    <div style="padding: .5rem; border-bottom: 1px solid #ced4da;">
-      <a href="{% url 'users:profile' shout.user.id %}">{{shout.user.username}}</a>: {{shout.content.rendered}}
-    </div>
-  {% endfor %}
-  </div>
-  <div class="panel-footer">
-    <form class="form-horizontal" action="/board/shoutbox/" method="post">
-      {% csrf_token %}
-      <div class="form-group">
-      {{ shout_form }}
-      <input class="btn btn-default" type="submit" value="Submit" />
-      </div>
-    </form>
-  </div> -->
 </div>
 <div class="row">
   <div class="col-md-9 col-xs-9">

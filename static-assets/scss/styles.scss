@@ -60,23 +60,6 @@ pre {
   white-space: pre-wrap;
 }
 
-input[type=name], input[type=email], input[type=text], input[type=tel],
-input[type=number], input[type=password], textarea, select {
-  border: 1px solid $oc-blue-8;
-  border-left: 4px solid $oc-blue-8;
-  resize: vertical;
-}
-
-input[type="button"], input[type="submit"], button {
-  background-color: $oc-blue-8;
-  border: none;
-  color: $oc-gray-2;
-  padding: .5rem 1rem;
-  &:hover {
-    background-color: $oc-blue-7;
-  }
-}
-
 /* Table Alignment Helpers
 *******************************************************************************/
 .align-left {
