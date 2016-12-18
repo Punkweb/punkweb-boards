@@ -11,12 +11,14 @@
   <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
   <li class="active">{{category.name}}</li>
 </ol>
-<div class="panel panel-default">
+<div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">{{category.name}}</h3>
   </div>
   <div class="panel-body">
+    {% if category.description.rendered %}
     {{category.description.rendered}}
+    {% endif %}
     <a href="{% url 'board:new_post' category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
   </div>
   <table class="table">
@@ -31,13 +33,12 @@
         <th class="align-center">
           Comments
         </th>
-        <th class="align-center">
+        <th class="align-right" width="30%">
           Last Comment
         </th>
       </tr>
     </thead>
     <tbody>
-      {% if posts %}
       {% for post in posts %}
       <tr>
         <td>
@@ -49,7 +50,7 @@
         <td class="align-center">
           {{post.num_comments}}
         </td>
-        <td>
+        <td class="align-right">
           {% if post.last_comment %}
           <a href="{% url 'users:profile' post.last_comment.user.id %}">{{post.last_comment.user}}</a>
           <p>{{post.last_comment.created}}</p>
@@ -59,15 +60,6 @@
         </td>
       </tr>
       {% endfor %}
-      {% else %}
-      <tr>
-        <td>
-          Empty Category
-          <br/>
-          Go back to <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
-        </td>
-      </tr>
-      {% endif %}
     </tbody>
   </table>
 </div>

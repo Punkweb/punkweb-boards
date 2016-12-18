@@ -50,21 +50,14 @@ table {
 }
 
 pre {
-  background-color: $oc-gray-4;
+  background-color: $oc-yellow-0;
   font-family: monospace;
   white-space: pre-wrap;
 }
 
-.well {
-  background-color: $oc-gray-8;
-  border: 2px solid $oc-blue-8;
-}
-
 input[type="text"], textarea {
-  background-color: $oc-gray-8;
   border: 1px solid $oc-blue-8;
   border-left: 4px solid $oc-blue-8;
-  color: $oc-gray-2;
   resize: vertical;
 }
 
@@ -116,79 +109,11 @@ input[type="button"], input[type="submit"], button {
 
 /* Colors
 *******************************************************************************/
+
 body {
-  background-color: $oc-gray-9;
+  background-color: $oc-gray-3;
 }
 
 .navbar {
-  background-color: $oc-gray-9;
-  border: none;
-  border-bottom: 1px solid $oc-blue-8;
   border-radius: 0;
 }
-
-.breadcrumb {
-  background-color: $oc-gray-8;
-  color: $oc-gray-2;
-
-  li a {
-    color: $oc-blue-5;
-  }
-  .active {
-    color: $oc-gray-2;
-  }
-}
-
-.table {
-  border: none;
-  thead {
-    border: none;
-  }
-  thead tr {
-    border: none;
-  }
-  thead tr th {
-    border: none;
-    border-bottom: 2px solid $oc-gray-8;
-  }
-  tbody tr td {
-    border: none;
-    border-top: 2px solid $oc-gray-8;
-  }
-}
-
-.panel {
-  background-color: $oc-gray-9;
-  color: $oc-gray-5;
-  .panel-heading {
-    color: $oc-gray-2;}}
-.panel-default {
-  border: 1px solid $oc-gray-8;
-  .panel-heading {
-    background-color: $oc-gray-8;
-    border-bottom: 1px solid $oc-gray-8;}}
-.panel-primary {
-  border: 1px solid $oc-blue-8;
-  .panel-heading {
-    background-color: $oc-blue-8;
-    border-bottom: 1px solid $oc-blue-8;}}
-.panel-success {
-  border: 1px solid $oc-green-8;
-  .panel-heading {
-    background-color: $oc-green-8;
-    border-bottom: 1px solid $oc-green-8;}}
-.panel-info {
-  border: 1px solid $oc-indigo-8;
-  .panel-heading {
-    background-color: $oc-indigo-8;
-    border-bottom: 1px solid $oc-indigo-8;}}
-.panel-warning {
-  border: 1px solid $oc-yellow-8;
-  .panel-heading {
-    background-color: $oc-yellow-8;
-    border-bottom: 1px solid $oc-yellow-8;}}
-.panel-danger {
-  border: 1px solid $oc-red-8;
-  .panel-heading {
-    background-color: $oc-red-8;
-    border-bottom: 1px solid $oc-red-8; }}
