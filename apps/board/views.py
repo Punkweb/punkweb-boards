@@ -41,17 +41,21 @@ def post_view(request, post_id):
 
 
 def new_post(request, category_id):
+    category = Subcategory.objects.get(id=category_id)
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = EmailUser.objects.get(id=request.user.id)
-            post.category = Subcategory.objects.get(id=category_id)
+            post.category = category
             post.save()
             return redirect('board:post', post.id)
     else:
         form = PostForm()
-    return render(request, 'board/new_post.html', {'form': form})
+    return render(request, 'board/new_post.html', {
+            'category': category,
+            'form': form,
+        })
 
 
 def shouts_view(request):

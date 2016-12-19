@@ -4,16 +4,26 @@
   <div class="panel-body">
     {% if user.is_authenticated %}
     <div class="row">
-      <div class="col-md-2 col-xs-2 align-center--all">
-        <h4>{{user.username}}</h4>
-        <img src="/media/{{user.image}}" alt="" />
+      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+        <div class="well well-sm">
+          <ul>
+            <li><h4>{{user.username}}</h4></li>
+            <li><img class="hidden-xs hidden-sm" src="/media/{{user.image}}" alt="" /></li>
+          </ul>
+        </div>
       </div>
-      <div class="col-md-10 col-xs-10">
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
         <form method="post">
           {% csrf_token %}
           {{ comment_form|crispy }}
           <input type="submit" class="btn btn-success form-control" value="Submit" />
         </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 align-center--all">
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
       </div>
     </div>
     {% endif %}

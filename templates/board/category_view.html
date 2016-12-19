@@ -2,52 +2,58 @@
 {% load static %}
 {% load bbcode_tags %}
 
-{% block title %}{{parent.name}}{% endblock %}
+{% block title %}{{category.name}}{% endblock %}
 
 {% block content %}
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
-  <li class="active">{{parent.name}}</li>
+  <li class="active">{{category.name}}</li>
 </ol>
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">{{parent.name}}</h3>
+    <h3 class="panel-title">{{category.name}}</h3>
   </div>
-  {% if parent.description.rendered %}
+  {% if category.description.rendered %}
   <div class="panel-body">
-    {{parent.description.rendered}}
+    {{category.description.rendered}}
   </div>
   {% endif %}
   <table class="table">
     <thead>
       <tr>
-        <th>
-          Topic
+        <th class="align-left" width="40%">
+          Subcategory
         </th>
         <th class="align-center" width="10%">
-          Posts
+          Threads
         </th>
-        <th class="align-right" width="40%">
-          Last Post
+        <th class="align-center" width="10%">
+          Replies
+        </th>
+        <th class="align-right hidden-xs" width="30%">
+          Last
         </th>
       </tr>
     </thead>
     <tbody>
-      {% for child in children %}
+      {% for sub in subcategories %}
       <tr>
-        <td>
-          <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
-          <a href="{% url 'board:new_post' child.category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-          <p>{{child.category.description.rendered}}</p>
+        <td class="align-left">
+          <a href="{% url 'board:topic' sub.category.id %}">{{sub.category.name}}</a>
+          <a href="{% url 'board:new_post' sub.category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+          <p>{{sub.category.description.rendered}}</p>
         </td>
         <td class="align-center">
-          {{child.num_posts}}
+          {{sub.num_posts}}
         </td>
-        <td class="align-right">
-          {% if child.last_post %}
-          <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title|truncatechars_html:30}}</a>
-          <p>{{child.last_post.created|date:'D, M d, Y'}}</p>
-          <p>by <a href="{% url 'users:profile' child.last_post.user.username %}">{{child.last_post.user.username}}</a></p>
+        <td class="align-center">
+          {{sub.num_comments}}
+        </td>
+        <td class="align-right hidden-xs">
+          {% if sub.last_post %}
+          <a href="{% url 'board:post' sub.last_post.id %}">{{sub.last_post.title|truncatechars_html:30}}</a>
+          <p>{{sub.last_post.created|date:'D, M d, Y'}}</p>
+          <p>by <a href="{% url 'users:profile' sub.last_post.user.username %}">{{sub.last_post.user.username}}</a></p>
           {% else %}
           <p>No Posts</p>
           {% endif %}

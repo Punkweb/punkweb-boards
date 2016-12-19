@@ -17,21 +17,19 @@
   </div>
   <div class="panel-body">
     <div class="row">
-      <div class="col-xs-2 align-center">
-        <div class="well well-sm col-xs-12 align-center">
-          <a href="{% url 'users:profile' post.user.username %}">{{post.user.username}}</a>
-          <img src="/media/{{post.user.image}}" alt="" />
+      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+        <div class="well well-sm">
           <ul>
+            <a href="{% url 'users:profile' post.user.username %}">{{post.user.username}}</a>
+            <img class="hidden-xs hidden-sm" src="/media/{{post.user.image}}" alt="" />
             <li>Posts: {{post.user.num_posts}}</li>
           </ul>
         </div>
       </div>
-      <div class="col-xs-10">
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
         <div class="row">
           <div class="col-xs-12">
-            <div class="well">
-              {{post.content.rendered}}
-            </div>
+            {{post.content.rendered}}
           </div>
         </div>
         <div class="row">
@@ -53,21 +51,19 @@
 <div class="panel panel-primary">
   <div class="panel-body">
     <div class="row">
-      <div class="col-xs-2 align-center">
-        <div class="well well-sm col-xs-12 align-center">
-          <a href="{% url 'users:profile' comment.user.username %}">{{comment.user.username}}</a>
-          <img src="/media/{{comment.user.image}}" alt="" />
+      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+        <div class="well well-sm">
           <ul>
+            <a href="{% url 'users:profile' comment.user.username %}">{{comment.user.username}}</a>
+            <img class="hidden-xs hidden-sm" src="/media/{{comment.user.image}}" alt="" />
             <li>Posts: {{comment.user.num_posts}}</li>
           </ul>
         </div>
       </div>
-      <div class="col-xs-10">
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
         <div class="row">
           <div class="col-xs-12">
-            <div class="well">
-              {{comment.content.rendered}}
-            </div>
+            {{comment.content.rendered}}
           </div>
         </div>
         <div class="row">

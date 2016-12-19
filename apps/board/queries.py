@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from apps.common.base import BaseQuery
 from .models import Category, Subcategory, Post, Comment, Shout
 from .forms import PostForm, CommentForm, ShoutForm
@@ -11,20 +12,24 @@ class CategoryQuery(BaseQuery):
         return 'category_query'
 
     def get_context(self):
-        parent = Category.objects.get(id=self.category_id)
-        children_groups = []
-        children = Subcategory.objects.filter(parent__id=parent.id).order_by('order')
-        for child in children:
-            child_posts = Post.objects.filter(category__id=child.id).order_by('-created')
-            last_post = child_posts.first()
-            children_groups.append({
-                'category': child,
-                'num_posts': len(child_posts),
-                'last_post': last_post
+        category = Category.objects.get(id=self.category_id)
+        sub_groups = []
+        subcategories = Subcategory.objects.filter(parent__id=category.id).order_by('order')
+        for sub in subcategories:
+            posts = Post.objects.filter(category__id=sub.id).order_by('-created')
+            num_posts = len(posts)
+            last_post = posts.first()
+            comments = Comment.objects.filter(post__category__id=sub.id)
+            num_comments = len(comments)
+            sub_groups.append({
+                'category': sub,
+                'num_posts': num_posts,
+                'last_post': last_post,
+                'num_comments': num_comments
             })
         return {
-            'parent': parent,
-            'children': children_groups
+            'category': category,
+            'subcategories': sub_groups
         }
 
 class SubCategoryQuery(BaseQuery):
