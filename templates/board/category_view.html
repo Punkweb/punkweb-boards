@@ -47,7 +47,7 @@
           {% if child.last_post %}
           <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title|truncatechars_html:30}}</a>
           <p>{{child.last_post.created|date:'D, M d, Y'}}</p>
-          <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
+          <p>by <a href="{% url 'users:profile' child.last_post.user.username %}">{{child.last_post.user.username}}</a></p>
           {% else %}
           <p>No Posts</p>
           {% endif %}

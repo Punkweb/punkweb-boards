@@ -17,7 +17,7 @@
   <div class="panel-body">
     <ul class="list-group">
       {% for shout in shouts %}
-      <li class="list-group-item"><a href="{% url 'users:profile' shout.user.id %}">{{shout.user.username}}</a>: {{shout.content.rendered}}</li>
+      <li class="list-group-item"><a href="{% url 'users:profile' shout.user.username %}">{{shout.user.username}}</a>: {{shout.content.rendered}}</li>
       {% endfor %}
     </ul>
   </div>

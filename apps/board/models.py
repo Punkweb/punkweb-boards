@@ -44,7 +44,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
 
 class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(EmailUser, related_name='comments', blank=False, null=False)
-    post = models.ForeignKey(Post, blank=False, null=False)
+    post = models.ForeignKey(Post, related_name='comments', blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     def __str__(self):

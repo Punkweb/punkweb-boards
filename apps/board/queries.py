@@ -51,3 +51,25 @@ class SubCategoryQuery(BaseQuery):
             'category': category,
             'posts': post_groups
         }
+
+
+class RecentPostsQuery(BaseQuery):
+    def get_name(self):
+        return 'recent_posts_query'
+
+    def get_context(self):
+        posts = Post.objects.all().order_by('-created')[:5]
+        return {
+            'recents': posts
+        }
+
+
+class RecentActivityQuery(BaseQuery):
+    def get_name(self):
+        return 'recent_activity_query'
+
+    def get_context(self):
+        posts = Post.objects.all().order_by('-modified')[:5]
+        return {
+            'recents': posts
+        }

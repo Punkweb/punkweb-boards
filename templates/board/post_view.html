@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-xs-2 align-center">
         <div class="well well-sm col-xs-12 align-center">
-          <a href="{% url 'users:profile' post.user.id %}">{{post.user.username}}</a>
+          <a href="{% url 'users:profile' post.user.username %}">{{post.user.username}}</a>
           <img src="/media/{{post.user.image}}" alt="" />
           <ul>
             <li>Posts: {{post.user.num_posts}}</li>
@@ -55,7 +55,7 @@
     <div class="row">
       <div class="col-xs-2 align-center">
         <div class="well well-sm col-xs-12 align-center">
-          <a href="{% url 'users:profile' comment.user.id %}">{{comment.user.username}}</a>
+          <a href="{% url 'users:profile' comment.user.username %}">{{comment.user.username}}</a>
           <img src="/media/{{comment.user.image}}" alt="" />
           <ul>
             <li>Posts: {{comment.user.num_posts}}</li>

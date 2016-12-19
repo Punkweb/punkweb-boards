@@ -44,14 +44,14 @@
           <a href="{% url 'board:post' post.post.id %}">{{post.post.title}}</a>
         </td>
         <td>
-          <a href="{% url 'users:profile' post.post.user.id %}">{{post.post.user}}</a>
+          <a href="{% url 'users:profile' post.post.user.username %}">{{post.post.user.username}}</a>
         </td>
         <td class="align-center">
           {{post.num_comments}}
         </td>
         <td class="align-right">
           {% if post.last_comment %}
-          <a href="{% url 'users:profile' post.last_comment.user.id %}">{{post.last_comment.user}}</a>
+          <a href="{% url 'users:profile' post.last_comment.user.username %}">{{post.last_comment.user.username}}</a>
           <p>{{post.last_comment.created|date:'D, M d, Y'}}</p>
           {% else %}
           <p>No Posts</p>

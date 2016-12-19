@@ -1,3 +1,4 @@
+import datetime
 from django.http import Http404
 from django.shortcuts import render, redirect
 from apps.users.models import EmailUser
@@ -22,6 +23,8 @@ def post_view(request, post_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = Post.objects.get(id=post_id)
+            comment.post.modified = datetime.datetime.now()
+            comment.post.save()
             comment.user = EmailUser.objects.get(id=request.user.id)
             comment.save()
             return redirect('board:post', post_id)

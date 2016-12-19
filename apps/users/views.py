@@ -22,8 +22,8 @@ def settings_view(request):
     return render(request, 'users/settings.html', context)
 
 
-def profile_view(request, user_id):
-    user = EmailUser.objects.get(id=user_id)
+def profile_view(request, username):
+    user = EmailUser.objects.get(username=username)
     if request.user.id == user.id:
         return redirect('users:me')
     context = {

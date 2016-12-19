@@ -46,7 +46,7 @@
               {% if child.last_post %}
               <a href="{% url 'board:post' child.last_post.id %}">{{child.last_post.title|truncatechars_html:30}}</a>
               <p>{{child.last_post.created|date:'D, M d, Y'}}</p>
-              <p>by <a href="{% url 'users:profile' child.last_post.user.id %}">{{child.last_post.user}}</a></p>
+              <p>by <a href="{% url 'users:profile' child.last_post.user.username %}">{{child.last_post.user.username}}</a></p>
               {% else %}
               <p>No Posts</p>
               {% endif %}
@@ -59,18 +59,44 @@
     {% endfor %}
   </div>
   <div class="col-md-3 col-xs-3">
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">Side section</h3>
+        <h3 class="panel-title">Recent Posts</h3>
       </div>
       <div class="panel-body">
+        <div class="container-fluid">
+          {% for post in recent_posts_query.recents %}
+          <div class="row">
+            <div class="col-xs-3">
+              <img src="/media/{{ post.user.image }}" alt="{{ post.user.username }}" />
+            </div>
+            <div class="col-xs-9">
+              <a href="{% url 'board:post' post.id %}">{{post.title}}</a>
+              <p>{{post.created|date:'D, M d, Y'}}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">Side section</h3>
+        <h3 class="panel-title">Recent Activity</h3>
       </div>
       <div class="panel-body">
+        <div class="container-fluid">
+          {% for post in recent_activity_query.recents %}
+          <div class="row">
+            <div class="col-xs-3">
+              <img src="/media/{{ post.user.image }}" alt="{{ post.user.username }}" />
+            </div>
+            <div class="col-xs-9">
+              <a href="{% url 'board:post' post.id %}">{{post.title}}</a>
+              <p>{{post.created|date:'D, M d, Y'}}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
     <div class="panel panel-success">
