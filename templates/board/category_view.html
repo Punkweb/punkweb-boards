@@ -5,7 +5,6 @@
 {% block title %}{{parent.name}}{% endblock %}
 
 {% block content %}
-
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
   <li class="active">{{parent.name}}</li>
@@ -38,6 +37,7 @@
       <tr>
         <td>
           <a href="{% url 'board:topic' child.category.id %}">{{child.category.name}}</a>
+          <a href="{% url 'board:new_post' child.category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
           <p>{{child.category.description.rendered}}</p>
         </td>
         <td class="align-center">
@@ -57,6 +57,4 @@
     </tbody>
   </table>
 </div>
-
-
 {% endblock %}

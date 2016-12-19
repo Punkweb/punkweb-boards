@@ -5,21 +5,20 @@
 {% block title %}{{category.name}}{% endblock %}
 
 {% block content %}
-
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
   <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
   <li class="active">{{category.name}}</li>
 </ol>
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{{category.name}}</h3>
+    {{category.name}}
+    <a href="{% url 'board:new_post' category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
   </div>
   <div class="panel-body">
     {% if category.description.rendered %}
     {{category.description.rendered}}
     {% endif %}
-    <a href="{% url 'board:new_post' category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
   </div>
   <table class="table">
     <thead>
@@ -63,6 +62,4 @@
     </tbody>
   </table>
 </div>
-
-
 {% endblock %}
