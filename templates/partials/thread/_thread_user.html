@@ -2,13 +2,6 @@
   <ul>
     <li>
       <center>
-        <a href="{% url 'users:profile' thread.user.username %}">
-          <h3>{{thread.user.username}}</h3>
-        </a>
-      </center>
-    </li>
-    <li>
-      <center>
         <a href="{% url 'users:profile' thread.user.username %}" class="thumbnail hidden-xs hidden-sm"  style="max-width: 200px">
           <img src="/media/{{thread.user.image}}" alt="..." />
         </a>

@@ -6,12 +6,12 @@
     <div class="container-fluid">
       {% for thread in recent_threads %}
       <div class="row">
-        <div class="col-xs-2 col-md-4 col-lg-3">
-          <a href="{% url 'users:profile' thread.user.username %}" class="thumbnail">
+        <div class="col-xs-3 col-sm-2 col-md-4 col-lg-3">
+          <a href="{% url 'users:profile' thread.user.username %}" class="thumbnail" style="min-width: 50px;">
             <img src="/media/{{thread.user.image}}" alt="{{thread.user.name}}" />
           </a>
         </div>
-        <div class="col-xs-10 col-md-8 col-lg-9">
+        <div class="col-xs-9 col-sm-10 col-md-8 col-lg-9">
           <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
           <p>{{thread.created|date:'D, M d, Y'}}</p>
         </div>

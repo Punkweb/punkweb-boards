@@ -1,0 +1,42 @@
+.footer {
+	background-color: $oc-gray-1;
+	border-bottom: 1px solid $oc-gray-5;
+	border-top: 1px solid $oc-gray-4;
+  padding-bottom: 2rem;
+  position: relative;
+  width: 100%;
+  p {
+    margin: 0;
+  }
+  h3 {
+  	border-bottom: 1px solid $oc-gray-4;
+  	color: $oc-blue-5;
+  	font-size: 18px;
+  	font-weight: 600;
+  	line-height: 27px;
+  	padding: 40px 0 10px;
+  	text-transform: uppercase;
+  }
+  ul {
+  	font-size: 13px;
+  	list-style-type: none;
+  	margin-left: 0;
+  	padding-left: 0;
+  	margin-top: 15px;
+  	color: $oc-gray-9;
+  }
+  ul li a {
+  	padding: 0 0 5px 0;
+  	display: block;
+  }
+  a {
+    color: $oc-blue-4;
+  }
+}
+
+.footer-bottom {
+	background: $oc-gray-2;
+	border-top: 1px solid #DDDDDD;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

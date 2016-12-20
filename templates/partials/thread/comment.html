@@ -1,3 +1,13 @@
+<div class="page-header">
+  <h4>
+    <a href="{% url 'users:profile' comment.user.username %}">
+      {{comment.user.username}}
+    </a>
+    <small class="pull-right">
+      {{comment.created}}
+    </small>
+  </h4>
+</div>
 <div class="panel panel-default">
   <div class="panel-body">
     <div class="row">

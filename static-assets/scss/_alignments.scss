@@ -1,0 +1,22 @@
+/* Table Alignment Helpers
+*******************************************************************************/
+.align-left {
+  text-align: left !important; }
+  .align-left--all {
+    text-align: left !important; }
+    .align-left--all * {
+      text-align: left !important; }
+
+.align-right {
+  text-align: right !important; }
+  .align-right--all {
+    text-align: right !important; }
+    .align-right--all * {
+      text-align: right !important; }
+
+.align-center {
+  text-align: center !important; }
+  .align-center--all {
+    text-align: center !important; }
+    .align-center--all * {
+      text-align: center !important; }

@@ -1,92 +1,77 @@
 @import 'open-color';
+@import 'alignments';
+@import 'defaults';
+@import 'footer';
 
-body {
-  margin: 0;
-  padding: 0;
+
+// * {
+//   border: 1px solid red;
+// }
+
+.page-wrap {
   min-height: 100vh;
-  min-width: 425px;
-  width: 100%;
+
+  &:after {
+    content: "";
+    display: block;
+  }
 }
 
-html, body {
-  font-size: 100%;
-  font-family: Helvetica, sans-serif;
-  font-weight: 500;
+.panel {
+  border-width: 1px;
+  .panel-body {
+    background-color: $oc-gray-1;
+  }
+  .panel-heading {
+    color: $oc-white;
+  }
+  &-default {
+    border-color: $oc-gray-3;
+    .panel-heading {
+      color: $oc-gray-8;
+      background-color: $oc-gray-2;
+    }
+  }
+  &-primary {
+    border-color: $oc-blue-8;
+    .panel-heading {
+      background-color: $oc-blue-7;
+    }
+  }
+  &-success {
+    border-color: $oc-green-8;
+    .panel-heading {
+      background-color: $oc-green-7;
+    }
+  }
+  &-info {
+    border-color: $oc-indigo-5;
+    .panel-heading {
+      background-color: $oc-indigo-4;
+    }
+  }
+  &-warning {
+    border-color: $oc-yellow-5;
+    .panel-heading {
+      color: $oc-gray-8;
+      background-color: $oc-yellow-4;
+    }
+  }
+  &-danger {
+    border-color: $oc-red-8;
+    .panel-heading {
+      background-color: $oc-red-7;
+    }
+  }
 }
 
-/* List styling */
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Remove shadow and outline on focus */
-input[type=name], input[type=email], input[type=text], input[type=tel], input[type=submit],
-input[type=number], input[type=password], input[type=button] textarea, button, a, select {
-  outline: none !important;
-  box-shadow: 0, 0, 0, transparent;
-  text-decoration: none;
-}
-input[type=name]:focus, input[type=email]:focus, input[type=text]:focus, input[type=tel]:focus, input[type=submit]:focus,
-input[type=number]:focus, input[type=password]:focus, input[type=button] textarea:focus, button:focus, a:focus, select:focus {
-  outline: none !important;
-  box-shadow: 0, 0, 0, transparent;
-  text-decoration: none;
-}
-
-input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus {
-  outline: none;
-  box-shadow: 0, 0, 0, transparent;
-}
-
-/* images can't be wider than their containers */
-img, iframe {
-  max-width: 100%;
-}
-
-input[type=name], input[type=email], input[type=text], input[type=tel],
-input[type=number], input[type=password], textarea, select {
-  max-width: 100%;
-}
-
-/* tables inherit font size (some browsers set a default table font size) */
-table {
-  font-size: inherit;
-}
-
-pre {
-  background-color: $oc-yellow-0;
-  font-family: monospace;
-  white-space: pre-wrap;
+.table {
+  background-color: $oc-gray-1;
 }
 
 .asteriskField {
     display: none;
 }
-
-/* Table Alignment Helpers
-*******************************************************************************/
-.align-left {
-  text-align: left !important; }
-  .align-left--all {
-    text-align: left !important; }
-    .align-left--all * {
-      text-align: left !important; }
-
-.align-right {
-  text-align: right !important; }
-  .align-right--all {
-    text-align: right !important; }
-    .align-right--all * {
-      text-align: right !important; }
-
-.align-center {
-  text-align: center !important; }
-  .align-center--all {
-    text-align: center !important; }
-    .align-center--all * {
-      text-align: center !important; }
 
 /* Profile
 *******************************************************************************/
@@ -105,7 +90,7 @@ pre {
 *******************************************************************************/
 
 body {
-  background-color: $oc-gray-3;
+  background-color: $oc-gray-0;
 }
 
 .navbar {
