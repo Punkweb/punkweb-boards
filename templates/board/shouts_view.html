@@ -21,6 +21,7 @@
       {% endfor %}
     </ul>
   </div>
+  {% if user.is_authenticated %}
   <div class="panel-footer">
     <form action="/board/shoutbox/" method="post">
       {% csrf_token %}
@@ -28,5 +29,6 @@
       <input type="submit" class="btn btn-success form-control" value="Submit" />
     </form>
   </div>
+  {% endif %}
 </div>
 {% endblock %}

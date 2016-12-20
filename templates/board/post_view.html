@@ -17,5 +17,7 @@
 {% include 'partials/post/comment.html' %}
 {% endfor %}
 {% endif %}
+{% if user.is_authenticated %}
 {% include 'partials/post/new_comment.html' %}
+{% endif %}
 {% endblock %}

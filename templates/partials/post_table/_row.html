@@ -9,11 +9,11 @@
     {{post.num_comments}}
   </td>
   <td class="align-right hidden-xs">
-    {% if post.last_comment %}
-    <a href="{% url 'users:profile' post.last_comment.user.username %}">{{post.last_comment.user.username}}</a>
-    <p>{{post.last_comment.created|date:'D, M d, Y'}}</p>
+    {% if post.post.last_comment %}
+    <a href="{% url 'users:profile' post.post.last_comment.user.username %}">{{post.post.last_comment.user.username}}</a>
+    <p>{{post.post.last_comment.created|date:'D, M d, Y'}}</p>
     {% else %}
-    <p>No Posts</p>
+    <p>No Replies</p>
     {% endif %}
   </td>
 </tr>

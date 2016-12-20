@@ -17,6 +17,9 @@ class Category(UUIDPrimaryKey):
     def __str__(self):
         return "{}. {}".format(self.order, self.name)
 
+    def get_absolute_url(self):
+        return reverse('board:category', kwargs={'pk': self.id})
+
 
 class Subcategory(UUIDPrimaryKey):
     parent = models.ForeignKey(
@@ -32,6 +35,13 @@ class Subcategory(UUIDPrimaryKey):
     def __str__(self):
         return "{}. {}".format(self.order, self.name)
 
+    def get_absolute_url(self):
+        return reverse('board:subcategory', kwargs={'pk': self.id})
+
+    @property
+    def last_post(self):
+        return Post.objects.filter(category__id=self.id).order_by('-created').first()
+
 
 class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(EmailUser, related_name='posts', blank=False, null=False)
@@ -44,6 +54,10 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
 
     def get_absolute_url(self):
         return reverse('board:post', kwargs={'pk': self.id})
+
+    @property
+    def last_comment(self):
+        return Comment.objects.filter(post__id=self.id).order_by('-created').first()
 
 
 class Comment(CreatedModifiedMixin, UUIDPrimaryKey):

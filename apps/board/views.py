@@ -15,13 +15,11 @@ def category_view(request, pk):
     for sub in subcategories:
         posts = Post.objects.filter(category__id=sub.id).order_by('-created')
         num_posts = len(posts)
-        last_post = posts.first()
         comments = Comment.objects.filter(post__category__id=sub.id)
         num_comments = len(comments)
         sub_groups.append({
             'category': sub,
             'num_posts': num_posts,
-            'last_post': last_post,
             'num_comments': num_comments
         })
     context = {
@@ -37,11 +35,9 @@ def subcategory_view(request, pk):
     posts = Post.objects.filter(category__id=pk).order_by('-created')
     for post in posts:
         comments = Comment.objects.filter(post_id=post.id).order_by('-created')
-        last_comment = comments.first()
         group = {
             'post': post,
             'num_comments': len(comments),
-            'last_comment': last_comment
         }
         post_groups.append(group)
     context = {
@@ -71,6 +67,66 @@ def post_view(request, pk):
         'comment_form': form,
     }
     return render(request, 'board/post_view.html', context)
+
+
+def shouts_view(request):
+    shouts = Shout.objects.all()[:30]
+    if request.method == 'POST':
+        shout_form = ShoutForm(request.POST)
+        if shout_form.is_valid():
+            shout = shout_form.save(commit=False)
+            shout.user = EmailUser.objects.get(id=request.user.id)
+            shout.save()
+    else:
+        shout_form = ShoutForm()
+    context = {
+        'shouts': shouts,
+        'shout_form': shout_form
+    }
+    return render(request, 'board/shouts_view.html', context)
+
+
+class CategoryCreate(CreateView):
+    model = Category
+    fields = ['name', 'description', 'order']
+    template_name_suffix = '_create_form'
+
+
+class CategoryUpdate(UpdateView):
+    model = Category
+    fields = ['name', 'description', 'order']
+    template_name_suffix = '_update_form'
+
+
+class CategoryDelete(DeleteView):
+    model = Category
+    template_name_suffix = '_delete_form'
+    success_url = reverse_lazy('home')
+
+
+class SubcategoryCreate(CreateView):
+    model = Subcategory
+    fields = ['name', 'description', 'order']
+    template_name_suffix = '_create_form'
+
+    def form_valid(self, form):
+        category = Category.objects.get(id=self.kwargs['category_id'])
+        sub = form.save(commit=False)
+        sub.parent = category
+        sub.save()
+        return super(SubcategoryCreate, self).form_valid(form)
+
+
+class SubcategoryUpdate(UpdateView):
+    model = Subcategory
+    fields = ['name', 'description', 'order']
+    template_name_suffix = '_update_form'
+
+
+class SubcategoryDelete(DeleteView):
+    model = Subcategory
+    template_name_suffix = '_delete_form'
+    success_url = reverse_lazy('home')
 
 
 class PostCreate(CreateView):
@@ -125,18 +181,25 @@ class CommentDelete(DeleteView):
     success_url = reverse_lazy('home')
 
 
-def shouts_view(request):
-    shouts = Shout.objects.all()[:30]
-    if request.method == 'POST':
-        shout_form = ShoutForm(request.POST)
-        if shout_form.is_valid():
-            shout = shout_form.save(commit=False)
-            shout.user = EmailUser.objects.get(id=request.user.id)
-            shout.save()
-    else:
-        shout_form = ShoutForm()
-    context = {
-        'shouts': shouts,
-        'shout_form': shout_form
-    }
-    return render(request, 'board/shouts_view.html', context)
+class ShoutCreate(CreateView):
+    model = Shout
+    fields = ['content']
+    template_name_suffix = '_create_form'
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.user = EmailUser.objects.get(id=self.request.user.id)
+        comment.save()
+        return super(ShoutCreate, self).form_valid(form)
+
+
+class ShoutUpdate(UpdateView):
+    model = Shout
+    fields = ['content']
+    template_name_suffix = '_update_form'
+
+
+class ShoutDelete(DeleteView):
+    model = Shout
+    template_name_suffix = '_delete_form'
+    success_url = reverse_lazy('home')
