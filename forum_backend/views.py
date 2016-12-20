@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
-from apps.board.models import Category, Subcategory, Thread, Shout
+from apps.board.models import Category, Subcategory, Thread, Comment, Shout
 from apps.board.forms import ShoutForm
 
 
@@ -12,9 +12,13 @@ def home_view(request):
         children = Subcategory.objects.filter(parent__id=parent_category.id).order_by('order')
         for child in children:
             child_threads = Thread.objects.filter(category__id=child.id).order_by('-created')
+            num_threads = len(child_threads)
+            comments = Comment.objects.filter(thread__category__id=child.id)
+            num_comments = len(comments)
             children_groups.append({
                 'category': child,
-                'num_threads': len(child_threads),
+                'num_threads': num_threads,
+                'num_comments': num_comments,
             })
         category_groups.append({
             'parent': parent_category,

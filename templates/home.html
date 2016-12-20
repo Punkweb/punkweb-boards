@@ -34,13 +34,16 @@
       <table class="table">
         <thead>
           <tr>
-            <th>
-              Topic
+            <th class="align-left" width="40%">
+              Subcategory
             </th>
             <th class="align-center" width="10%">
               Threads
             </th>
-            <th class="align-right" width="30%">
+            <th class="align-center" width="10%">
+              Replies
+            </th>
+            <th class="align-right hidden-xs" width="30%">
               Last Thread
             </th>
           </tr>
@@ -48,7 +51,7 @@
         <tbody>
           {% for child in category.children %}
           <tr>
-            <td>
+            <td class="align-left">
               <a href="{% url 'board:subcategory' child.category.id %}">{{child.category.name}}</a>
               {% if user.is_authenticated %}
               <a href="{% url 'board:thread-create' child.category.id %}">
@@ -60,7 +63,10 @@
             <td class="align-center">
               {{child.num_threads}}
             </td>
-            <td class="align-right">
+            <td class="align-center">
+              {{child.num_comments}}
+            </td>
+            <td class="align-right hidden-xs">
               {% if child.category.last_thread %}
               <a href="{% url 'board:thread' child.category.last_thread.id %}">{{child.category.last_thread.title|truncatechars_html:30}}</a>
               <p>{{child.category.last_thread.created|date:'D, M d, Y'}}</p>

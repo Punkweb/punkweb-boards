@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  min-width: 425px;
   width: 100%;
 }
 
@@ -58,6 +59,10 @@ pre {
   background-color: $oc-yellow-0;
   font-family: monospace;
   white-space: pre-wrap;
+}
+
+.asteriskField {
+    display: none;
 }
 
 /* Table Alignment Helpers
