@@ -1,0 +1,9 @@
+<div class="well well-sm">
+  <ul>
+    <a href="{% url 'users:profile' comment.user.username %}">{{comment.user.username}}</a>
+    <a href="{% url 'users:profile' comment.user.username %}" class="thumbnail hidden-xs hidden-sm">
+      <img src="/media/{{comment.user.image}}" alt="..." />
+    </a>
+    <li>Posts: {{comment.user.num_posts}}</li>
+  </ul>
+</div>

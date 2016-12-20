@@ -8,79 +8,14 @@
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
   <li><a href="{% url 'board:category' post.category.parent.id %}">{{post.category.parent.name}}</a></li>
-  <li><a href="{% url 'board:topic' post.category.id %}">{{post.category.name}}</a></li>
+  <li><a href="{% url 'board:subcategory' post.category.id %}">{{post.category.name}}</a></li>
   <li class="active">{{post.title}}</li>
 </ol>
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{post.title}}</h3>
-  </div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-        <div class="well well-sm">
-          <ul>
-            <a href="{% url 'users:profile' post.user.username %}">{{post.user.username}}</a>
-            <img class="hidden-xs hidden-sm" src="/media/{{post.user.image}}" alt="" />
-            <li>Posts: {{post.user.num_posts}}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-        <div class="row">
-          <div class="col-xs-12">
-            {{post.content.rendered}}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h5 class="align-right">{{post.created|date:'D, M d, Y'}}</h5>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            {{post.user.signature.rendered}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% include 'partials/post/post.html' %}
 {% if comments %}
 {% for comment in comments %}
-<div class="panel panel-primary">
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-        <div class="well well-sm">
-          <ul>
-            <a href="{% url 'users:profile' comment.user.username %}">{{comment.user.username}}</a>
-            <img class="hidden-xs hidden-sm" src="/media/{{comment.user.image}}" alt="" />
-            <li>Posts: {{comment.user.num_posts}}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-        <div class="row">
-          <div class="col-xs-12">
-            {{comment.content.rendered}}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h5 class="align-right">{{comment.created|date:'D, M d, Y'}}</h5>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            {{comment.user.signature.rendered}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% include 'partials/post/comment.html' %}
 {% endfor %}
 {% endif %}
-{% include 'partials/new_comment.html' %}
+{% include 'partials/post/new_comment.html' %}
 {% endblock %}

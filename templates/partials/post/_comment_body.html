@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-xs-12">
+    {{comment.content.rendered}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h5 class="align-right">{{comment.created|date:'D, M d, Y'}}</h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 align-right">
+    <a href="{% url 'board:comment-update' comment.id %}" class="btn btn-default" name="button">Update</a>
+    <a href="{% url 'board:comment-delete' comment.id %}" class="btn btn-danger" name="button">Delete</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    {{comment.user.signature.rendered}}
+  </div>
+</div>

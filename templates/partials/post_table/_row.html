@@ -1,0 +1,19 @@
+<tr>
+  <td class="align-left">
+    <a href="{% url 'board:post' post.post.id %}">{{post.post.title}}</a>
+  </td>
+  <td class="align-left">
+    <a href="{% url 'users:profile' post.post.user.username %}">{{post.post.user.username}}</a>
+  </td>
+  <td class="align-center">
+    {{post.num_comments}}
+  </td>
+  <td class="align-right hidden-xs">
+    {% if post.last_comment %}
+    <a href="{% url 'users:profile' post.last_comment.user.username %}">{{post.last_comment.user.username}}</a>
+    <p>{{post.last_comment.created|date:'D, M d, Y'}}</p>
+    {% else %}
+    <p>No Posts</p>
+    {% endif %}
+  </td>
+</tr>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from precise_bbcode.fields import BBCodeTextField
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
 from apps.users.models import EmailUser
@@ -41,6 +42,9 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('board:post', kwargs={'pk': self.id})
+
 
 class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(EmailUser, related_name='comments', blank=False, null=False)
@@ -49,6 +53,9 @@ class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
 
     def __str__(self):
         return '{}\'s comment on {} {}'.format(self.user, self.post, self.created)
+
+    def get_absolute_url(self):
+        return reverse('board:post', kwargs={'pk': self.post.id})
 
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):

@@ -2,64 +2,24 @@
 {% load static %}
 {% load bbcode_tags %}
 
-{% block title %}{{category.name}}{% endblock %}
+{% block title %}{{subcategory_query.category.name}}{% endblock %}
 
 {% block content %}
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
-  <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
-  <li class="active">{{category.name}}</li>
+  <li><a href="{% url 'board:category' subcategory_query.category.parent.id %}">{{subcategory_query.category.parent.name}}</a></li>
+  <li class="active">{{subcategory_query.category.name}}</li>
 </ol>
 <div class="panel panel-primary">
   <div class="panel-heading">
-    {{category.name}}
-    <a href="{% url 'board:new_post' category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    {{subcategory_query.category.name}}
+    <a href="{% url 'board:post-create' subcategory_query.category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
   </div>
   <div class="panel-body">
-    {% if category.description.rendered %}
-    {{category.description.rendered}}
+    {% if subcategory_query.category.description.rendered %}
+    {{subcategory_query.category.description.rendered}}
     {% endif %}
   </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="align-left" width="40%">
-          Title
-        </th>
-        <th class="align-left" width="20%">
-          User
-        </th>
-        <th class="align-center" widht="10%">
-          Replies
-        </th>
-        <th class="align-right hidden-xs" width="30%">
-          Last Reply
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for post in posts %}
-      <tr>
-        <td class="align-left">
-          <a href="{% url 'board:post' post.post.id %}">{{post.post.title}}</a>
-        </td>
-        <td class="align-left">
-          <a href="{% url 'users:profile' post.post.user.username %}">{{post.post.user.username}}</a>
-        </td>
-        <td class="align-center">
-          {{post.num_comments}}
-        </td>
-        <td class="align-right hidden-xs">
-          {% if post.last_comment %}
-          <a href="{% url 'users:profile' post.last_comment.user.username %}">{{post.last_comment.user.username}}</a>
-          <p>{{post.last_comment.created|date:'D, M d, Y'}}</p>
-          {% else %}
-          <p>No Posts</p>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% include 'partials/post_table/post_table.html' %}
 </div>
 {% endblock %}

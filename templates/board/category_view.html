@@ -2,20 +2,20 @@
 {% load static %}
 {% load bbcode_tags %}
 
-{% block title %}{{category.name}}{% endblock %}
+{% block title %}{{category_query.category.name}}{% endblock %}
 
 {% block content %}
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
-  <li class="active">{{category.name}}</li>
+  <li class="active">{{category_query.category.name}}</li>
 </ol>
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">{{category.name}}</h3>
+    <h3 class="panel-title">{{category_query.category.name}}</h3>
   </div>
-  {% if category.description.rendered %}
+  {% if category_query.category.description.rendered %}
   <div class="panel-body">
-    {{category.description.rendered}}
+    {{category_query.category.description.rendered}}
   </div>
   {% endif %}
   <table class="table">
@@ -36,11 +36,11 @@
       </tr>
     </thead>
     <tbody>
-      {% for sub in subcategories %}
+      {% for sub in category_query.subcategories %}
       <tr>
         <td class="align-left">
-          <a href="{% url 'board:topic' sub.category.id %}">{{sub.category.name}}</a>
-          <a href="{% url 'board:new_post' sub.category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+          <a href="{% url 'board:subcategory' sub.category.id %}">{{sub.category.name}}</a>
+          <a href="{% url 'board:post-create' sub.category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
           <p>{{sub.category.description.rendered}}</p>
         </td>
         <td class="align-center">
