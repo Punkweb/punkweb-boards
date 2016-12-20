@@ -1,9 +1,21 @@
 <div class="well well-sm">
   <ul>
-    <a href="{% url 'users:profile' comment.user.username %}">{{comment.user.username}}</a>
-    <a href="{% url 'users:profile' comment.user.username %}" class="thumbnail hidden-xs hidden-sm">
-      <img src="/media/{{comment.user.image}}" alt="..." />
-    </a>
-    <li>Posts: {{comment.user.num_posts}}</li>
+    <li>
+      <center>
+        <a href="{% url 'users:profile' comment.user.username %}">
+          <h3>{{comment.user.username}}</h3>
+        </a>
+      </center>
+    </li>
+    <li>
+      <center>
+        <a href="{% url 'users:profile' comment.user.username %}" class="thumbnail hidden-xs hidden-sm" style="max-width: 200px">
+          <img src="/media/{{comment.user.image}}" alt="..." />
+        </a>
+      </center>
+    </li>
+    <li>
+      Posts: {{comment.user.num_posts}}
+    </li>
   </ul>
 </div>

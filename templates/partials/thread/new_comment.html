@@ -5,18 +5,22 @@
     {% if user.is_authenticated %}
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-        <div class="well well-sm">
-          <ul>
-            <li>
-              <h4>{{user.username}}</h4>
-            </li>
-            <li>
-              <a href="{% url 'users:profile' thread.user.username %}" class="thumbnail hidden-xs hidden-sm">
-                <img src="/media/{{user.image}}" alt="..." />
-              </a>
-            </li>
-          </ul>
-        </div>
+          <div class="well well-sm">
+            <ul>
+              <li>
+                <center>
+                  <h3>{{user.username}}</h3>
+                </center>
+              </li>
+              <li>
+                <center>
+                  <a class="thumbnail hidden-xs hidden-sm" style="max-width: 200px">
+                    <img src="/media/{{user.image}}" alt="..." />
+                  </a>
+                </center>
+              </li>
+            </ul>
+          </div>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
         <form method="post">
