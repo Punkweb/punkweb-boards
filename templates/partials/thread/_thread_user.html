@@ -1,0 +1,15 @@
+<div class="well well-sm">
+  <ul>
+    <li>
+      <a href="{% url 'users:profile' thread.user.username %}">{{thread.user.username}}</a>
+    </li>
+    <li>
+      <a href="{% url 'users:profile' thread.user.username %}" class="thumbnail hidden-xs hidden-sm">
+        <img src="/media/{{thread.user.image}}" alt="..." />
+      </a>
+    </li>
+    <li>
+      Posts: {{thread.user.num_posts}}
+    </li>
+  </ul>
+</div>

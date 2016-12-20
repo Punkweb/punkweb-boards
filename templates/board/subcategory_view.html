@@ -14,7 +14,7 @@
   <div class="panel-heading">
     {{category.name}}
     {% if user.is_authenticated %}
-    <a href="{% url 'board:post-create' category.id %}">
+    <a href="{% url 'board:thread-create' category.id %}">
       <i class="fa fa-plus" aria-hidden="true"></i>
     </a>
     {% endif %}
@@ -24,6 +24,6 @@
     {{category.description.rendered}}
     {% endif %}
   </div>
-  {% include 'partials/post_table/post_table.html' %}
+  {% include 'partials/thread_table/thread_table.html' %}
 </div>
 {% endblock %}

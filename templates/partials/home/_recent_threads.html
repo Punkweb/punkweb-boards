@@ -1,10 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Recent Activity</h3>
+    <h3 class="panel-title">Recent Threads</h3>
   </div>
   <div class="panel-body">
     <div class="container-fluid">
-      {% for thread in recent_activity %}
+      {% for thread in recent_threads %}
       <div class="row">
         <div class="col-xs-1 col-sm-1 col-md-3 col-lg-3">
           <a href="{% url 'users:profile' thread.user.username %}" class="thumbnail">

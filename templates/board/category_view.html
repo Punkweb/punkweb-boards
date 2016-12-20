@@ -36,7 +36,7 @@
           Replies
         </th>
         <th class="align-right hidden-xs" width="30%">
-          Last Post
+          Last Thread
         </th>
       </tr>
     </thead>
@@ -46,25 +46,25 @@
         <td class="align-left">
           <a href="{% url 'board:subcategory' sub.category.id %}">{{sub.category.name}}</a>
           {% if user.is_authenticated %}
-          <a href="{% url 'board:post-create' sub.category.id %}">
+          <a href="{% url 'board:thread-create' sub.category.id %}">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </a>
           {% endif %}
           <p>{{sub.category.description.rendered}}</p>
         </td>
         <td class="align-center">
-          {{sub.num_posts}}
+          {{sub.num_threads}}
         </td>
         <td class="align-center">
           {{sub.num_comments}}
         </td>
         <td class="align-right hidden-xs">
-          {% if sub.category.last_post %}
-          <a href="{% url 'board:post' sub.category.last_post.id %}">{{sub.category.last_post.title|truncatechars_html:30}}</a>
-          <p>{{sub.category.last_post.created|date:'D, M d, Y'}}</p>
-          <p>by <a href="{% url 'users:profile' sub.category.last_post.user.username %}">{{sub.category.last_post.user.username}}</a></p>
+          {% if sub.category.last_thread %}
+          <a href="{% url 'board:thread' sub.category.last_thread.id %}">{{sub.category.last_thread.title|truncatechars_html:30}}</a>
+          <p>{{sub.category.last_thread.created|date:'D, M d, Y'}}</p>
+          <p>by <a href="{% url 'users:profile' sub.category.last_thread.user.username %}">{{sub.category.last_thread.user.username}}</a></p>
           {% else %}
-          <p>No Posts</p>
+          <p>No Threads</p>
           {% endif %}
         </td>
       </tr>

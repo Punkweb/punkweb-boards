@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}{{thread.title}}{% endblock %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="/">Forum</a></li>
+  <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
+  <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
+  <li class="active">{{thread.title}}</li>
+</ol>
+{% include 'partials/thread/thread.html' %}
+{% if comments %}
+{% for comment in comments %}
+{% include 'partials/thread/comment.html' %}
+{% endfor %}
+{% endif %}
+{% if user.is_authenticated %}
+{% include 'partials/thread/new_comment.html' %}
+{% endif %}
+{% endblock %}

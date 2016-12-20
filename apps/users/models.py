@@ -52,7 +52,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
 	@property
 	def num_posts(self):
-		return len(self.posts.all()) + len(self.comments.all())
+		return len(self.threads.all()) + len(self.comments.all())
 
 	def get_full_name(self):
 		return self.username

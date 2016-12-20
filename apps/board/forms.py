@@ -1,17 +1,17 @@
 from django import forms
-from .models import Post, Comment, Shout
+from .models import Thread, Comment, Shout
 
 
-class PostForm(forms.ModelForm):
+class ThreadForm(forms.ModelForm):
     class Meta:
-        model = Post
+        model = Thread
         exclude = ['category', 'user']
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ['post', 'user']
+        exclude = ['thread', 'user']
 
 
 class ShoutForm(forms.ModelForm):
