@@ -10,8 +10,10 @@
 </div>
 <div class="row">
   <div class="col-xs-12 align-right">
+    {% if user.is_authenticated and user == post.user or user.is_admin %}
     <a href="{% url 'board:post-update' post.id %}" class="btn btn-default" name="button">Update</a>
     <a href="{% url 'board:post-delete' post.id %}" class="btn btn-danger" name="button">Delete</a>
+    {% endif %}
   </div>
 </div>
 <div class="row">

@@ -3,26 +3,52 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-from apps.common.base import QueryView
 from apps.users.models import EmailUser
 from .models import Category, Subcategory, Post, Comment, Shout
 from .forms import PostForm, CommentForm, ShoutForm
-from . import queries
 
 
-class CategoryView(QueryView):
-    template_name = 'board/category_view.html'
+def category_view(request, pk):
+    category = Category.objects.get(id=pk)
+    sub_groups = []
+    subcategories = Subcategory.objects.filter(parent__id=category.id).order_by('order')
+    for sub in subcategories:
+        posts = Post.objects.filter(category__id=sub.id).order_by('-created')
+        num_posts = len(posts)
+        last_post = posts.first()
+        comments = Comment.objects.filter(post__category__id=sub.id)
+        num_comments = len(comments)
+        sub_groups.append({
+            'category': sub,
+            'num_posts': num_posts,
+            'last_post': last_post,
+            'num_comments': num_comments
+        })
+    context = {
+        'category': category,
+        'subcategories': sub_groups
+    }
+    return render(request, 'board/category_view.html', context)
 
-    def get_queries(self):
-        return [queries.CategoryQuery(self.kwargs['category_id'])]
 
-
-class SubCategoryView(QueryView):
-    template_name = 'board/topic_view.html'
-
-    def get_queries(self):
-        return [queries.SubCategoryQuery(self.kwargs['category_id'])]
-
+def subcategory_view(request, pk):
+    category = Subcategory.objects.get(id=pk)
+    post_groups = []
+    posts = Post.objects.filter(category__id=pk).order_by('-created')
+    for post in posts:
+        comments = Comment.objects.filter(post_id=post.id).order_by('-created')
+        last_comment = comments.first()
+        group = {
+            'post': post,
+            'num_comments': len(comments),
+            'last_comment': last_comment
+        }
+        post_groups.append(group)
+    context = {
+        'category': category,
+        'posts': post_groups
+    }
+    return render(request, 'board/subcategory_view.html', context)
 
 def post_view(request, pk):
     if request.method == 'POST':

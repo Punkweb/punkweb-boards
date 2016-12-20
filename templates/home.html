@@ -5,7 +5,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><a href="{% url 'board:shoutbox' %}">Shoutbox</a></h3>
   </div>
@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
     {% for category in categories %}
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></h3>
       </div>
@@ -36,7 +36,11 @@
           <tr>
             <td>
               <a href="{% url 'board:subcategory' child.category.id %}">{{child.category.name}}</a>
-              <a href="{% url 'board:post-create' child.category.id %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+              {% if user.is_authenticated %}
+              <a href="{% url 'board:post-create' child.category.id %}">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </a>
+              {% endif %}
               <p>{{child.category.description.rendered}}</p>
             </td>
             <td class="align-center">

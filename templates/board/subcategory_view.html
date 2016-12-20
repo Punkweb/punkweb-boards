@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}{{category.name}}{% endblock %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="/">Forum</a></li>
+  <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
+  <li class="active">{{category.name}}</li>
+</ol>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    {{category.name}}
+    {% if user.is_authenticated %}
+    <a href="{% url 'board:post-create' category.id %}">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+    </a>
+    {% endif %}
+  </div>
+  <div class="panel-body">
+    {% if category.description.rendered %}
+    {{category.description.rendered}}
+    {% endif %}
+  </div>
+  {% include 'partials/post_table/post_table.html' %}
+</div>
+{% endblock %}

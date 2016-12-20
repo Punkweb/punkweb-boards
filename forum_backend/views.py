@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import Http404
 from apps.board.models import Category, Subcategory, Post, Shout
 from apps.board.forms import ShoutForm
-from apps.board.queries import RecentPostsQuery, RecentActivityQuery
 
 
 def home_view(request):
@@ -23,11 +22,11 @@ def home_view(request):
             'parent': parent_category,
             'children': children_groups
         })
-    posts_query = RecentPostsQuery()
-    activity_query = RecentActivityQuery()
+    recent_posts = Post.objects.all().order_by('-created')[:5]
+    recent_activity = Post.objects.all().order_by('-modified')[:5]
     context = {
         'categories': category_groups,
-        posts_query.get_name(): posts_query.get_context(),
-        activity_query.get_name(): activity_query.get_context()
+        'recent_posts': recent_posts,
+        'recent_activity': recent_activity
     }
     return render(request, 'home.html', context)
