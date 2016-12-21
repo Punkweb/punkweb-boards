@@ -12,17 +12,17 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">{{category.name}}</h3>
+  </div>
+  <div class="panel-body">
+    {% if category.description.rendered %}
+    {{category.description.rendered}}
+    {% endif %}
     {% if user.is_authenticated and user.is_admin %}
-    <a href="{% url 'board:subcategory-create' category.id %}">
+    <a href="{% url 'board:subcategory-create' category.id %}" class="pull-right">
       <i class="fa fa-plus" aria-hidden="true"></i> Create Subcategory
     </a>
     {% endif %}
   </div>
-  {% if category.description.rendered %}
-  <div class="panel-body">
-    {{category.description.rendered}}
-  </div>
-  {% endif %}
   <table class="table">
     <thead>
       <tr>
@@ -45,12 +45,14 @@
       <tr>
         <td class="align-left">
           <a href="{% url 'board:subcategory' sub.category.id %}">{{sub.category.name}}</a>
+          <p>
+            {{sub.category.description.rendered}}
+          </p>
           {% if user.is_authenticated %}
           <a href="{% url 'board:thread-create' sub.category.id %}">
-            <i class="fa fa-plus" aria-hidden="true"></i>
+            <i class="fa fa-plus" aria-hidden="true"></i> Create Thread
           </a>
           {% endif %}
-          <p>{{sub.category.description.rendered}}</p>
         </td>
         <td class="align-center">
           {{sub.num_threads}}
