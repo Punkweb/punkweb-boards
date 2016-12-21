@@ -13,7 +13,7 @@ def category_view(request, pk):
     sub_groups = []
     subcategories = Subcategory.objects.filter(parent__id=category.id).order_by('order')
     for sub in subcategories:
-        threads = Thread.objects.filter(category__id=sub.id).order_by('-created')
+        threads = Thread.objects.filter(category__id=sub.id)
         num_threads = len(threads)
         comments = Comment.objects.filter(thread__category__id=sub.id)
         num_comments = len(comments)
@@ -32,9 +32,9 @@ def category_view(request, pk):
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
     thread_groups = []
-    threads = Thread.objects.filter(category__id=pk).order_by('-created')
+    threads = Thread.objects.filter(category__id=pk).order_by('-modified')
     for thread in threads:
-        comments = Comment.objects.filter(thread_id=thread.id).order_by('-created')
+        comments = Comment.objects.filter(thread_id=thread.id)
         group = {
             'thread': thread,
             'num_comments': len(comments),
