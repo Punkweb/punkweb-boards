@@ -1,9 +1,14 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
 	PermissionsMixin
-from django.core.mail import send_mail
 from django.db import models
 from precise_bbcode.fields import BBCodeTextField
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
+
+
+def get_placeholder_url():
+	url = '{}placeholder_profile.png'.format(settings.STATIC_URL)
+	return url
 
 
 class EmailUserManager(BaseUserManager):
@@ -53,6 +58,13 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 	@property
 	def num_posts(self):
 		return len(self.threads.all()) + len(self.comments.all())
+
+	@property
+	def image_url(self):
+		if not self.image:
+			return get_placeholder_url()
+		else:
+			return self.image.url
 
 	def get_full_name(self):
 		return self.username

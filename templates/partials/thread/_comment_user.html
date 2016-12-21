@@ -3,7 +3,7 @@
     <li>
       <center>
         <a href="{% url 'users:profile' comment.user.username %}" class="thumbnail" style="max-width: 150px">
-          <img src="/media/{{comment.user.image}}" alt="..." />
+          <img src="{{comment.user.image_url}}" alt="..." />
         </a>
       </center>
     </li>

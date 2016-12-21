@@ -3,7 +3,7 @@
     <li>
       <center>
         <a href="{% url 'users:profile' thread.user.username %}" class="thumbnail"  style="max-width: 150px">
-          <img src="/media/{{thread.user.image}}" alt="..." />
+          <img src="{{thread.user.image_url}}" alt="..." />
         </a>
       </center>
     </li>
