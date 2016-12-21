@@ -40,11 +40,13 @@ class Subcategory(UUIDPrimaryKey):
 
     @property
     def last_thread(self):
-        return Thread.objects.filter(category__id=self.id).order_by('-created').first()
+        return Thread.objects.filter(
+            category__id=self.id).order_by('-created').first()
 
 
 class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(EmailUser, related_name='threads', blank=False, null=False)
+    user = models.ForeignKey(
+        EmailUser, related_name='threads', blank=False, null=False)
     category = models.ForeignKey(Subcategory, blank=False, null=False)
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
@@ -57,16 +59,20 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
 
     @property
     def last_comment(self):
-        return Comment.objects.filter(thread__id=self.id).order_by('-created').first()
+        return Comment.objects.filter(
+            thread__id=self.id).order_by('-created').first()
 
 
 class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(EmailUser, related_name='comments', blank=False, null=False)
-    thread = models.ForeignKey(Thread, related_name='comments', blank=False, null=False)
+    user = models.ForeignKey(
+        EmailUser, related_name='comments', blank=False, null=False)
+    thread = models.ForeignKey(
+        Thread, related_name='comments', blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     def __str__(self):
-        return '{}\'s comment on {} {}'.format(self.user, self.thread, self.created)
+        return '{}\'s comment on {} {}'.format(
+            self.user, self.thread, self.created)
 
     def get_absolute_url(self):
         return reverse('board:thread', kwargs={'pk': self.thread.id})

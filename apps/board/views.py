@@ -1,8 +1,7 @@
 import datetime
-from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from apps.users.models import EmailUser
 from .models import Category, Subcategory, Thread, Comment, Shout
 from .forms import ThreadForm, CommentForm, ShoutForm

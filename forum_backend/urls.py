@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^$', views.home_view, name='home'),
     url(r'^board/', include('apps.board.urls', namespace='board')),
     url(r'^users/', include('apps.users.urls', namespace='users')),
+    url(r'^conversations/',
+        include('apps.conversations.urls', namespace='conversations')),
     url(r'^admin/', admin.site.urls),
 ]
 
