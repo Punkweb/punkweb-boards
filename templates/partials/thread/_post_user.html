@@ -2,8 +2,8 @@
   <ul>
     <li>
       <center>
-        <a href="{% url 'users:profile' post.user.username %}" class="thumbnail" style="max-width: 150px">
-          <img src="{{post.user.image_url}}" alt="..." />
+        <a href="{% url 'users:profile' post.user.username %}">
+          <img src="{{post.user.avatar_small}}" alt="..." />
         </a>
       </center>
     </li>

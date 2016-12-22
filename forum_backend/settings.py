@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'precise_bbcode',
     'sass_processor',
     'crispy_forms',
+    'easy_thumbnails',
     'apps.common',
     'apps.users',
     'apps.board',
@@ -50,15 +51,6 @@ INSTALLED_APPS = [
 # Auth Configuration
 AUTH_USER_MODEL = 'users.EmailUser'
 LOGIN_REDIRECT_URL = 'home'
-
-
-# 3rd party framework configuration
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser',
-    ),
-    'PAGE_SIZE': 100,
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -161,3 +153,15 @@ STATICFILES_FINDERS = (
 # Crispy forms
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+# Easy thumbnails
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (200, 200), 'crop': True},
+        'avatar_small': {'size': (100, 100), 'crop': True},
+        'avatar_smaller': {'size': (50, 50), 'crop': True},
+        'avatar_smallest': {'size': (25, 25), 'crop': True}
+    },
+}

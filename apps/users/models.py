@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
 	PermissionsMixin
 from django.db import models
 from precise_bbcode.fields import BBCodeTextField
+from easy_thumbnails.files import get_thumbnailer
+from easy_thumbnails.fields import ThumbnailerImageField
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
 
 
@@ -25,15 +27,49 @@ class EmailUserManager(BaseUserManager):
 		return user
 
 
+class AvatarImagesMixin(models.Model):
+	@property
+	def avatar(self):
+		if not self.image:
+			return get_placeholder_url()
+		else:
+			return self.image['avatar'].url
+
+	@property
+	def avatar_small(self):
+		if not self.image:
+			return get_placeholder_url()
+		else:
+			return self.image['avatar_small'].url
+
+	@property
+	def avatar_smaller(self):
+		if not self.image:
+			return get_placeholder_url()
+		else:
+			return self.image['avatar_smaller'].url
+
+	@property
+	def avatar_smallest(self):
+		if not self.image:
+			return get_placeholder_url()
+		else:
+			return self.image['avatar_smallest'].url
+
+	class Meta:
+		abstract = True
+
+
 class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
-				PermissionsMixin):
+				PermissionsMixin, AvatarImagesMixin):
 	GENDER_CHOICES = [
 		('f', 'Female'),
 		('m', 'Male'),
 	]
 	email = models.EmailField(unique=True, blank=False)
 	username = models.CharField(max_length=16, unique=True, blank=False)
-	image = models.ImageField(upload_to="user_images", null=True, blank=True)
+	image = ThumbnailerImageField(
+		upload_to="user_images", null=True, blank=True)
 	signature = BBCodeTextField(max_length=140, blank=True, null=True)
 	gender = models.CharField(null=True, blank=True, max_length=1,
 		choices=GENDER_CHOICES, default=None)
@@ -58,13 +94,6 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 	@property
 	def num_posts(self):
 		return len(self.threads.all()) + len(self.posts.all())
-
-	@property
-	def image_url(self):
-		if not self.image:
-			return get_placeholder_url()
-		else:
-			return self.image.url
 
 	def get_full_name(self):
 		return self.username
