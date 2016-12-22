@@ -10,11 +10,6 @@
 
 .page-wrap {
   min-height: 100vh;
-
-  &:after {
-    content: "";
-    display: block;
-  }
 }
 
 .panel {

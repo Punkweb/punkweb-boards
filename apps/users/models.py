@@ -13,20 +13,6 @@ def get_placeholder_url():
 	return url
 
 
-class EmailUserManager(BaseUserManager):
-	def create_user(self, email, username, password=None, **kwargs):
-		user = self.model(email=self.normalize_email(email), username=username)
-		user.set_password(password)
-		user.save()
-		return user
-
-	def create_superuser(self, email, username, password=None, **kwargs):
-		user = self.create_user(email, username, password, **kwargs)
-		user.is_admin = True
-		user.save()
-		return user
-
-
 class AvatarImagesMixin(models.Model):
 	@property
 	def avatar(self):
@@ -58,6 +44,20 @@ class AvatarImagesMixin(models.Model):
 
 	class Meta:
 		abstract = True
+
+
+class EmailUserManager(BaseUserManager):
+	def create_user(self, email, username, password=None, **kwargs):
+		user = self.model(email=self.normalize_email(email), username=username)
+		user.set_password(password)
+		user.save()
+		return user
+
+	def create_superuser(self, email, username, password=None, **kwargs):
+		user = self.create_user(email, username, password, **kwargs)
+		user.is_admin = True
+		user.save()
+		return user
 
 
 class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,

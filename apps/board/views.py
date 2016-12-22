@@ -6,42 +6,53 @@ from apps.users.models import EmailUser
 from .models import Category, Subcategory, Thread, Post, Shout
 from .forms import ThreadForm, PostForm, ShoutForm
 
+def recent_threads():
+    return Thread.objects.all().order_by('-created')[:5]
+
+def recent_activity():
+    return Thread.objects.all().order_by('-modified')[:5]
+
+def get_subcategories(parent):
+    return Subcategory.objects.filter(parent__id=parent.id).order_by('order')
+
+def subcategory_threads(sub):
+    return Thread.objects.filter(category__id=sub.id)
+
+def subcategory_posts(sub):
+    return Post.objects.filter(thread__category__id=sub.id)
+
+def thread_posts(thread):
+    return Post.objects.filter(thread__id=thread.id)
 
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
-    sub_groups = []
-    subcategories = Subcategory.objects.filter(parent__id=category.id).order_by('order')
-    for sub in subcategories:
-        threads = Thread.objects.filter(category__id=sub.id)
-        num_threads = len(threads)
-        posts = Post.objects.filter(thread__category__id=sub.id)
-        num_posts = len(posts)
-        sub_groups.append({
-            'category': sub,
+    subcategories = []
+    for sub in get_subcategories(category):
+        num_threads = len(subcategory_threads(sub))
+        num_posts = len(subcategory_posts(sub))
+        subcategories.append({
+            'obj': sub,
             'num_threads': num_threads,
             'num_posts': num_posts
         })
     context = {
         'category': category,
-        'subcategories': sub_groups
+        'subcategories': subcategories
     }
     return render(request, 'board/category_view.html', context)
 
-
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
-    thread_groups = []
-    threads = Thread.objects.filter(category__id=pk).order_by('-modified')
-    for thread in threads:
-        posts = Post.objects.filter(thread_id=thread.id)
+    threads = []
+    for thread in subcategory_threads(category).order_by('-modified'):
         group = {
-            'thread': thread,
-            'num_posts': len(posts),
+            'obj': thread,
+            'num_posts': len(thread_posts(thread)),
         }
-        thread_groups.append(group)
+        threads.append(group)
     context = {
         'category': category,
-        'threads': thread_groups
+        'threads': threads
     }
     return render(request, 'board/subcategory_view.html', context)
 
@@ -62,7 +73,7 @@ def thread_view(request, pk):
     posts = Post.objects.filter(thread__id=thread.id)
     context = {
         'thread': thread,
-        'posts': posts,
+        'posts': thread_posts(thread),
         'post_form': form,
     }
     return render(request, 'board/thread_view.html', context)
