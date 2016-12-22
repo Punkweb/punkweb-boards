@@ -4,11 +4,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Conversation, Message
 
 
-
-class ConversationCreate(CreateView):
-    model = Conversation
-    fields = ['users', 'subject']
-    template_name_suffix = '_create_form'
+def conversations_list(request):
+    conversations = request.user.conversations.all()
+    context = {
+        'conversations': conversations
+    }
+    return render(request, 'conversations/conversations_list.html', context)
 
 
 class ConversationUpdate(UpdateView):

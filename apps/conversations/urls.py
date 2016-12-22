@@ -3,12 +3,10 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^create_conversation/$',
-        views.ConversationCreate.as_view(), name='conversation-create'),
+    url(r'^conversations/$',
+        views.conversations_list, name='list'),
     url(r'^update_conversation/(?P<pk>[^/]+)/$',
         views.ConversationUpdate.as_view(), name='conversation-update'),
-    url(r'^delete_conversation/(?P<pk>[^/]+)/$',
-        views.ConversationDelete.as_view(), name='conversation-delete'),
 
     url(r'^create_message/$',
         views.MessageCreate.as_view(), name='message-create'),
