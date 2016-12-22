@@ -1,4 +1,4 @@
-"""forum_backend URL Configuration
+"""django_boards URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -17,8 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 
-from forum_backend import settings
-from forum_backend import views
+from django_boards import settings
+from django_boards import views
 
 urlpatterns = [
     url(r'^$', views.home_view, name='home'),
