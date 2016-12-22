@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.board.models import Category, Subcategory, Thread, Comment, Shout
+from apps.board.models import Category, Subcategory, Thread, Post, Shout
 
 
 class SubcategoryInline(admin.TabularInline):
@@ -15,14 +15,14 @@ class CategoryAdmin(admin.ModelAdmin):
     ordering = ('order', )
 
 
-class CommentInline(admin.TabularInline):
-    model = Comment
+class PostInline(admin.TabularInline):
+    model = Post
     ordering = ('created', )
 
 
 class ThreadAdmin(admin.ModelAdmin):
     inlines = [
-        CommentInline
+        PostInline
     ]
     list_display = ('title', 'category', 'user')
     ordering = ('title', )
@@ -30,5 +30,5 @@ class ThreadAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)
-admin.site.register(Comment)
+admin.site.register(Post)
 admin.site.register(Shout)

@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from apps.users.models import EmailUser
-from .models import Category, Subcategory, Thread, Comment, Shout
-from .forms import ThreadForm, CommentForm, ShoutForm
+from .models import Category, Subcategory, Thread, Post, Shout
+from .forms import ThreadForm, PostForm, ShoutForm
 
 
 def category_view(request, pk):
@@ -14,12 +14,12 @@ def category_view(request, pk):
     for sub in subcategories:
         threads = Thread.objects.filter(category__id=sub.id)
         num_threads = len(threads)
-        comments = Comment.objects.filter(thread__category__id=sub.id)
-        num_comments = len(comments)
+        posts = Post.objects.filter(thread__category__id=sub.id)
+        num_posts = len(posts)
         sub_groups.append({
             'category': sub,
             'num_threads': num_threads,
-            'num_comments': num_comments
+            'num_posts': num_posts
         })
     context = {
         'category': category,
@@ -33,10 +33,10 @@ def subcategory_view(request, pk):
     thread_groups = []
     threads = Thread.objects.filter(category__id=pk).order_by('-modified')
     for thread in threads:
-        comments = Comment.objects.filter(thread_id=thread.id)
+        posts = Post.objects.filter(thread_id=thread.id)
         group = {
             'thread': thread,
-            'num_comments': len(comments),
+            'num_posts': len(posts),
         }
         thread_groups.append(group)
     context = {
@@ -47,23 +47,23 @@ def subcategory_view(request, pk):
 
 def thread_view(request, pk):
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = PostForm(request.POST)
         if form.is_valid():
-            comment = form.save(commit=False)
-            comment.thread = Thread.objects.get(id=pk)
-            comment.thread.modified = datetime.datetime.now()
-            comment.thread.save()
-            comment.user = EmailUser.objects.get(id=request.user.id)
-            comment.save()
+            post = form.save(commit=False)
+            post.thread = Thread.objects.get(id=pk)
+            post.thread.modified = datetime.datetime.now()
+            post.thread.save()
+            post.user = EmailUser.objects.get(id=request.user.id)
+            post.save()
             return redirect('board:thread', pk)
     else:
-        form = CommentForm()
+        form = PostForm()
     thread = Thread.objects.get(id=pk)
-    comments = Comment.objects.filter(thread__id=thread.id)
+    posts = Post.objects.filter(thread__id=thread.id)
     context = {
         'thread': thread,
-        'comments': comments,
-        'comment_form': form,
+        'posts': posts,
+        'post_form': form,
     }
     return render(request, 'board/thread_view.html', context)
 
@@ -154,28 +154,28 @@ class ThreadDelete(DeleteView):
     success_url = reverse_lazy('home')
 
 
-class CommentCreate(CreateView):
-    model = Comment
+class PostCreate(CreateView):
+    model = Post
     fields = ['content']
     template_name_suffix = '_create_form'
 
     def form_valid(self, form):
         thread = Thread.objects.get(id=self.kwargs['thread_id'])
-        comment = form.save(commit=False)
-        comment.thread = thread
-        comment.user = EmailUser.objects.get(id=self.request.user.id)
-        comment.save()
-        return super(CommentCreate, self).form_valid(form)
+        post = form.save(commit=False)
+        post.thread = thread
+        post.user = EmailUser.objects.get(id=self.request.user.id)
+        post.save()
+        return super(PostCreate, self).form_valid(form)
 
 
-class CommentUpdate(UpdateView):
-    model = Comment
+class PostUpdate(UpdateView):
+    model = Post
     fields = ['content']
     template_name_suffix = '_update_form'
 
 
-class CommentDelete(DeleteView):
-    model = Comment
+class PostDelete(DeleteView):
+    model = Post
     template_name_suffix = '_delete_form'
     success_url = reverse_lazy('home')
 
@@ -186,9 +186,9 @@ class ShoutCreate(CreateView):
     template_name_suffix = '_create_form'
 
     def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.user = EmailUser.objects.get(id=self.request.user.id)
-        comment.save()
+        shout = form.save(commit=False)
+        shout.user = EmailUser.objects.get(id=self.request.user.id)
+        shout.save()
         return super(ShoutCreate, self).form_valid(form)
 
 

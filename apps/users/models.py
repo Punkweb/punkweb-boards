@@ -57,7 +57,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
 	@property
 	def num_posts(self):
-		return len(self.threads.all()) + len(self.comments.all())
+		return len(self.threads.all()) + len(self.posts.all())
 
 	@property
 	def image_url(self):

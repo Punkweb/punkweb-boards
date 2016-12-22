@@ -12,12 +12,12 @@
   <li class="active">{{thread.title}}</li>
 </ol>
 {% include 'partials/thread/thread.html' %}
-{% if comments %}
-{% for comment in comments %}
-{% include 'partials/thread/comment.html' %}
+{% if posts %}
+{% for post in posts %}
+{% include 'partials/thread/post.html' %}
 {% endfor %}
 {% endif %}
 {% if user.is_authenticated %}
-{% include 'partials/thread/new_comment.html' %}
+{% include 'partials/thread/new_post.html' %}
 {% endif %}
 {% endblock %}

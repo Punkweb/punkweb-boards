@@ -6,14 +6,14 @@
     <a href="{% url 'users:profile' thread.thread.user.username %}">{{thread.thread.user.username}}</a>
   </td>
   <td class="align-center">
-    {{thread.num_comments}}
+    {{thread.num_posts}}
   </td>
   <td class="align-right hidden-xs">
-    {% if thread.thread.last_comment %}
-    <a href="{% url 'users:profile' thread.thread.last_comment.user.username %}">{{thread.thread.last_comment.user.username}}</a>
-    <p>{{thread.thread.last_comment.created|date:'D, M d, Y'}}</p>
+    {% if thread.thread.last_post %}
+    <a href="{% url 'users:profile' thread.thread.last_post.user.username %}">{{thread.thread.last_post.user.username}}</a>
+    <p>{{thread.thread.last_post.created|date:'D, M d, Y'}}</p>
     {% else %}
-    <p>No Replies</p>
+    <p>No Posts</p>
     {% endif %}
   </td>
 </tr>

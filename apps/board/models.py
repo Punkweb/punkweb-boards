@@ -58,20 +58,20 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
         return reverse('board:thread', kwargs={'pk': self.id})
 
     @property
-    def last_comment(self):
-        return Comment.objects.filter(
+    def last_post(self):
+        return Post.objects.filter(
             thread__id=self.id).order_by('-created').first()
 
 
-class Comment(CreatedModifiedMixin, UUIDPrimaryKey):
+class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(
-        EmailUser, related_name='comments', blank=False, null=False)
+        EmailUser, related_name='posts', blank=False, null=False)
     thread = models.ForeignKey(
-        Thread, related_name='comments', blank=False, null=False)
+        Thread, related_name='posts', blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     def __str__(self):
-        return '{}\'s comment on {} {}'.format(
+        return '{}\'s post on {} {}'.format(
             self.user, self.thread, self.created)
 
     def get_absolute_url(self):

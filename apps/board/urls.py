@@ -29,10 +29,10 @@ urlpatterns = [
     url(r'^delete_thread/(?P<pk>[^/]+)/$',
         views.ThreadDelete.as_view(), name='thread-delete'),
 
-    url(r'^create_comment/(?P<thread_id>[^/]+)/$',
-        views.CommentCreate.as_view(), name='comment-create'),
-    url(r'^update_comment/(?P<pk>[^/]+)/$',
-        views.CommentUpdate.as_view(), name='comment-update'),
-    url(r'^delete_comment/(?P<pk>[^/]+)/$',
-        views.CommentDelete.as_view(), name='comment-delete'),
+    url(r'^create_post/(?P<thread_id>[^/]+)/$',
+        views.PostCreate.as_view(), name='post-create'),
+    url(r'^update_post/(?P<pk>[^/]+)/$',
+        views.PostUpdate.as_view(), name='post-update'),
+    url(r'^delete_post/(?P<pk>[^/]+)/$',
+        views.PostDelete.as_view(), name='post-delete'),
 ]

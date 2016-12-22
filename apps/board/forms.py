@@ -1,5 +1,5 @@
 from django import forms
-from .models import Thread, Comment, Shout
+from .models import Thread, Post, Shout
 
 
 class ThreadForm(forms.ModelForm):
@@ -8,9 +8,9 @@ class ThreadForm(forms.ModelForm):
         exclude = ['category', 'user']
 
 
-class CommentForm(forms.ModelForm):
+class PostForm(forms.ModelForm):
     class Meta:
-        model = Comment
+        model = Post
         exclude = ['thread', 'user']
 
 

@@ -1,10 +1,10 @@
 <div class="page-header">
   <h4>
-    <a href="{% url 'users:profile' comment.user.username %}">
-      {{comment.user.username}}
+    <a href="{% url 'users:profile' post.user.username %}">
+      {{post.user.username}}
     </a>
     <small class="pull-right">
-      {{comment.created}}
+      {{post.created}}
     </small>
   </h4>
 </div>
@@ -12,10 +12,10 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-        {% include 'partials/thread/_comment_user.html' %}
+        {% include 'partials/thread/_post_user.html' %}
       </div>
       <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-        {% include 'partials/thread/_comment_body.html' %}
+        {% include 'partials/thread/_post_body.html' %}
       </div>
     </div>
   </div>
