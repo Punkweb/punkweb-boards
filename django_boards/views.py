@@ -4,7 +4,7 @@ from apps.board.models import Category, Subcategory, Thread, Post, Shout
 from apps.board.forms import ShoutForm
 
 
-def home_view(request):
+def portal_view(request):
     category_groups = []
     parent_categories = Category.objects.all()
     for parent_category in parent_categories:
@@ -31,4 +31,4 @@ def home_view(request):
         'recent_threads': recent_threads,
         'recent_activity': recent_activity
     }
-    return render(request, 'home.html', context)
+    return render(request, 'portal.html', context)

@@ -12,7 +12,7 @@ I may make a separate repository for the bbcode editor, as I plan to hack it to
 fit special needs for this project.
 
 
-For now, download [SCEditor](http://www.sceditor.com/) and place it in:
+For now, download [SCEditor](http://www.sceditor.com/) and unzip it at:
 `django-boards/static-assets/sceditor/`
 
 
@@ -20,7 +20,7 @@ For now, download [SCEditor](http://www.sceditor.com/) and place it in:
 ### Some custom bbcode tags
 
 Check out custom_tags.txt for a list of bbcode tag definitions and replacement
-html.  Add these in the admin panel
+html.  Add these in the admin panel.
 
 
 ### Almost ready for use!

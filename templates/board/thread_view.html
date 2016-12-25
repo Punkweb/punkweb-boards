@@ -11,13 +11,13 @@
   <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
   <li class="active">{{thread.title}}</li>
 </ol>
-{% include 'partials/thread/thread.html' %}
+{% include 'partials/board/thread/thread.html' %}
 {% if posts %}
 {% for post in posts %}
-{% include 'partials/thread/post.html' %}
+{% include 'partials/board/thread/post.html' %}
 {% endfor %}
 {% endif %}
 {% if user.is_authenticated %}
-{% include 'partials/thread/new_post.html' %}
+{% include 'partials/board/thread/new_post.html' %}
 {% endif %}
 {% endblock %}

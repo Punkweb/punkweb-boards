@@ -21,7 +21,7 @@ from django_boards import settings
 from django_boards import views
 
 urlpatterns = [
-    url(r'^$', views.home_view, name='home'),
+    url(r'^$', views.portal_view, name='portal'),
     url(r'^board/', include('apps.board.urls', namespace='board')),
     url(r'^users/', include('apps.users.urls', namespace='users')),
     url(r'^conversations/',

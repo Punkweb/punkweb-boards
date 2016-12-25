@@ -6,7 +6,7 @@
 
 {% block content %}
 <ol class="breadcrumb">
-  <li><a href="/">Forum</a></li>
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
   <li class="active">{{category.name}}</li>
 </ol>
 <div class="panel panel-default">
