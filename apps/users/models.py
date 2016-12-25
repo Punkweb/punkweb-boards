@@ -12,6 +12,12 @@ def get_placeholder_url():
 	url = '{}placeholder_profile.png'.format(settings.STATIC_URL)
 	return url
 
+def user_image_file_name(instance, filename):
+	folder = instance.username
+	ext = filename.split('.')[-1]
+	filename = '{}.{}'.format(instance.username, ext)
+	return '/'.join(['user_images', folder, filename])
+
 
 class AvatarImagesMixin(models.Model):
 	@property
@@ -69,7 +75,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 	email = models.EmailField(unique=True, blank=False)
 	username = models.CharField(max_length=16, unique=True, blank=False)
 	image = ThumbnailerImageField(
-		upload_to="user_images", null=True, blank=True)
+		upload_to=user_image_file_name, null=True, blank=True)
 	signature = BBCodeTextField(max_length=140, blank=True, null=True)
 	gender = models.CharField(null=True, blank=True, max_length=1,
 		choices=GENDER_CHOICES, default=None)
