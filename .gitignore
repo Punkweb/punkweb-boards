@@ -1,3 +1,6 @@
+sceditor/
+
+
 ### Sqlite database
 *.sqlite3
 *.pyc

@@ -1,0 +1,28 @@
+CODE TAG
+
+  [code]{TEXT}[/code]
+  <pre class="prettyprint"><code>{TEXT}</code></pre>
+
+
+UL TAG
+
+  [ul]{TEXT}[/ul]
+  <ul>{TEXT}</ul>
+
+
+OL TAG
+
+  [ol]{TEXT}[/ol]
+  <ol>{TEXT}</ol>
+
+
+LI TAG
+
+  [li]{TEXT}[/li]
+  <li>{TEXT}</li>
+
+
+HR TAG
+
+  [hr]
+  <hr/>
