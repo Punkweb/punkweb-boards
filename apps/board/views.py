@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from apps.users.models import EmailUser
 from .models import Category, Subcategory, Thread, Post, Shout
-from .forms import ThreadForm, PostForm, ShoutForm
+from .forms import CategoryForm, SubcategoryForm, ThreadForm, PostForm, ShoutForm
 
 def recent_threads():
     return Thread.objects.all().order_by('-created')[:5]
@@ -126,26 +126,27 @@ def shouts_view(request):
 
 
 class CategoryCreate(CreateView):
+    form_class = CategoryForm
     model = Category
-    fields = ['name', 'description', 'order']
     template_name_suffix = '_create_form'
 
 
 class CategoryUpdate(UpdateView):
+    form_class = CategoryForm
     model = Category
-    fields = ['name', 'description', 'order']
     template_name_suffix = '_update_form'
 
 
 class CategoryDelete(DeleteView):
+    form_class = CategoryForm
     model = Category
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('board:index')
 
 
 class SubcategoryCreate(CreateView):
+    form_class = SubcategoryForm
     model = Subcategory
-    fields = ['name', 'description', 'order']
     template_name_suffix = '_create_form'
 
     def form_valid(self, form):
@@ -157,20 +158,21 @@ class SubcategoryCreate(CreateView):
 
 
 class SubcategoryUpdate(UpdateView):
+    form_class = SubcategoryForm
     model = Subcategory
-    fields = ['name', 'description', 'order']
     template_name_suffix = '_update_form'
 
 
 class SubcategoryDelete(DeleteView):
+    form_class = SubcategoryForm
     model = Subcategory
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('board:index')
 
 
 class ThreadCreate(CreateView):
+    form_class = ThreadForm
     model = Thread
-    fields = ['title', 'content']
     template_name_suffix = '_create_form'
 
     def form_valid(self, form):
@@ -183,20 +185,21 @@ class ThreadCreate(CreateView):
 
 
 class ThreadUpdate(UpdateView):
+    form_class = ThreadForm
     model = Thread
-    fields = ['title', 'content']
     template_name_suffix = '_update_form'
 
 
 class ThreadDelete(DeleteView):
+    form_class = ThreadForm
     model = Thread
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('board:index')
 
 
 class PostCreate(CreateView):
+    form_class = PostForm
     model = Post
-    fields = ['content']
     template_name_suffix = '_create_form'
 
     def form_valid(self, form):
@@ -209,20 +212,21 @@ class PostCreate(CreateView):
 
 
 class PostUpdate(UpdateView):
+    form_class = PostForm
     model = Post
-    fields = ['content']
     template_name_suffix = '_update_form'
 
 
 class PostDelete(DeleteView):
+    form_class = PostForm
     model = Post
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('board:index')
 
 
 class ShoutCreate(CreateView):
+    form_class = ShoutForm
     model = Shout
-    fields = ['content']
     template_name_suffix = '_create_form'
 
     def form_valid(self, form):
@@ -233,12 +237,13 @@ class ShoutCreate(CreateView):
 
 
 class ShoutUpdate(UpdateView):
+    form_class = ShoutForm
     model = Shout
-    fields = ['content']
     template_name_suffix = '_update_form'
 
 
 class ShoutDelete(DeleteView):
+    form_class = ShoutForm
     model = Shout
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('board:index')

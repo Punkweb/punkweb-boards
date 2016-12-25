@@ -31,11 +31,22 @@
   <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
   <script>
   $(function() {
-    // Replace all textarea tags with SCEditor
-    $('textarea').sceditor({
+    $('.post-editor').sceditor({
       emoticonsEnabled: false,
       plugins: 'bbcode',
       toolbar: 'bold,italic,underline,strike|bulletlist,orderedlist,horizontalrule|color,quote,link,image|date,time|source,maximize,removeformat',
+      style: '{% static "sceditor/minified/jquery.sceditor.default.min.css" %}'
+    });
+    $('.shout-editor').sceditor({
+      emoticonsEnabled: false,
+      plugins: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|color,link,image|date,time|source,maximize,removeformat',
+      style: '{% static "sceditor/minified/jquery.sceditor.default.min.css" %}'
+    });
+    $('.category-editor').sceditor({
+      emoticonsEnabled: false,
+      plugins: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|color,link|source,maximize,removeformat',
       style: '{% static "sceditor/minified/jquery.sceditor.default.min.css" %}'
     });
   });
