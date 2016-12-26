@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
 # Auth Configuration
 AUTH_USER_MODEL = 'users.EmailUser'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/board/index/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
