@@ -53,6 +53,9 @@ def index_view(request):
     }
     return render(request, 'board/index.html', context)
 
+def unpermitted_view(request):
+    return render(request, 'unpermitted.html', {})
+
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
     subcategories = []
@@ -116,6 +119,7 @@ def shouts_view(request):
             shout = shout_form.save(commit=False)
             shout.user = EmailUser.objects.get(id=request.user.id)
             shout.save()
+            return redirect('board:shoutbox')
     else:
         shout_form = ShoutForm()
     context = {

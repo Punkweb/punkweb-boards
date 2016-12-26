@@ -14,7 +14,7 @@ def get_placeholder_url():
 
 def user_image_file_name(instance, filename):
 	folder = instance.username
-	ext = filename.split('.')[-1]
+	ext = (filename.split('.')[-1]).lower()
 	filename = '{}.{}'.format(instance.username, ext)
 	return '/'.join(['user_images', folder, filename])
 

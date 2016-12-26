@@ -2,9 +2,9 @@
 {% load static %}
 {% load bbcode_tags %}
 
-{% block title %}{{user.username}}{% endblock %}
+{% block title %}{{profile.username}}{% endblock %}
 
 {% block content %}
-<img src="{{user.avatar}}">
-<h1>{{user.username}}</h1>
+<img src="{{profile.avatar}}">
+<h1>{{profile.username}}</h1>
 {% endblock %}

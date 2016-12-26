@@ -11,6 +11,8 @@ def register_view(request):
 
 
 def my_profile(request):
+    if request.user.id is None:
+        return redirect('board:unpermitted')
     context = {
     }
     return render(request, 'users/my_profile.html', context)
@@ -27,6 +29,6 @@ def profile_view(request, username):
     if request.user.id == user.id:
         return redirect('users:me')
     context = {
-        'user': user
+        'profile': user
     }
     return render(request, 'users/profile_page.html', context)

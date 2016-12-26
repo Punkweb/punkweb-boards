@@ -21,7 +21,7 @@ class ConversationUpdate(UpdateView):
 class ConversationDelete(DeleteView):
     model = Conversation
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('board:index')
 
 
 class MessageCreate(CreateView):
@@ -39,4 +39,4 @@ class MessageUpdate(UpdateView):
 class MessageDelete(DeleteView):
     model = Message
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('board:index')

@@ -17,7 +17,7 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
         return self.subject
 
     def get_absolute_url(self):
-        return reverse_lazy('home')
+        return reverse_lazy('board:index')
 
 
 class Message(UUIDPrimaryKey, CreatedModifiedMixin):
@@ -33,4 +33,4 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
         return self.user.username
 
     def get_absolute_url(self):
-        return reverse_lazy('home')
+        return reverse_lazy('board:index')

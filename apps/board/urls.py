@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^index/$', views.index_view, name='index'),
+    url(r'^unpermitted/$', views.unpermitted_view, name='unpermitted'),
 
     url(r'^category/(?P<pk>[^/]+)/$', views.category_view, name='category'),
     url(r'^subcategory/(?P<pk>[^/]+)/$', views.subcategory_view, name='subcategory'),

@@ -20,7 +20,7 @@ For now, download [SCEditor](http://www.sceditor.com/) and unzip it at:
 ### Some custom bbcode tags
 
 Check out custom_tags.txt for a list of bbcode tag definitions and replacement
-html.  Add these in the admin panel.
+html.  Add these in the admin page.
 
 
 ### Almost ready for use!
