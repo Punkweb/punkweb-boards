@@ -58,12 +58,21 @@ def unpermitted_view(request):
 
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
+    if category.auth_req and request.user.id is None:
+        return unpermitted_view(request)
     subcategories = []
     for sub in get_subcategories(category):
         num_threads = len(subcategory_threads(sub))
         num_posts = len(subcategory_posts(sub))
+        if sub.admin_req and request.user.is_admin:
+            can_post = True
+        elif not sub.admin_req and request.user.id:
+            can_post = True
+        else:
+            can_post = False
         subcategories.append({
             'obj': sub,
+            'can_post': can_post,
             'num_threads': num_threads,
             'num_posts': num_posts
         })
@@ -75,6 +84,15 @@ def category_view(request, pk):
 
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
+    if category.auth_req and request.user.id is None:
+        return unpermitted_view(request)
+    if category.admin_req and request.user.is_admin:
+        can_post = True
+    elif not category.admin_req and request.user.id:
+        can_post = True
+    else:
+        can_post = False
+
     threads = []
     for thread in subcategory_threads(category).order_by('-modified'):
         group = {
@@ -83,6 +101,7 @@ def subcategory_view(request, pk):
         }
         threads.append(group)
     context = {
+        'can_post': can_post,
         'category': category,
         'threads': threads
     }

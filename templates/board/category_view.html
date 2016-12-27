@@ -48,7 +48,7 @@
           <p>
             {{sub.obj.description.rendered}}
           </p>
-          {% if user.is_authenticated %}
+          {% if sub.can_post %}
           <a href="{% url 'board:thread-create' sub.obj.id %}">
             <i class="fa fa-plus" aria-hidden="true"></i> Create Thread
           </a>

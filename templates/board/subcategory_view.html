@@ -18,7 +18,7 @@
     {% if category.description.rendered %}
     {{category.description.rendered}}
     {% endif %}
-    {% if user.is_authenticated %}
+    {% if can_post %}
     <a href="{% url 'board:thread-create' category.id %}" class="pull-right">
       <i class="fa fa-plus" aria-hidden="true"></i> Create Thread
     </a>
