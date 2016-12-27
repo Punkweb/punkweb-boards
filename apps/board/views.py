@@ -7,10 +7,10 @@ from .models import Category, Subcategory, Thread, Post, Shout
 from .forms import CategoryForm, SubcategoryForm, ThreadForm, PostForm, ShoutForm
 
 def recent_threads():
-    return Thread.objects.all().order_by('-created')[:5]
+    return Thread.objects.all().order_by('-created')
 
 def recent_activity():
-    return Thread.objects.all().order_by('-modified')[:5]
+    return Thread.objects.all().order_by('-modified')
 
 def get_subcategories(parent):
     return Subcategory.objects.filter(parent__id=parent.id).order_by('order')
@@ -26,10 +26,16 @@ def thread_posts(thread):
 
 def index_view(request):
     category_groups = []
-    parent_categories = Category.objects.all()
+    if request.user.id:
+        parent_categories = Category.objects.all().order_by('order')
+    else:
+        parent_categories = Category.objects.filter(auth_req=False).order_by('order')
     for parent_category in parent_categories:
         children_groups = []
-        children = Subcategory.objects.filter(parent__id=parent_category.id).order_by('order')
+        if request.user.id:
+            children = Subcategory.objects.filter(parent__id=parent_category.id).order_by('order')
+        else:
+            children = Subcategory.objects.filter(parent__id=parent_category.id, auth_req=False).order_by('order')
         for child in children:
             child_threads = Thread.objects.filter(category__id=child.id).order_by('-created')
             num_threads = len(child_threads)
@@ -44,12 +50,16 @@ def index_view(request):
             'parent': parent_category,
             'children': children_groups
         })
-    recent_threads = Thread.objects.all().order_by('-created')[:5]
-    recent_activity = Thread.objects.all().order_by('-modified')[:5]
+    if request.user.id is None:
+        recent_thread_data = recent_threads().filter(category__auth_req=False)[:5]
+        recent_activity_data = recent_activity().filter(category__auth_req=False)[:5]
+    else:
+        recent_thread_data = recent_threads()[:5]
+        recent_activity_data = recent_activity()[:5]
     context = {
         'categories': category_groups,
-        'recent_threads': recent_threads,
-        'recent_activity': recent_activity
+        'recent_threads': recent_thread_data,
+        'recent_activity': recent_activity_data
     }
     return render(request, 'board/index.html', context)
 
@@ -64,7 +74,7 @@ def category_view(request, pk):
     for sub in get_subcategories(category):
         num_threads = len(subcategory_threads(sub))
         num_posts = len(subcategory_posts(sub))
-        if sub.admin_req and request.user.is_admin:
+        if sub.admin_req and request.user.id and request.user.is_admin:
             can_post = True
         elif not sub.admin_req and request.user.id:
             can_post = True
@@ -86,13 +96,12 @@ def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
     if category.auth_req and request.user.id is None:
         return unpermitted_view(request)
-    if category.admin_req and request.user.is_admin:
+    if category.admin_req and request.user.id and request.user.is_admin:
         can_post = True
     elif not category.admin_req and request.user.id:
         can_post = True
     else:
         can_post = False
-
     threads = []
     for thread in subcategory_threads(category).order_by('-modified'):
         group = {
@@ -108,6 +117,10 @@ def subcategory_view(request, pk):
     return render(request, 'board/subcategory_view.html', context)
 
 def thread_view(request, pk):
+    thread = Thread.objects.get(id=pk)
+    posts = Post.objects.filter(thread__id=thread.id)
+    if thread.category.auth_req and request.user.id is None:
+        return unpermitted_view(request)
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -120,8 +133,6 @@ def thread_view(request, pk):
             return redirect('board:thread', pk)
     else:
         form = PostForm()
-    thread = Thread.objects.get(id=pk)
-    posts = Post.objects.filter(thread__id=thread.id)
     context = {
         'thread': thread,
         'posts': thread_posts(thread),

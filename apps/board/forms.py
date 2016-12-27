@@ -9,7 +9,7 @@ class CategoryForm(forms.ModelForm):
 
     class Meta:
         model = Category
-        fields = ['name', 'description', 'order']
+        fields = ['name', 'description', 'order', 'auth_req']
 
 
 class SubcategoryForm(forms.ModelForm):
@@ -19,7 +19,7 @@ class SubcategoryForm(forms.ModelForm):
 
     class Meta:
         model = Subcategory
-        fields = ['name', 'description', 'order']
+        fields = ['name', 'description', 'order', 'admin_req', 'auth_req']
 
 
 class ThreadForm(forms.ModelForm):
