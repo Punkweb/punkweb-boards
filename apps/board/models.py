@@ -9,6 +9,8 @@ class Category(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False, unique=True)
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
+    auth_req = models.BooleanField(default=False,
+        help_text='Can only logged in users view this category?')
 
     class Meta:
         verbose_name = 'category'
@@ -27,6 +29,10 @@ class Subcategory(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False)
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
+    admin_req = models.BooleanField(default=False,
+        help_text='Can only admin users create threads in this subcategory?')
+    auth_req = models.BooleanField(default=False,
+        help_text='Can only logged in users view this subcategory?')
 
     class Meta:
         verbose_name = 'subcategory'
