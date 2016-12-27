@@ -17,11 +17,6 @@
     {% if category.description.rendered %}
     {{category.description.rendered}}
     {% endif %}
-    {% if user.is_authenticated and user.is_admin %}
-    <a href="{% url 'board:subcategory-create' category.id %}" class="pull-right">
-      <i class="fa fa-plus" aria-hidden="true"></i> Create Subcategory
-    </a>
-    {% endif %}
   </div>
   <table class="table">
     <thead>

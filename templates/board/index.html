@@ -10,13 +10,6 @@
     <h3 class="panel-title"><a href="{% url 'board:shoutbox' %}">Shoutbox</a></h3>
   </div>
 </div>
-{% if user.is_authenticated and user.is_admin %}
-<a href="{% url 'board:category-create' %}">
-  <i class="fa fa-plus" aria-hidden="true"></i> Create Category
-</a>
-<br/>
-<br/>
-{% endif %}
 <div class="row">
   <div class="col-xs-12 col-md-8">
     {% for category in categories %}
@@ -26,13 +19,6 @@
           <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
         </h3>
       </div>
-      {% if user.is_authenticated and user.is_admin %}
-      <div class="panel-body">
-        <a href="{% url 'board:subcategory-create' category.parent.id %}">
-          <i class="fa fa-plus" aria-hidden="true"></i> Create Subcategory
-        </a>
-      </div>
-      {% endif %}
       <table class="table">
         <thead>
           <tr>

@@ -1,25 +1,6 @@
 from django import forms
-from .models import Category, Subcategory, Thread, Post, Shout
-
-
-class CategoryForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(CategoryForm, self).__init__(*args, **kwargs)
-        self.fields['description'].widget.attrs['class'] = 'category-editor'
-
-    class Meta:
-        model = Category
-        fields = ['name', 'description', 'order', 'auth_req']
-
-
-class SubcategoryForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SubcategoryForm, self).__init__(*args, **kwargs)
-        self.fields['description'].widget.attrs['class'] = 'category-editor'
-
-    class Meta:
-        model = Subcategory
-        fields = ['name', 'description', 'order', 'admin_req', 'auth_req']
+from django.shortcuts import redirect
+from .models import Thread, Post, Shout
 
 
 class ThreadForm(forms.ModelForm):

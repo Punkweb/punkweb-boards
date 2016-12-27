@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from apps.users.models import EmailUser
 from .models import Category, Subcategory, Thread, Post, Shout
-from .forms import CategoryForm, SubcategoryForm, ThreadForm, PostForm, ShoutForm
+from .forms import ThreadForm, PostForm, ShoutForm
 
 def recent_threads():
     return Thread.objects.all().order_by('-created')
@@ -23,6 +23,14 @@ def subcategory_posts(sub):
 
 def thread_posts(thread):
     return Post.objects.filter(thread__id=thread.id)
+
+def can_post_in_sub(sub, user):
+    if sub.admin_req and user.is_authenticated and user.is_admin:
+        return True
+    elif not sub.admin_req and user.is_authenticated:
+        return True
+    else:
+        return False
 
 def index_view(request):
     category_groups = []
@@ -74,15 +82,9 @@ def category_view(request, pk):
     for sub in get_subcategories(category):
         num_threads = len(subcategory_threads(sub))
         num_posts = len(subcategory_posts(sub))
-        if sub.admin_req and request.user.id and request.user.is_admin:
-            can_post = True
-        elif not sub.admin_req and request.user.id:
-            can_post = True
-        else:
-            can_post = False
         subcategories.append({
             'obj': sub,
-            'can_post': can_post,
+            'can_post': can_post_in_sub(sub, request.user),
             'num_threads': num_threads,
             'num_posts': num_posts
         })
@@ -94,14 +96,6 @@ def category_view(request, pk):
 
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
-    if category.auth_req and request.user.id is None:
-        return unpermitted_view(request)
-    if category.admin_req and request.user.id and request.user.is_admin:
-        can_post = True
-    elif not category.admin_req and request.user.id:
-        can_post = True
-    else:
-        can_post = False
     threads = []
     for thread in subcategory_threads(category).order_by('-modified'):
         group = {
@@ -110,7 +104,7 @@ def subcategory_view(request, pk):
         }
         threads.append(group)
     context = {
-        'can_post': can_post,
+        'can_post': can_post_in_sub(category, request.user),
         'category': category,
         'threads': threads
     }
@@ -157,51 +151,6 @@ def shouts_view(request):
         'shout_form': shout_form
     }
     return render(request, 'board/shouts_view.html', context)
-
-
-class CategoryCreate(CreateView):
-    form_class = CategoryForm
-    model = Category
-    template_name_suffix = '_create_form'
-
-
-class CategoryUpdate(UpdateView):
-    form_class = CategoryForm
-    model = Category
-    template_name_suffix = '_update_form'
-
-
-class CategoryDelete(DeleteView):
-    form_class = CategoryForm
-    model = Category
-    template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('board:index')
-
-
-class SubcategoryCreate(CreateView):
-    form_class = SubcategoryForm
-    model = Subcategory
-    template_name_suffix = '_create_form'
-
-    def form_valid(self, form):
-        category = Category.objects.get(id=self.kwargs['category_id'])
-        sub = form.save(commit=False)
-        sub.parent = category
-        sub.save()
-        return super(SubcategoryCreate, self).form_valid(form)
-
-
-class SubcategoryUpdate(UpdateView):
-    form_class = SubcategoryForm
-    model = Subcategory
-    template_name_suffix = '_update_form'
-
-
-class SubcategoryDelete(DeleteView):
-    form_class = SubcategoryForm
-    model = Subcategory
-    template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('board:index')
 
 
 class ThreadCreate(CreateView):
