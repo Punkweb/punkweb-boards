@@ -32,6 +32,16 @@ def can_post_in_sub(sub, user):
     else:
         return False
 
+def can_edit_post(instance, user):
+    if not user.is_authenticated:
+        return False
+    elif user.is_admin:
+        return True
+    elif instance.user.id == user.id:
+        return True
+    else:
+        return False
+
 def index_view(request):
     category_groups = []
     if request.user.id:
@@ -112,21 +122,17 @@ def subcategory_view(request, pk):
 
 def thread_view(request, pk):
     thread = Thread.objects.get(id=pk)
-    posts = Post.objects.filter(thread__id=thread.id)
     if thread.category.auth_req and request.user.id is None:
         return unpermitted_view(request)
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        if request.user.id is None:
+            return unpermitted_view(request)
+        form = PostForm(request, request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.thread = Thread.objects.get(id=pk)
-            post.thread.modified = datetime.datetime.now()
-            post.thread.save()
-            post.user = EmailUser.objects.get(id=request.user.id)
-            post.save()
+            form.save(thread=thread, set_user=True)
             return redirect('board:thread', pk)
     else:
-        form = PostForm()
+        form = PostForm(request)
     context = {
         'thread': thread,
         'posts': thread_posts(thread),
@@ -134,99 +140,72 @@ def thread_view(request, pk):
     }
     return render(request, 'board/thread_view.html', context)
 
-
-def shouts_view(request):
-    shouts = Shout.objects.all()[:30]
+def thread_create(request, category_id):
+    subcategory = Subcategory.objects.get(id=category_id)
+    if not can_post_in_sub(subcategory, request.user):
+        return unpermitted_view(request)
     if request.method == 'POST':
-        shout_form = ShoutForm(request.POST)
-        if shout_form.is_valid():
-            shout = shout_form.save(commit=False)
-            shout.user = EmailUser.objects.get(id=request.user.id)
-            shout.save()
-            return redirect('board:shoutbox')
+        form = ThreadForm(request, request.POST)
+        if form.is_valid():
+            thread = form.save(category=subcategory, set_user=True)
+            return redirect('board:thread', thread.id)
     else:
-        shout_form = ShoutForm()
+        form = ThreadForm(request)
     context = {
-        'shouts': shouts,
-        'shout_form': shout_form
+        'form': form
     }
-    return render(request, 'board/shouts_view.html', context)
+    return render(request, 'board/thread_create_form.html', context)
 
+def thread_update(request, pk):
+    instance = Thread.objects.get(id=pk)
+    if not can_edit_post(instance, request.user):
+        return unpermitted_view(request)
+    if request.method == 'POST':
+        form = ThreadForm(request, request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('board:thread', pk)
+    else:
+        form = ThreadForm(request, instance=instance)
+    context = {
+        'form': form
+    }
+    return render(request, 'board/thread_update_form.html', context)
 
-class ThreadCreate(CreateView):
-    form_class = ThreadForm
-    model = Thread
-    template_name_suffix = '_create_form'
+def thread_delete(request, pk):
+    instance = Thread.objects.get(id=pk)
+    if not can_edit_post(instance, request.user):
+        return unpermitted_view(request)
+    if request.method == 'POST':
+        redirect_to = instance.category.id
+        instance.delete()
+        return redirect('board:subcategory', redirect_to)
+    context = {}
+    return render(request, 'board/thread_delete_form.html', context)
 
-    def form_valid(self, form):
-        category = Subcategory.objects.get(id=self.kwargs['category_id'])
-        thread = form.save(commit=False)
-        thread.category = category
-        thread.user = EmailUser.objects.get(id=self.request.user.id)
-        thread.save()
-        return super(ThreadCreate, self).form_valid(form)
+def post_update(request, pk):
+    instance = Post.objects.get(id=pk)
+    if not can_edit_post(instance, request.user):
+        return unpermitted_view(request)
+    if request.method == 'POST':
+        form = PostForm(request, request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('board:thread', instance.thread.id)
+    else:
+        form = PostForm(request, instance=instance)
+    context = {
+        'form': form
+    }
+    return render(request, 'board/post_update_form.html', context)
 
-
-class ThreadUpdate(UpdateView):
-    form_class = ThreadForm
-    model = Thread
-    template_name_suffix = '_update_form'
-
-
-class ThreadDelete(DeleteView):
-    form_class = ThreadForm
-    model = Thread
-    template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('board:index')
-
-
-class PostCreate(CreateView):
-    form_class = PostForm
-    model = Post
-    template_name_suffix = '_create_form'
-
-    def form_valid(self, form):
-        thread = Thread.objects.get(id=self.kwargs['thread_id'])
-        post = form.save(commit=False)
-        post.thread = thread
-        post.user = EmailUser.objects.get(id=self.request.user.id)
-        post.save()
-        return super(PostCreate, self).form_valid(form)
-
-
-class PostUpdate(UpdateView):
-    form_class = PostForm
-    model = Post
-    template_name_suffix = '_update_form'
-
-
-class PostDelete(DeleteView):
-    form_class = PostForm
-    model = Post
-    template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('board:index')
-
-
-class ShoutCreate(CreateView):
-    form_class = ShoutForm
-    model = Shout
-    template_name_suffix = '_create_form'
-
-    def form_valid(self, form):
-        shout = form.save(commit=False)
-        shout.user = EmailUser.objects.get(id=self.request.user.id)
-        shout.save()
-        return super(ShoutCreate, self).form_valid(form)
-
-
-class ShoutUpdate(UpdateView):
-    form_class = ShoutForm
-    model = Shout
-    template_name_suffix = '_update_form'
-
-
-class ShoutDelete(DeleteView):
-    form_class = ShoutForm
-    model = Shout
-    template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('board:index')
+def post_delete(request, pk):
+    instance = Post.objects.get(id=pk)
+    if not can_edit_post(instance, request.user):
+        return unpermitted_view(request)
+    if request.method == 'POST':
+        redirect_to = instance.thread.id
+        instance.delete()
+        return redirect('board:thread', redirect_to)
+    context = {}
+    return render(request, 'board/thread_delete_form.html', context)
