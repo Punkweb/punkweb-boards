@@ -18,7 +18,7 @@ def subcategory_posts(sub):
     return Post.objects.filter(thread__category__id=sub.id)
 
 def thread_posts(thread):
-    return Post.objects.filter(thread__id=thread.id)
+    return Post.objects.filter(thread__id=thread.id).order_by('created')
 
 def can_post_in_sub(sub, user):
     if sub.admin_req and user.is_authenticated and user.is_admin:

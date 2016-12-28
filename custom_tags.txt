@@ -4,6 +4,12 @@ CODE TAG
   <pre class="prettyprint"><code>{TEXT}</code></pre>
 
 
+FONT TAG
+
+  [font={TEXT1}]{TEXT2}[/font]
+  <span style="font-family:{TEXT1}">{TEXT2}</span>
+
+
 UL TAG
 
   [ul]{TEXT}[/ul]
