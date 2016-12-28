@@ -1,10 +1,6 @@
-import datetime
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from apps.users.models import EmailUser
-from .models import Category, Subcategory, Thread, Post, Shout
-from .forms import ThreadForm, PostForm, ShoutForm
+from .models import Category, Subcategory, Thread, Post
+from .forms import ThreadForm, PostForm
 
 def recent_threads():
     return Thread.objects.all().order_by('-created')
@@ -47,15 +43,19 @@ def index_view(request):
     if request.user.id:
         parent_categories = Category.objects.all().order_by('order')
     else:
-        parent_categories = Category.objects.filter(auth_req=False).order_by('order')
+        parent_categories = Category.objects.filter(
+            auth_req=False).order_by('order')
     for parent_category in parent_categories:
         children_groups = []
         if request.user.id:
-            children = Subcategory.objects.filter(parent__id=parent_category.id).order_by('order')
+            children = Subcategory.objects.filter(
+                parent__id=parent_category.id).order_by('order')
         else:
-            children = Subcategory.objects.filter(parent__id=parent_category.id, auth_req=False).order_by('order')
+            children = Subcategory.objects.filter(
+                parent__id=parent_category.id, auth_req=False).order_by('order')
         for child in children:
-            child_threads = Thread.objects.filter(category__id=child.id).order_by('-created')
+            child_threads = Thread.objects.filter(
+                category__id=child.id).order_by('-created')
             num_threads = len(child_threads)
             posts = Post.objects.filter(thread__category__id=child.id)
             num_posts = len(posts)
@@ -69,8 +69,10 @@ def index_view(request):
             'children': children_groups
         })
     if request.user.id is None:
-        recent_thread_data = recent_threads().filter(category__auth_req=False)[:5]
-        recent_activity_data = recent_activity().filter(category__auth_req=False)[:5]
+        recent_thread_data = recent_threads().filter(
+            category__auth_req=False)[:5]
+        recent_activity_data = recent_activity().filter(
+            category__auth_req=False)[:5]
     else:
         recent_thread_data = recent_threads()[:5]
         recent_activity_data = recent_activity()[:5]
