@@ -3,6 +3,13 @@
     {{thread.content.rendered}}
   </div>
 </div>
+{% if thread.reported and user.is_authenticated and user.is_admin %}
+<div class="alert alert-warning" style="margin: 1rem" role="alert">
+  <p>
+    This thread has open reports.
+  </p>
+</div>
+{% endif %}
 {% if thread.user.signature.rendered %}
 <hr>
 <div class="row">
@@ -13,7 +20,10 @@
 {% endif %}
 <div class="row">
   <div class="col-xs-12 align-right">
-    {% if user.is_authenticated and user == thread.user or user.is_admin %}
+    {% if user.is_authenticated and thread.user.id != user.id %}
+    <a href="{% url 'board:report-thread' thread.id %}" class="btn btn-default" name="button">Report</a>
+    {% endif %}
+    {% if user.is_authenticated and user.id == thread.user.id or user.is_admin %}
     <a href="{% url 'board:thread-update' thread.id %}" class="btn btn-success" name="button">Update</a>
     <a href="{% url 'board:thread-delete' thread.id %}" class="btn btn-danger" name="button">Delete</a>
     {% endif %}

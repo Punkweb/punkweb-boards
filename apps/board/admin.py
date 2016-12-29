@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.board.models import Category, Subcategory, Thread, Post, Shout
+from apps.board.models import Category, Subcategory, Thread, Post, Shout, Report
 
 
 class SubcategoryInline(admin.TabularInline):
@@ -32,3 +32,4 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)
 admin.site.register(Post)
 admin.site.register(Shout)
+admin.site.register(Report)

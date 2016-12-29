@@ -25,4 +25,11 @@ urlpatterns = [
         views.post_update, name='post-update'),
     url(r'^delete_post/(?P<pk>[^/]+)/$',
         views.post_delete, name='post-delete'),
+
+    url(r'^report/(?P<pk>[^/]+)/',
+        views.report_view, name='report'),
+    url(r'^report_thread/(?P<thread>[^/]+)/$',
+        views.report_create, name='report-thread'),
+    url(r'^report_post/(?P<post>[^/]+)/$',
+        views.report_create, name='report-post')
 ]

@@ -60,13 +60,20 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('board:thread', kwargs={'pk': self.id})
+    @property
+    def reported(self):
+        if len(Report.objects.filter(thread__id=self.id, closed=False)) >= 1:
+            return True
+        else:
+            return False
 
     @property
     def last_post(self):
         return Post.objects.filter(
             thread__id=self.id).order_by('-created').first()
+
+    def get_absolute_url(self):
+        return reverse('board:thread', kwargs={'pk': self.id})
 
 
 class Post(CreatedModifiedMixin, UUIDPrimaryKey):
@@ -80,8 +87,23 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
         return '{}\'s post on {} {}'.format(
             self.user, self.thread, self.created)
 
+    @property
+    def reported(self):
+        if len(Report.objects.filter(post__id=self.id, closed=False)) >= 1:
+            return True
+        else:
+            return False
+
     def get_absolute_url(self):
         return reverse('board:thread', kwargs={'pk': self.thread.id})
+
+
+class Report(CreatedModifiedMixin, UUIDPrimaryKey):
+    reporting_user = models.ForeignKey(EmailUser, blank=False, null=False)
+    reason = models.TextField(max_length=1024, blank=False, null=False)
+    thread = models.ForeignKey(Thread, blank=True, null=True, default=None)
+    post = models.ForeignKey(Post, blank=True, null=True, default=None)
+    closed = models.BooleanField(default=False)
 
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):

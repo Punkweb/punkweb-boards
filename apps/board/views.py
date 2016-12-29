@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Category, Subcategory, Thread, Post
-from .forms import ThreadForm, PostForm
+from .models import Category, Subcategory, Thread, Post, Report
+from .forms import ThreadForm, PostForm, ReportForm
 
 def recent_threads():
     return Thread.objects.all().order_by('-created')
@@ -234,3 +234,29 @@ def post_delete(request, pk):
         return redirect('board:thread', redirect_to)
     context = {}
     return render(request, 'board/thread_delete_form.html', context)
+
+def report_view(request, pk):
+    context = {
+        'report': Report.objects.get(id=pk)
+    }
+    return render(request, 'board/report_view.html', context)
+
+
+def report_create(request, thread=None, post=None):
+    if request.method == 'POST':
+        form = ReportForm(request, request.POST)
+        if form.is_valid():
+            if thread:
+                thread_obj = Thread.objects.get(id=thread)
+                report = form.save(thread=thread_obj, set_user=True)
+                return redirect('board:thread', thread)
+            if post:
+                post_obj = Post.objects.get(id=post)
+                report = form.save(post=post_obj, set_user=True)
+                return redirect('board:thread', post_obj.thread.id)
+    else:
+        form = ReportForm(request)
+    context = {
+        'form': form
+    }
+    return render(request, 'board/report_create_form.html', context)
