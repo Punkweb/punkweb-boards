@@ -18,6 +18,7 @@
     <div class="page-wrap">
       {% include "partials/nav.html" %}
       <div class="container">
+        {% block breadcrumb %}{% endblock %}
         {% block content %}{% endblock %}
       </div>
     </div>

@@ -4,13 +4,16 @@
 
 {% block title %}{{thread.title}}{% endblock %}
 
-{% block content %}
+{% block breadcrumb %}
 <ol class="breadcrumb">
   <li><a href="/">Forum</a></li>
   <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
   <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
   <li class="active">{{thread.title}}</li>
 </ol>
+{% endblock %}
+
+{% block content %}
 {% include 'partials/board/thread/thread.html' %}
 {% if posts %}
 {% for post in posts %}

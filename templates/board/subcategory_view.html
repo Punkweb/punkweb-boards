@@ -4,12 +4,15 @@
 
 {% block title %}{{category.name}}{% endblock %}
 
-{% block content %}
+{% block breadcrumb %}
 <ol class="breadcrumb">
   <li><a href="{% url 'board:index' %}">Forum</a></li>
   <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
   <li class="active">{{category.name}}</li>
 </ol>
+{% endblock %}
+
+{% block content %}
 <div class="panel panel-primary">
   <div class="panel-heading">
     {{category.name}}
