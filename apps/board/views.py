@@ -29,30 +29,41 @@ def can_post_in_sub(sub, user):
         return False
 
 def can_edit_post(instance, user):
-    if not user.is_authenticated:
-        return False
-    elif user.is_admin:
+    if user.is_authenticated and user.is_admin:
         return True
     elif instance.user.id == user.id:
         return True
     else:
         return False
 
+def can_view_thread(instance, user):
+    if instance.category.auth_req and not user.is_authenticated:
+        return False
+    else:
+        return True
+
+def can_view_category(instance, user):
+    if instance.auth_req and not user.is_authenticated:
+        return False
+    else:
+        return True
+
 def index_view(request):
     category_groups = []
-    if request.user.id:
+    if request.user.is_authenticated:
         parent_categories = Category.objects.all().order_by('order')
     else:
         parent_categories = Category.objects.filter(
             auth_req=False).order_by('order')
     for parent_category in parent_categories:
         children_groups = []
-        if request.user.id:
+        if request.user.is_authenticated:
             children = Subcategory.objects.filter(
                 parent__id=parent_category.id).order_by('order')
         else:
             children = Subcategory.objects.filter(
-                parent__id=parent_category.id, auth_req=False).order_by('order')
+                parent__id=parent_category.id, auth_req=False
+            ).order_by('order')
         for child in children:
             child_threads = Thread.objects.filter(
                 category__id=child.id).order_by('-created')
@@ -68,7 +79,7 @@ def index_view(request):
             'parent': parent_category,
             'children': children_groups
         })
-    if request.user.id is None:
+    if not request.user.is_authenticated:
         recent_thread_data = recent_threads().filter(
             category__auth_req=False)[:5]
         recent_activity_data = recent_activity().filter(
@@ -88,7 +99,7 @@ def unpermitted_view(request):
 
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
-    if category.auth_req and request.user.id is None:
+    if not can_view_category(category, request.user):
         return unpermitted_view(request)
     subcategories = []
     for sub in get_subcategories(category):
@@ -108,6 +119,8 @@ def category_view(request, pk):
 
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
+    if not can_view_category(category, request.user):
+        return unpermitted_view(request)
     threads = []
     for thread in subcategory_threads(category).order_by('-modified'):
         group = {
@@ -124,6 +137,8 @@ def subcategory_view(request, pk):
 
 def thread_view(request, pk):
     thread = Thread.objects.get(id=pk)
+    if not can_view_thread(thread, request.user):
+        return unpermitted_view(request)
     if thread.category.auth_req and request.user.id is None:
         return unpermitted_view(request)
     if request.method == 'POST':
