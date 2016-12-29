@@ -3,8 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Conversation, Message
 
-
 def conversations_list(request):
+    if request.user.is_authenticated and request.user.is_banned:
+        return redirect('board:unpermitted')
     conversations = request.user.conversations.all()
     context = {
         'conversations': conversations

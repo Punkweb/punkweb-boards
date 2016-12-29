@@ -84,6 +84,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
 	# special rights
 	is_admin = models.BooleanField(default=False)
+	is_banned = models.BooleanField(default=False)
 
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['username']

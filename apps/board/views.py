@@ -21,6 +21,8 @@ def thread_posts(thread):
     return Post.objects.filter(thread__id=thread.id).order_by('created')
 
 def can_post_in_sub(sub, user):
+    if user.is_authenticated and user.is_banned:
+        return False
     if sub.admin_req and user.is_authenticated and user.is_admin:
         return True
     elif not sub.admin_req and user.is_authenticated:
@@ -29,6 +31,8 @@ def can_post_in_sub(sub, user):
         return False
 
 def can_edit_post(instance, user):
+    if user.is_authenticated and user.is_banned:
+        return False
     if user.is_authenticated and user.is_admin:
         return True
     elif instance.user.id == user.id:
@@ -37,12 +41,16 @@ def can_edit_post(instance, user):
         return False
 
 def can_view_thread(instance, user):
+    if user.is_authenticated and user.is_banned:
+        return False
     if instance.category.auth_req and not user.is_authenticated:
         return False
     else:
         return True
 
 def can_view_category(instance, user):
+    if user.is_authenticated and user.is_banned:
+        return False
     if instance.auth_req and not user.is_authenticated:
         return False
     else:
