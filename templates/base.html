@@ -16,8 +16,8 @@
   </head>
   <body>
     <div class="page-wrap">
+      {% include "partials/nav.html" %}
       <div class="container">
-        {% include "partials/nav.html" %}
         {% block content %}{% endblock %}
       </div>
     </div>
