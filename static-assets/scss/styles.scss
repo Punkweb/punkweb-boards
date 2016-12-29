@@ -12,58 +12,6 @@
   min-height: 100vh;
 }
 
-.panel {
-  border-width: 1px;
-  .panel-body {
-    background-color: $oc-gray-1;
-  }
-  .panel-heading {
-    color: $oc-white;
-  }
-  &-default {
-    border-color: $oc-gray-3;
-    .panel-heading {
-      color: $oc-gray-8;
-      background-color: $oc-gray-2;
-    }
-  }
-  &-primary {
-    border-color: $oc-blue-8;
-    .panel-heading {
-      background-color: $oc-blue-7;
-    }
-  }
-  &-success {
-    border-color: $oc-green-8;
-    .panel-heading {
-      background-color: $oc-green-7;
-    }
-  }
-  &-info {
-    border-color: $oc-indigo-5;
-    .panel-heading {
-      background-color: $oc-indigo-4;
-    }
-  }
-  &-warning {
-    border-color: $oc-yellow-5;
-    .panel-heading {
-      color: $oc-gray-8;
-      background-color: $oc-yellow-4;
-    }
-  }
-  &-danger {
-    border-color: $oc-red-8;
-    .panel-heading {
-      background-color: $oc-red-7;
-    }
-  }
-}
-
-.table {
-  background-color: $oc-gray-1;
-}
-
 .asteriskField {
     display: none;
 }

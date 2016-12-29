@@ -14,7 +14,7 @@
 <div class="row">
   <div class="col-xs-12 align-right">
     {% if user.is_authenticated and user == thread.user or user.is_admin %}
-    <a href="{% url 'board:thread-update' thread.id %}" class="btn btn-default" name="button">Update</a>
+    <a href="{% url 'board:thread-update' thread.id %}" class="btn btn-success" name="button">Update</a>
     <a href="{% url 'board:thread-delete' thread.id %}" class="btn btn-danger" name="button">Delete</a>
     {% endif %}
   </div>
