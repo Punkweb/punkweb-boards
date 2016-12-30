@@ -15,9 +15,22 @@ class Category(UUIDPrimaryKey):
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categories'
+        ordering = ('order', )
 
     def __str__(self):
         return "{}. {}".format(self.order, self.name)
+
+    def can_view(self, user):
+        if user.is_authenticated and user.is_banned:
+            return False
+        if not user.is_authenticated and self.auth_req:
+            return False
+        return True
+
+    @property
+    def subcategories(self):
+        return Subcategory.objects.filter(
+            parent__id=self.id).select_related()
 
     def get_absolute_url(self):
         return reverse('board:category', kwargs={'pk': self.id})
@@ -37,17 +50,43 @@ class Subcategory(UUIDPrimaryKey):
     class Meta:
         verbose_name = 'subcategory'
         verbose_name_plural = 'subcategories'
+        ordering = ('order', )
 
     def __str__(self):
         return "{}. {}".format(self.order, self.name)
 
-    def get_absolute_url(self):
-        return reverse('board:subcategory', kwargs={'pk': self.id})
+    def can_view(self, user):
+        if user.is_authenticated and user.is_banned:
+            return False
+        if not user.is_authenticated and self.auth_req:
+            return False
+        return True
+
+    def can_post(self, user):
+        if user.is_authenticated and user.is_banned:
+            return False
+        if self.admin_req and user.is_authenticated and user.is_admin:
+            return True
+        if not self.admin_req and user.is_authenticated:
+            return True
+        return False
+
+    @property
+    def threads(self):
+        return Thread.objects.filter(
+            category__id=self.id).select_related()
+
+    @property
+    def posts(self):
+        return Post.objects.filter(
+            thread__category__id=self.id).select_related()
 
     @property
     def last_thread(self):
-        return Thread.objects.filter(
-            category__id=self.id).order_by('-created').first()
+        return self.threads.order_by('-created').first()
+
+    def get_absolute_url(self):
+        return reverse('board:subcategory', kwargs={'pk': self.id})
 
 
 class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
@@ -60,6 +99,22 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
     def __str__(self):
         return self.title
 
+    def can_view(self, user):
+        if user.is_authenticated and user.is_banned:
+            return False
+        if self.category.auth_req and not user.is_authenticated:
+            return False
+        return True
+
+    def can_edit(self, user):
+        if user.is_authenticated and user.is_banned:
+            return False
+        if user.is_authenticated and user.is_admin:
+            return True
+        if self.user.id == user.id:
+            return True
+        return False
+
     @property
     def reported(self):
         if len(Report.objects.filter(thread__id=self.id, closed=False)) >= 1:
@@ -68,9 +123,12 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
             return False
 
     @property
+    def posts(self):
+        return Post.objects.filter(thread__id=self.id).select_related()
+
+    @property
     def last_post(self):
-        return Post.objects.filter(
-            thread__id=self.id).order_by('-created').first()
+        return self.posts.order_by('-created').first()
 
     def get_absolute_url(self):
         return reverse('board:thread', kwargs={'pk': self.id})
@@ -86,6 +144,15 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     def __str__(self):
         return '{}\'s post on {} {}'.format(
             self.user, self.thread, self.created)
+
+    def can_edit(self, user):
+        if user.is_authenticated and user.is_banned:
+            return False
+        if user.is_authenticated and user.is_admin:
+            return True
+        if self.user.id == user.id:
+            return True
+        return False
 
     @property
     def reported(self):
