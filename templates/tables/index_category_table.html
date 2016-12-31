@@ -1,0 +1,50 @@
+{% extends 'base/base_table.html' %}
+
+{% block table_header %}
+<thead>
+  <tr>
+    <th class="align-left" width="40%">
+      Subcategory
+    </th>
+    <th class="align-center" width="10%">
+      Threads
+    </th>
+    <th class="align-center" width="10%">
+      Posts
+    </th>
+    <th class="align-right hidden-xs" width="30%">
+      Last Thread
+    </th>
+  </tr>
+</thead>
+{% endblock %}
+{% block table_body %}
+<tbody>
+  {% for child in category.children %}
+  <tr>
+    <td class="align-left">
+      <a href="{% url 'board:subcategory' child.category.id %}">{{child.category.name}}</a>
+      <p>
+        {{child.category.description.rendered}}
+      </p>
+    </td>
+    <td class="align-center">
+      {{child.num_threads}}
+    </td>
+    <td class="align-center">
+      {{child.num_posts}}
+    </td>
+    <td class="align-right hidden-xs">
+      {% if child.category.last_thread %}
+      <a href="{% url 'board:thread' child.category.last_thread.id %}">{{child.category.last_thread.title|truncatechars_html:30}}</a>
+      <p>{{child.category.last_thread.created|date:'D, M d, Y'}}</p>
+      <p>by <a href="{% url 'users:profile' child.category.last_thread.user.username %}">{{child.category.last_thread.user.username}}</a></p>
+      {% else %}
+      <p>No Threads</p>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+{% endblock %}
+{% block table_footer %}{% endblock %}

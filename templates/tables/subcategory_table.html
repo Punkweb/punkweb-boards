@@ -1,0 +1,46 @@
+{% extends 'base/base_table.html' %}
+
+{% block table_header %}
+<thead>
+  <tr>
+    <th class="align-left" width="40%">
+      Title
+    </th>
+    <th class="align-left" width="20%">
+      User
+    </th>
+    <th class="align-center" widht="10%">
+      Posts
+    </th>
+    <th class="align-right hidden-xs" width="30%">
+      Last Post
+    </th>
+  </tr>
+</thead>
+{% endblock %}
+{% block table_body %}
+<tbody>
+  {% for thread in threads %}
+  <tr>
+    <td class="align-left">
+      <a href="{% url 'board:thread' thread.obj.id %}">{{thread.obj.title}}</a>
+    </td>
+    <td class="align-left">
+      <a href="{% url 'users:profile' thread.obj.user.username %}">{{thread.obj.user.username}}</a>
+    </td>
+    <td class="align-center">
+      {{thread.num_posts}}
+    </td>
+    <td class="align-right hidden-xs">
+      {% if thread.obj.last_post %}
+      <a href="{% url 'users:profile' thread.obj.last_post.user.username %}">{{thread.obj.last_post.user.username}}</a>
+      <p>{{thread.obj.last_post.created|date:'D, M d, Y'}}</p>
+      {% else %}
+      <p>No Posts</p>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+{% endblock %}
+{% block table_footer %}{% endblock %}
