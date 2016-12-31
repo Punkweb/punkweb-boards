@@ -21,27 +21,27 @@
 {% block table_body %}
 <tbody>
   {% for sub in subcategories %}
-  <tr>
+  <tr class="border-bottom">
     <td class="align-left">
-      <a href="{% url 'board:subcategory' sub.obj.id %}">{{sub.obj.name}}</a>
-      <p>
-        {{sub.obj.description.rendered}}
-      </p>
+      <p><a href="{% url 'board:subcategory' sub.obj.id %}">{{sub.obj.name}}</a></p>
+      <p>{{sub.obj.description.rendered}}</p>
       {% if sub.can_post %}
-      <a href="{% url 'board:thread-create' sub.obj.id %}">
-        <i class="fa fa-plus" aria-hidden="true"></i> Create Thread
-      </a>
+      <p>
+        <a href="{% url 'board:thread-create' sub.obj.id %}">
+          <i class="fa fa-plus" aria-hidden="true"></i> Create Thread
+        </a>
+      </p>
       {% endif %}
     </td>
     <td class="align-center">
-      {{sub.num_threads}}
+      <p>{{sub.num_threads}}</p>
     </td>
     <td class="align-center">
-      {{sub.num_posts}}
+      <p>{{sub.num_posts}}</p>
     </td>
     <td class="align-right hidden-xs">
       {% if sub.obj.last_thread %}
-      <a href="{% url 'board:thread' sub.obj.last_thread.id %}">{{sub.obj.last_thread.title|truncatechars_html:30}}</a>
+      <p><a href="{% url 'board:thread' sub.obj.last_thread.id %}">{{sub.obj.last_thread.title|truncatechars_html:30}}</a></p>
       <p>{{sub.obj.last_thread.created|date:'D, M d, Y'}}</p>
       <p>by <a href="{% url 'users:profile' sub.obj.last_thread.user.username %}">{{sub.obj.last_thread.user.username}}</a></p>
       {% else %}

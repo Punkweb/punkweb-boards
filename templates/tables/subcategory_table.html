@@ -21,19 +21,19 @@
 {% block table_body %}
 <tbody>
   {% for thread in threads %}
-  <tr>
+  <tr class="border-bottom">
     <td class="align-left">
-      <a href="{% url 'board:thread' thread.obj.id %}">{{thread.obj.title}}</a>
+      <p><a href="{% url 'board:thread' thread.obj.id %}">{{thread.obj.title}}</a></p>
     </td>
     <td class="align-left">
-      <a href="{% url 'users:profile' thread.obj.user.username %}">{{thread.obj.user.username}}</a>
+      <p><a href="{% url 'users:profile' thread.obj.user.username %}">{{thread.obj.user.username}}</a></p>
     </td>
     <td class="align-center">
-      {{thread.num_posts}}
+      <p>{{thread.num_posts}}</p>
     </td>
     <td class="align-right hidden-xs">
       {% if thread.obj.last_post %}
-      <a href="{% url 'users:profile' thread.obj.last_post.user.username %}">{{thread.obj.last_post.user.username}}</a>
+      <p><a href="{% url 'users:profile' thread.obj.last_post.user.username %}">{{thread.obj.last_post.user.username}}</a></p>
       <p>{{thread.obj.last_post.created|date:'D, M d, Y'}}</p>
       {% else %}
       <p>No Posts</p>

@@ -21,22 +21,20 @@
 {% block table_body %}
 <tbody>
   {% for child in category.children %}
-  <tr>
+  <tr class="border-bottom">
     <td class="align-left">
-      <a href="{% url 'board:subcategory' child.category.id %}">{{child.category.name}}</a>
-      <p>
-        {{child.category.description.rendered}}
-      </p>
+      <p><a href="{% url 'board:subcategory' child.category.id %}">{{child.category.name}}</a></p>
+      <p>{{child.category.description.rendered}}</p>
     </td>
     <td class="align-center">
-      {{child.num_threads}}
+      <p>{{child.num_threads}}</p>
     </td>
     <td class="align-center">
-      {{child.num_posts}}
+      <p>{{child.num_posts}}</p>
     </td>
     <td class="align-right hidden-xs">
       {% if child.category.last_thread %}
-      <a href="{% url 'board:thread' child.category.last_thread.id %}">{{child.category.last_thread.title|truncatechars_html:30}}</a>
+      <p><a href="{% url 'board:thread' child.category.last_thread.id %}">{{child.category.last_thread.title|truncatechars_html:30}}</a></p>
       <p>{{child.category.last_thread.created|date:'D, M d, Y'}}</p>
       <p>by <a href="{% url 'users:profile' child.category.last_thread.user.username %}">{{child.category.last_thread.user.username}}</a></p>
       {% else %}
