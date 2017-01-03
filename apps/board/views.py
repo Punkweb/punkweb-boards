@@ -173,12 +173,17 @@ def post_delete(request, pk):
     context = {}
     return render(request, 'board/thread_delete_form.html', context)
 
+def reports_list(request):
+    context = {
+        'reports': Report.objects.all()
+    }
+    return render(request, 'board/reports_list.html', context)
+
 def report_view(request, pk):
     context = {
         'report': Report.objects.get(id=pk)
     }
     return render(request, 'board/report_view.html', context)
-
 
 def report_create(request, thread=None, post=None):
     if request.method == 'POST':

@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^delete_post/(?P<pk>[^/]+)/$',
         views.post_delete, name='post-delete'),
 
+    url(r'^reports/$',
+        views.reports_list, name='reports-list'),
     url(r'^report/(?P<pk>[^/]+)/',
         views.report_view, name='report'),
     url(r'^report_thread/(?P<thread>[^/]+)/$',
