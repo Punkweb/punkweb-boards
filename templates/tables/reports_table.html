@@ -24,14 +24,14 @@
       <a href="{% url 'board:report' report.id %}">View</a>
     </td>
     <td class="align-left">
-      {{report.reporting_user.username}}
+      <a href="{% url 'users:profile' report.reporting_user.username %}">{{report.reporting_user.username}}</a>
     </td>
     <td class="align-left">
       {% if report.thread %}
-      {{report.thread}}
+      <a href="{% url 'board:thread' report.thread.id %}">{{report.thread}}</a>
       {% endif %}
       {% if report.post %}
-      {{report.post}}
+      <a href="{% url 'board:thread' report.post.thread.id %}">{{report.post}}</a>
       {% endif %}
     </td>
     <td class="align-right">
