@@ -35,7 +35,11 @@
       {% endif %}
     </td>
     <td class="align-right">
-      {{report.resolved}}
+      {% if report.resolved %}
+      <i class="fa fa-check" style="color: green;" aria-hidden="true"></i>
+      {% else %}
+      <i class="fa fa-times" style="color: red;" aria-hidden="true"></i>
+      {% endif %}
     </td>
   </tr>
   {% endfor %}
