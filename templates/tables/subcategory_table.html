@@ -23,7 +23,12 @@
   {% for thread in threads %}
   <tr class="border-bottom">
     <td class="align-left">
-      <p><a href="{% url 'board:thread' thread.obj.id %}">{{thread.obj.title}}</a></p>
+      <p><a href="{% url 'board:thread' thread.obj.id %}">
+        {% if thread.obj.pinned %}
+        <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+        {% endif %}
+        {{thread.obj.title}}
+      </a></p>
     </td>
     <td class="align-left">
       <p><a href="{% url 'users:profile' thread.obj.user.username %}">{{thread.obj.user.username}}</a></p>

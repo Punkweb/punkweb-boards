@@ -71,7 +71,7 @@ def subcategory_view(request, pk):
     if not category.can_view(request.user):
         return unpermitted_view(request)
     threads = []
-    for thread in category.threads.order_by('-modified'):
+    for thread in category.threads.order_by('-pinned', '-modified'):
         group = {
             'obj': thread,
             'num_posts': len(thread.posts.all()),

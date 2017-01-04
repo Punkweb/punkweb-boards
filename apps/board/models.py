@@ -95,6 +95,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
     category = models.ForeignKey(Subcategory, blank=False, null=False)
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
+    pinned = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
