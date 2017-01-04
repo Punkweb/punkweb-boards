@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from .models import Category, Subcategory, Thread, Post, Report
 from .forms import ThreadForm, PostForm, ReportForm
 
@@ -143,7 +144,9 @@ def thread_delete(request, pk):
         redirect_to = instance.category.id
         instance.delete()
         return redirect('board:subcategory', redirect_to)
-    context = {}
+    context = {
+        'object': instance
+    }
     return render(request, 'board/thread_delete_form.html', context)
 
 def post_update(request, pk):
@@ -170,8 +173,10 @@ def post_delete(request, pk):
         redirect_to = instance.thread.id
         instance.delete()
         return redirect('board:thread', redirect_to)
-    context = {}
-    return render(request, 'board/thread_delete_form.html', context)
+    context = {
+        'object': instance
+    }
+    return render(request, 'board/post_delete_form.html', context)
 
 def reports_list(request):
     context = {
@@ -180,6 +185,13 @@ def reports_list(request):
     return render(request, 'board/reports_list.html', context)
 
 def report_view(request, pk):
+    instance = Report.objects.get(id=pk)
+    if request.method == 'POST':
+        instance.resolved = True
+        instance.resolved_by = request.user
+        instance.date_resolved = timezone.now()
+        instance.save()
+        return redirect('board:reports-list')
     context = {
         'report': Report.objects.get(id=pk)
     }
