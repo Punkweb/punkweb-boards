@@ -26,7 +26,7 @@
     </td>
     <td>
       <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
-      <p>{{thread.created|date:'D, M d, Y'}}</p>
+      <p>{{thread.modified}}</p>
     </td>
   </tr>
   {% endfor %}
