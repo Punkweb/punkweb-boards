@@ -1,6 +1,6 @@
-import datetime
 from django import forms
 from django.shortcuts import redirect
+from django.utils import timezone
 from .models import Thread, Post, Shout, Report
 
 
@@ -35,7 +35,8 @@ class PostForm(forms.ModelForm):
         obj = super(PostForm, self).save(commit=False)
         if thread:
             obj.thread = thread
-            obj.thread.modified = datetime.datetime.now()
+            obj.thread.modified = timezone.now()
+            obj.thread.save()
         if set_user:
             obj.user = self.request.user
         if commit:

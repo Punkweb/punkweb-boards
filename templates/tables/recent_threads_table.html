@@ -17,7 +17,7 @@
 {% endblock %}
 {% block table_body %}
 <tbody>
-  {% for thread in recent_activity %}
+  {% for thread in recent_threads %}
   <tr>
     <td>
       <a href="{% url 'users:profile' thread.user.username %}">
