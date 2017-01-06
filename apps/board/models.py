@@ -198,14 +198,14 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
 
 
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
-    reporting_user = models.ForeignKey(
-        EmailUser, related_name='reports_created', blank=False, null=False)
+    reporting_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+        related_name='reports_created', blank=False, null=False)
     reason = models.TextField(max_length=1024, blank=False, null=False)
     thread = models.ForeignKey(Thread, blank=True, null=True, default=None)
     post = models.ForeignKey(Post, blank=True, null=True, default=None)
     resolved = models.BooleanField(default=False)
-    resolved_by = models.ForeignKey(
-        EmailUser, related_name='reports_resolved', blank=True, null=True)
+    resolved_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+        related_name='reports_resolved', blank=True, null=True)
     date_resolved = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
