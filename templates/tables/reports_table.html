@@ -11,7 +11,7 @@
       Thread/Post
     </th>
     <th class="align-right">
-      Closed?
+      Resolved?
     </th>
   </tr>
 </thead>
@@ -24,18 +24,22 @@
       <a href="{% url 'board:report' report.id %}">View</a>
     </td>
     <td class="align-left">
-      {{report.reporting_user.username}}
+      <a href="{% url 'users:profile' report.reporting_user.username %}">{{report.reporting_user.username}}</a>
     </td>
     <td class="align-left">
       {% if report.thread %}
-      {{report.thread}}
+      <a href="{% url 'board:thread' report.thread.id %}">{{report.thread}}</a>
       {% endif %}
       {% if report.post %}
-      {{report.post}}
+      <a href="{% url 'board:thread' report.post.thread.id %}">{{report.post}}</a>
       {% endif %}
     </td>
     <td class="align-right">
-      {{report.closed}}
+      {% if report.resolved %}
+      <i class="fa fa-check" style="color: green;" aria-hidden="true"></i>
+      {% else %}
+      <i class="fa fa-times" style="color: red;" aria-hidden="true"></i>
+      {% endif %}
     </td>
   </tr>
   {% endfor %}

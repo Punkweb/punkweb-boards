@@ -95,6 +95,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
     category = models.ForeignKey(Subcategory, blank=False, null=False)
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
+    pinned = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}, {}'.format(self.title, self.created)
@@ -117,7 +118,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
 
     @property
     def reported(self):
-        if len(Report.objects.filter(thread__id=self.id, closed=False)) >= 1:
+        if len(Report.objects.filter(thread__id=self.id, resolved=False)) >= 1:
             return True
         else:
             return False
@@ -143,7 +144,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
 
     def __str__(self):
         return '{}\'s post on {} {}'.format(
-            self.user, self.thread, self.created)
+            self.user, self.thread, self.created.strftime("%Y-%m-%d %H:%M"))
 
     def can_edit(self, user):
         if user.is_authenticated and user.is_banned:
@@ -156,7 +157,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
 
     @property
     def reported(self):
-        if len(Report.objects.filter(post__id=self.id, closed=False)) >= 1:
+        if len(Report.objects.filter(post__id=self.id, resolved=False)) >= 1:
             return True
         else:
             return False
@@ -198,11 +199,14 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
 
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
     reporting_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=False, null=False)
+        EmailUser, related_name='reports_created', blank=False, null=False)
     reason = models.TextField(max_length=1024, blank=False, null=False)
     thread = models.ForeignKey(Thread, blank=True, null=True, default=None)
     post = models.ForeignKey(Post, blank=True, null=True, default=None)
-    closed = models.BooleanField(default=False)
+    resolved = models.BooleanField(default=False)
+    resolved_by = models.ForeignKey(
+        EmailUser, related_name='reports_resolved', blank=True, null=True)
+    date_resolved = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         if thread:

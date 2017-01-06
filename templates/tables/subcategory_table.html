@@ -23,7 +23,14 @@
   {% for thread in threads %}
   <tr class="border-bottom">
     <td class="align-left">
-      <p><a href="{% url 'board:thread' thread.obj.id %}">{{thread.obj.title}}</a></p>
+      <p>
+        {% if thread.obj.pinned %}
+        <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+        {% endif %}
+        <a href="{% url 'board:thread' thread.obj.id %}">
+          {{thread.obj.title}}
+        </a>
+      </p>
     </td>
     <td class="align-left">
       <p><a href="{% url 'users:profile' thread.obj.user.username %}">{{thread.obj.user.username}}</a></p>
@@ -34,7 +41,7 @@
     <td class="align-right hidden-xs">
       {% if thread.obj.last_post %}
       <p><a href="{% url 'users:profile' thread.obj.last_post.user.username %}">{{thread.obj.last_post.user.username}}</a></p>
-      <p>{{thread.obj.last_post.created|date:'D, M d, Y'}}</p>
+      <p>{{thread.obj.last_post.created}}</p>
       {% else %}
       <p>No Posts</p>
       {% endif %}

@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
+<<<<<<< HEAD
 from .models import Category, Subcategory, Thread, Post, Conversation, Message, \
 Report
+=======
+from django.utils import timezone
+from .models import Category, Subcategory, Thread, Post, Report
+>>>>>>> f8e6fb215bfc0ae21fda46128a7ddf5380104e78
 from .forms import ThreadForm, PostForm, ReportForm
 
 def recent_threads():
@@ -71,7 +76,7 @@ def subcategory_view(request, pk):
     if not category.can_view(request.user):
         return unpermitted_view(request)
     threads = []
-    for thread in category.threads.order_by('-modified'):
+    for thread in category.threads.order_by('-pinned', '-modified'):
         group = {
             'obj': thread,
             'num_posts': len(thread.posts.all()),
@@ -144,7 +149,9 @@ def thread_delete(request, pk):
         redirect_to = instance.category.id
         instance.delete()
         return redirect('board:subcategory', redirect_to)
-    context = {}
+    context = {
+        'object': instance
+    }
     return render(request, 'board/thread_delete_form.html', context)
 
 def post_update(request, pk):
@@ -171,8 +178,10 @@ def post_delete(request, pk):
         redirect_to = instance.thread.id
         instance.delete()
         return redirect('board:thread', redirect_to)
-    context = {}
-    return render(request, 'board/thread_delete_form.html', context)
+    context = {
+        'object': instance
+    }
+    return render(request, 'board/post_delete_form.html', context)
 
 def conversations_list(request):
     if request.user.is_authenticated and request.user.is_banned:
@@ -190,6 +199,13 @@ def reports_list(request):
     return render(request, 'board/reports_list.html', context)
 
 def report_view(request, pk):
+    instance = Report.objects.get(id=pk)
+    if request.method == 'POST':
+        instance.resolved = True
+        instance.resolved_by = request.user
+        instance.date_resolved = timezone.now()
+        instance.save()
+        return redirect('board:reports-list')
     context = {
         'report': Report.objects.get(id=pk)
     }

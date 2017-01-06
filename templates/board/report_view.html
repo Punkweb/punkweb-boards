@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 {% block title %}Report{% endblock %}
 
 {% block content %}
@@ -52,8 +54,14 @@
       </div>
     </div>
     {% endif %}
+    <div class="row">
+      <div class="col-xs-12">
+        <form method="post">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-success" value="Mark as Resolved" />
+        </form>
+      </div>
+    </div>
   </div>
 </div>
-
-
 {% endblock %}

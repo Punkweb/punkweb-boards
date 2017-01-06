@@ -35,7 +35,7 @@
     <td class="align-right hidden-xs">
       {% if child.category.last_thread %}
       <p><a href="{% url 'board:thread' child.category.last_thread.id %}">{{child.category.last_thread.title|truncatechars_html:30}}</a></p>
-      <p>{{child.category.last_thread.created|date:'D, M d, Y'}}</p>
+      <p>{{child.category.last_thread.created}}</p>
       <p>by <a href="{% url 'users:profile' child.category.last_thread.user.username %}">{{child.category.last_thread.user.username}}</a></p>
       {% else %}
       <p>No Threads</p>
