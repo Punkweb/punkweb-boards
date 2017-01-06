@@ -209,11 +209,12 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
     date_resolved = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        if thread:
-            in_question = thread
-        if post:
-            in_question = post
-        return '{}\'s report on {}'.format(reporting_user.username, in_question)
+        if self.thread:
+            in_question = self.thread
+        if self.post:
+            in_question = self.post
+        return '{}\'s report on {}'.format(
+            self.reporting_user.username, in_question)
 
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):

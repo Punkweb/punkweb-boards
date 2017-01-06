@@ -22,17 +22,17 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="{% url 'users:me' %}">View Provile</a></li>
-            <li><a href="{% url 'users:settings' %}">Settings</a></li>
+            <li><a href="{% url 'board:me' %}">View Provile</a></li>
+            <li><a href="{% url 'board:settings' %}">Settings</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            <li><a href="{% url 'board:logout' %}">Logout</a></li>
           </ul>
         </li>
       </ul>
       {% else %}
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'users:register' %}">Sign Up</a></li>
-        <li><a href="{% url 'users:login' %}">Login</a></li>
+        <li><a href="{% url 'board:register' %}">Sign Up</a></li>
+        <li><a href="{% url 'board:login' %}">Login</a></li>
       </ul>
       {% endif %}
     </div>

@@ -54,6 +54,7 @@
       </div>
     </div>
     {% endif %}
+    {% if not report.resolved %}
     <div class="row">
       <div class="col-xs-12">
         <form method="post">
@@ -62,6 +63,7 @@
         </form>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

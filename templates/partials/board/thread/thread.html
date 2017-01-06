@@ -1,6 +1,6 @@
 <div class="page-header">
   <h4><span style="font-weight: bold;">{{thread.title}}</span> by
-    <a href="{% url 'users:profile' thread.user.username %}">
+    <a href="{% url 'board:profile' thread.user.username %}">
       {{thread.user.username}}
     </a>
     <small class="pull-right">

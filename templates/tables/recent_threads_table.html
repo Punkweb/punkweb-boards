@@ -1,12 +1,5 @@
 {% extends 'base/base_table.html' %}
 
-<div class="row">
-  <div class="col-xs-1 col-md-2">
-  </div>
-  <div class="col-xs-11 col-md-10">
-  </div>
-</div>
-
 {% block table_header %}
 <thead>
   <tr>
@@ -20,13 +13,13 @@
   {% for thread in recent_threads %}
   <tr>
     <td>
-      <a href="{% url 'users:profile' thread.user.username %}">
+      <a href="{% url 'board:profile' thread.user.username %}">
         <img src="{{thread.user.avatar}}" alt="{{thread.user.name}}" />
       </a>
     </td>
     <td>
       <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
-      <p>{{thread.modified}}</p>
+      <p>{{thread.created}}</p>
     </td>
   </tr>
   {% endfor %}

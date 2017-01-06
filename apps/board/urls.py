@@ -1,9 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from . import views
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),
+    url(r'^', include('apps.users.urls')),
     url(r'^unpermitted/$',
         views.unpermitted_view, name='unpermitted'),
 
@@ -36,5 +37,5 @@ urlpatterns = [
     url(r'^report_thread/(?P<thread>[^/]+)/$',
         views.report_create, name='report-thread'),
     url(r'^report_post/(?P<post>[^/]+)/$',
-        views.report_create, name='report-post')
+        views.report_create, name='report-post'),
 ]
