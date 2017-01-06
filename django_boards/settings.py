@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'apps.common',
     'apps.users',
     'apps.board',
-    'apps.conversations'
 ]
 
 # Auth Configuration

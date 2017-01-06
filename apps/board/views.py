@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Category, Subcategory, Thread, Post, Report
+from .models import Category, Subcategory, Thread, Post, Conversation, Message, \
+Report
 from .forms import ThreadForm, PostForm, ReportForm
 
 def recent_threads():
@@ -172,6 +173,15 @@ def post_delete(request, pk):
         return redirect('board:thread', redirect_to)
     context = {}
     return render(request, 'board/thread_delete_form.html', context)
+
+def conversations_list(request):
+    if request.user.is_authenticated and request.user.is_banned:
+        return redirect('board:unpermitted')
+    conversations = request.user.conversations.all()
+    context = {
+        'conversations': conversations
+    }
+    return render(request, 'board/conversations_list.html', context)
 
 def reports_list(request):
     context = {

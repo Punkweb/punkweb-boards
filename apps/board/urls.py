@@ -14,6 +14,9 @@ urlpatterns = [
     url(r'^thread/(?P<pk>[^/]+)/$',
         views.thread_view, name='thread'),
 
+    url(r'^messages/$',
+        views.conversations_list, name='conversations-list'),
+
     url(r'^create_thread/(?P<category_id>[^/]+)/$',
         views.thread_create, name='thread-create'),
     url(r'^update_thread/(?P<pk>[^/]+)/$',

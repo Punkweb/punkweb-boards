@@ -1,5 +1,6 @@
 from django.contrib import admin
-from apps.board.models import Category, Subcategory, Thread, Post, Shout, Report
+from .models import Category, Subcategory, Thread, Post, Shout, Report, \
+Conversation, Message
 
 
 class SubcategoryInline(admin.TabularInline):
@@ -28,8 +29,22 @@ class ThreadAdmin(admin.ModelAdmin):
     ordering = ('title', )
 
 
+class MessageInline(admin.TabularInline):
+    model = Message
+    fields = ('user', 'content',)
+    ordering = ('created', )
+
+
+class ConversationAdmin(admin.ModelAdmin):
+    inlines = [
+        MessageInline,
+    ]
+    list_display = ('subject', )
+    ordering = ('created', )
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)
-admin.site.register(Post)
-admin.site.register(Shout)
+admin.site.register(Conversation, ConversationAdmin)
 admin.site.register(Report)
+admin.site.register(Shout)

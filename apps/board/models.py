@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from precise_bbcode.fields import BBCodeTextField
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
-from apps.users.models import EmailUser
 
 
 class Category(UUIDPrimaryKey):
@@ -90,14 +90,14 @@ class Subcategory(UUIDPrimaryKey):
 
 
 class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(
-        EmailUser, related_name='threads', blank=False, null=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+        related_name='threads', blank=False, null=False)
     category = models.ForeignKey(Subcategory, blank=False, null=False)
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     def __str__(self):
-        return self.title
+        return '{}, {}'.format(self.title, self.created)
 
     def can_view(self, user):
         if user.is_authenticated and user.is_banned:
@@ -136,7 +136,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
 
 class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(
-        EmailUser, related_name='posts', blank=False, null=False)
+        settings.AUTH_USER_MODEL, related_name='posts', blank=False, null=False)
     thread = models.ForeignKey(
         Thread, related_name='posts', blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
@@ -165,16 +165,55 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
         return reverse('board:thread', kwargs={'pk': self.thread.id})
 
 
+class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
+    users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='conversations')
+    subject = models.TextField(
+        max_length=140, blank=True, null=True, default='No subject')
+    unread_by = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='unread_conversations')
+
+    def __str__(self):
+        return self.subject
+
+    def get_absolute_url(self):
+        return reverse('board:messages') # TODO Actual url
+
+
+class Message(UUIDPrimaryKey, CreatedModifiedMixin):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='sent_messages')
+    conversation = models.ForeignKey(Conversation, related_name='messages')
+    content = BBCodeTextField(max_length=10000, blank=False, null=False)
+
+    class Meta:
+        ordering = ('created', )
+
+    def __str__(self):
+        return self.user.username
+
+    def get_absolute_url(self):
+        return reverse('board:messages') # TODO Actual url
+
+
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
-    reporting_user = models.ForeignKey(EmailUser, blank=False, null=False)
+    reporting_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=False, null=False)
     reason = models.TextField(max_length=1024, blank=False, null=False)
     thread = models.ForeignKey(Thread, blank=True, null=True, default=None)
     post = models.ForeignKey(Post, blank=True, null=True, default=None)
     closed = models.BooleanField(default=False)
 
+    def __str__(self):
+        if thread:
+            in_question = thread
+        if post:
+            in_question = post
+        return '{}\'s report on {}'.format(reporting_user.username, in_question)
+
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(EmailUser, blank=False, null=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, null=False)
     content = BBCodeTextField(max_length=280, blank=False, null=False)
 
     class Meta:
