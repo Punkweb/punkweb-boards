@@ -47,7 +47,7 @@ def index_view(request):
     return render(request, 'board/index.html', context)
 
 def unpermitted_view(request):
-    return render(request, 'unpermitted.html', {})
+    return render(request, 'board/unpermitted.html', {})
 
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
