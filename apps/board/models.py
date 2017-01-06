@@ -65,7 +65,7 @@ class Subcategory(UUIDPrimaryKey):
     def can_post(self, user):
         if user.is_authenticated and user.is_banned:
             return False
-        if self.admin_req and user.is_authenticated and user.is_admin:
+        if self.admin_req and user.is_authenticated and user.is_staff:
             return True
         if not self.admin_req and user.is_authenticated:
             return True
@@ -110,7 +110,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
     def can_edit(self, user):
         if user.is_authenticated and user.is_banned:
             return False
-        if user.is_authenticated and user.is_admin:
+        if user.is_authenticated and user.is_staff:
             return True
         if self.user.id == user.id:
             return True
@@ -149,7 +149,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     def can_edit(self, user):
         if user.is_authenticated and user.is_banned:
             return False
-        if user.is_authenticated and user.is_admin:
+        if user.is_authenticated and user.is_staff:
             return True
         if self.user.id == user.id:
             return True

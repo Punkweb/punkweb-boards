@@ -3,7 +3,7 @@
     {{thread.content.rendered}}
   </div>
 </div>
-{% if thread.reported and user.is_authenticated and user.is_admin %}
+{% if thread.reported and user.is_authenticated and user.is_staff %}
 <div class="alert alert-warning" style="margin: 1rem" role="alert">
   <p>
     This thread has open reports.
@@ -23,7 +23,7 @@
     {% if user.is_authenticated and thread.user.id != user.id %}
     <a href="{% url 'board:report-thread' thread.id %}" class="btn btn-default" name="button">Report</a>
     {% endif %}
-    {% if user.is_authenticated and user.id == thread.user.id or user.is_admin %}
+    {% if user.is_authenticated and user.id == thread.user.id or user.is_staff %}
     <a href="{% url 'board:thread-update' thread.id %}" class="btn btn-success" name="button">Update</a>
     <a href="{% url 'board:thread-delete' thread.id %}" class="btn btn-danger" name="button">Delete</a>
     {% endif %}

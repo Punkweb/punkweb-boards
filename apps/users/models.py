@@ -1,3 +1,4 @@
+import datetime
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
 	PermissionsMixin
@@ -61,7 +62,7 @@ class EmailUserManager(BaseUserManager):
 
 	def create_superuser(self, email, username, password=None, **kwargs):
 		user = self.create_user(email, username, password, **kwargs)
-		user.is_admin = True
+		user.is_superuser = True
 		user.save()
 		return user
 
@@ -79,11 +80,9 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 	signature = BBCodeTextField(max_length=140, blank=True, null=True)
 	gender = models.CharField(null=True, blank=True, max_length=1,
 		choices=GENDER_CHOICES, default=None)
-	birthdate = models.DateField(
+	birthday = models.DateField(
 		null=True, blank=True, verbose_name='Birth date')
 
-	# special rights
-	is_admin = models.BooleanField(default=False)
 	is_banned = models.BooleanField(default=False)
 
 	USERNAME_FIELD = 'email'
@@ -98,27 +97,37 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 	def __str__(self):
 		return self.username
 
-	@property
-	def num_posts(self):
-		return len(self.threads.all()) + len(self.posts.all())
-
 	def get_full_name(self):
 		return self.username
 
 	def get_short_name(self):
 		return self.username
 
+	@property
 	def is_staff(self):
-		return self.is_admin
+		return self.is_superuser
 
-	def is_superuser(self):
-		return self.is_admin
+	@property
+	def num_posts(self):
+		return len(self.threads.all()) + len(self.posts.all())
 
-	def has_perm(self, obj=None):
-		return self.is_admin
+	@property
+	def age(self):
+		# Ugly but hey, it works.
+		if not self.birthday:
+			return 0
+		today = datetime.date.today()
+		return (today.year - self.birthday.year -
+					((today.month, today.day) <
+						(self.birthday.month, self.birthday.day)))
 
-	def has_perms(self, obj=None):
-		return self.is_admin
-
-	def has_module_perms(self, app_label):
-		return self.is_admin
+	@property
+	def birthday_today(self):
+		if self.birthday is None:
+			return False
+		today = datetime.date.today()
+		match = self.birthday.day == today.day and \
+					self.birthday.month == today.month
+		if match:
+			return True
+		return False
