@@ -43,12 +43,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'easy_thumbnails',
     'apps.common',
-    'apps.users',
     'apps.board',
 ]
 
 # Auth Configuration
-AUTH_USER_MODEL = 'users.EmailUser'
+AUTH_USER_MODEL = 'board.EmailUser'
 LOGIN_REDIRECT_URL = '/board/'
 
 MIDDLEWARE = [

@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Category, Subcategory, Thread, Post, Shout, Report, \
-Conversation, Message
+from .models import EmailUser, Category, Subcategory, Thread, Post, Shout, \
+Conversation, Message, Report
 
 
 class SubcategoryInline(admin.TabularInline):
@@ -43,6 +43,7 @@ class ConversationAdmin(admin.ModelAdmin):
     ordering = ('created', )
 
 
+admin.site.register(EmailUser)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)
 admin.site.register(Conversation, ConversationAdmin)

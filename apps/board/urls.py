@@ -1,12 +1,21 @@
 from django.conf.urls import url, include
+import django.contrib.auth.views as auth_views
 
 from . import views
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),
-    url(r'^', include('apps.users.urls')),
     url(r'^unpermitted/$',
         views.unpermitted_view, name='unpermitted'),
+
+    url(r'^register', views.register_view, name='register'),
+    url(r'^login/$',
+        auth_views.login, {'template_name': 'board/login.html'}, name='login'),
+    url(r'^logout/$',
+        auth_views.logout, {'next_page': '/users/login/'}, name='logout'),
+    url(r'^me/$', views.my_profile, name='me'),
+    url(r'^settings/$', views.settings_view, name='settings'),
+    url(r'^profile/(?P<username>[^/]+)/$', views.profile_view, name='profile'),
 
     url(r'^category/(?P<pk>[^/]+)/$',
         views.category_view, name='category'),
@@ -14,7 +23,6 @@ urlpatterns = [
         views.subcategory_view, name='subcategory'),
     url(r'^thread/(?P<pk>[^/]+)/$',
         views.thread_view, name='thread'),
-
     url(r'^messages/$',
         views.conversations_list, name='conversations-list'),
 
