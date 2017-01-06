@@ -5,19 +5,15 @@
 {% block title %}Unpermitted{% endblock %}
 
 {% block content %}
-
 <h2>
   Unpermitted
 </h2>
-
 <p>
 You will be redirected to the index in 2 seconds.
 </p>
-
 <script>
   setTimeout(function() {
     window.location.href = '/board/';
   }, 2000);
 </script>
-
 {% endblock %}
