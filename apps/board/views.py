@@ -1,11 +1,7 @@
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
+from django.utils import timezone
 from .models import Category, Subcategory, Thread, Post, Conversation, Message, \
 Report
-=======
-from django.utils import timezone
-from .models import Category, Subcategory, Thread, Post, Report
->>>>>>> f8e6fb215bfc0ae21fda46128a7ddf5380104e78
 from .forms import ThreadForm, PostForm, ReportForm
 
 def recent_threads():
