@@ -8,11 +8,10 @@ urlpatterns = [
     url(r'^unpermitted/$',
         views.unpermitted_view, name='unpermitted'),
 
-    url(r'^register', views.register_view, name='register'),
     url(r'^login/$',
         auth_views.login, {'template_name': 'board/login.html'}, name='login'),
     url(r'^logout/$',
-        auth_views.logout, {'next_page': '/users/login/'}, name='logout'),
+        auth_views.logout, {'next_page': '/board/login/'}, name='logout'),
     url(r'^me/$', views.my_profile, name='me'),
     url(r'^settings/$', views.settings_view, name='settings'),
     url(r'^profile/(?P<username>[^/]+)/$', views.profile_view, name='profile'),

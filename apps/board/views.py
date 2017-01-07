@@ -49,10 +49,6 @@ def index_view(request):
 def unpermitted_view(request):
     return render(request, 'board/unpermitted.html', {})
 
-def register_view(request):
-    context = {}
-    return render(request, 'board/register.html', context)
-
 def my_profile(request):
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
