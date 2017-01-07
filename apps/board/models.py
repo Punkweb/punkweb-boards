@@ -133,6 +133,9 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 			return True
 		return False
 
+	def get_absolute_url(self):
+		return reverse('board:profile', self.id)
+
 
 class Category(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False, unique=True)
@@ -345,6 +348,9 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
         return '{}\'s report on {}'.format(
             self.reporting_user.username, in_question)
 
+    def get_absolute_url(self):
+        return reverse('board:report', self.id)
+
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, null=False)
@@ -355,3 +361,6 @@ class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
 
     def __str__(self):
         return str(self.user)
+
+    def get_absolute_url(self):
+        return reverse('board:index') # TODO Actual url
