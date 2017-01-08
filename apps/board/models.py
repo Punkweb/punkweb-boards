@@ -134,7 +134,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 		return False
 
 	def get_absolute_url(self):
-		return reverse('board:profile', self.id)
+		return reverse('board:profile', self.username)
 
 
 class Category(UUIDPrimaryKey):

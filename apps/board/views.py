@@ -39,10 +39,15 @@ def index_view(request):
             category__auth_req=False)
         recent_activity_data = recent_activity_data.filter(
             category__auth_req=False)
+
+    newest_member = EmailUser.objects.all().order_by('-created').first()
+    member_count = EmailUser.objects.all().count()
     context = {
         'categories': category_groups,
         'recent_threads': recent_thread_data[:5],
-        'recent_activity': recent_activity_data[:5]
+        'recent_activity': recent_activity_data[:5],
+        'newest_member': newest_member,
+        'member_count': member_count
     }
     return render(request, 'board/index.html', context)
 

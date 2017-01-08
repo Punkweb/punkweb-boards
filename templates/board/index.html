@@ -7,7 +7,6 @@
 {% block content %}
 <div class="row">
   <div class="col-xs-12 col-md-8">
-
     {% for category in categories %}
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -21,6 +20,15 @@
   </div>
   <div class="col-xs-12 col-md-4">
     {% include 'partials/board/index/side_section.html' %}
+  </div>
+  <div class="col-xs-12">
+    <p>The newest member to the forum is
+      <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.username}}</a></p>
+    <p>Total member count: {{member_count}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
   </div>
 </div>
 {% endblock %}
