@@ -5,6 +5,14 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
+<!-- Birthday message -->
+{% if user.birthday_today %}
+<p>
+  <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+  Happy Birthday!
+  <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+</p>
+{% endif %}
 <div class="row">
   <div class="col-xs-12 col-md-8">
     {% for category in categories %}
