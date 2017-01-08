@@ -260,6 +260,10 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
         return Post.objects.filter(thread__id=self.id).select_related()
 
     @property
+    def posts_count(self):
+        return len(self.posts.all())
+
+    @property
     def last_post(self):
         return self.posts.order_by('-created').first()
 

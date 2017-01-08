@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from .models import EmailUser, Category, Subcategory, Thread, Post, Shout, \
@@ -97,13 +98,15 @@ def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
     if not category.can_view(request.user):
         return unpermitted_view(request)
-    threads = []
-    for thread in category.threads.order_by('-pinned', '-modified'):
-        group = {
-            'obj': thread,
-            'num_posts': len(thread.posts.all()),
-        }
-        threads.append(group)
+    # Paginate threads
+    paginator = Paginator(category.threads.order_by('-pinned', '-modified'), 25)
+    page = request.GET.get('page')
+    try:
+        threads = paginator.page(page)
+    except PageNotAnInteger:
+        threads = paginator.page(1)
+    except EmptyPage:
+        threads = paginator.page(paginator.num_pages)
     context = {
         'can_post': category.can_post(request.user),
         'category': category,
@@ -124,9 +127,18 @@ def thread_view(request, pk):
             return redirect('board:thread', pk)
     else:
         form = PostForm(request)
+    # Paginate posts
+    paginator = Paginator(thread.posts.all(), 10)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     context = {
         'thread': thread,
-        'posts': thread.posts.all(),
+        'posts': posts,
         'post_form': form,
     }
     return render(request, 'board/thread_view.html', context)

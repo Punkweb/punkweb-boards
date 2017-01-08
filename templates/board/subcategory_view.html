@@ -29,4 +29,19 @@
   </div>
   {% include 'tables/subcategory_table.html' %}
 </div>
+<nav aria-label="...">
+  <ul class="pager">
+    {% if threads.has_previous %}
+    <li><a href="?page={{threads.previous_page_number}}">Previous</a></li>
+    {% else %}
+    <li class="disabled"><a>Previous</a></li>
+    {% endif %}
+    <li>Page {{threads.number}} of {{threads.paginator.num_pages}}</li>
+    {% if threads.has_next %}
+    <li><a href="?page={{threads.next_page_number}}">Next</a></li>
+    {% else %}
+    <li class="disabled"><a>Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
 {% endblock %}

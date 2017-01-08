@@ -14,12 +14,31 @@
 {% endblock %}
 
 {% block content %}
+{% if posts.number == 1 %}
 {% include 'partials/board/thread/thread.html' %}
+{% endif %}
 {% if posts %}
 {% for post in posts %}
 {% include 'partials/board/thread/post.html' %}
 {% endfor %}
 {% endif %}
+<center>
+  <nav aria-label="...">
+    <ul class="pager">
+      {% if posts.has_previous %}
+      <li><a href="?page={{posts.previous_page_number}}">Previous</a></li>
+      {% else %}
+      <li class="disabled"><a>Previous</a></li>
+      {% endif %}
+      <li>Page {{posts.number}} of {{posts.paginator.num_pages}}</li>
+      {% if posts.has_next %}
+      <li><a href="?page={{posts.next_page_number}}">Next</a></li>
+      {% else %}
+      <li class="disabled"><a>Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</center>
 {% if user.is_authenticated %}
 {% include 'partials/board/thread/new_post.html' %}
 {% endif %}

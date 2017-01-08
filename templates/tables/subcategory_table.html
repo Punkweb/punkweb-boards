@@ -24,24 +24,24 @@
   <tr class="border-bottom">
     <td class="align-left">
       <p>
-        {% if thread.obj.pinned %}
+        {% if thread.pinned %}
         <i class="fa fa-thumb-tack" aria-hidden="true"></i>
         {% endif %}
-        <a href="{% url 'board:thread' thread.obj.id %}">
-          {{thread.obj.title}}
+        <a href="{% url 'board:thread' thread.id %}">
+          {{thread.title}}
         </a>
       </p>
     </td>
     <td class="align-left">
-      <p><a href="{% url 'board:profile' thread.obj.user.username %}">{{thread.obj.user.username}}</a></p>
+      <p><a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a></p>
     </td>
     <td class="align-center">
-      <p>{{thread.num_posts}}</p>
+      <p>{{thread.posts_count}}</p>
     </td>
     <td class="align-right hidden-xs">
-      {% if thread.obj.last_post %}
-      <p><a href="{% url 'board:profile' thread.obj.last_post.user.username %}">{{thread.obj.last_post.user.username}}</a></p>
-      <p>{{thread.obj.last_post.created}}</p>
+      {% if thread.last_post %}
+      <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
+      <p>{{thread.last_post.created}}</p>
       {% else %}
       <p>No Posts</p>
       {% endif %}
