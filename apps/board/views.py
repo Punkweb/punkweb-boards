@@ -118,17 +118,8 @@ def thread_view(request, pk):
     thread = Thread.objects.get(id=pk)
     if not thread.can_view(request.user):
         return unpermitted_view(request)
-    if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return unpermitted_view(request)
-        form = PostForm(request, request.POST)
-        if form.is_valid():
-            form.save(thread=thread, set_user=True)
-            return redirect('board:thread', pk)
-    else:
-        form = PostForm(request)
     # Paginate posts
-    paginator = Paginator(thread.posts.all(), 10)
+    paginator = Paginator(thread.posts.order_by('created'), 10)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -136,6 +127,16 @@ def thread_view(request, pk):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return unpermitted_view(request)
+        form = PostForm(request, request.POST)
+        if form.is_valid():
+            form.save(thread=thread, set_user=True)
+            return redirect('/board/thread/{}/?page={}'.format(
+                thread.id, paginator.num_pages))
+    else:
+        form = PostForm(request)
     context = {
         'thread': thread,
         'posts': posts,
