@@ -1,5 +1,11 @@
 {% extends 'base/base_table.html' %}
 
+{% block table_caption %}
+{% if category.description.rendered %}
+<caption>{{category.description.rendered}}</caption>
+{% endif %}
+{% endblock %}
+
 {% block table_header %}
 <thead>
   <tr>
@@ -19,7 +25,7 @@
 </thead>
 {% endblock %}
 {% block table_body %}
-<tbody>
+<tbody class="striped">
   {% for thread in threads %}
   <tr class="border-bottom">
     <td class="align-left">

@@ -1,12 +1,6 @@
 html, body {
-  margin: 0;
-  padding: 0;
   min-width: 425px;
   width: 100%;
-
-  font-size: 100%;
-  font-family: Helvetica, sans-serif;
-  font-weight: 500;
 }
 
 /* List styling */
@@ -16,32 +10,8 @@ ul {
   padding: 0;
 }
 
-/* Remove shadow and outline on focus */
-input[type=name], input[type=email], input[type=text], input[type=tel], input[type=submit],
-input[type=number], input[type=password], input[type=button] textarea, button, a, select {
-  outline: none !important;
-  box-shadow: 0, 0, 0, transparent;
-  text-decoration: none;
-}
-input[type=name]:focus, input[type=email]:focus, input[type=text]:focus, input[type=tel]:focus, input[type=submit]:focus,
-input[type=number]:focus, input[type=password]:focus, input[type=button] textarea:focus, button:focus, a:focus, select:focus {
-  outline: none !important;
-  box-shadow: 0, 0, 0, transparent;
-  text-decoration: none;
-}
-
-input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus {
-  outline: none;
-  box-shadow: 0, 0, 0, transparent;
-}
-
 /* images can't be wider than their containers */
 img, iframe {
-  max-width: 100%;
-}
-
-input[type=name], input[type=email], input[type=text], input[type=tel],
-input[type=number], input[type=password], textarea, select {
   max-width: 100%;
 }
 

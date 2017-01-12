@@ -1,5 +1,11 @@
 {% extends 'base/base_table.html' %}
 
+{% block table_caption %}
+{% if category.description.rendered %}
+<caption>{{category.description.rendered}}</caption>
+{% endif %}
+{% endblock %}
+
 {% block table_header %}
 <thead>
   <tr>

@@ -13,14 +13,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
     {{category.name}}
   </div>
   <div class="panel-body">
-    {% if category.description.rendered %}
-    {{category.description.rendered}}
-    {% endif %}
     {% if can_post %}
     <a href="{% url 'board:thread-create' category.id %}" class="pull-right">
       <i class="fa fa-plus" aria-hidden="true"></i> Create Thread

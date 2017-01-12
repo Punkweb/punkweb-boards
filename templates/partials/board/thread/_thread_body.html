@@ -5,9 +5,7 @@
 </div>
 {% if thread.reported and user.is_authenticated and user.is_staff %}
 <div class="alert alert-warning" style="margin: 1rem" role="alert">
-  <p>
-    This thread has open reports.
-  </p>
+  <p>This thread has open reports.</p>
 </div>
 {% endif %}
 {% if thread.user.signature.rendered %}

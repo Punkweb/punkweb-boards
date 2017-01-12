@@ -1,23 +1,15 @@
 {% extends 'base/base_table.html' %}
 
-{% block table_header %}
-<thead>
-  <tr>
-    <th width="15%"></th>
-    <th class="align-left" width="85%">Thread Title</th>
-  </tr>
-</thead>
-{% endblock %}
 {% block table_body %}
 <tbody>
   {% for thread in recent_activity %}
-  <tr>
+  <tr width="15%">
     <td>
       <a href="{% url 'board:profile' thread.user.username %}">
         <img src="{{thread.user.avatar}}" alt="{{thread.user.name}}" />
       </a>
     </td>
-    <td>
+    <td class="align-left" width="85%">
       <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
       <p>{{thread.modified}}</p>
     </td>

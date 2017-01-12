@@ -1,14 +1,7 @@
-<div class="well well-sm">
-  <ul>
-    <li>
-      <center>
-        <a href="{% url 'board:profile' post.user.username %}">
-          <img src="{{post.user.avatar_small}}" alt="..." />
-        </a>
-      </center>
-    </li>
-    <li>
-      Posts: {{post.user.num_posts}}
-    </li>
-  </ul>
+<div class="well">
+  <center>
+    <a href="{% url 'board:profile' post.user.username %}">
+      <img src="{{post.user.avatar_small}}" alt="..." />
+    </a>
+  </center>
 </div>
