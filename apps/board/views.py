@@ -99,7 +99,7 @@ def subcategory_view(request, pk):
     if not category.can_view(request.user):
         return unpermitted_view(request)
     # Paginate threads
-    paginator = Paginator(category.threads.order_by('-pinned', '-modified'), 25)
+    paginator = Paginator(category.threads.order_by('-pinned', '-modified'), 20)
     page = request.GET.get('page')
     try:
         threads = paginator.page(page)

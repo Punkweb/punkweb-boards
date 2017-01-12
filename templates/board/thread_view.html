@@ -23,18 +23,28 @@
 {% endfor %}
 {% endif %}
 <center>
-  <nav aria-label="...">
-    <ul class="pager">
+  <nav>
+    <ul class="pagination">
       {% if posts.has_previous %}
-      <li><a href="?page={{posts.previous_page_number}}">Previous</a></li>
+      <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+      <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
       {% else %}
-      <li class="disabled"><a>Previous</a></li>
+      <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
       {% endif %}
-      <li>Page {{posts.number}} of {{posts.paginator.num_pages}}</li>
-      {% if posts.has_next %}
-      <li><a href="?page={{posts.next_page_number}}">Next</a></li>
+      {% for page in posts.paginator.page_range %}
+      {% if page == posts.number %}
+      <li class="active"><a>{{page}}</a></li>
       {% else %}
-      <li class="disabled"><a>Next</a></li>
+      <li><a href="?page={{page}}">{{page}}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if posts.has_next %}
+      <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+      <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+      {% else %}
+      <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
       {% endif %}
     </ul>
   </nav>
