@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% load bbcode_tags %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{thread.title}}{% endblock %}
 
@@ -15,11 +15,119 @@
 
 {% block content %}
 {% if posts.number == 1 %}
-{% include 'partials/board/thread/thread.html' %}
+<div class="page-header">
+  <h4><span style="font-weight: bold;">{{thread.title}}</span> by
+    <a href="{% url 'board:profile' thread.user.username %}">
+      {{thread.user.username}}
+    </a>
+    <small class="pull-right">{{thread.created}}</small>
+  </h4>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="well">
+          <center>
+            <a href="{% url 'board:profile' thread.user.username %}">
+              <img src="{{thread.user.avatar_small}}" alt="..." />
+            </a>
+          </center>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12">
+            {{thread.content.rendered}}
+          </div>
+        </div>
+        {% if thread.reported and user.is_authenticated and user.is_staff %}
+        <div class="alert alert-warning" style="margin: 1rem" role="alert">
+          <p>This thread has open reports.</p>
+        </div>
+        {% endif %}
+        {% if thread.user.signature.rendered %}
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            {{thread.user.signature.rendered}}
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-xs-12 align-right">
+            {% if user.is_authenticated and thread.user.id != user.id %}
+            <a href="{% url 'board:report-thread' thread.id %}" class="btn btn-default" name="button">Report</a>
+            {% endif %}
+            {% if user.is_authenticated and user.id == thread.user.id or user.is_staff %}
+            <a href="{% url 'board:thread-update' thread.id %}" class="btn btn-success" name="button">Update</a>
+            <a href="{% url 'board:thread-delete' thread.id %}" class="btn btn-danger" name="button">Delete</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endif %}
 {% if posts %}
 {% for post in posts %}
-{% include 'partials/board/thread/post.html' %}
+<div class="page-header">
+  <h4>
+    <a href="{% url 'board:profile' post.user.username %}">
+      {{post.user.username}}
+    </a>
+    <small class="pull-right">
+      {{post.created}}
+    </small>
+  </h4>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="well">
+          <center>
+            <a href="{% url 'board:profile' post.user.username %}">
+              <img src="{{post.user.avatar_small}}" alt="..." />
+            </a>
+          </center>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12">
+            {{post.content.rendered}}
+          </div>
+        </div>
+        {% if post.reported and user.is_authenticated and user.is_staff %}
+        <div class="alert alert-warning" style="margin: 1rem" role="alert">
+          <p>This post has open reports.</p>
+        </div>
+        {% endif %}
+        {% if post.user.signature.rendered %}
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            {{post.user.signature.rendered}}
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-xs-12 align-right">
+            {% if user.is_authenticated and post.user.id != user.id %}
+            <a href="{% url 'board:report-post' post.id %}" class="btn btn-default" name="button">Report</a>
+            {% endif %}
+            {% if user.is_authenticated and post.user.id == user.id or user.is_staff %}
+            <a href="{% url 'board:post-update' post.id %}" class="btn btn-success" name="button">Update</a>
+            <a href="{% url 'board:post-delete' post.id %}" class="btn btn-danger" name="button">Delete</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endfor %}
 {% endif %}
 <center>
@@ -50,6 +158,33 @@
   </nav>
 </center>
 {% if user.is_authenticated %}
-{% include 'partials/board/thread/new_post.html' %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-xs-12">
+          <div class="well">
+            <ul>
+              <li>
+                <center>
+                  <a>
+                    <img src="{{user.avatar_small}}" />
+                  </a>
+                </center>
+              </li>
+            </ul>
+          </div>
+      </div>
+      <div class="col-xs-12">
+        <form method="post">
+          {% csrf_token %}
+          {{ post_form|crispy }}
+          <input type="submit" class="btn btn-success form-control" value="Submit" />
+        </form>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
 {% endif %}
 {% endblock %}

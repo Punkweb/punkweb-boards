@@ -27,7 +27,18 @@
     {% endfor %}
   </div>
   <div class="col-xs-12 col-md-4">
-    {% include 'partials/board/index/side_section.html' %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Recent Threads</h3>
+      </div>
+      {% include 'tables/recent_threads_table.html' %}
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Recent Activity</h3>
+      </div>
+      {% include 'tables/recent_activity_table.html' %}
+    </div>
   </div>
   <div class="col-xs-12">
     <p>The newest member to the forum is
