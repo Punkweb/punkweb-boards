@@ -160,19 +160,12 @@
 {% if user.is_authenticated %}
 <div class="panel panel-default">
   <div class="panel-body">
-    {% if user.is_authenticated %}
     <div class="row">
       <div class="col-xs-12">
           <div class="well">
-            <ul>
-              <li>
-                <center>
-                  <a>
-                    <img src="{{user.avatar_small}}" />
-                  </a>
-                </center>
-              </li>
-            </ul>
+            <center>
+              <img src="{{user.avatar_small}}" />
+            </center>
           </div>
       </div>
       <div class="col-xs-12">
@@ -183,7 +176,6 @@
         </form>
       </div>
     </div>
-    {% endif %}
   </div>
 </div>
 {% endif %}

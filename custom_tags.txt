@@ -38,7 +38,7 @@ LI TAG
   <li>{TEXT}</li>
 
 
-HR TAG
+HR TAG (standalone)
 
   [hr]
   <hr/>
