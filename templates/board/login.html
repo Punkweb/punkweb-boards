@@ -19,4 +19,12 @@
     </div>
   </div>
 </div>
+<!-- TODO Find an alternative for this.  Works for now. -->
+{% if user.is_authenticated %}
+<script>
+  setTimeout(function() {
+    window.location.href = '/board/';
+  }, 0);
+</script>
+{% endif %}
 {% endblock %}
