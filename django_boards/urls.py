@@ -23,6 +23,7 @@ from django_boards import views
 urlpatterns = [
     url(r'^$', views.portal_view, name='portal'),
     url(r'^board/', include('apps.board.urls', namespace='board')),
+    url(r'^api/', include('apps.api.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 
