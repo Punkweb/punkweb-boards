@@ -14,31 +14,12 @@
 </p>
 {% endif %}
 <div class="row">
-  <div class="col-xs-12 col-md-8">
+  <div class="col-xs-12">
     {% for category in categories %}
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
-        </h3>
-      </div>
       {% include 'tables/index_category_table.html' %}
     </div>
     {% endfor %}
-  </div>
-  <div class="col-xs-12 col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Recent Threads</h3>
-      </div>
-      {% include 'tables/recent_threads_table.html' %}
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Recent Activity</h3>
-      </div>
-      {% include 'tables/recent_activity_table.html' %}
-    </div>
   </div>
   <div class="col-xs-12">
     <p>The newest member to the forum is

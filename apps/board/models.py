@@ -109,7 +109,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 		return self.is_superuser
 
 	@property
-	def num_posts(self):
+	def post_count(self):
 		return len(self.threads.all()) + len(self.posts.all())
 
 	@property
@@ -209,9 +209,17 @@ class Subcategory(UUIDPrimaryKey):
             category__id=self.id).select_related()
 
     @property
+    def thread_count(self):
+        return len(self.threads)
+
+    @property
     def posts(self):
         return Post.objects.filter(
             thread__category__id=self.id).select_related()
+
+    @property
+    def post_count(self):
+        return len(self.posts)
 
     @property
     def last_thread(self):

@@ -9,14 +9,11 @@
 {% block table_header %}
 <thead>
   <tr>
-    <th class="align-left" width="40%">
-      Title
-    </th>
-    <th class="align-left" width="20%">
-      User
+    <th class="align-left" width="60%">
+      Title/Author
     </th>
     <th class="align-center" widht="10%">
-      Posts
+      Replies
     </th>
     <th class="align-right hidden-xs" width="30%">
       Last Post
@@ -36,10 +33,9 @@
         <a href="{% url 'board:thread' thread.id %}">
           {{thread.title}}
         </a>
+        {{thread.created}}
       </p>
-    </td>
-    <td class="align-left">
-      <p><a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a></p>
+      <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a></p>
     </td>
     <td class="align-center">
       <p>{{thread.posts_count}}</p>

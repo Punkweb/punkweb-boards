@@ -14,26 +14,44 @@
 {% endblock %}
 
 {% block content %}
+<nav>
+  <ul class="pagination">
+    {% if posts.has_previous %}
+    <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+    <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+    {% endif %}
+    {% for page in posts.paginator.page_range %}
+    {% if page == posts.number %}
+    <li class="active"><a>{{page}}</a></li>
+    {% else %}
+    <li><a href="?page={{page}}">{{page}}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+    <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+    <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+    {% endif %}
+  </ul>
+</nav>
 {% if posts.number == 1 %}
-<div class="page-header">
-  <h4><span style="font-weight: bold;">{{thread.title}}</span> by
-    <a href="{% url 'board:profile' thread.user.username %}">
-      {{thread.user.username}}
-    </a>
-    <small class="pull-right">{{thread.created}}</small>
-  </h4>
-</div>
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{thread.title}}</h3>
+  </div>
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12">
-        <div class="well">
-          <center>
-            <a href="{% url 'board:profile' thread.user.username %}">
-              <img src="{{thread.user.avatar_small}}" alt="..." />
-            </a>
-          </center>
-        </div>
+        <a href="{% url 'board:profile' thread.user.username %}">
+          <img src="{{thread.user.avatar_small}}" alt="..." />
+        </a>
+        <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
+        <hr />
       </div>
       <div class="col-xs-12">
         <div class="row">
@@ -68,31 +86,23 @@
       </div>
     </div>
   </div>
+  <div class="panel-footer">
+    {{thread.created}}
+  </div>
 </div>
 {% endif %}
 {% if posts %}
 {% for post in posts %}
-<div class="page-header">
-  <h4>
-    <a href="{% url 'board:profile' post.user.username %}">
-      {{post.user.username}}
-    </a>
-    <small class="pull-right">
-      {{post.created}}
-    </small>
-  </h4>
-</div>
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title align-right">#{{forloop.counter}}</h3>
+  </div>
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12">
-        <div class="well">
-          <center>
-            <a href="{% url 'board:profile' post.user.username %}">
-              <img src="{{post.user.avatar_small}}" alt="..." />
-            </a>
-          </center>
-        </div>
+        <a href="{% url 'board:profile' post.user.username %}"><img src="{{post.user.avatar_small}}" alt="..." /></a>
+        <a href="{% url 'board:profile' post.user.username %}">{{post.user.username}}</a>
+        <hr />
       </div>
       <div class="col-xs-12">
         <div class="row">
@@ -127,52 +137,53 @@
       </div>
     </div>
   </div>
+  <div class="panel-footer">
+    {{post.created}}
+  </div>
 </div>
 {% endfor %}
 {% endif %}
-<center>
-  <nav>
-    <ul class="pagination">
-      {% if posts.has_previous %}
-      <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
-      <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
-      {% else %}
-      <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
-      <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
-      {% endif %}
-      {% for page in posts.paginator.page_range %}
-      {% if page == posts.number %}
-      <li class="active"><a>{{page}}</a></li>
-      {% else %}
-      <li><a href="?page={{page}}">{{page}}</a></li>
-      {% endif %}
-      {% endfor %}
-      {% if posts.has_next %}
-      <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
-      <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
-      {% else %}
-      <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
-      <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
-      {% endif %}
-    </ul>
-  </nav>
-</center>
+<nav>
+  <ul class="pagination">
+    {% if posts.has_previous %}
+    <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+    <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+    {% endif %}
+    {% for page in posts.paginator.page_range %}
+    {% if page == posts.number %}
+    <li class="active"><a>{{page}}</a></li>
+    {% else %}
+    <li><a href="?page={{page}}">{{page}}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+    <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+    <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+    {% endif %}
+  </ul>
+</nav>
 {% if user.is_authenticated %}
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Reply to this thread</h3>
+  </div>
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12">
-          <div class="well">
-            <center>
-              <img src="{{user.avatar_small}}" />
-            </center>
-          </div>
+        <img src="{{user.avatar_small}}" />
+        <hr />
       </div>
       <div class="col-xs-12">
         <form method="post">
           {% csrf_token %}
           {{ post_form|crispy }}
-          <input type="submit" class="btn btn-success form-control" value="Submit" />
+          <input type="submit" class="btn btn-success form-control" value="Post Reply" />
         </form>
       </div>
     </div>

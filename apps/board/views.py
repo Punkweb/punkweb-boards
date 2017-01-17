@@ -5,48 +5,36 @@ from .models import EmailUser, Category, Subcategory, Thread, Post, Shout, \
 Conversation, Message, Report
 from .forms import ThreadForm, PostForm, ReportForm
 
-def recent_threads():
-    return Thread.objects.all().order_by('-created')
-
-def recent_activity():
-    return Thread.objects.all().order_by('-modified')
-
 def index_view(request):
     category_groups = []
     parent_categories = Category.objects.all()
     if not request.user.is_authenticated:
+        # Filter out categories with auth_req = True
         parent_categories = parent_categories.filter(
             auth_req=False).order_by('order')
     for parent_category in parent_categories:
-        children_groups = []
         children = parent_category.subcategories
         if not request.user.is_authenticated:
+            # Filter out categories with auth_req = True
             children = children.filter(auth_req=False).order_by('order')
-        for child in children:
-            children_groups.append({
-                'category': child,
-                'num_threads': len(child.threads),
-                'num_posts': len(child.posts),
-            })
         category_groups.append({
             'parent': parent_category,
-            'children': children_groups
+            'children': children
         })
-
-    recent_thread_data = recent_threads()
-    recent_activity_data = recent_activity()
+    recent_threads = Thread.objects.all().order_by('-created')
+    recent_activity= Thread.objects.all().order_by('-modified')
     if not request.user.is_authenticated:
-        recent_thread_data = recent_thread_data.filter(
+        # Filter out threads in subcategories with auth_req = True
+        recent_threads = recent_threads.filter(
             category__auth_req=False)
-        recent_activity_data = recent_activity_data.filter(
+        recent_activity = recent_activity.filter(
             category__auth_req=False)
-
     newest_member = EmailUser.objects.all().order_by('-created').first()
     member_count = EmailUser.objects.all().count()
     context = {
         'categories': category_groups,
-        'recent_threads': recent_thread_data[:5],
-        'recent_activity': recent_activity_data[:5],
+        'recent_threads': recent_threads[:5],
+        'recent_activity': recent_activity[:5],
         'newest_member': newest_member,
         'member_count': member_count
     }
@@ -56,20 +44,27 @@ def unpermitted_view(request):
     return render(request, 'board/unpermitted.html', {})
 
 def my_profile(request):
+    # Redirect to unpermitted page if requesting user is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
     context = {}
     return render(request, 'board/my_profile.html', context)
 
 def settings_view(request):
+    # Redirect to unpermitted page if requesting user is not logged in or is banned
+    if not request.user.is_authenticated or request.user.is_banned:
+        return redirect('board:unpermitted')
     context = {}
     return render(request, 'board/settings.html', context)
 
 def profile_view(request, username):
     user = EmailUser.objects.get(username=username)
+        # Redirect to unpermitted page if requesting user is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
+    # Redirect to /board/me/ if trying to view own profile.
     if request.user.id == user.id:
+        # TODO do not redirect so that users can view their profile as others see it.
         return redirect('board:me')
     context = {
         'profile': user
@@ -78,6 +73,8 @@ def profile_view(request, username):
 
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have view
+    # permissions on this category.
     if not category.can_view(request.user):
         return unpermitted_view(request)
     subcategories = []
@@ -85,8 +82,6 @@ def category_view(request, pk):
         subcategories.append({
             'obj': sub,
             'can_post': sub.can_post(request.user),
-            'num_threads': len(sub.threads),
-            'num_posts': len(sub.posts)
         })
     context = {
         'category': category,
@@ -96,6 +91,8 @@ def category_view(request, pk):
 
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have view
+    # permissions on this subcategory.
     if not category.can_view(request.user):
         return unpermitted_view(request)
     # Paginate threads
@@ -116,6 +113,8 @@ def subcategory_view(request, pk):
 
 def thread_view(request, pk):
     thread = Thread.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have view
+    # permissions on this thread.
     if not thread.can_view(request.user):
         return unpermitted_view(request)
     # Paginate posts
@@ -127,12 +126,16 @@ def thread_view(request, pk):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
+    # Logic for creating a new post on a thread
     if request.method == 'POST':
+        # Redirect to unpermitted page if not logged in.
         if not request.user.is_authenticated:
             return unpermitted_view(request)
         form = PostForm(request, request.POST)
         if form.is_valid():
             form.save(thread=thread, set_user=True)
+            # Redirect to the last page of posts,
+            # which is where this new post will be.
             return redirect('/board/thread/{}/?page={}'.format(
                 thread.id, paginator.num_pages))
     else:
@@ -146,6 +149,8 @@ def thread_view(request, pk):
 
 def thread_create(request, category_id):
     subcategory = Subcategory.objects.get(id=category_id)
+    # Redirect to unpermitted page if the requesting user does not have post
+    # permission in this category.
     if not subcategory.can_post(request.user):
         return unpermitted_view(request)
     if request.method == 'POST':
@@ -162,6 +167,8 @@ def thread_create(request, category_id):
 
 def thread_update(request, pk):
     instance = Thread.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have edit
+    # permissions on this thread.
     if not instance.can_edit(request.user):
         return unpermitted_view(request)
     if request.method == 'POST':
@@ -178,6 +185,8 @@ def thread_update(request, pk):
 
 def thread_delete(request, pk):
     instance = Thread.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have edit
+    # permissions on this thread.
     if not instance.can_edit(request.user):
         return unpermitted_view(request)
     if request.method == 'POST':
@@ -189,8 +198,12 @@ def thread_delete(request, pk):
     }
     return render(request, 'board/thread_delete_form.html', context)
 
+# There is no post_view or post_create as both are handled on the thread_view
+
 def post_update(request, pk):
     instance = Post.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have edit
+    # permissions on this post.
     if not instance.can_edit(request.user):
         return unpermitted_view(request)
     if request.method == 'POST':
@@ -207,6 +220,8 @@ def post_update(request, pk):
 
 def post_delete(request, pk):
     instance = Post.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have edit
+    # permissions on this post.
     if not instance.can_edit(request.user):
         return unpermitted_view(request)
     if request.method == 'POST':
@@ -219,6 +234,8 @@ def post_delete(request, pk):
     return render(request, 'board/post_delete_form.html', context)
 
 def conversations_list(request):
+    # Redirect to unpermitted page if the requesting user does not have edit
+    # permissions on this post.
     if request.user.is_authenticated and request.user.is_banned:
         return redirect('board:unpermitted')
     conversations = request.user.conversations.all()
@@ -228,12 +245,14 @@ def conversations_list(request):
     return render(request, 'board/conversations_list.html', context)
 
 def reports_list(request):
+    # TODO admins only
     context = {
         'reports': Report.objects.all()
     }
     return render(request, 'board/reports_list.html', context)
 
 def report_view(request, pk):
+    # TODO admins only
     instance = Report.objects.get(id=pk)
     if request.method == 'POST':
         instance.resolved = True
