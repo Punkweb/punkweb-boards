@@ -1,24 +1,24 @@
 from django.contrib import admin
 from .models import EmailUser, Category, Subcategory, Thread, Post, Shout, \
-Conversation, Message, Report
+    Conversation, Message, Report
 
 
 class SubcategoryInline(admin.TabularInline):
     model = Subcategory
-    ordering = ('order', )
+    ordering = ('order',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
     inlines = [
         SubcategoryInline,
     ]
-    list_display = ('name', 'order', )
-    ordering = ('order', )
+    list_display = ('name', 'order',)
+    ordering = ('order',)
 
 
 class PostInline(admin.TabularInline):
     model = Post
-    ordering = ('created', )
+    ordering = ('created',)
 
 
 class ThreadAdmin(admin.ModelAdmin):
@@ -26,21 +26,21 @@ class ThreadAdmin(admin.ModelAdmin):
         PostInline
     ]
     list_display = ('title', 'category', 'user')
-    ordering = ('title', )
+    ordering = ('title',)
 
 
 class MessageInline(admin.TabularInline):
     model = Message
     fields = ('user', 'content',)
-    ordering = ('created', )
+    ordering = ('created',)
 
 
 class ConversationAdmin(admin.ModelAdmin):
     inlines = [
         MessageInline,
     ]
-    list_display = ('subject', )
-    ordering = ('created', )
+    list_display = ('subject',)
+    ordering = ('created',)
 
 
 admin.site.register(EmailUser)

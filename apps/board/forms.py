@@ -1,5 +1,4 @@
 from django import forms
-from django.shortcuts import redirect
 from django.utils import timezone
 from .models import Thread, Post, Shout, Report
 

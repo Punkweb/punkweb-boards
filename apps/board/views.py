@@ -1,9 +1,10 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from .models import EmailUser, Category, Subcategory, Thread, Post, Shout, \
-Conversation, Message, Report
+
+from .models import EmailUser, Category, Subcategory, Thread, Post, Report
 from .forms import ThreadForm, PostForm, ReportForm
+
 
 def index_view(request):
     category_groups = []
@@ -22,7 +23,7 @@ def index_view(request):
             'children': children
         })
     recent_threads = Thread.objects.all().order_by('-created')
-    recent_activity= Thread.objects.all().order_by('-modified')
+    recent_activity = Thread.objects.all().order_by('-modified')
     if not request.user.is_authenticated:
         # Filter out threads in subcategories with auth_req = True
         recent_threads = recent_threads.filter(
@@ -40,36 +41,45 @@ def index_view(request):
     }
     return render(request, 'board/index.html', context)
 
+
 def unpermitted_view(request):
     return render(request, 'board/unpermitted.html', {})
 
+
 def my_profile(request):
-    # Redirect to unpermitted page if requesting user is not logged in or is banned
+    # Redirect to unpermitted page if requesting user
+    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
     context = {}
     return render(request, 'board/my_profile.html', context)
 
+
 def settings_view(request):
-    # Redirect to unpermitted page if requesting user is not logged in or is banned
+    # Redirect to unpermitted page if requesting user
+    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
     context = {}
     return render(request, 'board/settings.html', context)
 
+
 def profile_view(request, username):
     user = EmailUser.objects.get(username=username)
-        # Redirect to unpermitted page if requesting user is not logged in or is banned
+    # Redirect to unpermitted page if requesting user
+    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
     # Redirect to /board/me/ if trying to view own profile.
     if request.user.id == user.id:
-        # TODO do not redirect so that users can view their profile as others see it.
+        # TODO do not redirect so that users
+        # can view their profile as others see it.
         return redirect('board:me')
     context = {
         'profile': user
     }
     return render(request, 'board/profile_page.html', context)
+
 
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
@@ -88,6 +98,7 @@ def category_view(request, pk):
         'subcategories': subcategories
     }
     return render(request, 'board/category_view.html', context)
+
 
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
@@ -110,6 +121,7 @@ def subcategory_view(request, pk):
         'threads': threads
     }
     return render(request, 'board/subcategory_view.html', context)
+
 
 def thread_view(request, pk):
     thread = Thread.objects.get(id=pk)
@@ -147,6 +159,7 @@ def thread_view(request, pk):
     }
     return render(request, 'board/thread_view.html', context)
 
+
 def thread_create(request, category_id):
     subcategory = Subcategory.objects.get(id=category_id)
     # Redirect to unpermitted page if the requesting user does not have post
@@ -164,6 +177,7 @@ def thread_create(request, category_id):
         'form': form
     }
     return render(request, 'board/thread_create_form.html', context)
+
 
 def thread_update(request, pk):
     instance = Thread.objects.get(id=pk)
@@ -183,6 +197,7 @@ def thread_update(request, pk):
     }
     return render(request, 'board/thread_update_form.html', context)
 
+
 def thread_delete(request, pk):
     instance = Thread.objects.get(id=pk)
     # Redirect to unpermitted page if the requesting user does not have edit
@@ -197,6 +212,7 @@ def thread_delete(request, pk):
         'object': instance
     }
     return render(request, 'board/thread_delete_form.html', context)
+
 
 # There is no post_view or post_create as both are handled on the thread_view
 
@@ -218,6 +234,7 @@ def post_update(request, pk):
     }
     return render(request, 'board/post_update_form.html', context)
 
+
 def post_delete(request, pk):
     instance = Post.objects.get(id=pk)
     # Redirect to unpermitted page if the requesting user does not have edit
@@ -233,6 +250,7 @@ def post_delete(request, pk):
     }
     return render(request, 'board/post_delete_form.html', context)
 
+
 def conversations_list(request):
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this post.
@@ -244,12 +262,14 @@ def conversations_list(request):
     }
     return render(request, 'board/conversations_list.html', context)
 
+
 def reports_list(request):
     # TODO admins only
     context = {
         'reports': Report.objects.all()
     }
     return render(request, 'board/reports_list.html', context)
+
 
 def report_view(request, pk):
     # TODO admins only
@@ -264,6 +284,7 @@ def report_view(request, pk):
         'report': Report.objects.get(id=pk)
     }
     return render(request, 'board/report_view.html', context)
+
 
 def report_create(request, thread=None, post=None):
     if request.method == 'POST':
