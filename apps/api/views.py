@@ -4,7 +4,7 @@ from apps.board.models import Category, Subcategory, Thread, Post, \
     Conversation, Message, Report, Shout
 from .serializers import CategorySerializer, SubcategorySerializer, \
     ThreadSerializer, PostSerializer, MessageSerializer, ReportSerializer, \
-    ShoutSerializer
+    ShoutSerializer, ConversationSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -29,7 +29,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
-    serializer_class = Conversation
+    serializer_class = ConversationSerializer
 
 
 class MessageViewSet(viewsets.ModelViewSet):
