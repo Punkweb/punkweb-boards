@@ -7,6 +7,7 @@ class ThreadForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super(ThreadForm, self).__init__(*args, **kwargs)
         self.request = request
+        self.fields['content'].label = ''
         self.fields['content'].widget.attrs['class'] = 'post-editor'
 
     def save(self, category=None, commit=True, set_user=False):
@@ -28,6 +29,7 @@ class PostForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
         self.request = request
+        self.fields['content'].label = ''
         self.fields['content'].widget.attrs['class'] = 'post-editor'
 
     def save(self, thread=None, commit=True, set_user=False):
@@ -50,6 +52,7 @@ class PostForm(forms.ModelForm):
 class ShoutForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ShoutForm, self).__init__(*args, **kwargs)
+        self.fields['content'].label = ''
         self.fields['content'].widget.attrs['class'] = 'shout-editor'
 
     class Meta:
