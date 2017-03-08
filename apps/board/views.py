@@ -306,8 +306,9 @@ def report_create(request, thread=None, post=None):
     return render(request, 'board/report_create_form.html', context)
 
 
-def members_list_view(request):
+def members_list(request):
+    users = EmailUser.objects.order_by('username')
     context = {
-    
+        'users': users
     }
-    return render(request, 'board/members_list_view.html', context)
+    return render(request, 'board/members_list.html', context)
