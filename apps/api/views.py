@@ -49,7 +49,9 @@ class PostViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qs = self.queryset
         if not self.request.user.is_authenticated:
-            qs = qs.filter(thread__category__auth_req=False)
+            qs = qs.filter(
+                thread__category__auth_req=False,
+                thread__category__parent__auth_req=False)
         return qs.all()
 
 
