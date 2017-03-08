@@ -304,3 +304,10 @@ def report_create(request, thread=None, post=None):
         'form': form
     }
     return render(request, 'board/report_create_form.html', context)
+
+
+def members_list_view(request):
+    context = {
+    
+    }
+    return render(request, 'board/members_list_view.html', context)

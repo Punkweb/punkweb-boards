@@ -45,4 +45,7 @@ urlpatterns = [
         views.report_create, name='report-thread'),
     url(r'^report_post/(?P<post>[^/]+)/$',
         views.report_create, name='report-post'),
+
+    url(r'^members_list_view/$',
+        views.members_list_view, name='members-list'),
 ]
