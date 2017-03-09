@@ -2,8 +2,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from .models import EmailUser, Category, Subcategory, Thread, Post, Report
-from .forms import ThreadForm, PostForm, ReportForm
+from apps.board.models import (EmailUser, Category, Subcategory, Thread, Post,
+                               Report)
+from apps.board.forms import ThreadForm, PostForm, ReportForm
 
 
 def index_view(request):
