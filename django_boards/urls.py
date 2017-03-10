@@ -20,17 +20,12 @@ from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 from django_boards import settings
 from django_boards import views
 
-from apps.board.settings import BOARD_THEME
-
 urlpatterns = [
     url(r'^$', views.portal_view, name='portal'),
+    url(r'^board/', include('apps.board.urls', namespace='board')),
     url(r'^api/', include('apps.api.urls')),
     url(r'^admin/', admin.site.urls),
 ]
-
-if BOARD_THEME == 'bootstrap3':
-    urlpatterns.append(
-        url(r'^board/', include('apps.bootstrap3.urls', namespace='board')))
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

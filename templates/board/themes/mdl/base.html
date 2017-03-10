@@ -1,0 +1,100 @@
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Forum | {% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-blue.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'sceditor/minified/themes/default.min.css' %}" />
+    <link href="{% sass_src 'scss/styles.scss' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout">
+      <header class="mdl-layout__header mdl-layout__header--waterfall">
+        <!-- Top row, always visible -->
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">django-boards</span>
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp">
+            </div>
+          </div>
+        </div>
+        <!-- Bottom row, not visible on scroll -->
+        <div class="mdl-layout__header-row">
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation -->
+          <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="{% url 'board:index' %}">Forum</a>
+            <a class="mdl-navigation__link" href="{% url 'board:members-list' %}">Members</a>
+            {% if user.is_authenticated %}
+            {% if user.is_staff %}
+            <a class="mdl-navigation__link" href="{% url 'board:reports-list' %}"><span class="mdl-badge" data-badge="4">Reports</span></a>
+            {% endif %}
+            <a class="mdl-navigation__link" href="{% url 'board:conversations-list' %}"><span class="mdl-badge" data-badge="12">Messages</span></a>
+            <a class="mdl-navigation__link" href="{% url 'board:me' %}">Profile</a>
+            <a class="mdl-navigation__link" href="{% url 'board:settings' %}">Settings</a>
+            <a class="mdl-navigation__link" href="{% url 'board:logout' %}">Logout</a>
+            {% else %}
+            <a class="mdl-navigation__link" href="{% url 'board:login' %}">Login</a>
+            {% endif %}
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">django_boards</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="{% url 'board:index' %}">Forum</a>
+          <a class="mdl-navigation__link" href="{% url 'board:members-list' %}">Members</a>
+          {% if user.is_authenticated %}
+          {% if user.is_staff %}
+          <a class="mdl-navigation__link" href="{% url 'board:reports-list' %}"><span class="mdl-badge" data-badge="4">Reports</span></a>
+          {% endif %}
+          <a class="mdl-navigation__link" href="{% url 'board:conversations-list' %}"><span class="mdl-badge" data-badge="12">Messages</span></a>
+          <a class="mdl-navigation__link" href="{% url 'board:me' %}">Profile</a>
+          <a class="mdl-navigation__link" href="{% url 'board:settings' %}">Settings</a>
+          <a class="mdl-navigation__link" href="{% url 'board:logout' %}">Logout</a>
+          {% else %}
+          <a class="mdl-navigation__link" href="{% url 'board:login' %}">Login</a>
+          {% endif %}
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content djcontainer">
+          {% block breadcrumb %}{% endblock %}
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
+  <script>
+  $(function() {
+    $('.post-editor').sceditor({
+      emoticonsEnabled: false,
+      plugins: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|bulletlist,orderedlist,center,horizontalrule|font,size,color,quote,link,image|date,time|source,maximize,removeformat',
+      style: '{% static "sceditor/development/jquery.sceditor.default.css" %}'
+    });
+    $('.shout-editor').sceditor({
+      emoticonsEnabled: false,
+      plugins: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|font,size,color,link,image|date,time|source,maximize,removeformat',
+      style: '{% static "sceditor/development/jquery.sceditor.default.css" %}'
+    });
+  });
+  </script>
+</html>

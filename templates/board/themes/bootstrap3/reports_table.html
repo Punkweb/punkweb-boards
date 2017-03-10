@@ -1,0 +1,48 @@
+{% extends './base_table.html' %}
+
+{% block table_header %}
+<thead>
+  <tr>
+    <th></th>
+    <th class="align-left">
+      Reporting User
+    </th>
+    <th class="align-left">
+      Thread/Post
+    </th>
+    <th class="align-right">
+      Resolved?
+    </th>
+  </tr>
+</thead>
+{% endblock %}
+{% block table_body %}
+<tbody>
+  {% for report in reports %}
+  <tr>
+    <td>
+      <a href="{% url 'board:report' report.id %}">View</a>
+    </td>
+    <td class="align-left">
+      <a href="{% url 'board:profile' report.reporting_user.username %}">{{report.reporting_user.username}}</a>
+    </td>
+    <td class="align-left">
+      {% if report.thread %}
+      <a href="{% url 'board:thread' report.thread.id %}">{{report.thread}}</a>
+      {% endif %}
+      {% if report.post %}
+      <a href="{% url 'board:thread' report.post.thread.id %}">{{report.post}}</a>
+      {% endif %}
+    </td>
+    <td class="align-right">
+      {% if report.resolved %}
+      <i class="fa fa-check" style="color: green;" aria-hidden="true"></i>
+      {% else %}
+      <i class="fa fa-times" style="color: red;" aria-hidden="true"></i>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+{% endblock %}
+{% block table_footer %}{% endblock %}

@@ -1,0 +1,57 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}{{category.name}}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
+  <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
+  <li class="active">{{category.name}}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{category.name}}</h3>
+    {% if can_post %}
+    <!-- TODO align-right is not working -->
+    <span class="align-right">
+      <a href="{% url 'board:thread-create' category.id %}">
+        <i class="fa fa-plus" aria-hidden="true"></i> Create Thread
+      </a>
+    </span>
+    {% endif %}
+  </div>
+  {% include './subcategory_table.html' %}
+</div>
+<center>
+  <nav>
+    <ul class="pagination">
+      {% if threads.has_previous %}
+      <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+      <li><a href="?page={{threads.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+      {% else %}
+      <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+      {% endif %}
+      {% for page in threads.paginator.page_range %}
+      {% if page == threads.number %}
+      <li class="active"><a>{{page}}</a></li>
+      {% else %}
+      <li><a href="?page={{page}}">{{page}}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if threads.has_next %}
+      <li><a href="?page={{threads.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+      <li><a href="?page={{threads.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+      {% else %}
+      <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</center>
+{% endblock %}

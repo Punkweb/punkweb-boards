@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from apps.board.settings import BOARD_THEME
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,11 +42,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'precise_bbcode',
     'sass_processor',
-    'crispy_forms',
     'easy_thumbnails',
     'apps.common',
     'apps.board',
 ]
+
+if BOARD_THEME == 'bootstrap3':
+    INSTALLED_APPS.append('crispy_forms')
 
 # Auth Configuration
 AUTH_USER_MODEL = 'board.EmailUser'
@@ -155,7 +158,8 @@ STATICFILES_FINDERS = (
 
 # Crispy forms
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+if BOARD_THEME == 'bootstrap3':
+    CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 # Easy thumbnails

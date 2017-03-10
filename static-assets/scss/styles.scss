@@ -7,14 +7,14 @@
 //   border: 1px solid red;
 // }
 
-body {
-  background-color: $oc-gray-0;
-}
-
 .page-wrap {
   min-height: 100vh;
 }
 
 .asteriskField {
     display: none;
+}
+
+.full-width {
+  width: 100%;
 }

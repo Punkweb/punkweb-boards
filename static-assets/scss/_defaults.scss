@@ -1,4 +1,6 @@
 html, body {
+  margin: 0;
+  padding: 0;
   min-width: 425px;
   width: 100%;
 }
@@ -8,9 +10,21 @@ img, iframe {
   max-width: 100%;
 }
 
+.djcontainer {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 16;
+}
+
 /* tables inherit font size (some browsers set a default table font size) */
 table {
   font-size: inherit;
+
+  tr td {
+    white-space: normal;;
+    word-wrap: break-word;
+  }
 }
 
 pre {

@@ -1,0 +1,39 @@
+{% extends './base_table.html' %}
+
+{% block table_caption %}
+{% if category.description.rendered %}
+Viewing list of all members
+{% endif %}
+{% endblock %}
+
+{% block table_header %}
+<thead>
+  <tr>
+    <th width="5%"></th>
+    <th class="mdl-data-table__cell--non-numeric" width="85%">
+      Username
+    </th>
+    <th width="10%">
+      Posts
+    </th>
+  </tr>
+</thead>
+{% endblock %}
+{% block table_body %}
+<tbody>
+  {% for user in users %}
+  <tr>
+    <td>
+      <img src="{{user.avatar_smallest}}" alt="..." />
+    </td>
+    <td class="mdl-data-table__cell--non-numeric">
+      <a href="{% url 'board:profile' user.username %}">{{user.username}}</a>
+    </td>
+    <td class="align-right">
+      {{user.post_count}}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+{% endblock %}
+{% block table_footer %}{% endblock %}
