@@ -1,4 +1,5 @@
 sceditor/
+/templates/board/themes/**
 
 
 ### Sqlite database
