@@ -266,7 +266,11 @@ def conversations_list(request):
 
 
 def reports_list(request):
-    # TODO admins only
+    # Redirect to unpermitted page if requesting user
+    # is not logged in or is banned or is not an admin
+    if not request.user.is_authenticated or \
+        not request.user.is_staff or request.user.is_banned:
+        return redirect('board:unpermitted')
     context = {
         'reports': Report.objects.all()
     }
@@ -274,7 +278,11 @@ def reports_list(request):
 
 
 def report_view(request, pk):
-    # TODO admins only
+    # Redirect to unpermitted page if requesting user
+    # is not logged in or is banned or is not an admin
+    if not request.user.is_authenticated or \
+        not request.user.is_staff or request.user.is_banned:
+        return redirect('board:unpermitted')
     instance = Report.objects.get(id=pk)
     if request.method == 'POST':
         instance.resolved = True
@@ -289,6 +297,10 @@ def report_view(request, pk):
 
 
 def report_create(request, thread=None, post=None):
+    # Redirect to unpermitted page if requesting user
+    # is not logged in or is banned
+    if not request.user.is_authenticated or request.user.is_banned:
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         form = ReportForm(request, request.POST)
         if form.is_valid():
@@ -309,6 +321,10 @@ def report_create(request, thread=None, post=None):
 
 
 def members_list(request):
+    # Redirect to unpermitted page if requesting user
+    # is not logged in or is banned
+    if not request.user.is_authenticated or request.user.is_banned:
+        return redirect('board:unpermitted')
     users = EmailUser.objects.order_by('username')
     context = {
         'users': users
