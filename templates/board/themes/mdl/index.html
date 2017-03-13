@@ -16,7 +16,9 @@
 {% for category in categories %}
 {% include './index_category_table.html' %}
 {% endfor %}
+{% if member_count >= 1%}
 <p>The newest member to the forum is
   <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.username}}</a></p>
 <p>Total member count: {{member_count}}</p>
+{% endif %}
 {% endblock %}

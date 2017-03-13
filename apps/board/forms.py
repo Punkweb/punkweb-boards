@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from .models import Thread, Post, Shout, Report
+from apps.api.models import Thread, Post, Shout, Report
 
 
 class ThreadForm(forms.ModelForm):

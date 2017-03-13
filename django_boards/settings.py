@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'precise_bbcode',
     'sass_processor',
     'easy_thumbnails',
+    'apps.api',
     'apps.common',
     'apps.board',
 ]
@@ -51,7 +52,7 @@ if BOARD_THEME == 'bootstrap3':
     INSTALLED_APPS.append('crispy_forms')
 
 # Auth Configuration
-AUTH_USER_MODEL = 'board.EmailUser'
+AUTH_USER_MODEL = 'api.EmailUser'
 LOGIN_REDIRECT_URL = '/board/'
 
 MIDDLEWARE = [

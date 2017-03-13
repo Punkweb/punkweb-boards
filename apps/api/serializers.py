@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.board.models import Category, Subcategory, Thread, Post, \
+from .models import Category, Subcategory, Thread, Post, \
     Conversation, Message, Report, Shout
 
 

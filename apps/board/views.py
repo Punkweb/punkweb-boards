@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from .settings import BOARD_THEME
-from .models import EmailUser, Category, Subcategory, Thread, Post, Report
+from apps.api.models import (
+    EmailUser, Category, Subcategory, Thread, Post, Report)
 from .forms import ThreadForm, PostForm, ReportForm
 
 

@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions
 
-from apps.board.models import Category, Subcategory, Thread, Post, \
-    Conversation, Message, Report, Shout
+from .models import (Category, Subcategory, Thread, Post, Conversation, Message,
+    Report, Shout)
 from .serializers import CategorySerializer, SubcategorySerializer, \
     ThreadSerializer, PostSerializer, MessageSerializer, ReportSerializer, \
     ShoutSerializer, ConversationSerializer
