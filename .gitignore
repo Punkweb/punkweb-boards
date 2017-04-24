@@ -8,8 +8,6 @@ sceditor/
 npm-debug.log
 migrations/
 __pycache__/
-media/*
-static/*
 
 
 ### Python template
