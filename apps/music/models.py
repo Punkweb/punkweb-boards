@@ -17,6 +17,12 @@ def audio_upload_to(instance, filename):
     return '/'.join(['music', 'audio', filename])
 
 
+def audio_compilation_upload_to(instance, filename):
+    ext = (filename.split('.')[-1]).lower()
+    filename = '{}.{}'.format(instance.slug, ext)
+    return '/'.join(['music', 'compilations', 'audio', filename])
+
+
 class TrackInformationMixin(models.Model):
     title = models.CharField(max_length=256, blank=False, null=False)
     artist = models.CharField(max_length=256, blank=False, null=False)
@@ -48,3 +54,25 @@ class Audio(UUIDPrimaryKey, UploadedAtMixin, TrackInformationMixin):
 
     def __str__(self):
         return '{} - {}'.format(self.uploaded_at, self.title)
+
+
+class AudioCompilation(UUIDPrimaryKey, CreatedModifiedMixin):
+    title = models.CharField(max_length=256, blank=False, null=False)
+    slug = models.SlugField(max_length=256, blank=False, null=False)
+    thumbnail = ThumbnailerImageField(
+        upload_to=audio_upload_to, blank=True, null=True)
+    tracks = models.ManyToManyField(Audio)
+
+    def __str__(self):
+        return '{} - {}'.format(self.created, self.title)
+
+
+class VideoCompilation(UUIDPrimaryKey, CreatedModifiedMixin):
+    title = models.CharField(max_length=256, blank=False, null=False)
+    slug = models.SlugField(max_length=256, blank=False, null=False)
+    thumbnail = ThumbnailerImageField(
+        upload_to=audio_upload_to, blank=True, null=True)
+    tracks = models.ManyToManyField(Video)
+
+    def __str__(self):
+        return '{} - {}'.format(self.created, self.title)

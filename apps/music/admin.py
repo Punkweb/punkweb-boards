@@ -7,5 +7,12 @@ class MusicAdmin(admin.ModelAdmin):
     ordering = ('uploaded_at',)
 
 
+class CompilationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created',)
+    ordering = ('created',)
+
+
 admin.site.register(models.Video, MusicAdmin)
 admin.site.register(models.Audio, MusicAdmin)
+admin.site.register(models.AudioCompilation, CompilationAdmin)
+admin.site.register(models.VideoCompilation, CompilationAdmin)

@@ -9,3 +9,13 @@ def audio_view(request, slug):
         'song': song
     }
     return render(request, 'music/audio_view.html', context)
+
+
+def audio_compilation_view(request, slug):
+    compilation = models.AudioCompilation.objects.get(slug=slug)
+    tracks = compilation.tracks
+    context = {
+        'compilation': compilation,
+        'tracks': tracks
+    }
+    return render(request, 'music/audio_compilation_view.html', context)

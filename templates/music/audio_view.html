@@ -1,6 +1,7 @@
 {% extends './base.html' %}
 {% load static %}
 {% load bbcode_tags %}
+{% load thumbnail %}
 
 {% block title %}Music | {{song.title}}{% endblock %}
 
@@ -13,6 +14,7 @@
       </div>
       <div class="panel-body">
         <h2>Now Playing</h2>
+        <img src="{{song.thumbnail|thumbnail_url:'music_thumbnail'}}" />
         <div id="currentTime">0</div>
         <progress id="progress"></progress>
         <div id="length"></div>

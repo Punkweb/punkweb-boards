@@ -1,0 +1,112 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+{% load thumbnail %}
+
+{% block title %}Music | {{compilation.title}}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{compilation.title}}</h3>
+      </div>
+      <div class="panel-body">
+        <h2>Now Playing</h2>
+        <img id="songImage" />
+        <div id="songTitle"></div>
+        <div id="songArtist"></div>
+        <div id="songAlbum"></div>
+        <div id="songYear"></div>
+        <div id="currentTime">0</div>
+        <progress id="progress"></progress>
+        <div id="length"></div>
+        <hr>
+        <h2>Control Buttons</h2>
+        <button id="last">Last</button>
+        <button id="next">Next</button>
+        <button id="mute">Toggle Mute</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+$(document).ready(function() {
+  var audio = document.createElement('audio');
+  var trackNum = 0;
+  var srcList = [];
+  {% for track in tracks.all %}
+  srcList.push({
+    'title': '{{track.title}}',
+    'artist': '{{track.artist}}',
+    'album': '{{track.album}}',
+    'year': '{{track.year}}',
+    'image': '{{track.thumbnail|thumbnail_url:"music_thumbnail"}}',
+    'file': '/media/{{track.file}}'
+  });
+  {% endfor %}
+  init();
+
+  function init() {
+    audio.setAttribute('src', srcList[trackNum].file);
+    updateInfo();
+  }
+
+  function updateInfo() {
+    $('#songTitle').text(srcList[trackNum].title);
+    $('#songArtist').text(srcList[trackNum].artist);
+    $('#songAlbum').text(srcList[trackNum].album);
+    $('#songYear').text(srcList[trackNum].year);
+    $('#songImage').attr('src', srcList[trackNum].image);
+  }
+
+  audio.addEventListener('ended', function() {
+    trackNum--;
+    this.setAttribute('src', srcList[trackNum].file);
+    this.load();
+    this.play();
+    updateInfo();
+  }, false);
+  audio.addEventListener('canplay', function() {
+    $('#length').text(audio.duration);
+    audio.play();
+  }, false);
+  audio.addEventListener('timeupdate', function() {
+    $('#currentTime').text(audio.currentTime);
+    $('#progress').attr('value', audio.currentTime);
+    $('#progress').attr('max', audio.duration);
+  }, false);
+  $('#next').click(function() {
+    if (trackNum >= srcList.length - 1) {
+      return;
+    }
+    trackNum++;
+    audio.setAttribute('src', srcList[trackNum].file);
+    audio.load();
+    audio.play();
+    updateInfo();
+  });
+  $('#last').click(function() {
+    if (trackNum <= 0) {
+      return;
+    }
+    trackNum--;
+    audio.setAttribute('src', srcList[trackNum].file);
+    audio.load();
+    audio.play();
+    updateInfo();
+  });
+  $('#mute').click(function() {
+    if (!audio.muted) {
+      audio.muted = true;
+      return;
+    }
+      audio.muted = false;
+  });
+});
+</script>
+{% endblock %}
