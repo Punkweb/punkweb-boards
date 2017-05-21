@@ -1,0 +1,60 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}Music | {{song.title}}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{song.title}} - {{song.artist}} on the album <i>{{song.album}}</i>, {{song.year}}</h3>
+      </div>
+      <div class="panel-body">
+        <h2>Now Playing</h2>
+        <div id="currentTime">0</div>
+        <progress id="progress"></progress>
+        <div id="length"></div>
+        <hr>
+        <h2>Control Buttons</h2>
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="restart">Restart</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+$(document).ready(function() {
+  var audio = document.createElement('audio');
+  audio.setAttribute('src', '/media/{{song.file}}');
+
+  audio.addEventListener('ended', function() {
+    this.play();
+  }, false);
+  audio.addEventListener('canplay', function() {
+    $('#length').text(audio.duration);
+    $('#source').text('Source: ' + audio.src);
+    $('#status').text('Status: Ready to play').css('color', 'green');
+  }, false);
+  audio.addEventListener('timeupdate', function() {
+    $('#currentTime').text(audio.currentTime);
+    $('#progress').attr('value', audio.currentTime);
+    $('#progress').attr('max', audio.duration);
+  }, false);
+  $('#play').click(function() {
+    audio.play();
+  });
+  $('#pause').click(function() {
+    audio.pause();
+  });
+  $('#restart').click(function() {
+    audio.currentTime = 0;
+  });
+});
+</script>
+{% endblock %}

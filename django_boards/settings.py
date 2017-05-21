@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.api',
     'apps.common',
     'apps.board',
+    'apps.music',
 ]
 
 if BOARD_THEME == 'bootstrap3':

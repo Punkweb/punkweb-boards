@@ -1,0 +1,105 @@
+/* Table Alignment Helpers
+*******************************************************************************/
+.align-left {
+  text-align: left !important; }
+
+.align-left--all {
+  text-align: left !important; }
+
+.align-left--all * {
+  text-align: left !important; }
+
+.align-right {
+  text-align: right !important; }
+
+.align-right--all {
+  text-align: right !important; }
+
+.align-right--all * {
+  text-align: right !important; }
+
+.align-center {
+  text-align: center !important; }
+
+.align-center--all {
+  text-align: center !important; }
+
+.align-center--all * {
+  text-align: center !important; }
+
+.border, .border-all, .border-all * {
+  border: 1px solid #adb5bd !important; }
+
+.border-top, .border-top-all, .border-top-all * {
+  border-top: 1px solid #adb5bd !important; }
+
+.border-bottom, .border-bottom-all, .border-bottom-all * {
+  border-bottom: 1px solid #adb5bd !important; }
+
+.border-right, .border-right-all, .border-right-all * {
+  border-right: 1px solid #adb5bd !important; }
+
+.border-left, .border-left-all, .border-left-all * {
+  border-left: 1px solid #adb5bd !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-width: 425px;
+  width: 100%; }
+
+/* images can't be wider than their containers */
+img, iframe {
+  max-width: 100%; }
+
+.djcontainer {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 16; }
+
+/* tables inherit font size (some browsers set a default table font size) */
+table {
+  font-size: inherit; }
+  table tr td {
+    white-space: normal;
+    word-wrap: break-word; }
+
+pre {
+  background-color: #fff9db;
+  font-family: monospace;
+  white-space: pre-wrap; }
+
+.footer {
+  background-color: #f1f3f5;
+  border-bottom: 1px solid #adb5bd;
+  border-top: 1px solid #ced4da;
+  padding-bottom: 2rem;
+  position: relative; }
+  .footer h3 {
+    border-bottom: 1px solid #ced4da;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 2rem 0 1rem;
+    text-transform: uppercase; }
+  .footer ul {
+    list-style-type: none;
+    margin-top: 15px; }
+  .footer ul li a {
+    padding-bottom: .5rem;
+    display: block; }
+
+.footer-bottom {
+  background: #e9ecef;
+  border-top: 1px solid #DDDDDD;
+  padding-top: 10px;
+  padding-bottom: 10px; }
+
+.page-wrap {
+  min-height: 100vh; }
+
+.asteriskField {
+  display: none; }
+
+.full-width {
+  width: 100%; }
