@@ -4,9 +4,13 @@ from . import models
 
 
 def index_view(request):
+    artists = models.Artist.objects.all()
+    albums = models.Album.objects.all()
     audio = models.Audio.objects.all()
     compilations = models.AudioCompilation.objects.all()
     context = {
+        'artists': artists,
+        'albums': albums,
         'audio': audio,
         'compilations': compilations
     }
