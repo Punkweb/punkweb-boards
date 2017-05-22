@@ -13,18 +13,75 @@
         <h3 class="panel-title">Music Section</h3>
       </div>
       <div class="panel-body">
+        <h1>Audio</h1>
         <h3>Tracks</h3>
-        <ul>
-          {% for track in audio %}
-          <li><a href="{% url 'music:audio' track.slug %}">{{track.title}}</a></li>
-          {% endfor %}
-        </ul>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                Song
+              </th>
+              <th>
+                Artist
+              </th>
+              <th>
+                Album
+              </th>
+              <th>
+                Year
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for track in audio %}
+            <tr>
+              <td>
+                <a href="{% url 'music:audio' track.slug %}">{{track.title}}</a>
+              </td>
+              <td>
+                {{track.album.artist.name}}
+              </td>
+              <td>
+                {{track.album.title}}
+              </td>
+              <td>
+                {{track.album.year|date:'Y'}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         <h3>Compilations</h3>
-        <ul>
-          {% for compilation in compilations %}
-          <li><a href="{% url 'music:audio_compilation' compilation.slug %}">{{compilation.title}}</a></li>
-          {% endfor %}
-        </ul>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                Title
+              </th>
+              <th>
+                Created
+              </th>
+              <th>
+                Updated
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for compilation in compilations %}
+            <tr>
+              <td>
+                <a href="{% url 'music:audio_compilation' compilation.slug %}">{{compilation.title}}</a>
+              </td>
+              <td>
+                {{compilation.created|date:'m/d/Y'}}
+              </td>
+              <td>
+                {{compilation.updated|date:'m/d/Y'}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

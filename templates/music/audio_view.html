@@ -10,11 +10,11 @@
   <div class="col-xs-12">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">{{song.title}} - {{song.artist}} on the album <i>{{song.album}}</i>, {{song.year}}</h3>
+        <h3 class="panel-title">{{song.title}} by <i>{{song.album.artist.name}} {{song.album.title}} {{song.album.year|date:'Y'}}</i></h3>
       </div>
       <div class="panel-body">
         <h2>Now Playing</h2>
-        <img src="{{song.thumbnail|thumbnail_url:'music_thumbnail'}}" />
+        <img src="{{song.album.cover_art|thumbnail_url:'music_thumbnail'}}" />
         <div id="currentTime">0</div>
         <progress id="progress"></progress>
         <div id="length"></div>

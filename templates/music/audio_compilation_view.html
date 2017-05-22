@@ -42,10 +42,10 @@ $(document).ready(function() {
   {% for track in tracks.all %}
   srcList.push({
     'title': '{{track.title}}',
-    'artist': '{{track.artist}}',
-    'album': '{{track.album}}',
-    'year': '{{track.year}}',
-    'image': '{{track.thumbnail|thumbnail_url:"music_thumbnail"}}',
+    'artist': '{{track.album.artist.name}}',
+    'album': '{{track.album.title}}',
+    'year': '{{track.album.year}}',
+    'image': '{{track.album.cover_art|thumbnail_url:"music_thumbnail"}}',
     'file': '/media/{{track.file}}'
   });
   {% endfor %}
@@ -64,12 +64,16 @@ $(document).ready(function() {
     $('#songImage').attr('src', srcList[trackNum].image);
   }
 
-  audio.addEventListener('ended', function() {
-    trackNum--;
-    this.setAttribute('src', srcList[trackNum].file);
-    this.load();
-    this.play();
+  function loadTrack(index) {
+    audio.setAttribute('src', srcList[index].file);
+    audio.load();
+    audio.play();
     updateInfo();
+  }
+
+  audio.addEventListener('ended', function() {
+    trackNum++;
+    loadTrack(trackNum);
   }, false);
   audio.addEventListener('canplay', function() {
     $('#length').text(audio.duration);
@@ -85,27 +89,21 @@ $(document).ready(function() {
       return;
     }
     trackNum++;
-    audio.setAttribute('src', srcList[trackNum].file);
-    audio.load();
-    audio.play();
-    updateInfo();
+    loadTrack(trackNum);
   });
   $('#last').click(function() {
     if (trackNum <= 0) {
       return;
     }
     trackNum--;
-    audio.setAttribute('src', srcList[trackNum].file);
-    audio.load();
-    audio.play();
-    updateInfo();
+    loadTrack(trackNum);
   });
   $('#mute').click(function() {
     if (!audio.muted) {
       audio.muted = true;
       return;
     }
-      audio.muted = false;
+    audio.muted = false;
   });
 });
 </script>
