@@ -3,6 +3,16 @@ from django.shortcuts import render, redirect
 from . import models
 
 
+def index_view(request):
+    audio = models.Audio.objects.all()
+    compilations = models.AudioCompilation.objects.all()
+    context = {
+        'audio': audio,
+        'compilations': compilations
+    }
+    return render(request, 'music/index.html', context)
+
+
 def audio_view(request, slug):
     song = models.Audio.objects.get(slug=slug)
     context = {

@@ -1,0 +1,37 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+{% load thumbnail %}
+
+{% block title %}Music{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Music Section</h3>
+      </div>
+      <div class="panel-body">
+        <h3>Tracks</h3>
+        <ul>
+          {% for track in audio %}
+          <li><a href="{% url 'music:audio' track.slug %}">{{track.title}}</a></li>
+          {% endfor %}
+        </ul>
+        <h3>Compilations</h3>
+        <ul>
+          {% for compilation in compilations %}
+          <li><a href="{% url 'music:audio_compilation' compilation.slug %}">{{compilation.title}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+</script>
+{% endblock %}
