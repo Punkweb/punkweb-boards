@@ -357,7 +357,7 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
     subject = models.TextField(
         max_length=140, blank=True, null=True, default='No subject')
     unread_by = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name='unread_conversations', null=True, blank=True)
+        settings.AUTH_USER_MODEL, related_name='unread_conversations', blank=True)
 
     def __str__(self):
         return self.subject

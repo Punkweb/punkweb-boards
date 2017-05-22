@@ -5,7 +5,6 @@ from . import models
 
 
 def base_context(request):
-
     ctx = {}
     if request.user.is_authenticated and not request.user.is_banned:
         unread_conversations = Conversation.objects.filter(
@@ -14,7 +13,6 @@ def base_context(request):
         if request.user.is_staff:
             unresolved_reports = Report.objects.filter(resolved=False).count()
             ctx.update({'unresolved_reports': unresolved_reports})
-
     return ctx
 
 
