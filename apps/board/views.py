@@ -11,16 +11,14 @@ from .forms import ThreadForm, PostForm, ReportForm
 
 
 def base_context(request):
-    unread_conversations = Conversation.objects.filter(
-        unread_by__in=[request.user]).count()
-    unresolved_reports = Report.objects.filter(resolved=False).count()
-
     ctx = {}
     if request.user.is_authenticated and not request.user.is_banned:
+        unread_conversations = Conversation.objects.filter(
+            unread_by__in=[request.user]).count()
         ctx.update({'unread_conversations': unread_conversations})
         if request.user.is_staff:
+            unresolved_reports = Report.objects.filter(resolved=False).count()
             ctx.update({'unresolved_reports': unresolved_reports})
-
     return ctx
 
 
