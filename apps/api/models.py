@@ -1,10 +1,15 @@
 import datetime
+import hashlib
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
 from django.db import models
 from django.urls import reverse
+from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
 
@@ -12,8 +17,34 @@ from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
 
 
 def get_placeholder_url():
-    url = '{}placeholder_profile.png'.format(settings.STATIC_URL)
+    url = '/'.join(['placeholder_profile.png'])
+    # url = '{}placeholder_profile.png'.format(settings.MEDIA_ROOT)
     return url
+
+
+def get_gravatar_url(email, size=80, secure=True, default='mm'):
+    if secure:
+        url_base = 'https://secure.gravatar.com/'
+    else:
+        url_base = 'http://www.gravatar.com/'
+    email_hash = hashlib.md5(email.encode('utf-8').strip().lower()).hexdigest()
+    qs = urlencode({
+        's': str(size),
+        'd': default,
+        'r': 'pg',
+    })
+    url = '{}avatar/{}.jpg?{}'.format(url_base, email_hash, qs)
+    return url
+
+
+def has_gravatar(email):
+    url = get_gravatar_url(email, default='404')
+    try:
+        request = Request(url)
+        request.get_method = lambda: 'HEAD'
+        return 200 == urlopen(request).code
+    except (HTTPError, URLError):
+        return False
 
 
 def user_image_file_name(instance, filename):
@@ -27,28 +58,36 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar(self):
         if not self.image:
-            return get_placeholder_url()
+            if has_gravatar(self.email):
+                return get_gravatar_url(self.email, size=200)
+            return get_thumbnailer(get_placeholder_url())['avatar'].url
         else:
             return self.image['avatar'].url
 
     @property
     def avatar_small(self):
         if not self.image:
-            return get_placeholder_url()
+            if has_gravatar(self.email):
+                return get_gravatar_url(self.email, size=100)
+            return get_thumbnailer(get_placeholder_url())['avatar_small'].url
         else:
             return self.image['avatar_small'].url
 
     @property
     def avatar_smaller(self):
         if not self.image:
-            return get_placeholder_url()
+            if has_gravatar(self.email):
+                return get_gravatar_url(self.email, size=50)
+            return get_thumbnailer(get_placeholder_url())['avatar_smaller'].url
         else:
             return self.image['avatar_smaller'].url
 
     @property
     def avatar_smallest(self):
         if not self.image:
-            return get_placeholder_url()
+            if has_gravatar(self.email):
+                return get_gravatar_url(self.email, size=25)
+            return get_thumbnailer(get_placeholder_url())['avatar_smallest'].url
         else:
             return self.image['avatar_smallest'].url
 
@@ -80,7 +119,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
     username = models.CharField(max_length=16, unique=True, blank=False)
     image = ThumbnailerImageField(
         upload_to=user_image_file_name, null=True, blank=True)
-    signature = BBCodeTextField(max_length=140, blank=True, null=True)
+    signature = BBCodeTextField(max_length=1024, blank=True, null=True)
     gender = models.CharField(null=True, blank=True, max_length=1,
                               choices=GENDER_CHOICES, default=None)
     birthday = models.DateField(
