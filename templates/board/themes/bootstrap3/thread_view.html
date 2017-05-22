@@ -1,0 +1,193 @@
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{thread.title}}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="/">Forum</a></li>
+  <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
+  <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
+  <li class="active">{{thread.title}}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<nav>
+  <ul class="pagination">
+    {% if posts.has_previous %}
+    <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+    <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+    {% endif %}
+    {% for page in posts.paginator.page_range %}
+    {% if page == posts.number %}
+    <li class="active"><a>{{page}}</a></li>
+    {% else %}
+    <li><a href="?page={{page}}">{{page}}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+    <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+    <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% if posts.number == 1 %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{thread.title}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <a href="{% url 'board:profile' thread.user.username %}">
+          <img src="{{thread.user.avatar_small}}" alt="..." />
+        </a>
+        <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
+        <hr />
+      </div>
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12">
+            {{thread.content.rendered}}
+          </div>
+        </div>
+        {% if thread.reported and user.is_authenticated and user.is_staff %}
+        <div class="alert alert-warning" style="margin: 1rem" role="alert">
+          <p>This thread has open reports.</p>
+        </div>
+        {% endif %}
+        {% if thread.user.signature.rendered %}
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            {{thread.user.signature.rendered}}
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-xs-12 align-right">
+            {% if user.is_authenticated and thread.user.id != user.id %}
+            <a href="{% url 'board:report-thread' thread.id %}" class="btn btn-default" name="button">Report</a>
+            {% endif %}
+            {% if user.is_authenticated and user.id == thread.user.id or user.is_staff %}
+            <a href="{% url 'board:thread-update' thread.id %}" class="btn btn-success" name="button">Update</a>
+            <a href="{% url 'board:thread-delete' thread.id %}" class="btn btn-danger" name="button">Delete</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    {{thread.created}}
+  </div>
+</div>
+{% endif %}
+{% if posts %}
+{% for post in posts %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title align-right">#{{forloop.counter}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <a href="{% url 'board:profile' post.user.username %}"><img src="{{post.user.avatar_small}}" alt="..." /></a>
+        <a href="{% url 'board:profile' post.user.username %}">{{post.user.username}}</a>
+        <hr />
+      </div>
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12">
+            {{post.content.rendered}}
+          </div>
+        </div>
+        {% if post.reported and user.is_authenticated and user.is_staff %}
+        <div class="alert alert-warning" style="margin: 1rem" role="alert">
+          <p>This post has open reports.</p>
+        </div>
+        {% endif %}
+        {% if post.user.signature.rendered %}
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            {{post.user.signature.rendered}}
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-xs-12 align-right">
+            {% if user.is_authenticated and post.user.id != user.id %}
+            <a href="{% url 'board:report-post' post.id %}" class="btn btn-default" name="button">Report</a>
+            {% endif %}
+            {% if user.is_authenticated and post.user.id == user.id or user.is_staff %}
+            <a href="{% url 'board:post-update' post.id %}" class="btn btn-success" name="button">Update</a>
+            <a href="{% url 'board:post-delete' post.id %}" class="btn btn-danger" name="button">Delete</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    {{post.created}}
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+<nav>
+  <ul class="pagination">
+    {% if posts.has_previous %}
+    <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+    <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+    {% endif %}
+    {% for page in posts.paginator.page_range %}
+    {% if page == posts.number %}
+    <li class="active"><a>{{page}}</a></li>
+    {% else %}
+    <li><a href="?page={{page}}">{{page}}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+    <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+    <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+    {% else %}
+    <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+    <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% if user.is_authenticated %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Reply to this thread</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="{{user.avatar_small}}" />
+        <hr />
+      </div>
+      <div class="col-xs-12">
+        <form method="post">
+          {% csrf_token %}
+          {{ post_form|crispy }}
+          <input type="submit" class="btn btn-success form-control" value="Post Reply" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends './base_table.html' %}
+
+{% block table_header %}
+<thead>
+  <tr>
+    <th class="mdl-data-table__cell--non-numeric" width="40%">
+      <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
+    </th>
+    <th width="10%">
+      Threads
+    </th>
+    <th width="10%">
+      Posts
+    </th>
+    <th width="30%">
+      Last Thread
+    </th>
+  </tr>
+</thead>
+{% endblock %}
+{% block table_body %}
+<tbody>
+  {% for child in category.children %}
+  <tr>
+    <td class="mdl-data-table__cell--non-numeric">
+      <p><a href="{% url 'board:subcategory' child.id %}">{{child.name}}</a></p>
+      <p>{{child.description.rendered}}</p>
+    </td>
+    <td>
+      <p>{{child.thread_count}}</p>
+    </td>
+    <td>
+      <p>{{child.post_count}}</p>
+    </td>
+    <td>
+      {% if child.last_thread %}
+      <p><a href="{% url 'board:thread' child.last_thread.id %}">{{child.last_thread.title|truncatechars_html:30}}</a></p>
+      <p>{{child.last_thread.created}}</p>
+      <p>by <a href="{% url 'board:profile' child.last_thread.user.username %}">{{child.last_thread.user.username}}</a></p>
+      {% else %}
+      <p>No Threads</p>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+{% endblock %}
+{% block table_footer %}{% endblock %}

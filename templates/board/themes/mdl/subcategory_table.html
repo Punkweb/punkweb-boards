@@ -1,0 +1,55 @@
+{% extends './base_table.html' %}
+
+{% block table_caption %}
+{% if category.description.rendered %}
+{{category.description.rendered}}
+{% endif %}
+{% endblock %}
+
+{% block table_header %}
+<thead>
+  <tr>
+    <th class="mdl-data-table__cell--non-numeric" width="60%">
+      Title/Author
+    </th>
+    <th widht="10%">
+      Replies
+    </th>
+    <th width="30%">
+      Last Post
+    </th>
+  </tr>
+</thead>
+{% endblock %}
+{% block table_body %}
+<tbody>
+  {% for thread in threads %}
+  <tr>
+    <td class="mdl-data-table__cell--non-numeric">
+      <p>
+        {% if thread.pinned %}
+        <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+        {% endif %}
+        <a href="{% url 'board:thread' thread.id %}">
+          {{thread.title}}
+        </a>
+        {{thread.created}}
+      </p>
+      <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a></p>
+    </td>
+    <td>
+      <p>{{thread.posts_count}}</p>
+    </td>
+    <td>
+      {% if thread.last_post %}
+      <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
+      <p>{{thread.last_post.created}}</p>
+      {% else %}
+      <p>No Posts</p>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+{% endblock %}
+{% block table_footer %}{% endblock %}

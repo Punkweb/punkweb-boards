@@ -1,0 +1,27 @@
+{% extends './base.html' %}
+
+{% block title %}Report{% endblock %}
+
+{% block content %}
+<h3>Resolve Report</h3>
+<h3>Reason for Report</h3>
+<p>{{report.reason}}</p>
+
+{% if report.post %}
+<h3>Post Content</h3>
+<p>{{report.post.content.rendered}}</p>
+<a href="{% url 'board:post-update' report.post.id %}" class="btn btn-success" name="button">Update Post</a>
+<a href="{% url 'board:post-delete' report.post.id %}" class="btn btn-danger" name="button">Delete Post</a>
+{% elif report.thread %}
+<h3>Thread Content</h3>
+<p>{{report.thread.content.rendered}}</p>
+<a href="{% url 'board:thread-update' report.thread.id %}" class="btn btn-success" name="button">Update Thread</a>
+<a href="{% url 'board:thread-delete' report.thread.id %}" class="btn btn-danger" name="button">Delete Thread</a>
+{% endif %}
+{% if not report.resolved %}
+<form method="post">
+{% csrf_token %}
+<input type="submit" class="mdl-button mdl-js-button" value="Mark as Resolved" />
+</form>
+{% endif %}
+{% endblock %}

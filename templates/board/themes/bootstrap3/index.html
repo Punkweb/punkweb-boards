@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<!-- Birthday message -->
+{% if user.birthday_today %}
+<p>
+  <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+  Happy Birthday!
+  <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+</p>
+{% endif %}
+<div class="row">
+  <div class="col-xs-12">
+    {% for category in categories %}
+    <div class="panel panel-default">
+      {% include './index_category_table.html' %}
+    </div>
+    {% endfor %}
+  </div>
+  {% if member_count >= 1 %}
+  <div class="col-xs-12">
+    <p>The newest member to the forum is
+      <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.username}}</a></p>
+    <p>Total member count: {{member_count}}</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

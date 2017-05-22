@@ -279,7 +279,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
     pinned = models.BooleanField(default=False)
 
     def __str__(self):
-        return '{}, {}'.format(self.title, self.created)
+        return '{} by {}'.format(self.title, self.user)
 
     def can_view(self, user):
         if user.is_authenticated and user.is_banned:
@@ -328,7 +328,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     def __str__(self):
-        return '{}\'s post on {} {}'.format(
+        return '{}\'s post on {}, {}'.format(
             self.user, self.thread, self.created.strftime("%Y-%m-%d %H:%M"))
 
     def can_edit(self, user):

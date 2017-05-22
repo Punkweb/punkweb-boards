@@ -1,0 +1,116 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}{{profile.username}}{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <img src="{{profile.avatar}}">
+    <h1>{{profile.username}}</h1>
+    <br>
+
+    <h4>Email</h4>
+    <p>{{profile.email}}</p>
+
+    <br>
+
+    <h4>Birth date</h4>
+    <p>
+      {{profile.birthday|date:'m/d/Y'}} ({{profile.age}})
+    </p>
+
+    <br>
+
+    <h4>Post Count</h4>
+    <p>
+      {{profile.post_count}}
+    </p>
+
+    <br>
+
+    <h4>Signature</h4>
+    <p>
+      {{profile.signature.rendered}}
+    </p>
+
+    <br>
+
+    <h4>Threads</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="align-left" width="60%">
+            Title
+          </th>
+          <th class="align-center" widht="10%">
+            Posts
+          </th>
+          <th class="align-right hidden-xs" width="30%">
+            Last Post
+          </th>
+        </tr>
+      </thead>
+      <tbody class="striped">
+        {% for thread in profile.threads.all %}
+        <tr class="border-bottom">
+          <td class="align-left">
+            <p>
+              <a href="{% url 'board:thread' thread.id %}">
+                {{thread.title}}
+              </a>
+            </p>
+            <p>
+              {{thread.created}}
+            </p>
+          </td>
+          <td class="align-center">
+            <p>{{thread.posts_count}}</p>
+          </td>
+          <td class="align-right hidden-xs">
+            {% if thread.last_post %}
+            <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
+            <p>{{thread.last_post.created}}</p>
+            {% else %}
+            <p>No Posts</p>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <br>
+
+    <h4>Posts</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Thread
+          </th>
+          <th class="align-right" width="30%">
+            Date
+          </th>
+        </tr>
+      </thead>
+      <tbody class="striped">
+        {% for post in profile.posts.all %}
+        <tr class="border-bottom">
+          <td class="align-left">
+            <a href="{% url 'board:thread' post.thread.id %}">
+              {{post.thread.title}}
+            </a>
+          </td>
+          <td class="align-right">
+            {{post.created}}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

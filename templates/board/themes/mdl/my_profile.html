@@ -1,0 +1,11 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}{{user.username}}{% endblock %}
+
+{% block content %}
+<img src="{{user.avatar}}">
+<h1>{{user.username}}</h1>
+{{ '[b]Profile page under construction[/b]' |bbcode }}
+{% endblock %}

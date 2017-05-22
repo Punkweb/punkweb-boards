@@ -1,0 +1,13 @@
+{% extends './base.html' %}
+{% load bbcode_tags %}
+
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+{{ '[b]Conversations page under construction[/b]' |bbcode }}
+
+<h3>Conversations</h3>
+{% for conversation in conversations %}
+{{conversation.subject}}
+{% endfor %}
+{% endblock %}
