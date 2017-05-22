@@ -4,8 +4,24 @@ from django.utils import timezone
 
 from .settings import BOARD_THEME
 from apps.api.models import (
-    EmailUser, Category, Subcategory, Thread, Post, Report)
+    EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
+    Message
+)
 from .forms import ThreadForm, PostForm, ReportForm
+
+
+def base_context(request):
+    unread_conversations = Conversation.objects.filter(
+        unread_by__in=[request.user]).count()
+    unresolved_reports = Report.objects.filter(resolved=False).count()
+
+    ctx = {}
+    if request.user.is_authenticated and not request.user.is_banned:
+        ctx.update({'unread_conversations': unread_conversations})
+        if request.user.is_staff:
+            ctx.update({'unresolved_reports': unresolved_reports})
+
+    return ctx
 
 
 def index_view(request):
@@ -41,6 +57,7 @@ def index_view(request):
         'newest_member': newest_member,
         'member_count': member_count
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/index.html'.format(BOARD_THEME), context)
 
 
@@ -54,6 +71,7 @@ def my_profile(request):
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
     context = {}
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/my_profile.html'.format(BOARD_THEME), context)
 
 
@@ -63,6 +81,7 @@ def settings_view(request):
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
     context = {}
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/settings.html'.format(BOARD_THEME), context)
 
 
@@ -80,6 +99,7 @@ def profile_view(request, username):
     context = {
         'profile': user
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/profile_page.html'.format(BOARD_THEME), context)
 
 
@@ -99,6 +119,7 @@ def category_view(request, pk):
         'category': category,
         'subcategories': subcategories
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/category_view.html'.format(BOARD_THEME), context)
 
 
@@ -122,6 +143,7 @@ def subcategory_view(request, pk):
         'category': category,
         'threads': threads
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/subcategory_view.html'.format(BOARD_THEME), context)
 
 
@@ -159,6 +181,7 @@ def thread_view(request, pk):
         'posts': posts,
         'post_form': form,
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/thread_view.html'.format(BOARD_THEME), context)
 
 
@@ -178,6 +201,7 @@ def thread_create(request, category_id):
     context = {
         'form': form
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/thread_create_form.html'.format(BOARD_THEME), context)
 
 
@@ -197,6 +221,7 @@ def thread_update(request, pk):
     context = {
         'form': form
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/thread_update_form.html'.format(BOARD_THEME), context)
 
 
@@ -213,6 +238,7 @@ def thread_delete(request, pk):
     context = {
         'object': instance
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/thread_delete_form.html'.format(BOARD_THEME), context)
 
 
@@ -234,6 +260,7 @@ def post_update(request, pk):
     context = {
         'form': form
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/post_update_form.html'.format(BOARD_THEME), context)
 
 
@@ -250,6 +277,7 @@ def post_delete(request, pk):
     context = {
         'object': instance
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/post_delete_form.html'.format(BOARD_THEME), context)
 
 
@@ -262,6 +290,7 @@ def conversations_list(request):
     context = {
         'conversations': conversations
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/conversations_list.html'.format(BOARD_THEME), context)
 
 
@@ -274,6 +303,7 @@ def reports_list(request):
     context = {
         'reports': Report.objects.all()
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/reports_list.html'.format(BOARD_THEME), context)
 
 
@@ -293,6 +323,7 @@ def report_view(request, pk):
     context = {
         'report': Report.objects.get(id=pk)
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/report_view.html'.format(BOARD_THEME), context)
 
 
@@ -317,6 +348,7 @@ def report_create(request, thread=None, post=None):
     context = {
         'form': form
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/report_create_form.html'.format(BOARD_THEME), context)
 
 
@@ -329,4 +361,5 @@ def members_list(request):
     context = {
         'users': users
     }
+    context.update(base_context(request))
     return render(request, 'board/themes/{}/members_list.html'.format(BOARD_THEME), context)
