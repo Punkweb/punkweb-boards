@@ -4,6 +4,14 @@
 
 {% block title %}Profile Settings{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
+  <li><a href="{% url 'board:me' %}">Profile</a></li>
+  <li class="active">Settings</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 {{ '[b]Settings page under construction[/b]' |bbcode }}
 {% endblock %}

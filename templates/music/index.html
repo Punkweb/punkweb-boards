@@ -5,6 +5,13 @@
 
 {% block title %}Music{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
+  <li class="active">Music</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <div class="row">
   <div class="col-xs-12">

@@ -4,9 +4,17 @@
 
 {% block title %}{{profile.username}}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
+  <li><a href="{% url 'board:members-list' %}">Members</a></li>
+  <li class="active">{{profile.username}}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 
-<div class="panel panel-default">
+<div class="panel panel-primary">
   <div class="panel-body">
     <img src="{{profile.avatar}}">
     <h1>{{profile.username}}</h1>

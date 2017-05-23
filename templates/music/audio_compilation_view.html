@@ -14,14 +14,17 @@
       </div>
       <div class="panel-body">
         <h2>Now Playing</h2>
-        <img id="songImage" />
+        <center>
+          <img id="songImage" />
+        </center>
         <div id="songTitle"></div>
         <div id="songArtist"></div>
         <div id="songAlbum"></div>
         <div id="songYear"></div>
-        <div id="currentTime">0</div>
-        <progress id="progress"></progress>
-        <div id="length"></div>
+        <div class="progress">
+          <div id="progress" class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div id="currentTime"></div>
         <hr>
         <h2>Control Buttons</h2>
         <button id="last">Last</button>
@@ -71,18 +74,33 @@ $(document).ready(function() {
     updateInfo();
   }
 
+  function timeFormat(time) {
+    var hrs = Math.floor(time / 3600);
+    var mins = Math.floor(time / 60);
+    var secs = Math.floor(time - mins * 60);
+    var str = '';
+
+    if (hrs > 0) {
+      str += '' + hrs + ":" + (mins < 10 ? '0' : '');
+    }
+
+    str += '' + mins + ':' + (secs < 10 ? '0' : '');
+    str += '' + secs;
+    return str;
+  }
+
   audio.addEventListener('ended', function() {
     trackNum++;
     loadTrack(trackNum);
   }, false);
   audio.addEventListener('canplay', function() {
-    $('#length').text(audio.duration);
     audio.play();
   }, false);
   audio.addEventListener('timeupdate', function() {
-    $('#currentTime').text(audio.currentTime);
-    $('#progress').attr('value', audio.currentTime);
-    $('#progress').attr('max', audio.duration);
+    $('#currentTime').text(timeFormat(audio.currentTime) + ' / ' + timeFormat(audio.duration));
+    $('#progress').attr('aria-valuenow', audio.currentTime);
+    $('#progress').attr('aria-valuemax', audio.duration);
+    $('#progress').width(((audio.currentTime/audio.duration)  * 100) + '%');
   }, false);
   $('#next').click(function() {
     if (trackNum >= srcList.length - 1) {

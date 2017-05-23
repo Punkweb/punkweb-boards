@@ -5,6 +5,14 @@
 
 {% block title %}Music | {{song.title}}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
+  <li><a href="{% url 'music:index' %}">Music</a></li>
+  <li class="active">{{song.title}}</a></li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <div class="row">
   <div class="col-xs-12">
@@ -14,10 +22,13 @@
       </div>
       <div class="panel-body">
         <h2>Now Playing</h2>
-        <img src="{{song.album.cover_art|thumbnail_url:'music_thumbnail'}}" />
-        <div id="currentTime">0</div>
-        <progress id="progress"></progress>
-        <div id="length"></div>
+        <center>
+          <img src="{{song.album.cover_art|thumbnail_url:'music_thumbnail'}}" />
+        </center>
+        <div class="progress">
+          <div id="progress" class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div id="currentTime"></div>
         <hr>
         <h2>Control Buttons</h2>
         <button id="play">Play</button>
@@ -35,18 +46,30 @@ $(document).ready(function() {
   var audio = document.createElement('audio');
   audio.setAttribute('src', '/media/{{song.file}}');
 
+  function timeFormat(time) {
+    var hrs = Math.floor(time / 3600);
+    var mins = Math.floor(time / 60);
+    var secs = Math.floor(time - mins * 60);
+    var str = '';
+
+    if (hrs > 0) {
+      str += '' + hrs + ":" + (mins < 10 ? '0' : '');
+    }
+
+    str += '' + mins + ':' + (secs < 10 ? '0' : '');
+    str += '' + secs;
+    return str;
+  }
+
   audio.addEventListener('ended', function() {
     this.play();
   }, false);
-  audio.addEventListener('canplay', function() {
-    $('#length').text(audio.duration);
-    $('#source').text('Source: ' + audio.src);
-    $('#status').text('Status: Ready to play').css('color', 'green');
-  }, false);
+  audio.addEventListener('canplay', function() { }, false);
   audio.addEventListener('timeupdate', function() {
-    $('#currentTime').text(audio.currentTime);
-    $('#progress').attr('value', audio.currentTime);
-    $('#progress').attr('max', audio.duration);
+    $('#currentTime').text(timeFormat(audio.currentTime) + ' / ' + timeFormat(audio.duration));
+    $('#progress').attr('aria-valuenow', audio.currentTime);
+    $('#progress').attr('aria-valuemax', audio.duration);
+    $('#progress').width(((audio.currentTime/audio.duration)  * 100) + '%');
   }, false);
   $('#play').click(function() {
     audio.play();

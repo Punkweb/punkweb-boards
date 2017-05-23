@@ -3,8 +3,16 @@
 
 {% block title %}Report{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
+  <li><a href="{% url 'board:reports-list' %}">Reports</a></li>
+  <li class="active">{{report.id}}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
-<div class="panel panel-default">
+<div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">Resolve Report</h3>
   </div>

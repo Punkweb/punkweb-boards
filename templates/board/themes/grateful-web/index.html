@@ -16,12 +16,7 @@
 <div class="row">
   <div class="col-xs-12">
     {% for category in categories %}
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
-        </h3>
-      </div>
+    <div class="panel panel-default">
       {% include './index_category_table.html' %}
     </div>
     {% endfor %}

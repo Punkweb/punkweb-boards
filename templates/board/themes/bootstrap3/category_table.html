@@ -29,12 +29,14 @@
   {% for sub in subcategories %}
   <tr class="border-bottom">
     <td class="align-left">
-      <p><a href="{% url 'board:subcategory' sub.obj.id %}">{{sub.obj.name}}</a></p>
+      <p>
+        <a href="{% url 'board:subcategory' sub.obj.id %}">{{sub.obj.name}}</a>
+      </p>
       <p>{{sub.obj.description.rendered}}</p>
       {% if sub.can_post %}
       <p>
         <a href="{% url 'board:thread-create' sub.obj.id %}">
-          <i class="fa fa-plus" aria-hidden="true"></i> Create Thread
+          <i class="fa fa-plus-circle" aria-hidden="true"></i> Create Thread
         </a>
       </p>
       {% endif %}
