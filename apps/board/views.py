@@ -7,7 +7,7 @@ from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
     Message
 )
-from .forms import ThreadForm, PostForm, ReportForm
+from .forms import ThreadForm, PostForm, ReportForm, MessageForm
 
 
 def base_context(request):
@@ -282,13 +282,49 @@ def post_delete(request, pk):
 def conversations_list(request):
     # Redirect to unpermitted page if not authenticated or is banned
     if request.user.is_authenticated and request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     conversations = request.user.conversations.all()
     context = {
         'conversations': conversations
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/conversations_list.html'.format(BOARD_THEME), context)
+    return render(request, 'board/themes/{}/inbox.html'.format(BOARD_THEME), context)
+
+
+def conversation_view(request, pk):
+    # Redirect to unpermitted page if not authenticated or is banned
+    if request.user.is_authenticated and request.user.is_banned:
+        return unpermitted_view(request)
+    conversation = request.user.conversations.get(id=pk)
+    messages = conversation.messages.all()
+
+    if request.user in conversation.unread_by.all():
+        conversation.unread_by.remove(request.user)
+
+
+    # TODO: Pagination
+
+    # Logic for creating a new message on a conversation
+    if request.method == 'POST':
+        # Redirect to unpermitted page if not logged in.
+        if not request.user.is_authenticated:
+            return unpermitted_view(request)
+        form = MessageForm(request, request.POST)
+        if form.is_valid():
+            new_unread = conversation.users.exclude(id=request.user.id)
+            conversation.unread_by.add(*new_unread)
+            conversation.save()
+            form.save(conversation=conversation)
+            return redirect(conversation.get_absolute_url())
+    else:
+        form = MessageForm(request)
+    context = {
+        'conversation': conversation,
+        'messages': messages,
+        'message_form': form
+    }
+    context.update(base_context(request))
+    return render(request, 'board/themes/{}/conversation_view.html'.format(BOARD_THEME), context)
 
 
 def reports_list(request):

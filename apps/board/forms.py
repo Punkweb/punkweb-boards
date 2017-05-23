@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from apps.api.models import Thread, Post, Shout, Report
+from apps.api.models import Thread, Post, Shout, Report, Message
 
 
 class ThreadForm(forms.ModelForm):
@@ -80,3 +80,26 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ['reason']
+
+
+
+class MessageForm(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        self.fields['content'].label = ''
+        self.fields['content'].widget.attrs['class'] = 'post-editor'
+        self.request = request
+
+    def save(self, conversation=None, commit=True):
+        obj = super(MessageForm, self).save(commit=False)
+        obj.user = self.request.user
+        if conversation:
+            obj.conversation = conversation
+        if commit:
+            obj.save()
+        return obj
+
+
+    class Meta:
+        model = Message
+        fields = ['content']

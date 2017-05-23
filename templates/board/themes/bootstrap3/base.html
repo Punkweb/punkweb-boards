@@ -38,7 +38,7 @@
               {% if user.is_staff %}
               <li><a href="{% url 'board:reports-list' %}">Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a></li>
               {% endif %}
-              <li><a href="{% url 'board:conversations-list' %}">Messages {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a></li>
+              <li><a href="{% url 'board:inbox' %}">Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                 <ul class="dropdown-menu">

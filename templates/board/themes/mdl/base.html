@@ -41,7 +41,7 @@
             {% if user.is_staff %}
             <a class="mdl-navigation__link" href="{% url 'board:reports-list' %}"><span class="mdl-badge" data-badge="4">Reports</span></a>
             {% endif %}
-            <a class="mdl-navigation__link" href="{% url 'board:conversations-list' %}"><span class="mdl-badge" data-badge="12">Messages</span></a>
+            <a class="mdl-navigation__link" href="{% url 'board:inbox' %}"><span class="mdl-badge" data-badge="12">Messages</span></a>
             <a class="mdl-navigation__link" href="{% url 'board:me' %}">Profile</a>
             <a class="mdl-navigation__link" href="{% url 'board:settings' %}">Settings</a>
             <a class="mdl-navigation__link" href="{% url 'board:logout' %}">Logout</a>
@@ -60,7 +60,7 @@
           {% if user.is_staff %}
           <a class="mdl-navigation__link" href="{% url 'board:reports-list' %}"><span class="mdl-badge" data-badge="4">Reports</span></a>
           {% endif %}
-          <a class="mdl-navigation__link" href="{% url 'board:conversations-list' %}"><span class="mdl-badge" data-badge="12">Messages</span></a>
+          <a class="mdl-navigation__link" href="{% url 'board:inbox' %}"><span class="mdl-badge" data-badge="12">Messages</span></a>
           <a class="mdl-navigation__link" href="{% url 'board:me' %}">Profile</a>
           <a class="mdl-navigation__link" href="{% url 'board:settings' %}">Settings</a>
           <a class="mdl-navigation__link" href="{% url 'board:logout' %}">Logout</a>

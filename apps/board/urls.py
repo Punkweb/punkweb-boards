@@ -23,8 +23,11 @@ urlpatterns = [
         views.subcategory_view, name='subcategory'),
     url(r'^thread/(?P<pk>[^/]+)/$',
         views.thread_view, name='thread'),
-    url(r'^messages/$',
-        views.conversations_list, name='conversations-list'),
+
+    url(r'^inbox/$',
+        views.conversations_list, name='inbox'),
+    url(r'^conversation/(?P<pk>[^/]+)/$',
+        views.conversation_view, name='conversation'),
 
     url(r'^create_thread/(?P<category_id>[^/]+)/$',
         views.thread_create, name='thread-create'),
@@ -47,6 +50,6 @@ urlpatterns = [
     url(r'^report_post/(?P<post>[^/]+)/$',
         views.report_create, name='report-post'),
 
-    url(r'^members_list/$',
+    url(r'^members/$',
         views.members_list, name='members-list'),
 ]

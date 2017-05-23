@@ -4,6 +4,12 @@
 
 {% block title %}Index{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="active">Forum</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <!-- Birthday message -->
 {% if user.birthday_today %}

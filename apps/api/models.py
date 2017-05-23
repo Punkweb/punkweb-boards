@@ -362,8 +362,20 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
     def __str__(self):
         return self.subject
 
+    # @property
+    # def messages(self):
+    #     return Message.objects.filter(conversation__id=self.id).select_related()
+
+    @property
+    def message_count(self):
+        return len(self.messages.all())
+
+    @property
+    def last_message(self):
+        return self.messages.order_by('-created').first()
+
     def get_absolute_url(self):
-        return reverse('board:messages')  # TODO Actual url
+        return reverse('board:conversation', kwargs={'pk': self.id})
 
 
 class Message(UUIDPrimaryKey, CreatedModifiedMixin):
@@ -379,7 +391,7 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
         return self.user.username
 
     def get_absolute_url(self):
-        return reverse('board:messages')  # TODO Actual url
+        return reverse('board:conversation', kwargs={'pk': self.convseration.id})
 
 
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
