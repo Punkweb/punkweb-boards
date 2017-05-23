@@ -1,7 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  min-width: 425px;
+  min-width: 320px;
   width: 100%;
 }
 
@@ -31,4 +31,32 @@ pre {
   background-color: $oc-yellow-0;
   font-family: monospace;
   white-space: pre-wrap;
+}
+
+@font-face {
+	font-family: 'Ripple';
+	src: url('../fonts/Ripple.ttf');
+	font-weight: normal;
+  letter-spacing: 7.5px;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Storybook';
+	src: url('../fonts/Storyboo.TTF');
+	font-weight: normal;
+  letter-spacing: 1.5px;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Griffin';
+	src: url('../fonts/GRIFRG__.TTF');
+	font-weight: bold;
+	font-style: normal;
+  letter-spacing: 12px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Storybook';
 }

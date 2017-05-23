@@ -41,7 +41,7 @@ def index_view(request):
     recent_threads = Thread.objects.all().order_by('-created')
     recent_activity = Thread.objects.all().order_by('-modified')
     if not request.user.is_authenticated:
-        # Filter out threads in subcategories with auth_req = True
+        # Filter out activity in subcategories with auth_req = True
         recent_threads = recent_threads.filter(
             category__auth_req=False)
         recent_activity = recent_activity.filter(
@@ -298,13 +298,13 @@ def conversation_view(request, pk):
     conversation = request.user.conversations.get(id=pk)
     messages = conversation.messages.all()
 
+    # Mark this conversation read by the requesting user
     if request.user in conversation.unread_by.all():
         conversation.unread_by.remove(request.user)
 
-
     # TODO: Pagination
 
-    # Logic for creating a new message on a conversation
+    # Logic for creating a new message in a conversation
     if request.method == 'POST':
         # Redirect to unpermitted page if not logged in.
         if not request.user.is_authenticated:
