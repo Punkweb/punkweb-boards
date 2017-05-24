@@ -2,7 +2,41 @@ from django import forms
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.widgets import ImageClearableFileInput
 from apps.api.models import EmailUser, Thread, Post, Shout, Report, Message
+
+
+class SettingsForm(forms.Form):
+    def __init__(self, request, *args, **kwargs):
+        super(SettingsForm, self).__init__(*args, **kwargs)
+        self.fields['image'].initial = request.user.image
+        self.fields['gender'].initial = request.user.gender
+        self.fields['birthday'].initial = request.user.birthday
+        self.fields['signature'].initial = request.user.signature
+
+    GENDER_CHOICES = [
+        ('', ''),
+        ('f', 'Female'),
+        ('m', 'Male'),
+    ]
+    image = forms.ImageField(
+        label=_('Profile Image'),
+        required=False
+    )
+    gender = forms.ChoiceField(
+        choices=GENDER_CHOICES,
+        label=_('Gender'),
+        required=False
+    )
+    birthday = forms.DateField(
+        label=_('Birthday (yyyy-mm-dd)'),
+        required=False
+    )
+    signature = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'post-editor'}),
+        label=_('Signature'),
+        required=False
+    )
 
 
 class RegistrationForm(forms.Form):

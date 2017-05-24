@@ -7,7 +7,7 @@ from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
     Message
 )
-from .forms import ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm
+from .forms import ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm, SettingsForm
 
 
 def base_context(request):
@@ -97,7 +97,24 @@ def settings_view(request):
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
-    context = {}
+    if request.method == 'POST':
+        form = SettingsForm(request, request.POST, request.FILES)
+        if form.is_valid():
+            if form.cleaned_data['image']:
+                request.user.image = form.cleaned_data['image']
+            if form.cleaned_data['gender']:
+                request.user.gender = form.cleaned_data['gender']
+            if form.cleaned_data['birthday']:
+                request.user.birthday = form.cleaned_data['birthday']
+            if form.cleaned_data['signature']:
+                request.user.signature = form.cleaned_data['signature']
+            request.user.save()
+            return redirect('/board/me/')
+    else:
+        form = SettingsForm(request)
+    context = {
+        'form': form
+    }
     context.update(base_context(request))
     return render(request, 'board/themes/{}/settings.html'.format(BOARD_THEME), context)
 

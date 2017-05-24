@@ -1,6 +1,7 @@
 {% extends './base.html' %}
 {% load static %}
 {% load bbcode_tags %}
+{% load crispy_forms_tags %}
 
 {% block title %}Profile Settings{% endblock %}
 
@@ -13,5 +14,16 @@
 {% endblock %}
 
 {% block content %}
-{{ '[b]Settings page under construction[/b]' |bbcode }}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Settings</h3>
+  </div>
+  <div class="panel-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success form-control">Update</button>
+    </form>
+  </div>
+</div>
 {% endblock %}
