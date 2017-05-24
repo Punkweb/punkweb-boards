@@ -7,7 +7,7 @@ from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
     Message
 )
-from .forms import ThreadForm, PostForm, ReportForm, MessageForm
+from .forms import ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm
 
 
 def base_context(request):
@@ -20,6 +20,25 @@ def base_context(request):
             unresolved_reports = Report.objects.filter(resolved=False).count()
             ctx.update({'unresolved_reports': unresolved_reports})
     return ctx
+
+
+def registration_view(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = EmailUser.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                email=form.cleaned_data['email']
+            )
+            return redirect('/board/login/')
+    else:
+        form = RegistrationForm()
+    context = {
+        'form': form
+    }
+    context.update(base_context(request))
+    return render(request, 'board/themes/{}/register.html'.format(BOARD_THEME), context)
 
 
 def index_view(request):

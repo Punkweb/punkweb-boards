@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^unpermitted/$',
         views.unpermitted_view, name='unpermitted'),
 
+    url(r'^register/$', views.registration_view, name='register'),
     url(r'^login/$',
         auth_views.login, {'template_name': 'board/themes/{}/login.html'.format(BOARD_THEME)}, name='login'),
     url(r'^logout/$',
