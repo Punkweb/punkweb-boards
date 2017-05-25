@@ -51,7 +51,10 @@
       {% if sub.obj.last_thread %}
       <p><a href="{% url 'board:thread' sub.obj.last_thread.id %}">{{sub.obj.last_thread.title|truncatechars_html:30}}</a></p>
       <p>{{sub.obj.last_thread.created}}</p>
-      <p>by <a href="{% url 'board:profile' sub.obj.last_thread.user.username %}">{{sub.obj.last_thread.user.username}}</a></p>
+      <p>
+        by <a href="{% url 'board:profile' sub.obj.last_thread.user.username %}">
+        {{sub.obj.last_thread.user.username}} <img src="{{sub.obj.last_thread.user.avatar_smallest}}" alt="" /></a>
+      </p>
       {% else %}
       <p>No Threads</p>
       {% endif %}

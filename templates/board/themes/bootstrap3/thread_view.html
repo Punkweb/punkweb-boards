@@ -50,7 +50,7 @@
     <div class="row">
       <div class="col-xs-12">
         <a href="{% url 'board:profile' thread.user.username %}">
-          <img src="{{thread.user.avatar_small}}" alt="..." />
+          <img src="{{thread.user.avatar_smaller}}" alt="..." />
         </a>
         <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
         <hr />
@@ -102,7 +102,7 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12">
-        <a href="{% url 'board:profile' post.user.username %}"><img src="{{post.user.avatar_small}}" alt="..." /></a>
+        <a href="{% url 'board:profile' post.user.username %}"><img src="{{post.user.avatar_smaller}}" alt="..." /></a>
         <a href="{% url 'board:profile' post.user.username %}">{{post.user.username}}</a>
         <hr />
       </div>
@@ -180,7 +180,7 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12">
-        <img src="{{user.avatar_small}}" />
+        <img src="{{user.avatar_smaller}}" />
         <hr />
       </div>
       <div class="col-xs-12">

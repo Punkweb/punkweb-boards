@@ -43,7 +43,7 @@
     </td>
     <td class="align-right hidden-xs">
       {% if thread.last_post %}
-      <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
+      <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}} <img src="{{thread.last_post.user.avatar_smallest}}" alt="" /></a></p>
       <p>{{thread.last_post.created}}</p>
       {% else %}
       <p>No Posts</p>

@@ -35,7 +35,7 @@
       {% if child.last_thread %}
       <p><a href="{% url 'board:thread' child.last_thread.id %}">{{child.last_thread.title|truncatechars_html:30}}</a></p>
       <p>{{child.last_thread.created}}</p>
-      <p>by <a href="{% url 'board:profile' child.last_thread.user.username %}">{{child.last_thread.user.username}}</a></p>
+      <p>by <a href="{% url 'board:profile' child.last_thread.user.username %}">{{child.last_thread.user.username}}<img src="{{child.last_thread.user.avatar_smallest}}" alt="" /></a></p>
       {% else %}
       <p>No Threads</p>
       {% endif %}
