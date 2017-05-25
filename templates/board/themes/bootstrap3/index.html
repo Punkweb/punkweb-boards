@@ -28,9 +28,10 @@
   </div>
   {% if member_count >= 1 %}
   <div class="col-xs-12">
-    <p>The newest member to the forum is
-      <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.username}}</a></p>
-    <p>Total member count: {{member_count}}</p>
+    <p>Newest Member: <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.username}}</a></p>
+    <p>Total Posts: {{total_posts}}</p>
+    <p>Total Threads: {{total_threads}}</p>
+    <p>Total Members: {{member_count}}</p>
   </div>
   {% endif %}
 </div>

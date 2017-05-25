@@ -23,6 +23,9 @@ def base_context(request):
 
 
 def index_view(request):
+    total_posts = Post.objects.all().count()
+    total_threads = Thread.objects.all().count()
+
     category_groups = []
     parent_categories = Category.objects.all()
     if not request.user.is_authenticated:
@@ -49,6 +52,8 @@ def index_view(request):
     newest_member = EmailUser.objects.all().order_by('-created').first()
     member_count = EmailUser.objects.all().count()
     context = {
+        'total_posts': total_posts,
+        'total_threads': total_threads,
         'categories': category_groups,
         'recent_threads': recent_threads[:5],
         'recent_activity': recent_activity[:5],
