@@ -7,6 +7,9 @@
 
     <title>Forum | {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="{% static 'fonts/GRIFRG__.TTF' %}"/>
+    <link rel="stylesheet" href="{% static 'fonts/Ripple.ttf' %}"/>
+    <link rel="stylesheet" href="{% static 'fonts/Storyboo.TTF' %}"/>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -25,7 +28,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'portal' %}">django-boards</a>
+            <a class="navbar-brand" style="font-family: 'Storybook';" href="{% url 'portal' %}">Django Boards</a>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
@@ -38,7 +41,7 @@
               {% if user.is_staff %}
               <li><a href="{% url 'board:reports-list' %}">Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a></li>
               {% endif %}
-              <li><a href="{% url 'board:conversations-list' %}">Messages {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a></li>
+              <li><a href="{% url 'board:inbox' %}">Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -51,6 +54,7 @@
             </ul>
             {% else %}
             <ul class="nav navbar-nav navbar-right">
+              <li><a href="{% url 'board:register' %}">Sign Up</a></li>
               <li><a href="{% url 'board:login' %}">Login</a></li>
             </ul>
             {% endif %}

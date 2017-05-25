@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^unpermitted/$',
         views.unpermitted_view, name='unpermitted'),
 
+    url(r'^register/$', views.registration_view, name='register'),
     url(r'^login/$',
         auth_views.login, {'template_name': 'board/themes/{}/login.html'.format(BOARD_THEME)}, name='login'),
     url(r'^logout/$',
@@ -23,8 +24,11 @@ urlpatterns = [
         views.subcategory_view, name='subcategory'),
     url(r'^thread/(?P<pk>[^/]+)/$',
         views.thread_view, name='thread'),
-    url(r'^messages/$',
-        views.conversations_list, name='conversations-list'),
+
+    url(r'^inbox/$',
+        views.conversations_list, name='inbox'),
+    url(r'^conversation/(?P<pk>[^/]+)/$',
+        views.conversation_view, name='conversation'),
 
     url(r'^create_thread/(?P<category_id>[^/]+)/$',
         views.thread_create, name='thread-create'),
@@ -47,6 +51,6 @@ urlpatterns = [
     url(r'^report_post/(?P<post>[^/]+)/$',
         views.report_create, name='report-post'),
 
-    url(r'^members_list/$',
+    url(r'^members/$',
         views.members_list, name='members-list'),
 ]

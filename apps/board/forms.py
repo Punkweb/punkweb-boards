@@ -1,6 +1,78 @@
 from django import forms
+from django.conf import settings
 from django.utils import timezone
-from apps.api.models import Thread, Post, Shout, Report
+from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.widgets import ImageClearableFileInput
+from apps.api.models import EmailUser, Thread, Post, Shout, Report, Message
+
+
+class SettingsForm(forms.Form):
+    def __init__(self, request, *args, **kwargs):
+        super(SettingsForm, self).__init__(*args, **kwargs)
+        self.fields['image'].initial = request.user.image
+        self.fields['gender'].initial = request.user.gender
+        self.fields['birthday'].initial = request.user.birthday
+        self.fields['signature'].initial = request.user.signature
+
+    GENDER_CHOICES = [
+        ('', ''),
+        ('f', 'Female'),
+        ('m', 'Male'),
+    ]
+    image = forms.ImageField(
+        label=_('Profile Image'),
+        required=False
+    )
+    gender = forms.ChoiceField(
+        choices=GENDER_CHOICES,
+        label=_('Gender'),
+        required=False
+    )
+    birthday = forms.DateField(
+        label=_('Birthday (yyyy-mm-dd)'),
+        required=False
+    )
+    signature = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'post-editor'}),
+        label=_('Signature'),
+        required=False
+    )
+
+
+class RegistrationForm(forms.Form):
+    username = forms.RegexField(
+        regex=r'^\w+$',
+        widget=forms.TextInput(attrs=dict(required=True, max_length=30)),
+        label=_("Username"),
+        error_messages={
+            'invalid': _("This value must contain only letters, numbers and underscores.")
+        }
+    )
+    email = forms.EmailField(
+        widget=forms.TextInput(attrs=dict(required=True, max_length=30)),
+        label=_("Email address")
+    )
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)),
+        label=_("Password")
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)),
+        label=_("Password (again)")
+    )
+
+    def clean_username(self):
+        try:
+            user = EmailUser.objects.get(username__iexact=self.cleaned_data['username'])
+        except EmailUser.DoesNotExist:
+            return self.cleaned_data['username']
+        raise forms.ValidationError(_("The username already exists. Please try another one."))
+
+    def clean(self):
+        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
+            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+                raise forms.ValidationError(_("The two password fields did not match."))
+        return self.cleaned_data
 
 
 class ThreadForm(forms.ModelForm):
@@ -80,3 +152,26 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ['reason']
+
+
+
+class MessageForm(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        self.fields['content'].label = ''
+        self.fields['content'].widget.attrs['class'] = 'post-editor'
+        self.request = request
+
+    def save(self, conversation=None, commit=True):
+        obj = super(MessageForm, self).save(commit=False)
+        obj.user = self.request.user
+        if conversation:
+            obj.conversation = conversation
+        if commit:
+            obj.save()
+        return obj
+
+
+    class Meta:
+        model = Message
+        fields = ['content']

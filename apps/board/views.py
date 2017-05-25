@@ -7,7 +7,7 @@ from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
     Message
 )
-from .forms import ThreadForm, PostForm, ReportForm
+from .forms import ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm, SettingsForm
 
 
 def base_context(request):
@@ -20,6 +20,25 @@ def base_context(request):
             unresolved_reports = Report.objects.filter(resolved=False).count()
             ctx.update({'unresolved_reports': unresolved_reports})
     return ctx
+
+
+def registration_view(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = EmailUser.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                email=form.cleaned_data['email']
+            )
+            return redirect('/board/login/')
+    else:
+        form = RegistrationForm()
+    context = {
+        'form': form
+    }
+    context.update(base_context(request))
+    return render(request, 'board/themes/{}/register.html'.format(BOARD_THEME), context)
 
 
 def index_view(request):
@@ -44,7 +63,7 @@ def index_view(request):
     recent_threads = Thread.objects.all().order_by('-created')
     recent_activity = Thread.objects.all().order_by('-modified')
     if not request.user.is_authenticated:
-        # Filter out threads in subcategories with auth_req = True
+        # Filter out activity in subcategories with auth_req = True
         recent_threads = recent_threads.filter(
             category__auth_req=False)
         recent_activity = recent_activity.filter(
@@ -83,7 +102,24 @@ def settings_view(request):
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
-    context = {}
+    if request.method == 'POST':
+        form = SettingsForm(request, request.POST, request.FILES)
+        if form.is_valid():
+            if form.cleaned_data['image']:
+                request.user.image = form.cleaned_data['image']
+            if form.cleaned_data['gender']:
+                request.user.gender = form.cleaned_data['gender']
+            if form.cleaned_data['birthday']:
+                request.user.birthday = form.cleaned_data['birthday']
+            if form.cleaned_data['signature']:
+                request.user.signature = form.cleaned_data['signature']
+            request.user.save()
+            return redirect('/board/me/')
+    else:
+        form = SettingsForm(request)
+    context = {
+        'form': form
+    }
     context.update(base_context(request))
     return render(request, 'board/themes/{}/settings.html'.format(BOARD_THEME), context)
 
@@ -287,13 +323,49 @@ def post_delete(request, pk):
 def conversations_list(request):
     # Redirect to unpermitted page if not authenticated or is banned
     if request.user.is_authenticated and request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     conversations = request.user.conversations.all()
     context = {
         'conversations': conversations
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/conversations_list.html'.format(BOARD_THEME), context)
+    return render(request, 'board/themes/{}/inbox.html'.format(BOARD_THEME), context)
+
+
+def conversation_view(request, pk):
+    # Redirect to unpermitted page if not authenticated or is banned
+    if request.user.is_authenticated and request.user.is_banned:
+        return unpermitted_view(request)
+    conversation = request.user.conversations.get(id=pk)
+    messages = conversation.messages.all()
+
+    # Mark this conversation read by the requesting user
+    if request.user in conversation.unread_by.all():
+        conversation.unread_by.remove(request.user)
+
+    # TODO: Pagination
+
+    # Logic for creating a new message in a conversation
+    if request.method == 'POST':
+        # Redirect to unpermitted page if not logged in.
+        if not request.user.is_authenticated:
+            return unpermitted_view(request)
+        form = MessageForm(request, request.POST)
+        if form.is_valid():
+            new_unread = conversation.users.exclude(id=request.user.id)
+            conversation.unread_by.add(*new_unread)
+            conversation.save()
+            form.save(conversation=conversation)
+            return redirect(conversation.get_absolute_url())
+    else:
+        form = MessageForm(request)
+    context = {
+        'conversation': conversation,
+        'messages': messages,
+        'message_form': form
+    }
+    context.update(base_context(request))
+    return render(request, 'board/themes/{}/conversation_view.html'.format(BOARD_THEME), context)
 
 
 def reports_list(request):

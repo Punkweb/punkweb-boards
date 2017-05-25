@@ -14,31 +14,33 @@
 {% endblock %}
 
 {% block content %}
-<nav>
-  <ul class="pagination">
-    {% if posts.has_previous %}
-    <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
-    <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
-    {% else %}
-    <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
-    <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
-    {% endif %}
-    {% for page in posts.paginator.page_range %}
-    {% if page == posts.number %}
-    <li class="active"><a>{{page}}</a></li>
-    {% else %}
-    <li><a href="?page={{page}}">{{page}}</a></li>
-    {% endif %}
-    {% endfor %}
-    {% if posts.has_next %}
-    <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
-    <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
-    {% else %}
-    <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
-    <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
-    {% endif %}
-  </ul>
-</nav>
+<center>
+  <nav>
+    <ul class="pagination">
+      {% if posts.has_previous %}
+      <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+      <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+      {% else %}
+      <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+      {% endif %}
+      {% for page in posts.paginator.page_range %}
+      {% if page == posts.number %}
+      <li class="active"><a>{{page}}</a></li>
+      {% else %}
+      <li><a href="?page={{page}}">{{page}}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if posts.has_next %}
+      <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+      <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+      {% else %}
+      <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</center>
 {% if posts.number == 1 %}
 <div class="panel panel-primary">
   <div class="panel-heading">
@@ -143,31 +145,33 @@
 </div>
 {% endfor %}
 {% endif %}
-<nav>
-  <ul class="pagination">
-    {% if posts.has_previous %}
-    <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
-    <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
-    {% else %}
-    <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
-    <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
-    {% endif %}
-    {% for page in posts.paginator.page_range %}
-    {% if page == posts.number %}
-    <li class="active"><a>{{page}}</a></li>
-    {% else %}
-    <li><a href="?page={{page}}">{{page}}</a></li>
-    {% endif %}
-    {% endfor %}
-    {% if posts.has_next %}
-    <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
-    <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
-    {% else %}
-    <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
-    <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
-    {% endif %}
-  </ul>
-</nav>
+<center>
+  <nav>
+    <ul class="pagination">
+      {% if posts.has_previous %}
+      <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+      <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+      {% else %}
+      <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+      {% endif %}
+      {% for page in posts.paginator.page_range %}
+      {% if page == posts.number %}
+      <li class="active"><a>{{page}}</a></li>
+      {% else %}
+      <li><a href="?page={{page}}">{{page}}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if posts.has_next %}
+      <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+      <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+      {% else %}
+      <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+      <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</center>
 {% if user.is_authenticated %}
 <div class="panel panel-success">
   <div class="panel-heading">
