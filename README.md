@@ -1,4 +1,4 @@
-# django-boards
+# django-boards - punkweb
 Django forum boards with django-bbcode support.
 
 ## Quick start
@@ -6,10 +6,15 @@ Django forum boards with django-bbcode support.
 ### Installation and running
 `
 pip install -r requirements.txt
+
 ./db.sh
+
 ./manage.py makemigrations
+
 ./manage.py migrate
+
 ./manage.py runserver
+
 `
 
 ### Create a super user
@@ -19,7 +24,7 @@ pip install -r requirements.txt
 
 ### Customize forum
 
-Navigate to /admin/, login and start by adding categories, bbcode tags, emoticons, and music.
+Navigate to `0.0.0.0/admin/`, login and start by adding categories, bbcode tags, emoticons, and music.
 
 Switch themes at
 `/django-boards/apps/board/settings.py`
