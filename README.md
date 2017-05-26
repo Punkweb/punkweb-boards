@@ -4,8 +4,7 @@ Django forum boards with django-bbcode support.
 ## Quick start
 
 ### Installation and running
-`
-pip install -r requirements.txt
+`pip install -r requirements.txt
 
 ./db.sh
 
@@ -13,9 +12,7 @@ pip install -r requirements.txt
 
 ./manage.py migrate
 
-./manage.py runserver
-
-`
+./manage.py runserver`
 
 ### Create a super user
 `
