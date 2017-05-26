@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+{% load bbcode_tags %}
+
+{% block title %}Inbox{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'board:index' %}">Forum</a></li>
+  <li class="active">Inbox</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+  <h3 class="panel-title">Inbox</h3>
+  <table class="full-width">
+    <tr>
+      <th>Subject</th>
+      <th>Created</th>
+      <th>Last Message</th>
+    </tr>
+    {% for conversation in conversations %}
+    <tr>
+      <td>
+        <a href="{% url 'board:conversation' conversation.id %}">{{conversation.subject}}</a>
+      </td>
+      <td>
+        {{conversation.created}}
+      </td>
+      <td>
+        {{conversation.last_message.user}}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

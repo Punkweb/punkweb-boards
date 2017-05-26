@@ -14,38 +14,47 @@
     <link href="{% sass_src 'scss/dead.scss' %}" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div class="nav">
-      <div class="djcontainer">
-        <div class="nav__flex">
-          <div class="nav__left">
-            <h2 class="nav__title"><span class="blueText">Punk</span> <span class="whiteText"><i class="fa fa-bolt"></i></span> <span class="redText">Web</span></h2>
-            <a href="{% url 'board:index' %}">Forum</a>
-            <a href="{% url 'board:members-list' %}">Members</a>
-            <a href="{% url 'music:index' %}">Music</a>
-          </div>
-          <div class="nav__right">
-            {% if user.is_authenticated %}
-              {% if user.is_staff %}
-              <a href="{% url 'board:reports-list' %}">Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
+    <div class="page-wrap">
+      <div class="nav">
+        <div class="djcontainer">
+          <div class="nav__flex">
+            <div class="nav__left">
+              <h2 class="nav__title"><span class="blueText">Punk</span> <span class="whiteText"><i class="fa fa-bolt"></i></span> <span class="redText">Web</span></h2>
+              <a href="{% url 'board:index' %}">Forum</a>
+              <a href="{% url 'board:members-list' %}">Members</a>
+              <a href="{% url 'music:index' %}">Music</a>
+            </div>
+            <div class="nav__right">
+              {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                <a href="{% url 'board:reports-list' %}">Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
+                {% endif %}
+                <a href="{% url 'board:inbox' %}">Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
+
+              <a href="{% url 'board:me' %}">View Provile</a>
+              <a href="{% url 'board:settings' %}">Settings</a>
+              <a href="{% url 'board:logout' %}">Logout</a>
+              {% else %}
+
+              <a href="{% url 'board:register' %}">Sign up</a>
+              <a href="{% url 'board:login' %}">Login</a>
               {% endif %}
-              <a href="{% url 'board:inbox' %}">Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
-
-            <a href="{% url 'board:me' %}">View Provile</a>
-            <a href="{% url 'board:settings' %}">Settings</a>
-            <a href="{% url 'board:logout' %}">Logout</a>
-            {% else %}
-
-            <a href="{% url 'board:register' %}">Sign up</a>
-            <a href="{% url 'board:login' %}">Login</a>
-            {% endif %}
+            </div>
           </div>
         </div>
       </div>
+      <div class="djcontainer">
+        {% block breadcrumb %}{% endblock %}
+        {% block content %}{% endblock %}
+      </div>
     </div>
-    <div class="djcontainer">
-      {% block breadcrumb %}{% endblock %}
-      {% block content %}{% endblock %}
-    </div>
+    <footer>
+      <div class="footer-bottom">
+        <div class="djcontainer">
+          <p class="text-muted">Powered by <a target="_blank" href="https://github.com/shakedown-street/django-boards">shakedown-street/django-boards</a></p>
+        </div>
+      </div>
+    </footer>
   </body>
   <!-- JQuery 3.1.1 -->
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

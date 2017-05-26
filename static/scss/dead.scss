@@ -3,10 +3,68 @@
 @import 'defaults';
 @import 'footer';
 
+// * {
+//   border: 1px solid red;
+// }
+
+html, body {
+  background-color: $oc-gray-9;
+  color: $oc-gray-6;
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  width: 100%;
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
+
+  li {
+    padding: 1rem;
+    cursor: pointer;
+  }
+}
+
+.djcontainer {
+  width: 100%;
+  max-width: 1024px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.page-wrap {
+  min-height: 100vh;
+}
+
+.full-width {
+  width: 100%;
+}
+
+a:link, a:visited, a:hover, a:active {
+  color: $oc-blue-6;
+  text-decoration: none;
+  cursor: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $oc-blue-7;
+  font-family: 'Storybook';
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
 
 .nav {
 
   background-color: $oc-gray-7;
+  width: 100%;
 
   &__flex {
     display: flex;
@@ -37,12 +95,23 @@
 }
 
 .badge {
-  background-color: $oc-red-6;
-  color: white;
-  display:inline-block;
-  padding-left:8px;
-  padding-right:8px;
-  text-align:center;
+  // background-color: $oc-red-9;
+  // color: white;
+  // display:inline-block;
+  // padding-left:8px;
+  // padding-right:8px;
+  // text-align:center;
+  background-color: $oc-red-9;
+  display: inline-block;
+  padding: .25em .4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
 }
 .badge {
   border-radius:50%;
@@ -58,7 +127,7 @@
   color: $oc-gray-2;
 }
 .blueText {
-  color: $oc-blue-8;
+  color: $oc-blue-6;
 }
 .redText {
   color: $oc-red-7;

@@ -4,22 +4,14 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="panel-title">Login</div>
-  </div>
-  <div class="panel-body">
-    <div class="well col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-      <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success form-control">Login</button>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- TODO Find an alternative for this.  Works for now. -->
+<h3>Sign Up</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-success form-control">Login</button>
+</form>
 {% if user.is_authenticated %}
+<!-- TODO Find an alternative for this.  Works for now. -->
 <script>
   setTimeout(function() {
     window.location.href = '/board/';

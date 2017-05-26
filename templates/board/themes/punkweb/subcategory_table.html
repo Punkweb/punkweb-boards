@@ -1,0 +1,50 @@
+{% if category.description.rendered %}
+<caption>{{category.description.rendered}}</caption>
+{% endif %}
+
+<table class="full-width">
+
+  <thead>
+    <tr>
+      <th class="align-left" width="60%">
+        Title/Author
+      </th>
+      <th class="align-center" widht="10%">
+        Replies
+      </th>
+      <th class="align-right hidden-xs" width="30%">
+        Last Post
+      </th>
+    </tr>
+  </thead>
+  <tbody class="striped">
+    {% for thread in threads %}
+    <tr class="border-bottom">
+      <td class="align-left">
+        <p>
+          {% if thread.pinned %}
+          <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+          {% endif %}
+          <a href="{% url 'board:thread' thread.id %}">
+            {{thread.title}}
+          </a>
+          <br />
+          {{thread.created}}
+        </p>
+        <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a></p>
+      </td>
+      <td class="align-center">
+        <p>{{thread.posts_count}}</p>
+      </td>
+      <td class="align-right hidden-xs">
+        {% if thread.last_post %}
+        <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}} <img src="{{thread.last_post.user.avatar_smallest}}" alt="" /></a></p>
+        <p>{{thread.last_post.created}}</p>
+        {% else %}
+        <p>No Posts</p>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
