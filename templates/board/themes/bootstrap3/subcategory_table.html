@@ -33,10 +33,8 @@
         <a href="{% url 'board:thread' thread.id %}">
           {{thread.title}}
         </a>
-        <br />
-        {{thread.created}}
       </p>
-      <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a></p>
+      <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}} </a>{{thread.created}}</p>
     </td>
     <td class="align-center">
       <p>{{thread.posts_count}}</p>

@@ -9,12 +9,17 @@
 {% block table_header %}
 <thead>
   <tr>
-    <th width="50px"></th>
-    <th class="align-left">
+    <th class="align-left" width="40%">
       Username
     </th>
-    <th class="align-right" width="10%">
+    <th class="align-right" width="15%">
+      Rank
+    </th>
+    <th class="align-center" width="10%">
       Posts
+    </th>
+    <th class="align-right" width="35%">
+      Joined
     </th>
   </tr>
 </thead>
@@ -24,13 +29,17 @@
   {% for user in users %}
   <tr>
     <td>
-      <img src="{{user.avatar_smallest}}" alt="..." />
-    </td>
-    <td>
+      <!-- <img src="{{user.avatar_smallest}}" alt="..." /> -->
       <a href="{% url 'board:profile' user.username %}">{{user.username}}</a>
     </td>
     <td class="align-right">
+      Rookie
+    </td>
+    <td class="align-center">
       {{user.post_count}}
+    </td>
+    <td class="align-right">
+      {{user.created}}
     </td>
   </tr>
   {% endfor %}
