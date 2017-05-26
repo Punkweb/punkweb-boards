@@ -6,10 +6,23 @@ from easy_thumbnails.widgets import ImageClearableFileInput
 from apps.api.models import EmailUser, Thread, Post, Shout, Report, Message
 
 
+# class NewConversationForm(forms.Form):
+#     def __init__(self, request, *args, **kwargs):
+#         super(NewConversationForm, self).__init__(*args, **kwargs)
+#
+#     users_queryset = EmailUser.objects.exclude(is_banned=True)
+#     subject = forms.CharField(max_length=140, initial='No subject')
+#     users = forms.ModelMultipleChoiceField(queryset=users_queryset)
+#     message = forms.CharField(
+#         widget=forms.Textarea(attrs={'class': 'post-editor'}),
+#         label=_('Message'),
+#         required=True
+#     )
+
+
 class SettingsForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         super(SettingsForm, self).__init__(*args, **kwargs)
-        self.fields['image'].initial = request.user.image
         self.fields['gender'].initial = request.user.gender
         self.fields['birthday'].initial = request.user.birthday
         self.fields['signature'].initial = request.user.signature

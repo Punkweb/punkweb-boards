@@ -1,0 +1,72 @@
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Forum | {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'sceditor/minified/themes/default.min.css' %}" />
+    <link href="{% sass_src 'scss/dead.scss' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="nav">
+      <div class="djcontainer">
+        <div class="nav__flex">
+          <div class="nav__left">
+            <h2 class="nav__title"><span class="blueText">Punk</span> <span class="whiteText"><i class="fa fa-bolt"></i></span> <span class="redText">Web</span></h2>
+            <a href="{% url 'board:index' %}">Forum</a>
+            <a href="{% url 'board:members-list' %}">Members</a>
+            <a href="{% url 'music:index' %}">Music</a>
+          </div>
+          <div class="nav__right">
+            {% if user.is_authenticated %}
+              {% if user.is_staff %}
+              <a href="{% url 'board:reports-list' %}">Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
+              {% endif %}
+              <a href="{% url 'board:inbox' %}">Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
+
+            <a href="{% url 'board:me' %}">View Provile</a>
+            <a href="{% url 'board:settings' %}">Settings</a>
+            <a href="{% url 'board:logout' %}">Logout</a>
+            {% else %}
+
+            <a href="{% url 'board:register' %}">Sign up</a>
+            <a href="{% url 'board:login' %}">Login</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="djcontainer">
+      {% block breadcrumb %}{% endblock %}
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+  <!-- JQuery 3.1.1 -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
+  <script>
+  $(function() {
+    $('.post-editor').sceditor({
+      emoticonsEnabled: false,
+      plugins: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|bulletlist,orderedlist,center,horizontalrule|font,size,color,quote,link,image|date,time|source,maximize,removeformat',
+      style: '{% static "sceditor/development/jquery.sceditor.default.css" %}'
+    });
+    $('.shout-editor').sceditor({
+      emoticonsEnabled: false,
+      plugins: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|font,size,color,link,image|date,time|source,maximize,removeformat',
+      style: '{% static "sceditor/development/jquery.sceditor.default.css" %}'
+    });
+  });
+  </script>
+</html>

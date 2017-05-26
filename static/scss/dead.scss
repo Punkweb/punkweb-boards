@@ -1,0 +1,65 @@
+@import 'open-color';
+@import 'alignments';
+@import 'defaults';
+@import 'footer';
+
+
+.nav {
+
+  background-color: $oc-gray-7;
+
+  &__flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__left {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__right {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__title {
+    padding: 1rem 0;
+    letter-spacing: 6px;
+  }
+}
+
+.badge {
+  background-color: $oc-red-6;
+  color: white;
+  display:inline-block;
+  padding-left:8px;
+  padding-right:8px;
+  text-align:center;
+}
+.badge {
+  border-radius:50%;
+}
+
+.badge {
+  border-radius: 50%;
+  color: white;
+  padding: 6px;
+}
+
+.whiteText {
+  color: $oc-gray-2;
+}
+.blueText {
+  color: $oc-blue-8;
+}
+.redText {
+  color: $oc-red-7;
+}

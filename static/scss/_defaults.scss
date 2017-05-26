@@ -1,4 +1,5 @@
 html, body {
+  background-color: $oc-gray-8;
   margin: 0;
   padding: 0;
   min-width: 320px;
@@ -10,11 +11,18 @@ img, iframe {
   max-width: 100%;
 }
 
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .djcontainer {
   width: 100%;
   max-width: 1440px;
+  min-width: 320px;
   margin: 0 auto;
-  padding: 0 16;
+  padding: 0 16px;
 }
 
 /* tables inherit font size (some browsers set a default table font size) */
@@ -59,4 +67,7 @@ pre {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Storybook';
+  line-height: 1;
+  margin: 0;
+  padding: 0;
 }

@@ -323,7 +323,7 @@ def post_delete(request, pk):
 
 def conversations_list(request):
     # Redirect to unpermitted page if not authenticated or is banned
-    if request.user.is_authenticated and request.user.is_banned:
+    if not request.user.is_authenticated and request.user.is_banned:
         return unpermitted_view(request)
     conversations = request.user.conversations.all()
     context = {
@@ -335,7 +335,7 @@ def conversations_list(request):
 
 def conversation_view(request, pk):
     # Redirect to unpermitted page if not authenticated or is banned
-    if request.user.is_authenticated and request.user.is_banned:
+    if not request.user.is_authenticated or request.user.is_banned:
         return unpermitted_view(request)
     conversation = request.user.conversations.get(id=pk)
     messages = conversation.messages.all()
@@ -343,9 +343,7 @@ def conversation_view(request, pk):
     # Mark this conversation read by the requesting user
     if request.user in conversation.unread_by.all():
         conversation.unread_by.remove(request.user)
-
     # TODO: Pagination
-
     # Logic for creating a new message in a conversation
     if request.method == 'POST':
         # Redirect to unpermitted page if not logged in.

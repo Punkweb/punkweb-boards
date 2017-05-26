@@ -1,0 +1,22 @@
+{% extends './base.html' %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<!-- Birthday message -->
+{% if user.birthday_today %}
+<p>
+  <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+  Happy Birthday!
+  <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+</p>
+{% endif %}
+{% for category in categories %}
+<div>
+  {% include './index_category_table.html' %}
+</div>
+{% endfor %}
+</div>
+{% endblock %}

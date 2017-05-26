@@ -1,2 +1,2 @@
 # Theme (bootstrap3, mdl)
-BOARD_THEME = 'bootstrap3'
+BOARD_THEME = 'punkweb'
