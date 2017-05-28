@@ -1,9 +1,8 @@
-{% if category.description.rendered %}
+<!-- {% if category.description.rendered %}
 <caption>{{category.description.rendered}}</caption>
-{% endif %}
+{% endif %} -->
 
-<table class="full-width">
-
+<table class="table full-width">
   <thead>
     <tr>
       <th class="align-left" width="60%">
@@ -19,7 +18,7 @@
   </thead>
   <tbody class="striped">
     {% for thread in threads %}
-    <tr class="border-bottom">
+    <tr>
       <td class="align-left">
         <p>
           {% if thread.pinned %}
@@ -38,7 +37,7 @@
       </td>
       <td class="align-right hidden-xs">
         {% if thread.last_post %}
-        <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}} <img src="{{thread.last_post.user.avatar_smallest}}" alt="" /></a></p>
+        <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
         <p>{{thread.last_post.created}}</p>
         {% else %}
         <p>No Posts</p>

@@ -15,38 +15,46 @@
   </head>
   <body>
     <div class="page-wrap">
-      <div class="nav">
+      <div class="nav nav--upper">
         <div class="djcontainer">
           <div class="nav__flex">
             <div class="nav__left">
-              <h2 class="nav__title"><span class="blueText">Punk</span> <span class="whiteText"><i class="fa fa-bolt"></i></span> <span class="redText">Web</span></h2>
-              <a href="{% url 'board:index' %}">Forum</a>
-              <a href="{% url 'board:members-list' %}">Members</a>
-              <a href="{% url 'music:index' %}">Music</a>
+
             </div>
             <div class="nav__right">
               {% if user.is_authenticated %}
-                {% if user.is_staff %}
-                <a href="{% url 'board:reports-list' %}">Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
-                {% endif %}
-                <a href="{% url 'board:inbox' %}">Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
+              {% if user.is_staff %}
+              <a class="nav--upper__link" href="{% url 'board:reports-list' %}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i> Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
+              {% endif %}
+              <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i> Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
 
-              <a href="{% url 'board:me' %}">View Provile</a>
-              <a href="{% url 'board:settings' %}">Settings</a>
-              <a href="{% url 'board:logout' %}">Logout</a>
+              <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
+              <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
+              <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a>
               {% else %}
-
-              <a href="{% url 'board:register' %}">Sign up</a>
-              <a href="{% url 'board:login' %}">Login</a>
+              <a class="nav--upper__link" href="{% url 'board:register' %}"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Sign up</a>
+              <a class="nav--upper__link" href="{% url 'board:login' %}"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i> Login</a>
               {% endif %}
             </div>
           </div>
         </div>
       </div>
-      <div class="djcontainer">
-        {% block breadcrumb %}{% endblock %}
-        {% block content %}{% endblock %}
+      <div class="nav nav--main">
+        <div class="djcontainer">
+          <div class="nav__flex">
+            <div class="nav__left">
+              <h2 class="nav__title"><span class="blueText">Punk</span> <span class="redText">Web</span></h2>
+              <a class="nav__link" href="{% url 'board:index' %}">Forum</a>
+              <a class="nav__link" href="{% url 'board:members-list' %}">Members</a>
+              <a class="nav__link" href="{% url 'music:index' %}">Music</a>
+            </div>
+            <div class="nav__right">
+              <input type="text" name="search" value="" placeholder="Search" />
+            </div>
+          </div>
+        </div>
       </div>
+      {% block content %}{% endblock %}
     </div>
     <footer>
       <div class="footer-bottom">

@@ -7,25 +7,84 @@
 //   border: 1px solid red;
 // }
 
-html, body {
-  background-color: $oc-gray-3;
-  color: $oc-gray-7;
-  font-family: 'sans-serif';
-  // letter-spacing: 5
+
+body {
   margin: 0;
   padding: 0;
   min-width: 320px;
-  width: 100%;
+}
+
+html, body {
+  background-color: $oc-gray-9;
+  background-image: linear-gradient(to right, $oc-blue-9 0%, $oc-red-9 100%), url('../img/dead_glass.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-blend-mode:screen;
+  font-size: 100%;
+  color: $oc-gray-4;
+  font-family: 'sans-serif';
+}
+
+.pageHeader {
+  background-color: $oc-gray-9;
+  display: flex;
+  flex-direction: row;
+  line-height: 6;
+
+  &__title {
+    line-height: 2;
+  }
+
+  &__flex {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__left {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__right {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.main {
+  margin: 2rem 0;
+}
+
+.breadcrumb {
+  list-style: none;
+
+  li {
+    display: inline;
+
+    a {
+      color: $oc-red-7;
+    }
+  }
+
+  li+li:before {
+    color: $oc-gray-4;
+    content: "/\00a0";
+  }
 }
 
 .pagination {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   padding-left: 0;
   list-style: none;
-  border-radius: .25rem;
 
   li {
     padding: 1rem;
@@ -35,10 +94,9 @@ html, body {
 
 .djcontainer {
   width: 100%;
-  max-width: 1024px;
-  min-width: 320px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 1rem;
 }
 
 .page-wrap {
@@ -49,14 +107,16 @@ html, body {
   width: 100%;
 }
 
-a:link, a:visited, a:hover, a:active {
-  color: $oc-blue-6;
+a:link, a:visited {
   text-decoration: none;
-  cursor: auto;
+  transition: text-decoration 0.3s ease-in-out;
+
+  &:hover, :active {
+    text-decoration: underline;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $oc-blue-7;
   font-family: 'Storybook';
   line-height: 1;
   margin: 0;
@@ -64,15 +124,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav {
-
-  background-color: $oc-gray-2;
   width: 100%;
+
+  &--upper {
+    background-color: $oc-gray-9;
+    font-size: 16px;
+    padding: 0.4rem 0;
+
+    &__link {
+      color: white !important;
+      padding: .25rem 0 .25rem 1rem;
+      font-size: 13px;
+    }
+  }
+
+  &--main {
+    background-color: $oc-gray-8;
+    // border-width: 1px 0px 2px;
+    // border-style: solid;
+    // border-color: $oc-gray-6;
+  }
 
   &__flex {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    width: 100%;
   }
 
   &__left {
@@ -91,8 +167,14 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   &__title {
-    padding: 1rem 0;
+    padding: 2rem 2rem 2rem 0;
     letter-spacing: 6px;
+  }
+
+  &__link {
+    color: $oc-gray-3;
+    font-weight: 600;
+    padding: 0 1rem;
   }
 }
 
@@ -109,22 +191,72 @@ h1, h2, h3, h4, h5, h6 {
   vertical-align: baseline;
   border-radius: .25rem;
 }
-.badge {
-  border-radius:50%;
+
+.panel {
+  border: none;
+  // border-width: 1px 1px 2px;
+  // border-style: solid;
+  // border-color: $oc-gray-6;
+  margin-bottom: 1rem;
+  opacity: .95;
+
+  &__header {
+    background-color: $oc-gray-9;
+    padding: 1rem;
+  }
+  &__title {
+    color: $oc-white;
+  }
+  &__body {
+    background-color: $oc-gray-9;
+  }
+  &__footer {
+
+  }
 }
 
-.badge {
-  border-radius: 50%;
-  color: white;
-  padding: 6px;
+.table {
+  border-collapse: collapse;
+
+  thead {
+    background-color: $oc-gray-8;
+    color: white;
+    tr {
+      th {
+        font-size: 75%;
+        font-weight: 500;
+        line-height: 5;
+        padding: 0 1rem;
+        a {
+          color: white;
+        }
+      }
+      td {
+      }
+    }
+  }
+  tbody {
+    tr {
+      th {
+
+      }
+      td {
+        padding: 0 1rem;
+        vertical-align: top;
+        a {
+          color: $oc-red-7;
+        }
+      }
+    }
+  }
 }
 
 .whiteText {
   color: $oc-gray-2;
 }
 .blueText {
-  color: $oc-blue-6;
+  color: $oc-blue-9;
 }
 .redText {
-  color: $oc-red-7;
+  color: $oc-red-9;
 }
