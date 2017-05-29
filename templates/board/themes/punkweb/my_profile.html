@@ -73,7 +73,7 @@
               <th class="align-center" widht="10%">
                 Posts
               </th>
-              <th class="align-right hidden-xs" width="30%">
+              <th class="align-right hide-on-mobile" width="30%">
                 Last Post
               </th>
             </tr>
@@ -94,7 +94,7 @@
               <td class="align-center">
                 <p>{{thread.posts_count}}</p>
               </td>
-              <td class="align-right hidden-xs">
+              <td class="align-right hide-on-mobile">
                 {% if thread.last_post %}
                 <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
                 <p>{{thread.last_post.created}}</p>
