@@ -1,0 +1,62 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}{{conversation.subject}}{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <h1 class="pageHeader__title">Inbox</h1>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:inbox' %}">Inbox</a></li>
+          <li>{{conversation.subject}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title">{{conversation.subject}}</h3>
+      </div>
+      <div class="panel__body">
+        <div class="padding">
+          {% for message in messages %}
+          <a href="{% url 'board:profile' message.user.username %}">{{message.user}}</a>
+          <p>
+            {{message.content.rendered}}
+          </p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title">Reply to this conversation</h3>
+      </div>
+      <div class="panel__body padding">
+        <img src="{{user.avatar_smaller}}" />
+        <hr />
+        <form method="post">
+          {% csrf_token %}
+          {{ message_form.as_p }}
+          <input type="submit" value="Post Reply" />
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

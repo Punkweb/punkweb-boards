@@ -1,0 +1,60 @@
+{% extends './base.html' %}
+
+{% block title %}Report{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <h1 class="pageHeader__title">Resolve Report</h1>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:reports-list' %}">Reports</a></li>
+          <li>{{report.id}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title">{{report}}</h3>
+      </div>
+      <div class="panel__body padding">
+        <h3>Reason for Report</h3>
+        {{report.reason}}
+        <br/>
+        <br/>
+        {% if report.post %}
+        <h3>Post Content</h3>2
+        {{report.post.content.rendered}}
+        <br/>
+        <br/>
+        <a href="{% url 'board:post-update' report.post.id %}">Update Post</a>
+        <a href="{% url 'board:post-delete' report.post.id %}">Delete Post</a>
+        {% elif report.thread%}
+        <h3>Thread Content</h3>
+        {{report.thread.content.rendered}}
+        <br/>
+        <br/>
+        <a href="{% url 'board:thread-update' report.thread.id %}">Update Thread</a>
+        <a href="{% url 'board:thread-delete' report.thread.id %}">Delete Thread</a>
+        {% endif %}
+        {% if not report.resolved %}
+        <br/>
+        <br/>
+        <form method="post">
+          {% csrf_token %}
+          <input type="submit" value="Mark as Resolved" />
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

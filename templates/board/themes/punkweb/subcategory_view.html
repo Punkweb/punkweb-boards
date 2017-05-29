@@ -4,11 +4,7 @@
 
 {% block title %}{{category.name}}{% endblock %}
 
-{% block breadcrumb %}
-{% endblock %}
-
 {% block content %}
-
 <div class="pageHeader">
   <div class="djcontainer">
     <div class="pageHeader__flex">
@@ -19,7 +15,7 @@
         <ul class="breadcrumb">
           <li><a href="{% url 'board:index' %}">Forum</a></li>
           <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
-          <li class="active">{{category.name}}</li>
+          <li>{{category.name}}</li>
         </ul>
       </div>
     </div>

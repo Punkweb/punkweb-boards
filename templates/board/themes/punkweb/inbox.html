@@ -3,34 +3,53 @@
 
 {% block title %}Inbox{% endblock %}
 
-{% block breadcrumb %}
-<ol class="breadcrumb">
-  <li><a href="{% url 'board:index' %}">Forum</a></li>
-  <li class="active">Inbox</li>
-</ol>
-{% endblock %}
-
 {% block content %}
-  <h3 class="panel-title">Inbox</h3>
-  <table class="full-width">
-    <tr>
-      <th>Subject</th>
-      <th>Created</th>
-      <th>Last Message</th>
-    </tr>
-    {% for conversation in conversations %}
-    <tr>
-      <td>
-        <a href="{% url 'board:conversation' conversation.id %}">{{conversation.subject}}</a>
-      </td>
-      <td>
-        {{conversation.created}}
-      </td>
-      <td>
-        {{conversation.last_message.user}}
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <h1 class="pageHeader__title">Inbox</h1>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li>Inbox</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__body">
+        <table class="table full-width">
+          <thead>
+            <tr>
+              <th class="align-left">Subject</th>
+              <th class="align-left">Created</th>
+              <th class="align-left">Last Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for conversation in conversations %}
+            <tr>
+              <td class="align-left">
+                <a href="{% url 'board:conversation' conversation.id %}">{{conversation.subject}}</a>
+              </td>
+              <td class="align-left">
+                {{conversation.created}}
+              </td>
+              <td class="align-left">
+                {{conversation.last_message.user}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 {% endblock %}

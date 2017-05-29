@@ -1,0 +1,166 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}{{thread.title}}{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <h1 class="pageHeader__title">{{thread.title}}</h1>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="/">Forum</a></li>
+          <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
+          <li>{{thread.title}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <center>
+      <nav class="margin">
+        <ul class="pagination">
+          {% if posts.has_previous %}
+          <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+          <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+          {% else %}
+          <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+          <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+          {% endif %}
+          {% for page in posts.paginator.page_range %}
+          {% if page == posts.number %}
+          <li class="active"><a>{{page}}</a></li>
+          {% else %}
+          <li><a href="?page={{page}}">{{page}}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if posts.has_next %}
+          <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+          <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+          {% else %}
+          <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+          <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </center>
+    {% if posts.number == 1 %}
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title">{{thread.title}}</h3>
+      </div>
+      <div class="panel__body padding">
+        <a href="{% url 'board:profile' thread.user.username %}">
+        <img src="{{thread.user.avatar_smaller}}" alt="..." />
+        </a>
+        <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
+        <hr />
+        {{thread.content.rendered}}
+        {% if thread.reported and user.is_authenticated and user.is_staff %}
+        <div style="margin: 1rem">
+          <p>This thread has open reports.</p>
+        </div>
+        {% endif %}
+        {% if thread.user.signature.rendered %}
+        <hr>
+        {{thread.user.signature.rendered}}
+        {% endif %}
+        {% if user.is_authenticated and thread.user.id != user.id %}
+        <a href="{% url 'board:report-thread' thread.id %}" name="button">Report</a>
+        {% endif %}
+        {% if user.is_authenticated and user.id == thread.user.id or user.is_staff %}
+        <a href="{% url 'board:thread-update' thread.id %}" name="button">Update</a>
+        <a href="{% url 'board:thread-delete' thread.id %}" name="button">Delete</a>
+        {% endif %}
+      </div>
+      <div class="panel__footer">
+        {{thread.created}}
+      </div>
+    </div>
+    {% endif %}
+    {% if posts %}
+    {% for post in posts %}
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title align-right">#{{forloop.counter}}</h3>
+      </div>
+      <div class="panel__body padding">
+        <a href="{% url 'board:profile' post.user.username %}"><img src="{{post.user.avatar_smaller}}" alt="..." /></a>
+        <a href="{% url 'board:profile' post.user.username %}">{{post.user.username}}</a>
+        <hr />
+        {{post.content.rendered}}
+        {% if post.reported and user.is_authenticated and user.is_staff %}
+        <div style="margin: 1rem">
+          <p>This post has open reports.</p>
+        </div>
+        {% endif %}
+        {% if post.user.signature.rendered %}
+        <hr>
+        {{post.user.signature.rendered}}
+        {% endif %}
+        {% if user.is_authenticated and post.user.id != user.id %}
+        <a href="{% url 'board:report-post' post.id %}" class="btn btn-default" name="button">Report</a>
+        {% endif %}
+        {% if user.is_authenticated and post.user.id == user.id or user.is_staff %}
+        <a href="{% url 'board:post-update' post.id %}" class="btn btn-success" name="button">Update</a>
+        <a href="{% url 'board:post-delete' post.id %}" class="btn btn-danger" name="button">Delete</a>
+        {% endif %}
+      </div>
+      <div class="panel__footer">
+        {{post.created}}
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <center>
+      <nav class="margin">
+        <ul class="pagination">
+          {% if posts.has_previous %}
+          <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+          <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+          {% else %}
+          <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+          <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+          {% endif %}
+          {% for page in posts.paginator.page_range %}
+          {% if page == posts.number %}
+          <li class="active"><a>{{page}}</a></li>
+          {% else %}
+          <li><a href="?page={{page}}">{{page}}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if posts.has_next %}
+          <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+          <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+          {% else %}
+          <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+          <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </center>
+    {% if user.is_authenticated %}
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title">Reply to this thread</h3>
+      </div>
+      <div class="panel__body padding">
+        <img src="{{user.avatar_smaller}}" />
+        <hr />
+        <form method="post">
+          {% csrf_token %}
+          {{ post_form.as_p }}
+          <input type="submit" class="btn btn-success form-control" value="Post Reply" />
+        </form>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

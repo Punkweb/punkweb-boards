@@ -9,14 +9,6 @@ ul {
   padding: 0;
 }
 
-.djcontainer {
-  width: 100%;
-  max-width: 1440px;
-  min-width: 320px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
 /* tables inherit font size (some browsers set a default table font size) */
 table {
   font-size: inherit;
@@ -45,7 +37,6 @@ pre {
 	font-family: 'Storybook';
 	src: url('../fonts/Storyboo.TTF');
 	font-weight: normal;
-  letter-spacing: 1.5px;
 	font-style: normal;
 }
 
@@ -54,12 +45,4 @@ pre {
 	src: url('../fonts/GRIFRG__.TTF');
 	font-weight: bold;
 	font-style: normal;
-  letter-spacing: 12px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Storybook';
-  line-height: 1;
-  margin: 0;
-  padding: 0;
 }

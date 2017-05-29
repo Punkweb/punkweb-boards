@@ -29,13 +29,78 @@
       <i class="fa fa-birthday-cake" aria-hidden="true"></i>
     </p>
     {% endif %}
-    {% for category in categories %}
-    <div class="panel">
-      <div class="panel__body">
-        {% include './index_category_table.html' %}
+    <div class="flexContainer">
+      <div class="flexrow">
+        <div class="flexcol" style="flex: 3;">
+          {% for category in categories %}
+          <div class="panel">
+            <div class="panel__body">
+              {% include './index_category_table.html' %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="flexcol margin-left" style="flex: 1;">
+          <div class="panel">
+            <div class="panel__header">
+              <h2 class="panel__title">Login</h2>
+            </div>
+            <div class="panel__body padding">
+              <label class="margin-bottom" for="email">Email: </label>
+              <input class="margin-bottom" type="text" name="email">
+              <br/>
+              <label class="margin-bottom" for="password">Password: </label>
+              <input class="margin-bottom" type="password" name="password">
+              <br/>
+              <input type="submit" name="name" value="Login">
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__header">
+              <h2 class="panel__title">Recent Threads</h2>
+            </div>
+            <div class="panel__body">
+              {% for thread in recent_threads %}
+              <p class="clearMargin padding">
+                <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
+                {{thread.created}}
+              </p>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__header">
+              <h2 class="panel__title">Recent Activity</h2>
+            </div>
+            <div class="panel__body">
+              {% for thread in recent_activity %}
+              <p class="clearMargin padding">
+                <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
+                {{thread.modified}}
+              </p>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flexrow">
+        <div class="flexcol" style="flex: 1;">
+          <div class="panel">
+            <div class="panel__header">
+              <h3 class="panel__title">Statistics</h3>
+            </div>
+            <div class="panel__body padding">
+              <ul>
+                <li style="display: inline">Total posts {{total_posts}} •</li>
+                <li style="display: inline">Total threads {{total_threads}} •</li>
+                <li style="display: inline">Total members {{member_count}} •</li>
+                <li style="display: inline">Newest member <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.username}}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    {% endfor %}
   </div>
 </div>
 {% endblock %}

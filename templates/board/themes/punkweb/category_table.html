@@ -1,0 +1,54 @@
+<table class="table full-width">
+  <thead>
+    <tr>
+      <th class="align-left" width="40%">
+        Subcategory
+      </th>
+      <th class="align-center" width="10%">
+        Threads
+      </th>
+      <th class="align-center" width="10%">
+        Posts
+      </th>
+      <th class="align-left hidden-xs" width="30%">
+        Last Thread
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sub in subcategories %}
+    <tr>
+      <td class="align-left">
+        <p>
+          <a href="{% url 'board:subcategory' sub.obj.id %}">{{sub.obj.name}}</a>
+        </p>
+        <p>{{sub.obj.description.rendered}}</p>
+        {% if sub.can_post %}
+        <p>
+          <a href="{% url 'board:thread-create' sub.obj.id %}">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> Create Thread
+          </a>
+        </p>
+        {% endif %}
+      </td>
+      <td class="align-center">
+        <p>{{sub.obj.thread_count}}</p>
+      </td>
+      <td class="align-center">
+        <p>{{sub.obj.post_count}}</p>
+      </td>
+      <td class="align-left hidden-xs">
+        {% if sub.obj.last_thread %}
+        <p><a href="{% url 'board:thread' sub.obj.last_thread.id %}">{{sub.obj.last_thread.title|truncatechars_html:30}}</a></p>
+        <p>{{sub.obj.last_thread.created}}</p>
+        <p>
+          by <a href="{% url 'board:profile' sub.obj.last_thread.user.username %}">{{sub.obj.last_thread.user.username}}</a>
+          </p>
+          {% else %}
+          <p>No Threads</p>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
