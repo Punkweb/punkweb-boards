@@ -170,7 +170,7 @@ def subcategory_view(request, pk):
         return unpermitted_view(request)
     # Paginate threads
     # TODO: get correct ordering worked out
-    paginator = Paginator(category.threads.order_by('-pinned', 'modified'), 20)
+    paginator = Paginator(category.threads.order_by('-pinned', '-modified'), 20)
     page = request.GET.get('page')
     try:
         threads = paginator.page(page)
