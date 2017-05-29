@@ -1,16 +1,7 @@
 {% extends './base.html' %}
 {% load static %}
-{% load bbcode_tags %}
 
 {% block title %}{{profile.username}}{% endblock %}
-
-{% block breadcrumb %}
-<ol class="breadcrumb">
-  <li><a href="{% url 'board:index' %}">Forum</a></li>
-  <li><a href="{% url 'board:members-list' %}">Members</a></li>
-  <li class="active">{{profile.username}}</li>
-</ol>
-{% endblock %}
 
 {% block content %}
 <div class="pageHeader">

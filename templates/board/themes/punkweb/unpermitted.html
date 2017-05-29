@@ -1,16 +1,19 @@
 {% extends './base.html' %}
 {% load static %}
-{% load bbcode_tags %}
 
 {% block title %}Unpermitted{% endblock %}
 
 {% block content %}
-<h2>
-  Unpermitted
-</h2>
-<p>
-You will be redirected to the index in 2 seconds.
-</p>
+<div class="main">
+  <div class="djcontainer">
+    <h2>
+      Unpermitted
+    </h2>
+    <p>
+      You will be redirected to the index in 2 seconds.
+    </p>
+  </div>
+</div>
 <script>
   setTimeout(function() {
     window.location.href = '/board/';
