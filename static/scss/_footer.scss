@@ -22,8 +22,17 @@
 }
 
 .footer-bottom {
-	background: $oc-gray-2;
-	border-top: 1px solid #DDDDDD;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	background: #2C2C2C;
+	border-top: 2px solid #DDDDDD;
+	color: $oc-gray-4;
+	font-size: 12px;
+  padding: 0.4rem 0;
+
+	.fa .fa-github {
+		font-size: 20px;
+	}
+
+	a {
+		color: $oc-blue-6;
+	}
 }

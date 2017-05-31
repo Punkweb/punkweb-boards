@@ -1,0 +1,39 @@
+$primary: $oc-blue-9;
+$primary-link: $oc-blue-9;
+$default-text-on-light: lighten(black, 10%);
+$default-text-on-dark: darken(white, 10%);
+$default-text: $default-text-on-dark;
+
+$body-background: mix(black, $primary, 85%);
+$upper-nav: mix(black, $primary, 90%);
+$upper-nav-link: darken(white, 20%);
+$main-nav: mix(black, $primary, 45%);
+$main-nav-title: $default-text;
+$main-nav-text: $default-text;
+$main-nav-link: $default-text;
+$page-header: mix(black, $primary, 55%);
+$page-header-text: $default-text;
+
+$breadcrumb-active: $default-text;
+$breadcrumb-separator: $default-text;
+$breadcrumb-link: $primary-link;
+
+$badge-background: $oc-red-9;
+$badge-text: $oc-white;
+
+$panel-header: mix(black, $primary, 45%);
+$panel-body: mix(black, $primary, 80%);
+$panel-opacity: .95;
+
+$table-header: $panel-header;
+$table-header-text: $default-text;
+$table-header-link: $default-text;
+$table-body: $panel-body;
+$table-body-text: $default-text;
+$table-body-link: $primary-link;
+
+$footer: $upper-nav;
+$footer-text: $default-text;
+$footer-link: $primary-link;
+
+$input-placeholder: darken($default-text, 15%);

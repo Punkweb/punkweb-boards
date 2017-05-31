@@ -8,6 +8,10 @@
     <title>Forum | {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+    <!-- Enables 'Add to Homescreen' for Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="{% static 'img/icons/steal_your_face_mayan.png' %}">
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'sceditor/minified/themes/default.min.css' %}" />
@@ -24,7 +28,7 @@
               {% if user.is_staff %}
               <a class="nav--upper__link" href="{% url 'board:reports-list' %}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i> Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
               {% endif %}
-              <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i> Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
+              <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i>{% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %} Inbox</a>
               <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
               <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
               <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a>
@@ -40,7 +44,7 @@
         <div class="djcontainer">
           <div class="nav__flex">
             <div class="nav__left">
-              <h2 class="nav__title"><span class="blueText">Punk</span> <span class="redText">Web</span></h2>
+              <h2 class="nav__title">Punk Web</h2>
               <a class="nav__link" href="{% url 'board:index' %}">Forum</a>
               <a class="nav__link" href="{% url 'board:members-list' %}">Members</a>
               <a class="nav__link" href="{% url 'music:index' %}">Music</a>
@@ -60,9 +64,9 @@
       {% block content %}{% endblock %}
     </div>
     <footer>
-      <div class="footer-bottom">
+      <div class="footer">
         <div class="djcontainer">
-          <p class="text-muted">Powered by <a target="_blank" href="https://github.com/shakedown-street/django-boards">shakedown-street/django-boards</a></p>
+          Powered by <i class="fa fa-github" aria-hidden="true"></i> <a target="_blank" href="https://github.com/shakedown-street/django-boards">shakedown-street/django-boards</a>
         </div>
       </div>
     </footer>
@@ -70,7 +74,6 @@
   <!-- JQuery 3.1.1 -->
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
   <script>

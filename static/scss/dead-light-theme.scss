@@ -1,0 +1,40 @@
+$primary: $oc-gray-9;
+$primary-link: $oc-red-9;
+$default-text-on-light: $oc-gray-7;
+$default-text-on-dark: $oc-gray-4;
+$default-text: $default-text-on-light;
+
+$body-background: $oc-gray-3;
+$upper-nav: #2C2C2C;
+$upper-nav-link: $oc-gray-0;
+$main-nav: #EBEBEB;
+$main-nav-title: $default-text;
+$main-nav-link: $default-text;
+$main-nav-text: $default-text;
+$page-header: #D7D7D7;
+$page-header-text: $default-text;
+
+
+$breadcrumb-active: $default-text;
+$breadcrumb-separator: $default-text;
+$breadcrumb-link: $primary-link;
+
+$badge-background: $oc-red-9;
+$badge-text: $oc-white;
+
+$panel-header: $primary;
+$panel-body: $oc-gray-0;
+$panel-opacity: .90;
+
+$table-header: $panel-header;
+$table-header-text: $oc-gray-0;
+$table-header-link: $oc-gray-0;
+$table-body: $panel-body;
+$table-body-text: $default-text;
+$table-body-link: $primary-link;
+
+$footer: $upper-nav;
+$footer-text: $default-text;
+$footer-link: $primary-link;
+
+$input-placeholder: darken($default-text, 15%);

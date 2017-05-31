@@ -25,7 +25,7 @@
     <h1>Users</h1>
     <br>
     {% for item in matched_users %}
-    {{item}}
+    <a href="{{item.get_absolute_url}}">{{item}}</a>
     <br>
     {% endfor %}
     <br>
@@ -36,7 +36,7 @@
     <h1>Categories</h1>
     <br>
     {% for item in matched_categories %}
-    {{item}}
+    <a href="{{item.get_absolute_url}}">{{item}}</a>
     <br>
     {% endfor %}
     <br>
@@ -47,7 +47,7 @@
     <h1>Subcategories</h1>
     <br>
     {% for item in matched_subcategories %}
-    {{item}}
+    <a href="{{item.get_absolute_url}}">{{item}}</a>
     <br>
     {% endfor %}
     <br>
@@ -58,7 +58,7 @@
     <h1>Threads</h1>
     <br>
     {% for item in matched_threads %}
-    {{item}}
+    <a href="{{item.get_absolute_url}}">{{item}}</a>
     <br>
     {% endfor %}
     <br>
@@ -68,7 +68,7 @@
     <h1>Posts</h1>
     <br>
     {% for item in matched_posts %}
-    {{item}}
+    <a href="{{item.get_absolute_url}}">{{item}}</a>
     <br>
     {% endfor %}
     <br>
