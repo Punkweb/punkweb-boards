@@ -18,6 +18,8 @@ urlpatterns = [
     url(r'^settings/$', views.settings_view, name='settings'),
     url(r'^profile/(?P<username>[^/]+)/$', views.profile_view, name='profile'),
 
+    url(r'^search/$', views.keyword_search_view, name='search'),
+
     url(r'^category/(?P<pk>[^/]+)/$',
         views.category_view, name='category'),
     url(r'^subcategory/(?P<pk>[^/]+)/$',

@@ -1,0 +1,78 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <h1 class="pageHeader__title">Search</h1>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index'%}">Forum</a></li>
+          <li>Search: {{keyword}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    {% if matched_users%}
+    <h1>Users</h1>
+    <br>
+    {% for item in matched_users %}
+    {{item}}
+    <br>
+    {% endfor %}
+    <br>
+    {% endif %}
+
+
+    {% if matched_categories %}
+    <h1>Categories</h1>
+    <br>
+    {% for item in matched_categories %}
+    {{item}}
+    <br>
+    {% endfor %}
+    <br>
+    {% endif %}
+
+
+    {% if matched_subcategories %}
+    <h1>Subcategories</h1>
+    <br>
+    {% for item in matched_subcategories %}
+    {{item}}
+    <br>
+    {% endfor %}
+    <br>
+    {% endif %}
+
+
+    {% if matched_threads %}
+    <h1>Threads</h1>
+    <br>
+    {% for item in matched_threads %}
+    {{item}}
+    <br>
+    {% endfor %}
+    <br>
+    {% endif %}
+
+    {% if matched_posts %}
+    <h1>Posts</h1>
+    <br>
+    {% for item in matched_posts %}
+    {{item}}
+    <br>
+    {% endfor %}
+    <br>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

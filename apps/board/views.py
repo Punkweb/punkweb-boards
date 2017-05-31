@@ -1,5 +1,6 @@
+from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 
 from .settings import BOARD_THEME
@@ -7,7 +8,7 @@ from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
     Message
 )
-from .forms import ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm, SettingsForm
+from .forms import ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm, SettingsForm, KeywordSearchForm
 
 
 def base_context(request):
@@ -20,6 +21,33 @@ def base_context(request):
             unresolved_reports = Report.objects.filter(resolved=False).count()
             ctx.update({'unresolved_reports': unresolved_reports})
     return ctx
+
+
+def keyword_search_view(request):
+    keyword = request.POST.get('keyword')
+    if not request.user.is_authenticated or request.user.is_banned:
+        return redirect('board:unpermitted')
+    matched_users = EmailUser.objects.filter(
+        Q(username__icontains=keyword) | Q(email__icontains=keyword))
+    matched_categories = Category.objects.filter(
+        Q(name__icontains=keyword) | Q(description__icontains=keyword))
+    matched_subcategories = Subcategory.objects.filter(
+        Q(name__icontains=keyword) | Q(description__icontains=keyword))
+    matched_threads = Thread.objects.filter(
+        Q(title__icontains=keyword) | Q(category__name__icontains=keyword) |
+        Q(content__icontains=keyword) | Q(user__username__icontains=keyword))
+    matched_posts = Post.objects.filter(
+        Q(user__username__icontains=keyword) | Q(content__icontains=keyword))
+    context = {
+        'matched_users': matched_users,
+        'matched_categories': matched_categories,
+        'matched_subcategories': matched_subcategories,
+        'matched_threads': matched_threads,
+        'matched_posts': matched_posts,
+        'keyword': keyword
+    }
+    context.update(base_context(request))
+    return render(request, 'board/themes/{}/keyword_search.html'.format(BOARD_THEME), context)
 
 
 def registration_view(request):

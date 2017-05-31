@@ -20,6 +20,10 @@ from apps.api.models import EmailUser, Thread, Post, Shout, Report, Message
 #     )
 
 
+class KeywordSearchForm(forms.Form):
+    keyword = forms.CharField(max_length=80, required=True, label='')
+
+
 class SettingsForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         super(SettingsForm, self).__init__(*args, **kwargs)

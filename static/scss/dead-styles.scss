@@ -11,7 +11,7 @@ html, body {
   // background-position: center;
   // background-size: cover;
   // background-blend-mode: screen;
-  font-size: 100%;
+  font-size: 14px;
   color: $oc-gray-7;
   font-family: 'sans-serif';
 }
@@ -60,6 +60,7 @@ html, body {
   max-height: 600px;
 }
 .breadcrumb {
+  font-size: 12px;
   list-style: none;
 
   li {
@@ -94,7 +95,7 @@ html, body {
 
 .djcontainer {
   // border: 1px solid red;
-  max-width: 1440px;
+  max-width: 1024px;
   width: 100%;
   margin: 0 auto;
 }
@@ -186,8 +187,8 @@ h1, h2, h3, h4, h5, h6 {
 
     &__link {
       color: white !important;
-      padding: .25rem 0 .25rem 1rem;
-      font-size: 13px;
+      padding: .25rem 0 .25rem .5rem;
+      font-size: 10px;
     }
   }
 
@@ -221,14 +222,14 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   &__title {
-    font-size: 150%;
+    font-size: 24px;
     padding: 2rem 1.5rem 2rem 0;
     letter-spacing: 3px;
     font-family: 'Storybook';
   }
 
   &__link {
-    font-size: 80%;
+    font-size: 14px;
     color: $oc-gray-8;
     font-weight: 400;
     padding: 0 1rem;
@@ -268,7 +269,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   &__title {
     color: $oc-white;
-    font-size: 16px;
+    font-size: 14px;
   }
   &__body {
     background-color: $oc-gray-0;

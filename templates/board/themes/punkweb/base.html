@@ -46,10 +46,13 @@
               <a class="nav__link" href="{% url 'music:index' %}">Music</a>
             </div>
             <div class="nav__right">
-              <div class="search">
-                <span class="fa fa-search"></span>
-                <input type="text" name="search" placeholder="Search" />
-              </div>
+              <form action="/board/search/" method="post">
+                {% csrf_token %}
+                <div class="search">
+                  <span class="fa fa-search"></span>
+                  <input id="id_keyword" maxlength="80" name="keyword" type="text" placeholder="Search" required />
+                </div>
+              </form>
             </div>
           </div>
         </div>
