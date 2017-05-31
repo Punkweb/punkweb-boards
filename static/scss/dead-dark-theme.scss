@@ -1,5 +1,5 @@
-$primary: $oc-blue-9;
-$primary-link: $oc-blue-9;
+$primary: $oc-blue-7;
+$primary-link: $oc-blue-7;
 $default-text-on-light: lighten(black, 10%);
 $default-text-on-dark: darken(white, 10%);
 $default-text: $default-text-on-dark;
@@ -22,8 +22,9 @@ $badge-background: $oc-red-9;
 $badge-text: $oc-white;
 
 $panel-header: mix(black, $primary, 45%);
-$panel-body: mix(black, $primary, 80%);
-$panel-opacity: .95;
+$panel-body: mix(black, $primary, 70%);
+$panel-footer: mix(black, $primary, 50%);
+$panel-opacity: 1;
 
 $table-header: $panel-header;
 $table-header-text: $default-text;
@@ -37,3 +38,14 @@ $footer-text: $default-text;
 $footer-link: $primary-link;
 
 $input-placeholder: darken($default-text, 15%);
+
+$editor-container: $body-background;
+$editor-text: $default-text-on-dark;
+$editor-border: desaturate($primary, 25%);
+$editor-toolbar: lighten($body-background, 15%);
+$editor-toolbar-group: $oc-gray-2;
+$editor-toolbar-group-hover: lighten($body-background, 70%);
+$editor-button: $body-background;
+$editor-button-hover: lighten($body-background, 5%);
+$editor-button-text: $default-text-on-dark;
+$editor-button-border: desaturate($primary, 25%);

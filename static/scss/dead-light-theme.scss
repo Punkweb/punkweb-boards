@@ -1,14 +1,14 @@
 $primary: $oc-gray-9;
 $primary-link: $oc-red-9;
-$default-text-on-light: $oc-gray-7;
-$default-text-on-dark: $oc-gray-4;
+$default-text-on-light: lighten(black, 25%);
+$default-text-on-dark: darken(white, 10%);
 $default-text: $default-text-on-light;
 
 $body-background: $oc-gray-3;
 $upper-nav: #2C2C2C;
-$upper-nav-link: $oc-gray-0;
+$upper-nav-link: $default-text-on-dark;
 $main-nav: #EBEBEB;
-$main-nav-title: $default-text;
+$main-nav-title: $primary;
 $main-nav-link: $default-text;
 $main-nav-text: $default-text;
 $page-header: #D7D7D7;
@@ -24,6 +24,7 @@ $badge-text: $oc-white;
 
 $panel-header: $primary;
 $panel-body: $oc-gray-0;
+$panel-footer: $oc-gray-2;
 $panel-opacity: .90;
 
 $table-header: $panel-header;

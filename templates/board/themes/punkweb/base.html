@@ -14,7 +14,7 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'sceditor/minified/themes/default.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'sceditor/minified/themes/monocons.min.css' %}" />
     <link href="{% sass_src 'scss/dead.scss' %}" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -28,7 +28,7 @@
               {% if user.is_staff %}
               <a class="nav--upper__link" href="{% url 'board:reports-list' %}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i> Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
               {% endif %}
-              <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i>{% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %} Inbox</a>
+              <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i>Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
               <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
               <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
               <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a>
@@ -44,7 +44,7 @@
         <div class="djcontainer">
           <div class="nav__flex">
             <div class="nav__left">
-              <h2 class="nav__title">Punk Web</h2>
+              <h2 class="nav__title"><a href="/">Punk Web</a></h2>
               <a class="nav__link" href="{% url 'board:index' %}">Forum</a>
               <a class="nav__link" href="{% url 'board:members-list' %}">Members</a>
               <a class="nav__link" href="{% url 'music:index' %}">Music</a>
@@ -82,13 +82,15 @@
       emoticonsEnabled: false,
       plugins: 'bbcode',
       toolbar: 'bold,italic,underline,strike|bulletlist,orderedlist,center,horizontalrule|font,size,color,quote,link,image|date,time|source,maximize,removeformat',
-      style: '{% static "sceditor/development/jquery.sceditor.default.css" %}'
+      style: '{% sass_src "scss/_editor.scss" %}',
+      fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Griffin,Impact,Ripple,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Verdana',
+      autoExpand: true,
     });
     $('.shout-editor').sceditor({
       emoticonsEnabled: false,
       plugins: 'bbcode',
       toolbar: 'bold,italic,underline,strike|font,size,color,link,image|date,time|source,maximize,removeformat',
-      style: '{% static "sceditor/development/jquery.sceditor.default.css" %}'
+      style: '{% sass_src "scss/_editor.scss" %}'
     });
   });
   </script>

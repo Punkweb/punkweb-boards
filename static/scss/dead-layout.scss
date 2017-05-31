@@ -5,12 +5,12 @@ body {
 }
 
 html, body {
-  // background-color: $body-background;
-  background-image: linear-gradient(to right, mix(black, $oc-blue-9, 20%) 0%, mix(black, $oc-red-9, 20%) 100%), url('../img/dead_glass.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-blend-mode:hue;
+  background-color: $body-background;
+  // background-image: linear-gradient(to right, mix(black, $oc-blue-9, 20%) 0%, mix(black, $oc-red-9, 20%) 100%), url('../img/dead_glass.jpg');
+  // background-repeat: no-repeat;
+  // background-position: center;
+  // background-size: cover;
+  // background-blend-mode:hue;
   font-size: 14px;
   color: $default-text;
   font-family: 'sans-serif';
@@ -87,6 +87,10 @@ label {
     padding: 2rem 1.5rem 2rem 0;
     letter-spacing: 3px;
     font-family: 'Storybook';
+
+    a {
+      color: $main-nav-title;
+    }
   }
 
   &__link {
@@ -167,8 +171,9 @@ label {
 }
 
 .post-editor {
-  min-width: 100%;
-  max-width: 100%;
+  min-width: 240px;
+  max-width: 800px;
+  width: 100%;
   min-height: 300px;
   max-height: 600px;
 }
@@ -227,7 +232,8 @@ label {
     }
   }
   &__footer {
-
+    background-color: $panel-footer;
+    padding: 1rem .5rem;
   }
 }
 
@@ -318,8 +324,25 @@ label {
   right: 0px;
 }
 
-input[type="text"], input[type="password"] {
-  background-color: $oc-gray-1;
+// .sceditor-container, div.sceditor-toolbar {
+//   background-color: transparent;
+//   border-color: desaturate($primary, 25%);
+// }
+//
+// .sceditor-container iframe, .sceditor-container textarea {
+//   background: transparent;
+//   color: white;
+//   border-color: desaturate($primary, 25%);
+// }
+//
+// div.sceditor-group {
+//   background: desaturate($primary, 25%);
+//   color: white;
+//   border: none;
+// }
+
+input[type="text"], input[type="password"], textarea {
+  background-color: transparent;
   color: $default-text;
   border: 1px solid desaturate($primary, 25%);
   display: block;

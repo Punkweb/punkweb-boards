@@ -202,8 +202,7 @@ class Category(UUIDPrimaryKey):
 
     @property
     def subcategories(self):
-        return Subcategory.objects.filter(
-            parent__id=self.id).select_related()
+        return Subcategory.objects.filter(parent__id=self.id).select_related()
 
     def get_absolute_url(self):
         return reverse('board:category', kwargs={'pk': self.id})
@@ -232,6 +231,8 @@ class Subcategory(UUIDPrimaryKey):
         if user.is_authenticated and user.is_banned:
             return False
         if not user.is_authenticated and self.auth_req:
+            return False
+        if not user.is_authenticated and self.parent.auth_req:
             return False
         return True
 
@@ -285,6 +286,8 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
         if user.is_authenticated and user.is_banned:
             return False
         if self.category.auth_req and not user.is_authenticated:
+            return False
+        if self.category.parent.auth_req and not user.is_authenticated:
             return False
         return True
 

@@ -23,6 +23,51 @@ def base_context(request):
     return ctx
 
 
+def unpermitted_view(request):
+    return render(
+        request, 'board/themes/{}/unpermitted.html'.format(BOARD_THEME), {})
+
+
+def index_view(request):
+    total_posts = Post.objects.all().count()
+    total_threads = Thread.objects.all().count()
+
+    category_groups = []
+    parent_categories = Category.objects.all().order_by('order')
+    for parent_category in parent_categories:
+        children = parent_category.subcategories
+        if not request.user.is_authenticated:
+            # Filter out categories with auth_req = True
+            children = children.filter(
+                auth_req=False, parent__auth_req=False).order_by('order')
+        category_groups.append({
+            'parent': parent_category,
+            'children': children
+        })
+    recent_threads = Thread.objects.all().order_by('-created')
+    recent_activity = Thread.objects.all().order_by('-modified')
+    if not request.user.is_authenticated:
+        # Filter out activity in subcategories with auth_req = True
+        recent_threads = recent_threads.filter(
+            category__auth_req=False, category__parent__auth_req=False)
+        recent_activity = recent_activity.filter(
+            category__auth_req=False, category__parent__auth_req=False)
+    newest_member = EmailUser.objects.all().order_by('-created').first()
+    member_count = EmailUser.objects.all().count()
+    context = {
+        'total_posts': total_posts,
+        'total_threads': total_threads,
+        'categories': category_groups,
+        'recent_threads': recent_threads[:5],
+        'recent_activity': recent_activity[:5],
+        'newest_member': newest_member,
+        'member_count': member_count
+    }
+    context.update(base_context(request))
+    return render(
+        request, 'board/themes/{}/index.html'.format(BOARD_THEME), context)
+
+
 def keyword_search_view(request):
     keyword = request.POST.get('keyword')
     if not request.user.is_authenticated or request.user.is_banned:
@@ -47,7 +92,11 @@ def keyword_search_view(request):
         'keyword': keyword
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/keyword_search.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/keyword_search.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def registration_view(request):
@@ -66,70 +115,26 @@ def registration_view(request):
         'form': form
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/register.html'.format(BOARD_THEME), context)
-
-
-def index_view(request):
-    total_posts = Post.objects.all().count()
-    total_threads = Thread.objects.all().count()
-
-    category_groups = []
-    parent_categories = Category.objects.all()
-    if not request.user.is_authenticated:
-        # Filter out categories with auth_req = True
-        parent_categories = parent_categories.filter(
-            auth_req=False).order_by('order')
-    for parent_category in parent_categories:
-        children = parent_category.subcategories
-        if not request.user.is_authenticated:
-            # Filter out categories with auth_req = True
-            children = children.filter(auth_req=False).order_by('order')
-        category_groups.append({
-            'parent': parent_category,
-            'children': children
-        })
-    recent_threads = Thread.objects.all().order_by('-created')
-    recent_activity = Thread.objects.all().order_by('-modified')
-    if not request.user.is_authenticated:
-        # Filter out activity in subcategories with auth_req = True
-        recent_threads = recent_threads.filter(
-            category__auth_req=False)
-        recent_activity = recent_activity.filter(
-            category__auth_req=False)
-    newest_member = EmailUser.objects.all().order_by('-created').first()
-    member_count = EmailUser.objects.all().count()
-    context = {
-        'total_posts': total_posts,
-        'total_threads': total_threads,
-        'categories': category_groups,
-        'recent_threads': recent_threads[:5],
-        'recent_activity': recent_activity[:5],
-        'newest_member': newest_member,
-        'member_count': member_count
-    }
-    context.update(base_context(request))
-    return render(request, 'board/themes/{}/index.html'.format(BOARD_THEME), context)
-
-
-def unpermitted_view(request):
-    return render(request, 'board/themes/{}/unpermitted.html'.format(BOARD_THEME), {})
+    return render(
+        request, 'board/themes/{}/register.html'.format(BOARD_THEME), context)
 
 
 def my_profile(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     context = {}
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/my_profile.html'.format(BOARD_THEME), context)
+    return render(
+        request, 'board/themes/{}/my_profile.html'.format(BOARD_THEME), context)
 
 
 def settings_view(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     if request.method == 'POST':
         form = SettingsForm(request, request.POST, request.FILES)
         if form.is_valid():
@@ -149,7 +154,8 @@ def settings_view(request):
         'form': form
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/settings.html'.format(BOARD_THEME), context)
+    return render(
+        request, 'board/themes/{}/settings.html'.format(BOARD_THEME), context)
 
 
 def profile_view(request, username):
@@ -157,17 +163,21 @@ def profile_view(request, username):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     # Redirect to /board/me/ if trying to view own profile.
     if request.user.id == user.id:
         # TODO do not redirect so that users
         # can view their profile as others see it.
-        return redirect('board:me')
+        return my_profile(request)
     context = {
         'profile': user
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/profile_page.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/profile_page.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def category_view(request, pk):
@@ -177,17 +187,27 @@ def category_view(request, pk):
     if not category.can_view(request.user):
         return unpermitted_view(request)
     subcategories = []
+
+    subs = category.subcategories.order_by('order')
+    if not request.user.is_authenticated:
+        subs = subs.filter(
+            auth_req=False, parent__auth_req=False)
     for sub in category.subcategories:
-        subcategories.append({
-            'obj': sub,
-            'can_post': sub.can_post(request.user),
-        })
+        if sub.can_view(request.user):
+            subcategories.append({
+                'obj': sub,
+                'can_post': sub.can_post(request.user),
+            })
     context = {
         'category': category,
         'subcategories': subcategories
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/category_view.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/category_view.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def subcategory_view(request, pk):
@@ -212,7 +232,11 @@ def subcategory_view(request, pk):
         'threads': threads
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/subcategory_view.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/subcategory_view.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def thread_view(request, pk):
@@ -250,7 +274,11 @@ def thread_view(request, pk):
         'post_form': form,
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/thread_view.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/thread_view.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def thread_create(request, category_id):
@@ -267,10 +295,15 @@ def thread_create(request, category_id):
     else:
         form = ThreadForm(request)
     context = {
-        'form': form
+        'form': form,
+        'subcategory': subcategory
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/thread_create_form.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/thread_create_form.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def thread_update(request, pk):
@@ -287,10 +320,15 @@ def thread_update(request, pk):
     else:
         form = ThreadForm(request, instance=instance)
     context = {
-        'form': form
+        'form': form,
+        'object': instance
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/thread_update_form.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/thread_update_form.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def thread_delete(request, pk):
@@ -307,7 +345,11 @@ def thread_delete(request, pk):
         'object': instance
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/thread_delete_form.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/thread_delete_form.html'.format(BOARD_THEME),
+        context
+    )
 
 
 # There is no post_view or post_create as both are handled on the thread_view
@@ -329,7 +371,11 @@ def post_update(request, pk):
         'form': form
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/post_update_form.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/post_update_form.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def post_delete(request, pk):
@@ -346,19 +392,27 @@ def post_delete(request, pk):
         'object': instance
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/post_delete_form.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/post_delete_form.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def conversations_list(request):
     # Redirect to unpermitted page if not authenticated or is banned
-    if not request.user.is_authenticated and request.user.is_banned:
+    if not request.user.is_authenticated or request.user.is_banned:
         return unpermitted_view(request)
     conversations = request.user.conversations.all()
     context = {
         'conversations': conversations
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/inbox.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/inbox.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def conversation_view(request, pk):
@@ -392,7 +446,11 @@ def conversation_view(request, pk):
         'message_form': form
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/conversation_view.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/conversation_view.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def reports_list(request):
@@ -400,12 +458,16 @@ def reports_list(request):
     # is not logged in or is banned or is not an admin
     if not request.user.is_authenticated or \
         not request.user.is_staff or request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     context = {
         'reports': Report.objects.all()
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/reports_list.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/reports_list.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def report_view(request, pk):
@@ -413,7 +475,7 @@ def report_view(request, pk):
     # is not logged in or is banned or is not an admin
     if not request.user.is_authenticated or \
         not request.user.is_staff or request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     instance = Report.objects.get(id=pk)
     if request.method == 'POST':
         instance.resolved = True
@@ -425,14 +487,18 @@ def report_view(request, pk):
         'report': Report.objects.get(id=pk)
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/report_view.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/report_view.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def report_create(request, thread=None, post=None):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     if request.method == 'POST':
         form = ReportForm(request, request.POST)
         if form.is_valid():
@@ -450,17 +516,25 @@ def report_create(request, thread=None, post=None):
         'form': form
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/report_create_form.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/report_create_form.html'.format(BOARD_THEME),
+        context
+    )
 
 
 def members_list(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return redirect('board:unpermitted')
+        return unpermitted_view(request)
     users = EmailUser.objects.order_by('username')
     context = {
         'users': users
     }
     context.update(base_context(request))
-    return render(request, 'board/themes/{}/members_list.html'.format(BOARD_THEME), context)
+    return render(
+        request,
+        'board/themes/{}/members_list.html'.format(BOARD_THEME),
+        context
+    )
