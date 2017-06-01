@@ -1,19 +1,68 @@
 {% extends './base.html' %}
-{% load crispy_forms_tags %}
 
 {% block title %}Create Report{% endblock %}
 
 {% block content %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Create Report</h3>
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        {% if post %}
+        <h1 class="pageHeader__title">Reporting user {{post.user.username}}'s post</h1>
+        {% elif thread %}
+        <h1 class="pageHeader__title">Reporting user {{thread.user.username}}'s thread</h1>
+        {% endif %}
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          {% if post %}
+          <li><a href="{% url 'board:category' post.thread.category.parent.id %}">{{post.thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' post.thread.category.id %}">{{post.thread.category.name}}</a></li>
+          <li><a href="{% url 'board:thread' post.thread.id %}">{{post.thread.title}}</a></li>
+          <li>Report Post</li>
+          {% elif thread %}
+          <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
+          <li><a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a></li>
+          <li>Report Thread</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="panel-body">
-    <form method="post">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <input type="submit" class="btn btn-success form-control" value="Submit" />
-    </form>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title">Create Report</h3>
+      </div>
+      <div class="panel__body padding">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" class="btn btn-success form-control" value="Submit" />
+        </form>
+        <hr>
+        <!-- TODO: Hide this by default.  Allow users to open it. -->
+        <div>
+          {% if post %}
+          <h3>Post Content</h3>
+          <hr>
+          <div>
+            {{post.content.rendered}}
+          </div>
+          {% elif thread %}
+          <h3>Thread Content</h3>
+          <hr>
+          <div>
+            {{thread.content.rendered}}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

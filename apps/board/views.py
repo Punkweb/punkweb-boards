@@ -495,6 +495,13 @@ def report_view(request, pk):
 
 
 def report_create(request, thread=None, post=None):
+    context = {}
+    if thread:
+        thread_obj = Thread.objects.get(id=thread)
+        context.update({'thread': thread_obj})
+    if post:
+        post_obj = Post.objects.get(id=post)
+        context.update({'post': post_obj})
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
@@ -512,9 +519,7 @@ def report_create(request, thread=None, post=None):
                 return redirect('board:thread', post_obj.thread.id)
     else:
         form = ReportForm(request)
-    context = {
-        'form': form
-    }
+    context.update({'form': form})
     context.update(base_context(request))
     return render(
         request,

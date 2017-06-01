@@ -64,7 +64,9 @@
         {{thread.content.rendered}}
         {% if thread.reported and user.is_authenticated and user.is_staff %}
         <div style="margin: 1rem">
-          <p>This thread has open reports.</p>
+          <blockquote>
+            <p>This thread has open reports.</p>
+          </blockquote>
         </div>
         {% endif %}
         {% if thread.user.signature.rendered %}
@@ -97,7 +99,9 @@
         {{post.content.rendered}}
         {% if post.reported and user.is_authenticated and user.is_staff %}
         <div style="margin: 1rem">
-          <p>This post has open reports.</p>
+          <blockquote>
+            <p>This thread has open reports.</p>
+          </blockquote>
         </div>
         {% endif %}
         {% if post.user.signature.rendered %}
