@@ -55,31 +55,44 @@
       <div class="panel__header">
         <h3 class="panel__title">{{thread.title}}</h3>
       </div>
-      <div class="panel__body padding">
-        <a href="{% url 'board:profile' thread.user.username %}">
-        <img src="{{thread.user.avatar_smaller}}" alt="..." />
-        </a>
-        <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
-        <hr />
-        {{thread.content.rendered}}
-        {% if thread.reported and user.is_authenticated and user.is_staff %}
-        <div style="margin: 1rem">
-          <blockquote>
-            <p>This thread has open reports.</p>
-          </blockquote>
+      <div class="panel__body">
+        <div class="thread">
+          <div class="thread__user">
+            <a href="{% url 'board:profile' thread.user.username %}">
+              <img src="{{thread.user.avatar_small}}" alt="..." />
+            </a>
+            <div class="thread__user__name">
+              <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
+            </div>
+            <div class="thread__user__posts">Posts: {{thread.user.post_count}}</div>
+          </div>
+          <div class="thread__body">
+            <div class="thread__content">
+              {{thread.content.rendered}}
+              {% if thread.reported and user.is_authenticated and user.is_staff %}
+              <div style="margin: 1rem">
+                <blockquote>
+                  <p>This thread has open reports.</p>
+                </blockquote>
+              </div>
+              {% endif %}
+            </div>
+            {% if thread.user.signature.rendered %}
+            <div class="thread__signature">
+              {{thread.user.signature.rendered}}
+            </div>
+            {% endif %}
+            <div class="thread__actions">
+              {% if user.is_authenticated and thread.user.id != user.id %}
+              <a href="{% url 'board:report-thread' thread.id %}" name="button">Report</a>
+              {% endif %}
+              {% if user.is_authenticated and user.id == thread.user.id or user.is_staff %}
+              <a href="{% url 'board:thread-update' thread.id %}" name="button">Update</a>
+              <a href="{% url 'board:thread-delete' thread.id %}" name="button">Delete</a>
+              {% endif %}
+            </div>
+          </div>
         </div>
-        {% endif %}
-        {% if thread.user.signature.rendered %}
-        <hr>
-        {{thread.user.signature.rendered}}
-        {% endif %}
-        {% if user.is_authenticated and thread.user.id != user.id %}
-        <a href="{% url 'board:report-thread' thread.id %}" name="button">Report</a>
-        {% endif %}
-        {% if user.is_authenticated and user.id == thread.user.id or user.is_staff %}
-        <a href="{% url 'board:thread-update' thread.id %}" name="button">Update</a>
-        <a href="{% url 'board:thread-delete' thread.id %}" name="button">Delete</a>
-        {% endif %}
       </div>
       <div class="panel__footer">
         {{thread.created}}
@@ -92,29 +105,45 @@
       <div class="panel__header">
         <h3 class="panel__title align-right">#{{forloop.counter}}</h3>
       </div>
-      <div class="panel__body padding">
-        <a href="{% url 'board:profile' post.user.username %}"><img src="{{post.user.avatar_smaller}}" alt="..." /></a>
-        <a href="{% url 'board:profile' post.user.username %}">{{post.user.username}}</a>
-        <hr />
-        {{post.content.rendered}}
-        {% if post.reported and user.is_authenticated and user.is_staff %}
-        <div style="margin: 1rem">
-          <blockquote>
-            <p>This thread has open reports.</p>
-          </blockquote>
+      <div class="panel__body">
+
+        <div class="thread">
+          <div class="thread__user">
+            <a href="{% url 'board:profile' post.user.username %}">
+              <img src="{{post.user.avatar_small}}" alt="..." />
+            </a>
+            <div class="thread__user__name">
+              <a href="{% url 'board:profile' post.user.username %}">{{post.user.username}}</a>
+            </div>
+            <div class="thread__user__posts">Posts: {{post.user.post_count}}</div>
+          </div>
+          <div class="thread__body">
+            <div class="thread__content">
+              {{post.content.rendered}}
+              {% if post.reported and user.is_authenticated and user.is_staff %}
+              <div style="margin: 1rem">
+                <blockquote>
+                  <p>This post has open reports.</p>
+                </blockquote>
+              </div>
+              {% endif %}
+            </div>
+            {% if post.user.signature.rendered %}
+            <div class="thread__signature">
+              {{post.user.signature.rendered}}
+            </div>
+            {% endif %}
+            <div class="thread__actions">
+              {% if user.is_authenticated and post.user.id != user.id %}
+              <a href="{% url 'board:report-post' post.id %}" name="button">Report</a>
+              {% endif %}
+              {% if user.is_authenticated and user.id == post.user.id or user.is_staff %}
+              <a href="{% url 'board:post-update' post.id %}" name="button">Update</a>
+              <a href="{% url 'board:post-delete' post.id %}" name="button">Delete</a>
+              {% endif %}
+            </div>
+          </div>
         </div>
-        {% endif %}
-        {% if post.user.signature.rendered %}
-        <hr>
-        {{post.user.signature.rendered}}
-        {% endif %}
-        {% if user.is_authenticated and post.user.id != user.id %}
-        <a href="{% url 'board:report-post' post.id %}" class="btn btn-default" name="button">Report</a>
-        {% endif %}
-        {% if user.is_authenticated and post.user.id == user.id or user.is_staff %}
-        <a href="{% url 'board:post-update' post.id %}" class="btn btn-success" name="button">Update</a>
-        <a href="{% url 'board:post-delete' post.id %}" class="btn btn-danger" name="button">Delete</a>
-        {% endif %}
       </div>
       <div class="panel__footer">
         {{post.created}}
