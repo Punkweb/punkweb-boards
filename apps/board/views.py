@@ -370,7 +370,8 @@ def post_update(request, pk):
     else:
         form = PostForm(request, instance=instance)
     context = {
-        'form': form
+        'form': form,
+        'obj': instance
     }
     context.update(base_context(request))
     return render(
@@ -535,7 +536,7 @@ def members_list(request):
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return unpermitted_view(request)
-    users = EmailUser.objects.order_by('username')
+    users = EmailUser.objects..order_by('username')
     context = {
         'users': users
     }

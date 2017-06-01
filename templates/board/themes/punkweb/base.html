@@ -78,6 +78,15 @@
   <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
   <script>
   $(function() {
+    $(document).ready(function() {
+      $('.spoiler__open').click(function() {
+        $(this).siblings('.spoiler__content').toggle();
+      });
+    });
+  });
+  </script>
+  <script>
+  $(function() {
     $('.post-editor').sceditor({
       plugins: 'bbcode',
       toolbar: 'bold,italic,underline,strike|bulletlist,orderedlist,center,horizontalrule|font,size,color,quote,link,image,emoticon|date,time|source,maximize,removeformat',

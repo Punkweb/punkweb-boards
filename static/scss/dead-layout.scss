@@ -41,6 +41,17 @@ label {
   display: block;
 }
 
+.spoiler {
+  &__open {
+    margin-bottom: 1rem;
+  }
+  &__content {
+    display: none;
+    padding: 1rem;
+    background-color: $body-background;
+  }
+}
+
 .nav {
   width: 100%;
 

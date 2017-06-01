@@ -1,3 +1,8 @@
+SPOILER TAG
+
+  [spoiler={TEXT1}]{TEXT2}[/spoiler]
+  <div class="spoiler"><button class="spoiler__open" type="button" name="button">Spoiler: {TEXT1}</button><div class="spoiler__content">{TEXT2}</div></div>
+
 SIZE TAG
 
   [size={RANGE=1,7}]{TEXT}[/size]
