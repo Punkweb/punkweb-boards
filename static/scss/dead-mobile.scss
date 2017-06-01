@@ -114,4 +114,13 @@
     text-align: center;
   }
 
+  .thread {
+    flex-direction: column;
+
+    &__user {
+      border-bottom: 2px solid mix(black, $primary, 45%);
+      border-right: none;
+    }
+  }
+
 }

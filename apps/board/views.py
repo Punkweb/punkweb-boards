@@ -34,6 +34,8 @@ def index_view(request):
 
     category_groups = []
     parent_categories = Category.objects.all().order_by('order')
+    if not request.user.is_authenticated:
+        parent_categories = parent_categories.filter(auth_req=False)
     for parent_category in parent_categories:
         children = parent_category.subcategories
         if not request.user.is_authenticated:
