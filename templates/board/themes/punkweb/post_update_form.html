@@ -3,16 +3,38 @@
 {% block title %}Update Post{% endblock %}
 
 {% block content %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Update Post</h3>
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <h1 class="pageHeader__title">Update Post</h1>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:category' object.thread.category.parent.id %}">{{object.thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' object.thread.category.id %}">{{object.thread.category.name}}</a></li>
+          <li><a href="{% url 'board:thread' object.thread.id %}">{{object.thread.title}}</a></li>
+          <li>Update Post</li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="panel-body">
-    <form method="post">
-      {% csrf_token %}
-      {{ form }}
-      <input type="submit" class="btn btn-success form-control" value="Submit" />
-    </form>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <h3 class="panel__title">Delete {{object}}</h3>
+      </div>
+      <div class="panel__body padding">
+        <form method="post">
+          {% csrf_token %}
+          {{ form }}
+          <input type="submit" class="btn btn-success form-control" value="Submit" />
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

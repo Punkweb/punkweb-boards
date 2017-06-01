@@ -9,6 +9,15 @@
       <div class="pageHeader__left">
         <h1 class="pageHeader__title">Delete Thread</h1>
       </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:category' object.category.parent.id %}">{{object.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' object.category.id %}">{{object.category.name}}</a></li>
+          <li><a href="{% url 'board:thread' object.id %}">{{object.title}}</a></li>
+          <li>Delete Thread</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
@@ -20,10 +29,8 @@
       </div>
       <div class="panel__body padding">
         <form method="post">{% csrf_token %}
-          <div class="col-xs-4 col-xs-offset-4 well well-sm form-group">
-            <p>Are you sure you want to delete this thread?</p>
-            <input class="btn btn-danger form-control" type="submit" value="Confirm" />
-          </div>
+          <p>Are you sure you want to delete this thread?</p>
+          <input type="submit" value="Confirm" />
         </form>
       </div>
     </div>
