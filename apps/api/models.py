@@ -278,6 +278,11 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
     pinned = models.BooleanField(default=False)
+    closed = models.BooleanField(
+        default=False,
+        help_text="Check to stop users from being able " \
+                  "to comment on this thread."
+    )
 
     def __str__(self):
         return '{} by {}'.format(self.title, self.user)
@@ -434,3 +439,20 @@ class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
 
     def get_absolute_url(self):
         return reverse('board:index')  # TODO Actual url
+
+
+class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=False, null=False,
+        related_name='notifications'
+    )
+    text = models.CharField(max_length=140, blank=False, null=False)
+    link = models.CharField(max_length=140, blank=True, null=True)
+    read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.text

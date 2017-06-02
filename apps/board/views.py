@@ -6,9 +6,12 @@ from django.utils import timezone
 from .settings import BOARD_THEME
 from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
-    Message
+    Message, Notification
 )
-from .forms import ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm, SettingsForm, KeywordSearchForm
+from .forms import (
+    ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm,
+    SettingsForm, KeywordSearchForm
+)
 
 
 def base_context(request):
@@ -16,6 +19,9 @@ def base_context(request):
     if request.user.is_authenticated and not request.user.is_banned:
         ctx.update({
             'unread_conversations': request.user.unread_conversations.count()
+        })
+        ctx.update({
+            'unread_notifications': request.user.notifications.filter(read=False).count()
         })
         if request.user.is_staff:
             unresolved_reports = Report.objects.filter(resolved=False).count()
@@ -259,7 +265,7 @@ def thread_view(request, pk):
     # Logic for creating a new post on a thread
     if request.method == 'POST':
         # Redirect to unpermitted page if not logged in.
-        if not request.user.is_authenticated:
+        if not request.user.is_authenticated or thread.closed:
             return unpermitted_view(request)
         form = PostForm(request, request.POST)
         if form.is_valid():
@@ -536,7 +542,7 @@ def members_list(request):
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return unpermitted_view(request)
-    users = EmailUser.objects..order_by('username')
+    users = EmailUser.objects.order_by('username')
     context = {
         'users': users
     }

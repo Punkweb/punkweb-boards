@@ -184,6 +184,7 @@
         <h3 class="panel__title">Reply to this thread</h3>
       </div>
       <div class="panel__body padding">
+        {% if not thread.closed %}
         <img src="{{user.avatar_smaller}}" />
         <hr />
         <form method="post">
@@ -191,6 +192,9 @@
           {{ post_form.as_p }}
           <input type="submit" class="btn btn-success form-control" value="Post Reply" />
         </form>
+        {% else %}
+        This thread has been closed.
+        {% endif %}
       </div>
     </div>
     {% endif %}
