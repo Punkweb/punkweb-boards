@@ -21,11 +21,11 @@
 </div>
 <div class="main">
   <div class="djcontainer">
-    {% if matched_users%}
+    {% if matched_users %}
     <h2>Users</h2>
     <br>
     {% for item in matched_users %}
-    <a href="{{item.get_absolute_url}}">{{item}}</a>
+    <a href="{% url 'board:profile' item.username %}">{{item.username}}</a>
     <br>
     {% endfor %}
     <br>

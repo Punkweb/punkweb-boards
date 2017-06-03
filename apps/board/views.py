@@ -1,3 +1,4 @@
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, reverse
@@ -6,7 +7,7 @@ from django.utils import timezone
 from .settings import BOARD_THEME
 from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
-    Message, Notification
+    Message, Notification, Shout
 )
 from .forms import (
     ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm,
@@ -37,6 +38,7 @@ def unpermitted_view(request):
 def index_view(request):
     total_posts = Post.objects.all().count()
     total_threads = Thread.objects.all().count()
+    last_25_shouts = Shout.objects.all().select_related()[:25]
 
     category_groups = []
     parent_categories = Category.objects.all().order_by('order')
@@ -65,6 +67,7 @@ def index_view(request):
     context = {
         'total_posts': total_posts,
         'total_threads': total_threads,
+        'shouts': last_25_shouts,
         'categories': category_groups,
         'recent_threads': recent_threads[:5],
         'recent_activity': recent_activity[:5],
@@ -80,17 +83,47 @@ def keyword_search_view(request):
     keyword = request.POST.get('keyword')
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
-    matched_users = EmailUser.objects.filter(
-        Q(username__icontains=keyword) | Q(email__icontains=keyword))
-    matched_categories = Category.objects.filter(
-        Q(name__icontains=keyword) | Q(description__icontains=keyword))
-    matched_subcategories = Subcategory.objects.filter(
-        Q(name__icontains=keyword) | Q(description__icontains=keyword))
-    matched_threads = Thread.objects.filter(
-        Q(title__icontains=keyword) | Q(category__name__icontains=keyword) |
-        Q(content__icontains=keyword) | Q(user__username__icontains=keyword))
-    matched_posts = Post.objects.filter(
-        Q(user__username__icontains=keyword) | Q(content__icontains=keyword))
+
+    user_vector = TrigramSimilarity(
+        'username', keyword
+    ) + TrigramSimilarity(
+        'email', keyword
+    )
+    category_vector = TrigramSimilarity(
+        'name', keyword
+    ) + TrigramSimilarity(
+        'description', keyword
+    )
+    thread_vector = TrigramSimilarity(
+        'title', keyword
+    ) + TrigramSimilarity(
+        'content', keyword
+    ) + TrigramSimilarity(
+        'user__username', keyword
+    )
+    post_vector = TrigramSimilarity(
+        'content', keyword
+    ) + TrigramSimilarity(
+        'user__username', keyword
+    )
+    matched_users = EmailUser.objects.annotate(
+        similarity=user_vector,
+    ).filter(similarity__gt=0.3).order_by('-similarity')
+    matched_categories = Category.objects.annotate(
+        similarity=category_vector,
+    ).filter(similarity__gt=0.3).order_by('-similarity')
+    matched_subcategories = Subcategory.objects.annotate(
+        similarity=category_vector,
+    ).filter(similarity__gt=0.3).order_by('-similarity')
+    matched_threads = Thread.objects.annotate(
+        similarity=thread_vector,
+    ).filter(similarity__gt=0.3).order_by('-similarity')
+    matched_threads = Thread.objects.annotate(
+        similarity=thread_vector,
+    ).filter(similarity__gt=0.3).order_by('-similarity')
+    matched_posts = Post.objects.annotate(
+        similarity=post_vector,
+    ).filter(similarity__gt=0.3).order_by('-similarity')
     context = {
         'matched_users': matched_users,
         'matched_categories': matched_categories,

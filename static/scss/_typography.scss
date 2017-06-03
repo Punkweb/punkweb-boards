@@ -1,5 +1,5 @@
 html, body {
-  font-family: 'sans-serif';
+  font-family: 'Open-Sans', 'Calibri', 'sans-serif';
   font-size: 14px;
   color: $default-text;
   @include normal;
@@ -38,6 +38,20 @@ h1, h2, h3, h4, h5, h6 {
 @font-face {
 	font-family: 'Truckin';
 	src: url('../fonts/Truckin.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Forum';
+	src: url('../fonts/Forum-Regular.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Open-Sans';
+	src: url('../fonts/OpenSans-Regular.ttf');
 	font-weight: normal;
 	font-style: normal;
 }
