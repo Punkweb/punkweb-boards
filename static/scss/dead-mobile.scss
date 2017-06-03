@@ -77,43 +77,6 @@
     }
   }
 
-  .panel {
-    &__title {
-      font-size: 12px;
-    }
-    &__body {
-      font-size: 11px;
-    }
-  }
-
-  .table {
-    thead {
-      tr {
-        th {
-          font-size: 12px;
-        }
-        td {
-          font-size: 12px;
-        }
-      }
-    }
-    tbody {
-      tr {
-        th {
-          font-size: 11px;
-        }
-        td {
-          font-size: 11px;
-        }
-      }
-    }
-  }
-
-  .footer-bottom {
-  	font-size: 11px;
-    text-align: center;
-  }
-
   .thread {
     flex-direction: column;
 

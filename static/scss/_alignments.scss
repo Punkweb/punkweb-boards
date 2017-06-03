@@ -1,51 +1,39 @@
-/* Table Alignment Helpers
+/* Alignment classes
 *******************************************************************************/
-.align-left {
-  text-align: left !important; }
-  .align-left--all {
-    text-align: left !important; }
-    .align-left--all * {
-      text-align: left !important; }
-
-.align-right {
-  text-align: right !important; }
-  .align-right--all {
-    text-align: right !important; }
-    .align-right--all * {
-      text-align: right !important; }
-
-.align-center {
-  text-align: center !important; }
-  .align-center--all {
-    text-align: center !important; }
-    .align-center--all * {
-      text-align: center !important; }
-
-
+.align-center, .align-center--all, .align-center--all * {
+  text-align: center !important;
+}
+.align-left, .align-left--all, .align-left--all * {
+  text-align: left !important;
+}
+.align-right, .align-right--all, .align-right--all * {
+  text-align: right !important;
+}
+/* Border classes
+*******************************************************************************/
 .border, .border-all, .border-all * {
-    border: 1px solid $oc-gray-5 !important;
+  border: 1px solid $oc-gray-5 !important;
 }
 .border-top, .border-top-all, .border-top-all * {
-    border-top: 1px solid $oc-gray-5 !important;
+  border-top: 1px solid $oc-gray-5 !important;
 }
 .border-bottom, .border-bottom-all, .border-bottom-all * {
-    border-bottom: 1px solid $oc-gray-5 !important;
+  border-bottom: 1px solid $oc-gray-5 !important;
 }
 .border-right, .border-right-all, .border-right-all * {
-    border-right: 1px solid $oc-gray-5 !important;
+  border-right: 1px solid $oc-gray-5 !important;
 }
 .border-left, .border-left-all, .border-left-all * {
-    border-left: 1px solid $oc-gray-5 !important;
+  border-left: 1px solid $oc-gray-5 !important;
 }
-
+/* Padding classes
+*******************************************************************************/
 .padding {
   padding: 1rem;
 }
-
 .padding-left {
   padding-left: 1rem;
 }
-
 .padding-right {
   padding-right: 1rem;
 }
@@ -55,19 +43,17 @@
 .padding-bottom {
   padding-bottom: 1rem;
 }
-
+/* Margin classes
+*******************************************************************************/
 .clearMargin {
   margin: 0;
 }
-
 .margin {
   margin: 1rem;
 }
-
 .margin-left {
   margin-left: 1rem;
 }
-
 .margin-right {
   margin-right: 1rem;
 }

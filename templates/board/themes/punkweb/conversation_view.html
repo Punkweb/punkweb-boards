@@ -24,7 +24,7 @@
   <div class="djcontainer">
     <div class="panel">
       <div class="panel__header">
-        <h3 class="panel__title">{{conversation.subject}}</h3>
+        <div class="panel__title">{{conversation.subject}}</div>
       </div>
       <div class="panel__body">
         <div class="padding">
@@ -40,7 +40,7 @@
     {% if user.is_authenticated %}
     <div class="panel">
       <div class="panel__header">
-        <h3 class="panel__title">Reply to this conversation</h3>
+        <div class="panel__title">Reply to this conversation</div>
       </div>
       <div class="panel__body padding">
         <img src="{{user.avatar_smaller}}" />

@@ -3,18 +3,15 @@
   border: 1px solid $editor-border;
   color: $editor-text;
 }
-
 .sceditor-container iframe,
 .sceditor-container textarea {
   background: $editor-container;
   color: $editor-text;
 }
-
 div.sceditor-toolbar {
   background: $editor-toolbar;
   border-bottom: 1px solid $editor-border;
 }
-
 div.sceditor-group {
   background: $editor-toolbar-group;
   border-bottom: 1px solid $editor-border;
@@ -61,12 +58,6 @@ div.sceditor-dropdown .button {
 div.sceditor-dropdown .button:hover {
   background: $editor-button-hover;
 }
-.sceditor-fontsize-option,
-.sceditor-font-option,
-.sceditor-format a {
-  color: green;
-}
-
 .sceditor-color-option {
   border: 1px solid $editor-container;
 }

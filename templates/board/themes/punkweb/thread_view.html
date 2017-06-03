@@ -8,7 +8,7 @@
   <div class="djcontainer">
     <div class="pageHeader__flex">
       <div class="pageHeader__left">
-        <h1 class="pageHeader__title">{{thread.title}}</h1>
+        <div class="pageHeader__title">{{thread.title}}</div>
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
@@ -53,7 +53,7 @@
     {% if posts.number == 1 %}
     <div class="panel">
       <div class="panel__header">
-        <h3 class="panel__title">{{thread.title}}</h3>
+        <div class="panel__title">{{thread.title}}</div>
       </div>
       <div class="panel__body">
         <div class="thread">
@@ -103,7 +103,7 @@
     {% for post in posts %}
     <div class="panel">
       <div class="panel__header">
-        <h3 class="panel__title align-right">#{{forloop.counter}}</h3>
+        <div class="panel__title align-right">#{{forloop.counter}}</div>
       </div>
       <div class="panel__body">
 
@@ -181,7 +181,7 @@
     {% if user.is_authenticated %}
     <div class="panel">
       <div class="panel__header">
-        <h3 class="panel__title">Reply to this thread</h3>
+        <div class="panel__title">Reply to this thread</div>
       </div>
       <div class="panel__body padding">
         {% if not thread.closed %}
