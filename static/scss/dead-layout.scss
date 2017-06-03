@@ -79,6 +79,7 @@ a:link, a:visited {
   }
 
   &__title {
+    @include medium;
     @include font-range(20, 24);
     color: $main-nav-title;
     padding: 2rem 1.5rem 2rem 0;
@@ -91,9 +92,9 @@ a:link, a:visited {
   }
 
   &__link {
+    @include bold;
     @include font-range(12, 14);
     color: $main-nav-link;
-    font-weight: 400;
     padding: 0 1rem;
   }
 }
@@ -104,9 +105,9 @@ a:link, a:visited {
   flex-direction: row;
 
   &__title {
+    @include bold;
     @include font-range(16, 20);
     color: $page-header-text;
-    font-weight: 400;
     padding: 2rem 0;
   }
 
@@ -191,11 +192,11 @@ a:link, a:visited {
 }
 
 .badge {
+  @include bold;
   background-color: $badge-background;
   display: inline-block;
   padding: .25rem .4rem;
   font-size: 75%;
-  font-weight: 700;
   line-height: 1;
   color: $badge-text;
   text-align: center;
@@ -210,18 +211,18 @@ a:link, a:visited {
   opacity: $panel-opacity;
 
   &__header {
+    @include medium;
     @include font-range(12, 14);
     display: flex;
     flex-direction: row;
     align-items: center;
     background-color: $panel-header;
-    font-weight: 500;
     padding: 1rem 1rem;
   }
   &__title {
+    @include medium;
     @include font-range(12, 14);
     color: $oc-white;
-    font-weight: 500;
   }
   &__body {
     @include font-range(12, 14);
@@ -245,8 +246,8 @@ a:link, a:visited {
     color: $table-header-text;
     tr {
       th {
+        @include medium;
         @include font-range(12, 14);
-        font-weight: 500;
         padding: 1rem 1rem;
         a {
           color: $table-header-link;
