@@ -45,10 +45,14 @@
                     {% if notification.read %}
                     <div class="notification">
                       <a href="{{notification.link}}">{{notification.text}}</a>
+                      <br/>
+                      {{notification.created}}
                     </div>
                     {% else %}
                     <div class="notification notification--unread">
                       <a href="{{notification.link}}">{{notification.text}}</a>
+                      <br/>
+                      {{notification.created}}
                     </div>
                     {% endif %}
                     {% endfor %}

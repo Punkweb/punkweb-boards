@@ -19,7 +19,7 @@ def base_context(request):
     ctx = {}
     if request.user.is_authenticated and not request.user.is_banned:
         ctx.update({
-            'notifications': Notification.objects.filter()[:5]
+            'notifications': request.user.notifications.all()[:5]
         })
         ctx.update({
             'unread_conversations': request.user.unread_conversations.count()

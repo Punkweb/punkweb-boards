@@ -80,6 +80,7 @@ a:link, a:visited {
   }
 
   &__title {
+    @include noselect;
     @include medium;
     @include font-range(20, 24);
     color: $main-nav-title;
@@ -294,27 +295,37 @@ a:link, a:visited {
 }
 
 .dropdown {
+  @include noselect;
   cursor: pointer;
   display: inline-block;
   position: relative;
 }
 
 .dropdown__content {
-  background-color: $body-background;
+  background-color: mix(black, $primary, 55%);
   box-shadow: 0px .5rem 1rem 0px rgba(0, 0, 0, 0.2);
   display: none;
-  padding: .75rem 1rem;
   position: absolute;
   min-width: 160px;
+  margin-top: 1rem;
   z-index: 1;
 }
 
 .notification {
-  background-color: $oc-gray-5;
+  background-color: mix(black, $primary, 55%);
+  padding: 1rem;
+  opacity: .75;
+  a {
+    color: $primary-link;
+  }
   &--unread {
-    opacity: .75;
+    opacity: 1;
+  }
+  &:not(:last-of-type) {
+    border-bottom: 1px solid desaturate($primary, 25%);
   }
 }
+
 
 .recentActivity, .recentThreads {
   margin-left: 1rem;
