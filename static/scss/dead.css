@@ -206,6 +206,7 @@ a:link, a:visited {
         font-size: 0.78571rem; } }
     .nav--upper__link {
       color: #cccccc;
+      cursor: pointer;
       padding: .25rem 0; }
       .nav--upper__link + .nav--upper__link {
         padding-left: 0.5rem; }
@@ -246,6 +247,7 @@ a:link, a:visited {
     font-weight: 700;
     font-size: calc(0.85714rem + (14 - 12) * (100vw - 22.85714rem) / (1440 - 320));
     color: #e6e6e6;
+    cursor: pointer;
     padding: 0 1rem; }
     @media only screen and (max-width: 320) {
       .nav__link {
@@ -467,6 +469,25 @@ a:link, a:visited {
       font-size: 0.85714rem; } }
   .footer a {
     color: #c92a2a; }
+
+.dropdown {
+  cursor: pointer;
+  display: inline-block;
+  position: relative; }
+
+.dropdown__content {
+  background-color: #0b0c0d;
+  box-shadow: 0px 0.5rem 1rem 0px rgba(0, 0, 0, 0.2);
+  display: none;
+  padding: .75rem 1rem;
+  position: absolute;
+  min-width: 160px;
+  z-index: 1; }
+
+.notification {
+  background-color: #adb5bd; }
+  .notification--unread {
+    opacity: .75; }
 
 .recentActivity, .recentThreads {
   margin-left: 1rem; }

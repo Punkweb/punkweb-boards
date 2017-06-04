@@ -19,6 +19,9 @@ def base_context(request):
     ctx = {}
     if request.user.is_authenticated and not request.user.is_banned:
         ctx.update({
+            'notifications': Notification.objects.filter()[:5]
+        })
+        ctx.update({
             'unread_conversations': request.user.unread_conversations.count()
         })
         ctx.update({
@@ -105,16 +108,16 @@ def keyword_search_view(request):
     )
     matched_users = EmailUser.objects.annotate(
         similarity=user_vector,
-    ).filter(similarity__gt=0.3).order_by('-similarity')
+    ).filter(similarity__gt=0.1).order_by('-similarity')
     matched_threads = Thread.objects.annotate(
         similarity=thread_vector,
-    ).filter(similarity__gt=0.3).order_by('-similarity')
+    ).filter(similarity__gt=0.1).order_by('-similarity')
     matched_threads = Thread.objects.annotate(
         similarity=thread_vector,
-    ).filter(similarity__gt=0.3).order_by('-similarity')
+    ).filter(similarity__gt=0.15).order_by('-similarity')
     matched_posts = Post.objects.annotate(
         similarity=post_vector,
-    ).filter(similarity__gt=0.3).order_by('-similarity')
+    ).filter(similarity__gt=0.1).order_by('-similarity')
     context = {
         'matched_users': matched_users,
         'matched_threads': matched_threads,
