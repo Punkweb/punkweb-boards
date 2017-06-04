@@ -1,32 +1,16 @@
-/* Table Alignment Helpers
+/* Alignment classes
 *******************************************************************************/
-.align-left {
-  text-align: left !important; }
-
-.align-left--all {
-  text-align: left !important; }
-
-.align-left--all * {
-  text-align: left !important; }
-
-.align-right {
-  text-align: right !important; }
-
-.align-right--all {
-  text-align: right !important; }
-
-.align-right--all * {
-  text-align: right !important; }
-
-.align-center {
+.align-center, .align-center--all, .align-center--all * {
   text-align: center !important; }
 
-.align-center--all {
-  text-align: center !important; }
+.align-left, .align-left--all, .align-left--all * {
+  text-align: left !important; }
 
-.align-center--all * {
-  text-align: center !important; }
+.align-right, .align-right--all, .align-right--all * {
+  text-align: right !important; }
 
+/* Border classes
+*******************************************************************************/
 .border, .border-all, .border-all * {
   border: 1px solid #adb5bd !important; }
 
@@ -42,21 +26,56 @@
 .border-left, .border-left-all, .border-left-all * {
   border-left: 1px solid #adb5bd !important; }
 
-html, body {
+/* Padding classes
+*******************************************************************************/
+.padding {
+  padding: 1rem; }
+
+.padding-left {
+  padding-left: 1rem; }
+
+.padding-right {
+  padding-right: 1rem; }
+
+.padding-top {
+  padding-top: 1rem; }
+
+.padding-bottom {
+  padding-bottom: 1rem; }
+
+/* Margin classes
+*******************************************************************************/
+.clearMargin {
+  margin: 0; }
+
+.margin {
+  margin: 1rem; }
+
+.margin-left {
+  margin-left: 1rem; }
+
+.margin-right {
+  margin-right: 1rem; }
+
+.margin-top {
+  margin-top: 1rem; }
+
+.margin-bottom {
+  margin-bottom: 1rem; }
+
+body {
   margin: 0;
   padding: 0;
-  min-width: 320px;
-  width: 100%; }
+  min-width: 320px; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
 
 /* images can't be wider than their containers */
 img, iframe {
   max-width: 100%; }
-
-.djcontainer {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 16; }
 
 /* tables inherit font size (some browsers set a default table font size) */
 table {
@@ -69,30 +88,6 @@ pre {
   background-color: #fff9db;
   font-family: monospace;
   white-space: pre-wrap; }
-
-@font-face {
-  font-family: 'Ripple';
-  src: url("../fonts/Ripple.ttf");
-  font-weight: normal;
-  letter-spacing: 7.5px;
-  font-style: normal; }
-
-@font-face {
-  font-family: 'Storybook';
-  src: url("../fonts/Storyboo.TTF");
-  font-weight: normal;
-  letter-spacing: 1.5px;
-  font-style: normal; }
-
-@font-face {
-  font-family: 'Griffin';
-  src: url("../fonts/GRIFRG__.TTF");
-  font-weight: bold;
-  font-style: normal;
-  letter-spacing: 12px; }
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Storybook'; }
 
 .footer {
   background-color: #f1f3f5;
@@ -114,10 +109,15 @@ h1, h2, h3, h4, h5, h6 {
     display: block; }
 
 .footer-bottom {
-  background: #e9ecef;
-  border-top: 1px solid #DDDDDD;
-  padding-top: 10px;
-  padding-bottom: 10px; }
+  background: #2C2C2C;
+  border-top: 2px solid #DDDDDD;
+  color: #ced4da;
+  font-size: 12px;
+  padding: 0.4rem 0; }
+  .footer-bottom .fa .fa-github {
+    font-size: 20px; }
+  .footer-bottom a {
+    color: #228ae6; }
 
 .page-wrap {
   min-height: 100vh; }

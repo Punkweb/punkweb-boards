@@ -80,19 +80,18 @@ def index_view(request):
 
 
 def keyword_search_view(request):
-    keyword = request.POST.get('keyword')
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
+
+    if request.GET.get('keyword'):
+        keyword = request.GET['keyword']
+    else:
+        keyword = ''
 
     user_vector = TrigramSimilarity(
         'username', keyword
     ) + TrigramSimilarity(
         'email', keyword
-    )
-    category_vector = TrigramSimilarity(
-        'name', keyword
-    ) + TrigramSimilarity(
-        'description', keyword
     )
     thread_vector = TrigramSimilarity(
         'title', keyword
@@ -103,17 +102,9 @@ def keyword_search_view(request):
     )
     post_vector = TrigramSimilarity(
         'content', keyword
-    ) + TrigramSimilarity(
-        'user__username', keyword
     )
     matched_users = EmailUser.objects.annotate(
         similarity=user_vector,
-    ).filter(similarity__gt=0.3).order_by('-similarity')
-    matched_categories = Category.objects.annotate(
-        similarity=category_vector,
-    ).filter(similarity__gt=0.3).order_by('-similarity')
-    matched_subcategories = Subcategory.objects.annotate(
-        similarity=category_vector,
     ).filter(similarity__gt=0.3).order_by('-similarity')
     matched_threads = Thread.objects.annotate(
         similarity=thread_vector,
@@ -126,8 +117,6 @@ def keyword_search_view(request):
     ).filter(similarity__gt=0.3).order_by('-similarity')
     context = {
         'matched_users': matched_users,
-        'matched_categories': matched_categories,
-        'matched_subcategories': matched_subcategories,
         'matched_threads': matched_threads,
         'matched_posts': matched_posts,
         'keyword': keyword

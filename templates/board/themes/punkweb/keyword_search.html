@@ -22,56 +22,43 @@
 <div class="main">
   <div class="djcontainer">
     {% if matched_users %}
-    <h2>Users</h2>
-    <br>
-    {% for item in matched_users %}
-    <a href="{% url 'board:profile' item.username %}">{{item.username}}</a>
-    <br>
-    {% endfor %}
-    <br>
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Users</div>
+      </div>
+      <div class="panel__body padding">
+        {% for item in matched_users %}
+        <a href="{% url 'board:profile' item.username %}">{{item.username}}</a>
+        <br>
+        {% endfor %}
+      </div>
+    </div>
     {% endif %}
-
-
-    {% if matched_categories %}
-    <h2>Categories</h2>
-    <br>
-    {% for item in matched_categories %}
-    <a href="{{item.get_absolute_url}}">{{item}}</a>
-    <br>
-    {% endfor %}
-    <br>
-    {% endif %}
-
-
-    {% if matched_subcategories %}
-    <h2>Subcategories</h2>
-    <br>
-    {% for item in matched_subcategories %}
-    <a href="{{item.get_absolute_url}}">{{item}}</a>
-    <br>
-    {% endfor %}
-    <br>
-    {% endif %}
-
-
     {% if matched_threads %}
-    <h2>Threads</h2>
-    <br>
-    {% for item in matched_threads %}
-    <a href="{{item.get_absolute_url}}">{{item}}</a>
-    <br>
-    {% endfor %}
-    <br>
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Threads</div>
+      </div>
+      <div class="panel__body padding">
+        {% for item in matched_threads %}
+        <a href="{{item.get_absolute_url}}">{{item}}</a>
+        <br>
+        {% endfor %}
+      </div>
+    </div>
     {% endif %}
-
     {% if matched_posts %}
-    <h2>Posts</h2>
-    <br>
-    {% for item in matched_posts %}
-    <a href="{{item.get_absolute_url}}">{{item}}</a>
-    <br>
-    {% endfor %}
-    <br>
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Posts</div>
+      </div>
+      <div class="panel__body padding">
+        {% for item in matched_posts %}
+        <a href="{{item.get_absolute_url}}">{{item}}</a>
+        <br>
+        {% endfor %}
+      </div>
+    </div>
     {% endif %}
   </div>
 </div>
