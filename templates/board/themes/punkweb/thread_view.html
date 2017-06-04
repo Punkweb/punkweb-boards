@@ -103,7 +103,7 @@
     {% for post in posts %}
     <div class="panel">
       <div class="panel__header">
-        <div class="panel__title align-right">#{{forloop.counter}}</div>
+        <div class="panel__title align-right">#{{posts.number|add:-1}}{{forloop.counter}}</div>
       </div>
       <div class="panel__body">
 
