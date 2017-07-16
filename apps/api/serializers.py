@@ -46,6 +46,9 @@ class ReportSerializer(serializers.ModelSerializer):
 
 
 class ShoutSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = Shout
-        fields = '__all__'
+        fields = (
+            'id', 'user', 'username', 'content', '_content_rendered', 'created',
+            'modified')

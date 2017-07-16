@@ -20,6 +20,22 @@
 </div> -->
 <div class="main">
   <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Shoutbox</div>
+      </div>
+      <div class="panel__body">
+        <div id="shoutBox" class="shoutList">
+        </div>
+        <form class="">
+          <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
+          <input id="submitShout" type="button" name="name" value="Post Shout">
+          <input id="reloadShouts" type="button" name="name" value="Reload Shouts">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="djcontainer">
     <!-- Birthday message -->
     {% if user.birthday_today %}
     <p>
@@ -86,4 +102,8 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extrascript %}
+<script src="{% static 'js/shoutbox.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,108 @@
+$(function() {
+  $(document).ready(function() {
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    function sameOrigin(url) {
+      // test that a given url is a same-origin URL
+      // url could be relative or scheme relative or absolute
+      var host = document.location.host; // host + port
+      var protocol = document.location.protocol;
+      var sr_origin = '//' + host;
+      var origin = protocol + sr_origin;
+      // Allow absolute or scheme relative URLs to same origin
+      return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+          // Send the token to same-origin, relative URLs only.
+          // Send the token only if the method warrants CSRF protection
+          // Using the CSRFToken value acquired earlier
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+
+    var editor = $('#shoutEditor').sceditor({
+      emoticonsEnabled: false,
+      plugins: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|font,size,color,link,image|date,time|source,maximize,removeformat',
+      style: '/static/scss/_editor.min.css',
+      fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
+    });
+
+    $('#submitShout').click(function($event) {
+      var editorContent = editor.sceditor('instance').val();
+      editor.sceditor('instance').val('');
+      postShout(editorContent);
+    });
+
+    $('#reloadShouts').click(function($event) {
+      getShouts();
+    });
+
+    var shoutList = [];
+
+    function clearShoutList() {
+      shoutList = [];
+      $('#shoutBox').html('');
+    }
+
+    function shoutLine(shout) {
+      var date = new Date(shout.created);
+      var dateStr = new Date(date.getTime()).toLocaleTimeString();
+      return $.parseHTML('<div class="shout">' + dateStr + ' - ' + shout.username + ': ' + shout._content_rendered + '</div>');
+    }
+
+    function getShouts() {
+      $.get('/api/shouts/', function(data) {
+        clearShoutList();
+        shoutList = data;
+
+        shoutList.forEach(function(shout) {
+          $('#shoutBox').append(shoutLine(shout));
+        });
+      });
+    }
+
+    function postShout(shout) {
+      $.ajax({
+        type: 'POST',
+        url: '/api/shouts/',
+        data: {
+          content: shout
+        },
+        success: function(data) {
+          getShouts();
+        }
+      });
+    }
+    
+    getShouts();
+  });
+});

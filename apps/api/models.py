@@ -428,7 +428,7 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
 
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, null=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     content = BBCodeTextField(max_length=280, blank=False, null=False)
 
     class Meta:

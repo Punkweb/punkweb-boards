@@ -171,7 +171,7 @@ h1, h2, h3, h4, h5, h6 {
   font-style: normal; }
 
 html, body {
-  background-color: #0b0c0d; }
+  background-color: #0f1011; }
 
 hr {
   border: 0;
@@ -190,13 +190,13 @@ a:link, a:visited {
 .spoiler__content {
   display: none;
   padding: 1rem;
-  background-color: #0b0c0d; }
+  background-color: #0f1011; }
 
 .nav {
   width: 100%; }
   .nav--upper {
     font-size: calc(0.64286rem + (11 - 9) * (100vw - 22.85714rem) / (1440 - 320));
-    background-color: #070809;
+    background-color: #0b0c0d;
     padding: 0.4rem 0; }
     @media only screen and (max-width: 320) {
       .nav--upper {
@@ -312,7 +312,7 @@ a:link, a:visited {
     color: #e6e6e6;
     display: inline; }
     .breadcrumb li a {
-      color: #c92a2a; }
+      color: #f03e3e; }
   .breadcrumb li + li:before {
     color: #e6e6e6;
     content: "/\00a0";
@@ -331,12 +331,15 @@ a:link, a:visited {
   width: 100%;
   margin: 0 auto; }
 
-.post-editor {
+.post-editor, .shout-editor {
   min-width: 240px;
   max-width: 800px;
   width: 100%;
   min-height: 300px;
   max-height: 600px; }
+
+.shout-editor {
+  max-height: 340px; }
 
 .pagination {
   font-size: calc(0.85714rem + (14 - 12) * (100vw - 22.85714rem) / (1440 - 320));
@@ -406,7 +409,7 @@ a:link, a:visited {
       .panel__body {
         font-size: 1rem; } }
     .panel__body a {
-      color: #c92a2a; }
+      color: #f03e3e; }
   .panel__footer {
     font-size: calc(0.85714rem + (14 - 12) * (100vw - 22.85714rem) / (1440 - 320));
     background-color: #25282c;
@@ -465,13 +468,13 @@ a:link, a:visited {
         .table tbody tr td {
           font-size: 1rem; } }
       .table tbody tr td a {
-        color: #c92a2a; }
+        color: #f03e3e; }
     .table tbody .vertically-centered {
       vertical-align: middle; }
 
 .footer {
   font-size: calc(0.71429rem + (12 - 10) * (100vw - 22.85714rem) / (1440 - 320));
-  background-color: #070809;
+  background-color: #0b0c0d;
   color: #e6e6e6;
   padding: 0.4rem 0; }
   @media only screen and (max-width: 320) {
@@ -481,7 +484,7 @@ a:link, a:visited {
     .footer {
       font-size: 0.85714rem; } }
   .footer a {
-    color: #c92a2a; }
+    color: #f03e3e; }
 
 .dropdown {
   -webkit-touch-callout: none;
@@ -502,7 +505,7 @@ a:link, a:visited {
   position: relative; }
 
 .dropdown__content {
-  background-color: #212427;
+  background-color: #1a1c1e;
   box-shadow: 0px 0.5rem 1rem 0px rgba(0, 0, 0, 0.2);
   display: none;
   position: absolute;
@@ -511,11 +514,11 @@ a:link, a:visited {
   z-index: 1; }
 
 .notification {
-  background-color: #212427;
+  background-color: #1a1c1e;
   padding: 1rem;
   opacity: .75; }
   .notification a {
-    color: #c92a2a; }
+    color: #f03e3e; }
   .notification--unread {
     opacity: 1; }
   .notification:not(:last-of-type) {
@@ -655,17 +658,17 @@ input[type="text"], input[type="password"], textarea {
       border-right: none; } }
 
 .sceditor-container {
-  background: #0b0c0d;
+  background: #0f1011;
   border: 1px solid #505050;
   color: #e6e6e6; }
 
 .sceditor-container iframe,
 .sceditor-container textarea {
-  background: #0b0c0d;
+  background: #0f1011;
   color: #e6e6e6; }
 
 div.sceditor-toolbar {
-  background: #2e3236;
+  background: #33363a;
   border-bottom: 1px solid #505050; }
 
 div.sceditor-group {
@@ -675,14 +678,14 @@ div.sceditor-group {
 .sceditor-button:hover,
 .sceditor-button:active,
 .sceditor-button.active {
-  background: #b9bfc4; }
+  background: #bfc3c6; }
 
 .sceditor-button:active {
-  background: #b9bfc4; }
+  background: #bfc3c6; }
 
 div.sceditor-dropdown {
   border: 1px solid #505050;
-  background: #0b0c0d;
+  background: #0f1011;
   color: #e6e6e6; }
 
 .sceditor-dropdown a:hover {
@@ -707,14 +710,14 @@ div.sceditor-dropdown textarea:focus {
 
 div.sceditor-dropdown .button {
   color: #e6e6e6;
-  background: #0b0c0d;
+  background: #0f1011;
   border: solid 1px #505050; }
 
 div.sceditor-dropdown .button:hover {
-  background: #17191b; }
+  background: #1b1d1f; }
 
 .sceditor-color-option {
-  border: 1px solid #0b0c0d; }
+  border: 1px solid #0f1011; }
 
 .sceditor-color-option:hover {
   border: 1px solid white; }

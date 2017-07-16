@@ -1,4 +1,5 @@
 from rest_framework import viewsets, permissions
+from rest_framework.response import Response
 
 from .models import (Category, Subcategory, Thread, Post, Conversation, Message,
     Report, Shout)
@@ -74,3 +75,6 @@ class ReportViewSet(viewsets.ModelViewSet):
 class ShoutViewSet(viewsets.ModelViewSet):
     queryset = Shout.objects.all()
     serializer_class = ShoutSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
