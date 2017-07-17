@@ -605,11 +605,16 @@ input[type="text"], input[type="password"], textarea {
     .thread__actions a + a {
       margin-left: 1rem; }
 
-.shoutList .shout {
-  padding: 1rem; }
-
-.shoutList .shout:not(:last-of-type) {
-  border-bottom: 1px solid #282c30; }
+.shoutList {
+  max-height: 300px;
+  overflow: auto; }
+  .shoutList .shout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem; }
+  .shoutList .shout:not(:last-of-type) {
+    border-bottom: 1px solid #282c30; }
 
 @media only screen and (max-width: 840px) {
   .djcontainer {

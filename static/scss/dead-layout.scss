@@ -436,7 +436,12 @@ input[type="text"], input[type="password"], textarea {
 }
 
 .shoutList {
+  max-height: 300px;
+  overflow: auto;
   .shout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 1rem;
   }
   .shout:not(:last-of-type) {
