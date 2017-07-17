@@ -15,7 +15,6 @@ def index_view(request):
         'audio': audio,
         'compilations': compilations
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/music/index.html'.format(BOARD_THEME),
@@ -28,7 +27,6 @@ def audio_view(request, slug):
     context = {
         'song': song
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/music/audio_view.html'.format(BOARD_THEME),
@@ -43,7 +41,6 @@ def audio_compilation_view(request, slug):
         'compilation': compilation,
         'tracks': tracks
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/music/audio_compilation_view.html'.format(BOARD_THEME),

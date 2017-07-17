@@ -134,7 +134,7 @@ def my_profile(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     context = {}
     return render(
         request, 'board/themes/{}/my_profile.html'.format(BOARD_THEME), context)
@@ -144,7 +144,7 @@ def settings_view(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         form = SettingsForm(request, request.POST, request.FILES)
         if form.is_valid():
@@ -172,12 +172,13 @@ def profile_view(request, username):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     # Redirect to /board/me/ if trying to view own profile.
     if request.user.id == user.id:
+        print('really why is it not getting here then?')
         # TODO do not redirect so that users
         # can view their profile as others see it.
-        return my_profile(request)
+        return redirect('board:me')
     context = {
         'profile': user
     }
@@ -193,7 +194,7 @@ def category_view(request, pk):
     # Redirect to unpermitted page if the requesting user does not have view
     # permissions on this category.
     if not category.can_view(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     subcategories = []
 
     subs = category.subcategories.order_by('order')
@@ -222,7 +223,7 @@ def subcategory_view(request, pk):
     # Redirect to unpermitted page if the requesting user does not have view
     # permissions on this subcategory.
     if not category.can_view(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     # Paginate threads
     # TODO: get correct ordering worked out
     paginator = Paginator(category.threads.order_by('-pinned', '-modified'), 20)
@@ -251,7 +252,7 @@ def thread_view(request, pk):
     # Redirect to unpermitted page if the requesting user does not have view
     # permissions on this thread.
     if not thread.can_view(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     # Paginate posts
     paginator = Paginator(thread.posts.all(), page_size)
     page = request.GET.get('page')
@@ -265,7 +266,7 @@ def thread_view(request, pk):
     if request.method == 'POST':
         # Redirect to unpermitted page if not logged in.
         if not request.user.is_authenticated or thread.closed:
-            return unpermitted_view(request)
+            return redirect('board:unpermitted')
         form = PostForm(request, request.POST)
         if form.is_valid():
             new_post = form.save(thread=thread, set_user=True)
@@ -290,7 +291,7 @@ def thread_create(request, category_id):
     # Redirect to unpermitted page if the requesting user does not have post
     # permission in this category.
     if not subcategory.can_post(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         form = ThreadForm(request, request.POST)
         if form.is_valid():
@@ -314,7 +315,7 @@ def thread_update(request, pk):
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this thread.
     if not instance.can_edit(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         form = ThreadForm(request, request.POST, instance=instance)
         if form.is_valid():
@@ -338,7 +339,7 @@ def thread_delete(request, pk):
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this thread.
     if not instance.can_edit(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         redirect_to = instance.category.id
         instance.delete()
@@ -360,7 +361,7 @@ def post_update(request, pk):
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this post.
     if not instance.can_edit(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         form = PostForm(request, request.POST, instance=instance)
         if form.is_valid():
@@ -384,7 +385,7 @@ def post_delete(request, pk):
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this post.
     if not instance.can_edit(request.user):
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         redirect_to = instance.thread.id
         instance.delete()
@@ -417,7 +418,7 @@ def conversations_list(request):
 def conversation_view(request, pk):
     # Redirect to unpermitted page if not authenticated or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     conversation = request.user.conversations.get(id=pk)
     messages = conversation.messages.all()
 
@@ -429,7 +430,7 @@ def conversation_view(request, pk):
     if request.method == 'POST':
         # Redirect to unpermitted page if not logged in.
         if not request.user.is_authenticated:
-            return unpermitted_view(request)
+            return redirect('board:unpermitted')
         form = MessageForm(request, request.POST)
         if form.is_valid():
             new_unread = conversation.users.exclude(id=request.user.id)
@@ -456,7 +457,7 @@ def reports_list(request):
     # is not logged in or is banned or is not an admin
     if not request.user.is_authenticated or \
         not request.user.is_staff or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     context = {
         'reports': Report.objects.all()
     }
@@ -472,7 +473,7 @@ def report_view(request, pk):
     # is not logged in or is banned or is not an admin
     if not request.user.is_authenticated or \
         not request.user.is_staff or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     instance = Report.objects.get(id=pk)
     if request.method == 'POST':
         instance.resolved = True
@@ -501,7 +502,7 @@ def report_create(request, thread=None, post=None):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     if request.method == 'POST':
         form = ReportForm(request, request.POST)
         if form.is_valid():
@@ -527,7 +528,7 @@ def members_list(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
-        return unpermitted_view(request)
+        return redirect('board:unpermitted')
     users = EmailUser.objects.order_by('username')
     context = {
         'users': users
