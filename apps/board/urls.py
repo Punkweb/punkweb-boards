@@ -24,7 +24,7 @@ urlpatterns = [
         views.category_view, name='category'),
     url(r'^subcategory/(?P<pk>[^/]+)/$',
         views.subcategory_view, name='subcategory'),
-    url(r'^thread/(?P<pk>[^/]+)/$',
+    url(r'^thread/(?P<pk>[^/]+)/?$',
         views.thread_view, name='thread'),
 
     url(r'^inbox/$',

@@ -20,6 +20,7 @@
 </div> -->
 <div class="main">
   <div class="djcontainer">
+    <a name="shoutbox"></a>
     <div class="panel">
       <div class="panel__header">
         <div class="panel__title">Shoutbox</div>
@@ -47,6 +48,7 @@
     <div class="flexrow">
       <div class="flexcol" style="flex: 3;">
         {% for category in categories %}
+        <a name="{{category.parent.name}}"></a>
         <div class="panel">
           <div class="panel__body">
             {% include './index_category_table.html' %}
@@ -85,6 +87,7 @@
     </div>
     <div class="flexrow ">
       <div class="flexcol" style="flex: 1;">
+        <a name="statistics"></a>
         <div class="panel">
           <div class="panel__header">
             <div class="panel__title">Statistics</div>
