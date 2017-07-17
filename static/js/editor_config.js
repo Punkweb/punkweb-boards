@@ -13,9 +13,7 @@ $(function() {
         dropdown: {
           ":gd:": "gd.png",
           ":gimli:": "gimli.jpg",
-          ":cool:": "cool.png",
-          ":tool:": "tool.jpg",
-          ":git:": "git.png"
+          ":tool:": "tool.jpg"
         },
         hidden: {}
       }

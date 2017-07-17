@@ -49,11 +49,22 @@ $(function() {
     });
 
     var editor = $('#shoutEditor').sceditor({
-      emoticonsEnabled: false,
       plugins: 'bbcode',
-      toolbar: 'bold,italic,underline,strike|font,size,color,link,image|date,time|source,maximize,removeformat',
+      toolbar: 'bold,italic,underline,strike|font,size,color,link,image,emoticon|date,time|source,maximize,removeformat',
       style: '/static/scss/_editor.min.css',
       fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
+      autoExpand: true,
+      emoticonsEnabled: true,
+      emoticonsCompat: true,
+      emoticonsRoot: '/media/precise_bbcode/smilies/',
+      emoticons: {
+        dropdown: {
+          ":gd:": "gd.png",
+          ":gimli:": "gimli.jpg",
+          ":tool:": "tool.jpg"
+        },
+        hidden: {}
+      }
     });
 
     $('#submitShout').click(function($event) {
@@ -102,7 +113,7 @@ $(function() {
         }
       });
     }
-    
+
     getShouts();
   });
 });

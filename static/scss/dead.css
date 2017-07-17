@@ -338,9 +338,6 @@ a:link, a:visited {
   min-height: 300px;
   max-height: 600px; }
 
-.shout-editor {
-  max-height: 340px; }
-
 .pagination {
   font-size: calc(0.85714rem + (14 - 12) * (100vw - 22.85714rem) / (1440 - 320));
   display: flex;
@@ -607,6 +604,12 @@ input[type="text"], input[type="password"], textarea {
     padding: 1rem; }
     .thread__actions a + a {
       margin-left: 1rem; }
+
+.shoutList .shout {
+  padding: 1rem; }
+
+.shoutList .shout:not(:last-of-type) {
+  border-bottom: 1px solid #282c30; }
 
 @media only screen and (max-width: 840px) {
   .djcontainer {

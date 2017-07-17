@@ -434,3 +434,12 @@ input[type="text"], input[type="password"], textarea {
     }
   }
 }
+
+.shoutList {
+  .shout {
+    padding: 1rem;
+  }
+  .shout:not(:last-of-type) {
+    border-bottom: 1px solid $hr;
+  }
+}
