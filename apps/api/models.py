@@ -223,10 +223,10 @@ class Subcategory(UUIDPrimaryKey):
     class Meta:
         verbose_name = 'subcategory'
         verbose_name_plural = 'subcategories'
-        ordering = ('order',)
+        ordering = ('parent__order', 'order',)
 
     def __str__(self):
-        return "{}. {}".format(self.order, self.name)
+        return "{} > {}. {}".format(self.parent, self.order, self.name)
 
     def can_view(self, user):
         if user.is_authenticated and user.is_banned:
@@ -284,6 +284,12 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
         help_text="Check to stop users from being able " \
                   "to comment on this thread."
     )
+    # TODO: Better tagging in the future.
+    tags = models.CharField(
+        max_length=1024, blank=True, null=True,
+        help_text="Optional. Improves keywoard searching. " \
+                  "Separate tags with a comma and space. " \
+                  "(eg. news, important, update)")
 
     class Meta:
         ordering = ('created',)

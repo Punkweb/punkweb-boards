@@ -102,6 +102,8 @@ def keyword_search_view(request):
         'content', keyword
     ) + TrigramSimilarity(
         'user__username', keyword
+    ) + TrigramSimilarity(
+        'tags', keyword
     )
     post_vector = TrigramSimilarity(
         'content', keyword

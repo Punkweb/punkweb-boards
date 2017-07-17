@@ -1,0 +1,117 @@
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Forum | {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Enables 'Add to Homescreen' for Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="{% static 'img/icons/steal_your_face_mayan.png' %}">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'sceditor/minified/themes/monocons.min.css' %}" />
+
+    <!-- Use in production -->
+
+    <!-- <link href="{% static 'scss/dead.min.css' %}" rel="stylesheet" type="text/css" /> -->
+
+    <!-- Use in development -->
+
+    <link href="{% sass_src 'scss/dead.scss' %}" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+    <div class="page-wrap">
+      <div class="nav nav--upper">
+        <div class="djcontainer">
+          <div class="nav__flex">
+            <div class="nav__left"></div>
+            <div class="nav__right">
+              {% if user.is_authenticated %}
+              {% if user.is_staff %}
+              <a class="nav--upper__link" href="{% url 'board:reports-list' %}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i> Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
+              {% endif %}
+              <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i> Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
+              <a class="nav--upper__link">
+                <div class="dropdown">
+                  <i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications {% if unread_notifications > 0%}<span class="badge">{{unread_notifications}}</span>{% endif %}
+                  <div class="dropdown__content">
+                    {% for notification in notifications %}
+                    {% if notification.read %}
+                    <div class="notification">
+                      <a href="{{notification.link}}">{{notification.text}}</a>
+                      <br/>
+                      {{notification.created}}
+                    </div>
+                    {% else %}
+                    <div class="notification notification--unread">
+                      <a href="{{notification.link}}">{{notification.text}}</a>
+                      <br/>
+                      {{notification.created}}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </a>
+              <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
+              <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
+              <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a>
+              {% else %}
+              <a class="nav--upper__link" href="{% url 'board:register' %}"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Sign up</a>
+              <a class="nav--upper__link" href="{% url 'board:login' %}"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i> Login</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav nav--main">
+        <div class="djcontainer">
+          <div class="nav__flex">
+            <div class="nav__left">
+              <div class="nav__title"><a href="/">Punk Web</a></div>
+              <a class="nav__link" href="{% url 'board:index' %}">Forum</a>
+              <a class="nav__link" href="{% url 'board:members-list' %}">Members</a>
+              <a class="nav__link" href="{% url 'music:index' %}">Music</a>
+            </div>
+            <div class="nav__right">
+              <form action="/board/search/" method="get">
+                <div class="search">
+                  <span class="fa fa-search"></span>
+                  <input id="id_keyword" maxlength="80" name="keyword" type="text" placeholder="Search" required />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% block content %}{% endblock %}
+    </div>
+    <footer>
+      <div class="footer">
+        <div class="djcontainer">
+          Powered by <i class="fa fa-github" aria-hidden="true"></i> <a target="_blank" href="https://github.com/shakedown-street/django-boards">shakedown-street/django-boards</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+
+  <!-- Use in production -->
+
+  <!-- <script src="{% static 'js/bundle.min.js' %}"></script> -->
+
+  <!-- Use in development -->
+
+  <script src="{% static 'js/run_prettify.js' %}"></script>
+  <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
+  <script src="{% static 'js/spoiler.js' %}"></script>
+  <script src="{% static 'js/editor_config.js' %}"></script>
+
+  {% block extrascript %}{% endblock %}
+</html>
