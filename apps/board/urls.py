@@ -11,7 +11,9 @@ urlpatterns = [
 
     url(r'^register/$', views.registration_view, name='register'),
     url(r'^login/$',
-        auth_views.login, {'template_name': 'board/themes/{}/login.html'.format(BOARD_THEME)}, name='login'),
+        auth_views.login,
+        {'template_name': 'board/themes/{}/login.html'.format(BOARD_THEME)},
+        name='login'),
     url(r'^logout/$',
         auth_views.logout, {'next_page': '/board/login/'}, name='logout'),
     url(r'^me/$', views.my_profile, name='me'),

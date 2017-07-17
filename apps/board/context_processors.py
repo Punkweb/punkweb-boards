@@ -21,7 +21,8 @@ def base_context(request):
             'unread_conversations': request.user.unread_conversations.count()
         })
         ctx.update({
-            'unread_notifications': request.user.notifications.filter(read=False).count()
+            'unread_notifications':
+                request.user.notifications.filter(read=False).count()
         })
         if request.user.is_staff:
             unresolved_reports = Report.objects.filter(resolved=False).count()

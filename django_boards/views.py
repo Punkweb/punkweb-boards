@@ -18,4 +18,5 @@ def portal_view(request):
         'recent_threads': recent_threads[:5],
         'recent_activity': recent_activity[:5]
     }
-    return render(request, 'board/themes/{}/portal.html'.format(BOARD_THEME), context)
+    return render(
+        request, 'board/themes/{}/portal.html'.format(BOARD_THEME), context)

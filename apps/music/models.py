@@ -3,8 +3,8 @@ from django.db import models
 from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
 
-from apps.common.models import (UploadedAtMixin, CreatedModifiedMixin,
-                                UUIDPrimaryKey)
+from apps.common.models import (
+    UploadedAtMixin, CreatedModifiedMixin, UUIDPrimaryKey)
 
 
 def audio_upload_to(instance, filename):

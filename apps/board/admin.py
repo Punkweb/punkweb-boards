@@ -1,8 +1,7 @@
 from django.contrib import admin
 from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Shout, Conversation,
-    Message, Report, Notification
-)
+    Message, Report, Notification)
 
 
 class SubcategoryInline(admin.TabularInline):

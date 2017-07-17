@@ -1,4 +1,5 @@
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
+from django.contrib.postgres.search import (
+    SearchQuery, SearchRank, SearchVector, TrigramSimilarity)
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, reverse
@@ -7,12 +8,10 @@ from django.utils import timezone
 from .settings import BOARD_THEME
 from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
-    Message, Notification, Shout
-)
+    Message, Notification, Shout)
 from .forms import (
     ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm,
-    SettingsForm, KeywordSearchForm
-)
+    SettingsForm, KeywordSearchForm)
 
 
 def unpermitted_view(request):
