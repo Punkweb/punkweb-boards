@@ -1,5 +1,6 @@
 import datetime
 import hashlib
+import math
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -314,7 +315,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
 
     @property
     def posts(self):
-        return Post.objects.filter(thread__id=self.id).select_related()
+        return Post.objects.filter(thread__id=self.id).order_by('created')
 
     @property
     def posts_count(self):
@@ -334,6 +335,9 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
     thread = models.ForeignKey(
         Thread, related_name='posts', blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
+
+    class Meta:
+        ordering = ('created',)
 
     def __str__(self):
         return '{}\'s post on {}, {}'.format(
@@ -355,8 +359,19 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey):
         else:
             return False
 
+    @property
+    def post_number(self):
+        qs = self.thread.posts.all()
+        post_index = list(qs.values_list('id', flat=True)).index(self.id)
+        return post_index + 1
+
+    @property
+    def page_number(self, page_size=10):
+        return math.ceil(self.post_number / page_size)
+
     def get_absolute_url(self):
-        return reverse('board:thread', kwargs={'pk': self.thread.id})
+        return '/board/thread/{}/?page={}#{}'.format(
+            self.thread.id, self.page_number, self.post_number)
 
 
 class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):

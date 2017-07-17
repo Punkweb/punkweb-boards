@@ -270,13 +270,14 @@ def subcategory_view(request, pk):
 
 
 def thread_view(request, pk):
+    page_size = 10
     thread = Thread.objects.get(id=pk)
     # Redirect to unpermitted page if the requesting user does not have view
     # permissions on this thread.
     if not thread.can_view(request.user):
         return unpermitted_view(request)
     # Paginate posts
-    paginator = Paginator(thread.posts.order_by('created'), 10)
+    paginator = Paginator(thread.posts.order_by('created'), page_size)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -291,11 +292,9 @@ def thread_view(request, pk):
             return unpermitted_view(request)
         form = PostForm(request, request.POST)
         if form.is_valid():
-            form.save(thread=thread, set_user=True)
-            # Redirect to the last page of posts,
-            # which is where this new post will be.
-            return redirect('/board/thread/{}/?page={}'.format(
-                thread.id, paginator.num_pages))
+            new_post = form.save(thread=thread, set_user=True)
+            # Redirect to this post
+            return redirect(new_post)
     else:
         form = PostForm(request)
     context = {

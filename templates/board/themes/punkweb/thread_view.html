@@ -101,12 +101,12 @@
     {% endif %}
     {% if posts %}
     {% for post in posts %}
+    <a name="{{post.post_number}}"></a>
     <div class="panel">
       <div class="panel__header">
-        <div class="panel__title align-right">#{{posts.number|add:-1}}{{forloop.counter}}</div>
+        <div class="panel__title align-right">#{{post.post_number}}</div>
       </div>
       <div class="panel__body">
-
         <div class="thread">
           <div class="thread__user">
             <a href="{% url 'board:profile' post.user.username %}">
