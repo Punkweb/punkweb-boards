@@ -285,6 +285,9 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
                   "to comment on this thread."
     )
 
+    class Meta:
+        ordering = ('created',)
+
     def __str__(self):
         return '{} by {}'.format(self.title, self.user)
 
@@ -315,7 +318,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
 
     @property
     def posts(self):
-        return Post.objects.filter(thread__id=self.id).order_by('created')
+        return Post.objects.filter(thread__id=self.id)
 
     @property
     def posts_count(self):

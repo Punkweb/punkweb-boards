@@ -108,7 +108,7 @@
         {% for post in profile.posts.all %}
         <tr class="border-bottom">
           <td class="align-left">
-            <a href="{% url 'board:thread' post.thread.id %}">
+            <a href="{{post.get_absolute_url}}">
               {{post.thread.title}}
             </a>
           </td>

@@ -277,7 +277,7 @@ def thread_view(request, pk):
     if not thread.can_view(request.user):
         return unpermitted_view(request)
     # Paginate posts
-    paginator = Paginator(thread.posts.order_by('created'), page_size)
+    paginator = Paginator(thread.posts.all(), page_size)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)

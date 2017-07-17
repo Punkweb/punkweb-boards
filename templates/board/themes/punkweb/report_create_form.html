@@ -45,21 +45,26 @@
           <input type="submit" class="btn btn-success form-control" value="Submit" />
         </form>
         <hr>
-        <!-- TODO: Hide this by default.  Allow users to open it. -->
-        <div>
+        <div class="spoiler">
           {% if post %}
-          <h3>Post Content</h3>
-          <hr>
-          <div>
-            {{post.content.rendered}}
-          </div>
+          <button class="spoiler__open" type="button" name="button">Toggle Post Content</button>
           {% elif thread %}
-          <h3>Thread Content</h3>
-          <hr>
-          <div>
-            {{thread.content.rendered}}
-          </div>
+          <button class="spoiler__open" type="button" name="button">Toggle Thread Content</button>
           {% endif %}
+          <div class="spoiler__content">
+            {% if post %}
+            <div>
+              {{post.content.rendered}}
+            </div>
+            {% elif thread %}
+            <div>
+              {{thread.content.rendered}}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="spoiler__content">
+          other spoiler
         </div>
       </div>
     </div>
