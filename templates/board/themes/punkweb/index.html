@@ -20,6 +20,7 @@
 </div> -->
 <div class="main">
   <div class="djcontainer">
+    {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
     <a name="shoutbox"></a>
     <div class="panel">
       <div class="panel__header">
@@ -37,6 +38,7 @@
         {% endif %}
       </div>
     </div>
+    {% endif %}
   </div>
   <div class="djcontainer">
     <!-- Birthday message -->

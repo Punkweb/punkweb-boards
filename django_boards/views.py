@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from apps.board.settings import BOARD_THEME
 
-from apps.board.views import base_context
 from apps.api.models import Thread
 
 def portal_view(request):
@@ -19,5 +18,4 @@ def portal_view(request):
         'recent_threads': recent_threads[:5],
         'recent_activity': recent_activity[:5]
     }
-    context.update(base_context(request))
     return render(request, 'board/themes/{}/portal.html'.format(BOARD_THEME), context)

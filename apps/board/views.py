@@ -15,24 +15,6 @@ from .forms import (
 )
 
 
-def base_context(request):
-    ctx = {}
-    if request.user.is_authenticated and not request.user.is_banned:
-        ctx.update({
-            'notifications': request.user.notifications.all()[:5]
-        })
-        ctx.update({
-            'unread_conversations': request.user.unread_conversations.count()
-        })
-        ctx.update({
-            'unread_notifications': request.user.notifications.filter(read=False).count()
-        })
-        if request.user.is_staff:
-            unresolved_reports = Report.objects.filter(resolved=False).count()
-            ctx.update({'unresolved_reports': unresolved_reports})
-    return ctx
-
-
 def unpermitted_view(request):
     return render(
         request, 'board/themes/{}/unpermitted.html'.format(BOARD_THEME), {})
@@ -77,7 +59,6 @@ def index_view(request):
         'newest_member': newest_member,
         'member_count': member_count
     }
-    context.update(base_context(request))
     return render(
         request, 'board/themes/{}/index.html'.format(BOARD_THEME), context)
 
@@ -123,7 +104,6 @@ def keyword_search_view(request):
         'matched_posts': matched_posts,
         'keyword': keyword
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/keyword_search.html'.format(BOARD_THEME),
@@ -146,7 +126,6 @@ def registration_view(request):
     context = {
         'form': form
     }
-    context.update(base_context(request))
     return render(
         request, 'board/themes/{}/register.html'.format(BOARD_THEME), context)
 
@@ -157,7 +136,6 @@ def my_profile(request):
     if not request.user.is_authenticated or request.user.is_banned:
         return unpermitted_view(request)
     context = {}
-    context.update(base_context(request))
     return render(
         request, 'board/themes/{}/my_profile.html'.format(BOARD_THEME), context)
 
@@ -185,7 +163,6 @@ def settings_view(request):
     context = {
         'form': form
     }
-    context.update(base_context(request))
     return render(
         request, 'board/themes/{}/settings.html'.format(BOARD_THEME), context)
 
@@ -204,7 +181,6 @@ def profile_view(request, username):
     context = {
         'profile': user
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/profile_page.html'.format(BOARD_THEME),
@@ -234,7 +210,6 @@ def category_view(request, pk):
         'category': category,
         'subcategories': subcategories
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/category_view.html'.format(BOARD_THEME),
@@ -263,7 +238,6 @@ def subcategory_view(request, pk):
         'category': category,
         'threads': threads
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/subcategory_view.html'.format(BOARD_THEME),
@@ -304,7 +278,6 @@ def thread_view(request, pk):
         'posts': posts,
         'post_form': form,
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/thread_view.html'.format(BOARD_THEME),
@@ -329,7 +302,6 @@ def thread_create(request, category_id):
         'form': form,
         'subcategory': subcategory
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/thread_create_form.html'.format(BOARD_THEME),
@@ -354,7 +326,6 @@ def thread_update(request, pk):
         'form': form,
         'object': instance
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/thread_update_form.html'.format(BOARD_THEME),
@@ -375,7 +346,6 @@ def thread_delete(request, pk):
     context = {
         'object': instance
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/thread_delete_form.html'.format(BOARD_THEME),
@@ -402,7 +372,6 @@ def post_update(request, pk):
         'form': form,
         'obj': instance
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/post_update_form.html'.format(BOARD_THEME),
@@ -423,7 +392,6 @@ def post_delete(request, pk):
     context = {
         'object': instance
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/post_delete_form.html'.format(BOARD_THEME),
@@ -439,7 +407,6 @@ def conversations_list(request):
     context = {
         'conversations': conversations
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/inbox.html'.format(BOARD_THEME),
@@ -477,7 +444,6 @@ def conversation_view(request, pk):
         'messages': messages,
         'message_form': form
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/conversation_view.html'.format(BOARD_THEME),
@@ -494,7 +460,6 @@ def reports_list(request):
     context = {
         'reports': Report.objects.all()
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/reports_list.html'.format(BOARD_THEME),
@@ -518,7 +483,6 @@ def report_view(request, pk):
     context = {
         'report': Report.objects.get(id=pk)
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/report_view.html'.format(BOARD_THEME),
@@ -552,7 +516,6 @@ def report_create(request, thread=None, post=None):
     else:
         form = ReportForm(request)
     context.update({'form': form})
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/report_create_form.html'.format(BOARD_THEME),
@@ -569,7 +532,6 @@ def members_list(request):
     context = {
         'users': users
     }
-    context.update(base_context(request))
     return render(
         request,
         'board/themes/{}/members_list.html'.format(BOARD_THEME),
