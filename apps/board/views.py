@@ -41,7 +41,7 @@ def unpermitted_view(request):
 def index_view(request):
     total_posts = Post.objects.all().count()
     total_threads = Thread.objects.all().count()
-    last_25_shouts = Shout.objects.all().select_related()[:25]
+    last_25_shouts = Shout.objects.all()[:25]
 
     category_groups = []
     parent_categories = Category.objects.all().order_by('order')

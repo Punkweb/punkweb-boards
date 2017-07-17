@@ -203,7 +203,7 @@ class Category(UUIDPrimaryKey):
 
     @property
     def subcategories(self):
-        return Subcategory.objects.filter(parent__id=self.id).select_related()
+        return Subcategory.objects.filter(parent__id=self.id)
 
     def get_absolute_url(self):
         return reverse('board:category', kwargs={'pk': self.id})
@@ -249,7 +249,7 @@ class Subcategory(UUIDPrimaryKey):
     @property
     def threads(self):
         return Thread.objects.filter(
-            category__id=self.id).select_related()
+            category__id=self.id)
 
     @property
     def thread_count(self):
@@ -258,7 +258,7 @@ class Subcategory(UUIDPrimaryKey):
     @property
     def posts(self):
         return Post.objects.filter(
-            thread__category__id=self.id).select_related()
+            thread__category__id=self.id)
 
     @property
     def post_count(self):
@@ -387,7 +387,7 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
 
     # @property
     # def messages(self):
-    #     return Message.objects.filter(conversation__id=self.id).select_related()
+    #     return Message.objects.filter(conversation__id=self.id)
 
     @property
     def message_count(self):
