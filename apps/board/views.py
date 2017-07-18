@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 
-from .settings import BOARD_THEME
+from .settings import BOARD_THEME, SIGNATURES_ENABLED
 from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
     Message, Notification, Shout)
@@ -153,7 +153,7 @@ def settings_view(request):
                 request.user.gender = form.cleaned_data['gender']
             if form.cleaned_data['birthday']:
                 request.user.birthday = form.cleaned_data['birthday']
-            if form.cleaned_data['signature']:
+            if form.cleaned_data['signature'] and SIGNATURES_ENABLED:
                 request.user.signature = form.cleaned_data['signature']
             request.user.save()
             return redirect('/board/me/')

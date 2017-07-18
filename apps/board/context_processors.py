@@ -1,4 +1,4 @@
-from .settings import BOARD_THEME, SHOUTBOX_ENABLED
+from .settings import BOARD_THEME, SHOUTBOX_ENABLED, SIGNATURES_ENABLED
 from apps.api.models import Report
 
 
@@ -6,7 +6,8 @@ def settings(request):
     return {
         'BOARD_SETTINGS': {
             'BOARD_THEME': BOARD_THEME,
-            'SHOUTBOX_ENABLED': SHOUTBOX_ENABLED
+            'SHOUTBOX_ENABLED': SHOUTBOX_ENABLED,
+            'SIGNATURES_ENABLED': SIGNATURES_ENABLED
         }
     }
 

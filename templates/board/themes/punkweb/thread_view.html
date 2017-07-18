@@ -77,7 +77,7 @@
               </div>
               {% endif %}
             </div>
-            {% if thread.user.signature.rendered %}
+            {% if thread.user.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
             <div class="thread__signature">
               {{thread.user.signature.rendered}}
             </div>
@@ -128,7 +128,7 @@
               </div>
               {% endif %}
             </div>
-            {% if post.user.signature.rendered %}
+            {% if post.user.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
             <div class="thread__signature">
               {{post.user.signature.rendered}}
             </div>

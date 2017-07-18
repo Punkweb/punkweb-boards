@@ -66,7 +66,7 @@
           <p>This thread has open reports.</p>
         </div>
         {% endif %}
-        {% if thread.user.signature.rendered %}
+        {% if thread.user.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
         <hr>
         <div class="row">
           <div class="col-xs-12">
@@ -117,7 +117,7 @@
           <p>This post has open reports.</p>
         </div>
         {% endif %}
-        {% if post.user.signature.rendered %}
+        {% if post.user.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
         <hr>
         <div class="row">
           <div class="col-xs-12">

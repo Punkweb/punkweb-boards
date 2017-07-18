@@ -39,12 +39,14 @@
 
     <br>
 
+    {% if BOARD_SETTINGS.SIGNATURES_ENABLED %}
     <h4>Signature</h4>
     <p>
       {{profile.signature.rendered}}
     </p>
 
     <br>
+    {% endif %}
 
     <h4>Threads</h4>
     <table class="table">
