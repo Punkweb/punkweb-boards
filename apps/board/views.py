@@ -153,7 +153,7 @@ def settings_view(request):
                 request.user.gender = form.cleaned_data['gender']
             if form.cleaned_data['birthday']:
                 request.user.birthday = form.cleaned_data['birthday']
-            if form.cleaned_data['signature'] and SIGNATURES_ENABLED:
+            if SIGNATURES_ENABLED and form.cleaned_data['signature']:
                 request.user.signature = form.cleaned_data['signature']
             request.user.save()
             return redirect('/board/me/')

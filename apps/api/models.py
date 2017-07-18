@@ -14,6 +14,7 @@ from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
 
+from apps.board import settings as BOARD_SETTINGS
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
 
 
@@ -174,6 +175,16 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
         if match:
             return True
         return False
+
+    @property
+    def can_shout(self):
+        if not BOARD_SETTINGS.SHOUTBOX_ENABLED:
+            return False
+        if BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS:
+            has_post_req = self.post_count >= BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS_REQ
+            if not has_post_req:
+                return False
+        return True
 
     def get_absolute_url(self):
         return reverse('board:profile', self.username)

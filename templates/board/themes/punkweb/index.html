@@ -28,7 +28,7 @@
       </div>
       <div class="panel__body">
         <div id="shoutBox" class="shoutList"></div>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user.can_shout %}
         <form>
           <p id="shoutboxError"></p>
           <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
