@@ -73,7 +73,7 @@ class ReportViewSet(viewsets.ModelViewSet):
 
 
 class ShoutViewSet(viewsets.ModelViewSet):
-    queryset = Shout.objects.all()
+    queryset = Shout.objects.all()[:25]
     serializer_class = ShoutSerializer
 
     def perform_create(self, serializer):

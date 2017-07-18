@@ -185,11 +185,10 @@ a:link, a:visited {
     text-decoration: underline; }
 
 .spoiler__content {
-  display: none;
-  padding: 1rem;
-  background-color: #0f1011; }
-  .spoiler__content--show {
-    display: block; }
+  background-color: #0f1011;
+  visibility: hidden;
+  height: 0;
+  padding: 1rem; }
 
 .spoiler__open {
   cursor: pointer; }
@@ -615,7 +614,7 @@ input[type="text"], input[type="password"], textarea {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 1rem; }
+    padding: .5rem; }
   .shoutList .shout:not(:last-of-type) {
     border-bottom: 1px solid #282c30; }
 

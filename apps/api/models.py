@@ -189,6 +189,18 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
     def get_absolute_url(self):
         return reverse('board:profile', self.username)
 
+# TODO: Think of a way to do username modification based on rank
+# class UserRank(models.Model):
+#     title = models.CharField(max_length=96, blank=False, null=False, unique=True)
+#     description = models.TextField(max_length=256, blank=True, null=True)
+#     order = models.IntegerField(help_text='Where this rank ranks among the other ranks')
+#     username_modifier = BBCodeTextField()
+#
+#     class Meta:
+#         ordering = ('order',)
+#
+#     def __str__(self):
+#         return ''
 
 class Category(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False, unique=True)

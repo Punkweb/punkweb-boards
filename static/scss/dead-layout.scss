@@ -24,17 +24,16 @@ a:link, a:visited {
 
 .spoiler {
   &__content {
-    display: none;
-    padding: 1rem;
     background-color: $body-background;
-    &--show {
-      display: block;
-    }
+    visibility: hidden;
+    height: 0;
+    padding: 1rem;
   }
   &__open {
     cursor: pointer;
   }
 }
+
 
 .nav {
   width: 100%;
@@ -446,7 +445,7 @@ input[type="text"], input[type="password"], textarea {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 1rem;
+    padding: .5rem;
   }
   .shout:not(:last-of-type) {
     border-bottom: 1px solid $hr;
