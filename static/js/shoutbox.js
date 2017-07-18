@@ -50,7 +50,7 @@ $(function() {
 
     var editor = $('#shoutEditor').sceditor({
       plugins: 'bbcode',
-      toolbar: 'bold,italic,underline,strike|font,size,color,link,image,emoticon|date,time|source,maximize,removeformat',
+      toolbar: 'bold,italic,underline,strike|font,size,color,link,emoticon|date,time|source,removeformat',
       style: '/static/scss/_editor.min.css',
       fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
       autoExpand: true,
@@ -102,6 +102,9 @@ $(function() {
     }
 
     function postShout(shout) {
+      if (!shout) {
+        return;
+      }
       $.ajax({
         type: 'POST',
         url: '/api/shouts/',
@@ -110,6 +113,12 @@ $(function() {
         },
         success: function(data) {
           getShouts();
+        },
+        error: function(err) {
+          var errMsg = err.responseJSON;
+          if (errMsg.notAllowed) {
+            $('#shoutboxError').text(errMsg.notAllowed).css('color', 'red');
+          }
         }
       });
     }
