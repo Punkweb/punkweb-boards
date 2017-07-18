@@ -19,35 +19,12 @@
   </div>
 </div> -->
 <div class="main">
+  {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
+  {% include './components/shoutbox/shoutbox.html' %}
+  {% endif %}
   <div class="djcontainer">
-    {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
-    <a name="shoutbox"></a>
-    <div class="panel">
-      <div class="panel__header">
-        <div class="panel__title">Shoutbox</div>
-      </div>
-      <div class="panel__body">
-        <div id="shoutBox" class="shoutList"></div>
-        {% if user.is_authenticated and user.can_shout %}
-        <form>
-          <p id="shoutboxError"></p>
-          <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
-          <input id="submitShout" type="button" name="name" value="Post Shout">
-          <input id="reloadShouts" type="button" name="name" value="Reload Shouts">
-        </form>
-        {% endif %}
-      </div>
-    </div>
-    {% endif %}
-  </div>
-  <div class="djcontainer">
-    <!-- Birthday message -->
-    {% if user.birthday_today %}
-    <p>
-      <i class="fa fa-birthday-cake" aria-hidden="true"></i>
-      Happy Birthday!
-      <i class="fa fa-birthday-cake" aria-hidden="true"></i>
-    </p>
+    {% if BOARD_SETTINGS.USER_BIRTHDAY_MESSAGE %}
+    {% include './components/birthday/birthday.html' %}
     {% endif %}
     <div class="flexrow">
       <div class="flexcol" style="flex: 3;">
@@ -109,8 +86,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block extrascript %}
-<script src="{% static 'js/shoutbox.js' %}"></script>
 {% endblock %}

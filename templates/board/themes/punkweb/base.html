@@ -7,23 +7,16 @@
 
     <title>Forum | {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
     <!-- Enables 'Add to Homescreen' for Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="{% static 'img/icons/steal_your_face_mayan.png' %}">
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'sceditor/minified/themes/monocons.min.css' %}" />
-
     <!-- Use in production -->
-
     <!-- <link href="{% static 'scss/dead.min.css' %}" rel="stylesheet" type="text/css" /> -->
-
     <!-- Use in development -->
-
     <link href="{% sass_src 'scss/dead.scss' %}" rel="stylesheet" type="text/css" />
-
   </head>
   <body>
     <div class="page-wrap">
@@ -101,17 +94,12 @@
     </footer>
   </body>
   <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-
   <!-- Use in production -->
-
   <!-- <script src="{% static 'js/bundle.min.js' %}"></script> -->
-
   <!-- Use in development -->
-
   <script src="{% static 'js/run_prettify.js' %}"></script>
   <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
   <script src="{% static 'js/spoiler.js' %}"></script>
   <script src="{% static 'js/editor_config.js' %}"></script>
-
   {% block extrascript %}{% endblock %}
 </html>

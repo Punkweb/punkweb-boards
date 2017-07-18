@@ -184,13 +184,15 @@ a:link, a:visited {
   a:link:hover, a:link :active, a:visited:hover, a:visited :active {
     text-decoration: underline; }
 
-.spoiler__open {
-  margin-bottom: 1rem; }
-
 .spoiler__content {
   display: none;
   padding: 1rem;
   background-color: #0f1011; }
+  .spoiler__content--show {
+    display: block; }
+
+.spoiler__open {
+  cursor: pointer; }
 
 .nav {
   width: 100%; }
@@ -606,6 +608,7 @@ input[type="text"], input[type="password"], textarea {
       margin-left: 1rem; }
 
 .shoutList {
+  min-height: 300px;
   max-height: 300px;
   overflow: auto; }
   .shoutList .shout {

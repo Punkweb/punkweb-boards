@@ -23,13 +23,16 @@ a:link, a:visited {
 }
 
 .spoiler {
-  &__open {
-    margin-bottom: 1rem;
-  }
   &__content {
     display: none;
     padding: 1rem;
     background-color: $body-background;
+    &--show {
+      display: block;
+    }
+  }
+  &__open {
+    cursor: pointer;
   }
 }
 
@@ -436,6 +439,7 @@ input[type="text"], input[type="password"], textarea {
 }
 
 .shoutList {
+  min-height: 300px;
   max-height: 300px;
   overflow: auto;
   .shout {
