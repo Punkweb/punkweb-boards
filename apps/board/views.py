@@ -528,7 +528,7 @@ def members_list(request):
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.is_banned:
         return redirect('board:unpermitted')
-    users = EmailUser.objects.order_by('username')
+    users = EmailUser.objects.filter(is_banned=False).order_by('username')
     context = {
         'users': users
     }
