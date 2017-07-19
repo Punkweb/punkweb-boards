@@ -26,14 +26,14 @@
           <br />
           {{thread.created}}
         </p>
-        <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a></p>
+        <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username|safe}}</a></p>
       </td>
       <td class="align-center">
         <p>{{thread.posts_count}}</p>
       </td>
       <td class="align-right hidden-xs">
         {% if thread.last_post %}
-        <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
+        <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username|safe}}</a></p>
         <p>{{thread.last_post.created}}</p>
         {% else %}
         <p>No Posts</p>

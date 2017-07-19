@@ -1,20 +1,20 @@
 {% extends './base.html' %}
 {% load static %}
 
-{% block title %}{{profile.username}}{% endblock %}
+{% block title %}Members | {{profile.username}}{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
   <div class="djcontainer">
     <div class="pageHeader__flex">
       <div class="pageHeader__left">
-        <div class="pageHeader__title">{{profile.username}}</div>
+        <div class="pageHeader__title">{{profile.rendered_username|safe}}</div>
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
           <li><a href="{% url 'board:index' %}">Forum</a></li>
           <li><a href="{% url 'board:members-list' %}">Members</a></li>
-          <li>{{profile.username}}</li>
+          <li>{{profile.rendered_username|safe}}</li>
         </ul>
       </div>
     </div>
@@ -26,7 +26,7 @@
       <div class="panel__body padding">
         <center>
           <img src="{{profile.avatar}}">
-          <h2>{{profile.username}}</h2>
+          <h2>{{profile.rendered_username|safe}}</h2>
         </center>
         <br>
 
@@ -97,7 +97,7 @@
               </td>
               <td class="align-right hidden-xs">
                 {% if thread.last_post %}
-                <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
+                <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username|safe}}</a></p>
                 <p>{{thread.last_post.created}}</p>
                 {% else %}
                 <p>No Posts</p>

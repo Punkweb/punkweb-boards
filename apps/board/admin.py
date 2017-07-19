@@ -1,7 +1,7 @@
 from django.contrib import admin
 from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Shout, Conversation,
-    Message, Report, Notification)
+    Message, Report, Notification, UserRank)
 
 
 class SubcategoryInline(admin.TabularInline):
@@ -44,7 +44,13 @@ class ConversationAdmin(admin.ModelAdmin):
     ordering = ('created',)
 
 
+class UserRankAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    ordering = ('order',)
+
+
 admin.site.register(EmailUser)
+admin.site.register(UserRank, UserRankAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)
 admin.site.register(Conversation, ConversationAdmin)

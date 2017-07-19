@@ -13,6 +13,7 @@ from django.urls import reverse
 from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
+from precise_bbcode.bbcode import get_parser
 
 from apps.board import settings as BOARD_SETTINGS
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
@@ -129,6 +130,13 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     is_banned = models.BooleanField(default=False)
 
+    user_rank = models.ForeignKey('UserRank', blank=True, null=True)
+    username_modifier = models.CharField(
+        max_length=120, blank=True, null=True,
+        help_text="BBCode. Just add {USER} where " \
+                  "you want the username to be placed at. " \
+                  "Setting this will override the UserRank modification")
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -186,28 +194,49 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
                 return False
         return True
 
+    @property
+    def rendered_username(self):
+        # Returns the username rendered in bbcode defined by the users rank.
+        parser = get_parser()
+        if self.is_banned:
+            return parser.render('BANNED')
+        if self.username_modifier:
+            modifier = self.username_modifier
+            replace_username = modifier.replace('{USER}', self.username)
+            return parser.render(replace_username)
+        elif self.user_rank and self.user_rank.username_modifier:
+            modifier = self.user_rank.username_modifier
+            replace_username = modifier.replace('{USER}', self.username)
+            return parser.render(replace_username)
+        else:
+            return self.username
+
     def get_absolute_url(self):
         return reverse('board:profile', self.username)
 
-# TODO: Think of a way to do username modification based on rank
-# class UserRank(models.Model):
-#     title = models.CharField(max_length=96, blank=False, null=False, unique=True)
-#     description = models.TextField(max_length=256, blank=True, null=True)
-#     order = models.IntegerField(help_text='Where this rank ranks among the other ranks')
-#     username_modifier = BBCodeTextField()
-#
-#     class Meta:
-#         ordering = ('order',)
-#
-#     def __str__(self):
-#         return ''
+
+class UserRank(models.Model):
+    title = models.CharField(max_length=96, blank=False, null=False, unique=True)
+    description = models.TextField(max_length=256, blank=True, null=True)
+    order = models.IntegerField(
+        help_text='Where this rank ranks among the other ranks')
+    username_modifier = models.CharField(
+        max_length=120, blank=True, null=True,
+        help_text="BBCode. Just add {USER} where "\
+                  "you want the username to be placed at.")
+
+    class Meta:
+        ordering = ('order',)
+
+    def __str__(self):
+        return self.title
 
 class Category(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False, unique=True)
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
-    auth_req = models.BooleanField(default=False,
-                                   help_text='Can only logged in users view this category?')
+    auth_req = models.BooleanField(
+        default=False, help_text='Can only logged in users view this category?')
 
     class Meta:
         verbose_name = 'category'

@@ -40,7 +40,7 @@
                 {{conversation.created}}
               </td>
               <td class="align-left">
-                {{conversation.last_message.user}}
+                {{conversation.last_message.user.rendered_username|safe}}
               </td>
             </tr>
             {% endfor %}

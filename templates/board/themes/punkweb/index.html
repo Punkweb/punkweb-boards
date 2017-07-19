@@ -78,7 +78,7 @@
               <li style="display: inline">Total posts {{total_posts}} •</li>
               <li style="display: inline">Total threads {{total_threads}} •</li>
               <li style="display: inline">Total members {{member_count}} •</li>
-              <li style="display: inline">Newest member <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.username}}</a></li>
+              <li style="display: inline">Newest member <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.rendered_username|safe}}</a></li>
             </ul>
           </div>
         </div>
