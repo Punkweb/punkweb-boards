@@ -394,6 +394,13 @@ input[type="text"], input[type="password"], textarea {
   }
 }
 
+.profile {
+  &__tables {
+    max-height: 600px;
+    overflow: auto;
+  }
+}
+
 
 .thread {
   display: flex;
