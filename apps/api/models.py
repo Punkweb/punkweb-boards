@@ -200,14 +200,15 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
     @property
     def rendered_username(self):
         # Returns the username rendered in bbcode defined by the users rank.
+        a = BOARD_SETTINGS.USERNAME_MODIFIERS_ENABLED
         parser = get_parser()
         if self.is_banned:
-            return parser.render('BANNED')
-        if self.username_modifier:
+            return 'BANNED'
+        if a and self.username_modifier:
             modifier = self.username_modifier
             replace_username = modifier.replace('{USER}', self.username)
             return parser.render(replace_username)
-        elif self.user_rank and self.user_rank.username_modifier:
+        elif a and self.user_rank and self.user_rank.username_modifier:
             modifier = self.user_rank.username_modifier
             replace_username = modifier.replace('{USER}', self.username)
             return parser.render(replace_username)

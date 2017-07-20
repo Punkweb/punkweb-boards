@@ -16,3 +16,9 @@ SHOUTBOX_DEFAULT_CLOSED = True
 SHOUTBOX_DISABLED_TAGS = [
     'img', 'hr', 'ol', 'ul', 'li', 'youtube'
 ]
+
+USERNAME_MODIFIERS_ENABLED = True
+# TODO: Make disabled tags work
+USERNAME_MODIFIERS_DISABLED_TAGS = [
+    'img', 'hr', 'ol', 'ul', 'li', 'youtube'
+]
