@@ -10,8 +10,8 @@ SIZE TAG
 
 USER LINK TAG
 
-  [user={TEXT1}]{TEXT2}[/user]
-  <a href="/board/profile/{TEXT1}/"><i class="fa fa-user" aria-hidden="true"></i> {TEXT2}</a>
+  [user={TEXT}]
+  <a href="/board/profile/{TEXT}/"><i class="fa fa-user" aria-hidden="true"></i> {TEXT}</a>
 
 CODE TAG
 

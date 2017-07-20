@@ -9,6 +9,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -17,6 +19,7 @@ from precise_bbcode.bbcode import get_parser
 
 from apps.board import settings as BOARD_SETTINGS
 from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
+from . import utils
 
 
 def get_placeholder_url():
@@ -532,3 +535,25 @@ class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
 
     def __str__(self):
         return self.text
+
+
+@receiver(post_save, sender=Thread)
+@receiver(post_save, sender=Post)
+def thread_notifications(sender, instance, created, **kwargs):
+    if created:
+        content = str(instance.content)
+        tagged_users = utils.tagged_usernames(content)
+        for user in tagged_users:
+            try:
+                user_obj = EmailUser.objects.get(username=user)
+            except Exception as e:
+                user_obj = None
+            if user_obj:
+                notification = Notification(
+                    user=user_obj,
+                    text='{} tagged you in a thread.'.format(
+                        instance.user.username),
+                    link=instance.get_absolute_url(),
+                    read=False
+                )
+                notification.save()
