@@ -133,12 +133,14 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     is_banned = models.BooleanField(default=False)
 
-    user_rank = models.ForeignKey('UserRank', blank=True, null=True)
+    rank = models.ForeignKey('UserRank', blank=True, null=True)
     username_modifier = models.CharField(
         max_length=120, blank=True, null=True,
         help_text="BBCode. Just add {USER} where " \
                   "you want the username to be placed at. " \
                   "Setting this will override the UserRank modification")
+
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -208,8 +210,8 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
             modifier = self.username_modifier
             replace_username = modifier.replace('{USER}', self.username)
             return parser.render(replace_username)
-        elif a and self.user_rank and self.user_rank.username_modifier:
-            modifier = self.user_rank.username_modifier
+        elif a and self.rank and self.rank.username_modifier:
+            modifier = self.rank.username_modifier
             replace_username = modifier.replace('{USER}', self.username)
             return parser.render(replace_username)
         else:
