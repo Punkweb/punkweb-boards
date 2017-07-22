@@ -1,7 +1,17 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from apps.board.settings import SHOUTBOX_DISABLED_TAGS
 from .models import Category, Subcategory, Thread, Post, \
     Conversation, Message, Report, Shout
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        exclude = ('password', 'groups', 'user_permissions',)
+        read_only_fields = (
+            'last_login', 'is_superuser', 'created', 'modified', 'email',
+            'is_banned', 'username_modifier', 'rank', )
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -37,12 +47,6 @@ class ConversationSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = '__all__'
-
-
-class ReportSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Report
         fields = '__all__'
 
 

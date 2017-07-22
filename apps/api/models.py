@@ -6,9 +6,10 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
-    PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser, BaseUserManager, PermissionsMixin)
 from django.db import models
+from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
@@ -18,7 +19,8 @@ from precise_bbcode.fields import BBCodeTextField
 from precise_bbcode.bbcode import get_parser
 
 from apps.board import settings as BOARD_SETTINGS
-from apps.common.models import CreatedModifiedMixin, UUIDPrimaryKey
+from apps.common.models import (
+    CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin)
 from . import utils
 
 
@@ -97,6 +99,7 @@ class AvatarImagesMixin(models.Model):
         else:
             return self.image['avatar_smallest'].url
 
+
     class Meta:
         abstract = True
 
@@ -139,8 +142,6 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
         help_text="BBCode. Just add {USER} where " \
                   "you want the username to be placed at. " \
                   "Setting this will override the UserRank modification")
-
-
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -330,7 +331,7 @@ class Subcategory(UUIDPrimaryKey):
         return reverse('board:subcategory', kwargs={'pk': self.id})
 
 
-class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
+class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name='threads', blank=False, null=False)
     category = models.ForeignKey(Subcategory, blank=False, null=False)
@@ -396,7 +397,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey):
         return reverse('board:thread', kwargs={'pk': self.id})
 
 
-class Post(CreatedModifiedMixin, UUIDPrimaryKey):
+class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='posts', blank=False, null=False)
     thread = models.ForeignKey(
