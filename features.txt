@@ -14,19 +14,24 @@ Gravatar user images support
 Default bootstrap3 theme
 Alternate theme support
 Report threads/posts to admins
-Audio/playlist streaming
 PostgreSQL database backend
-REST API for integration (django-rest-framework)
+REST API for plugins and integration (django-rest-framework)
 Ban users
 Pinned threads
 Thumbnailing support (easy-thumbnails)
 SCSS processor (django-sass-processor)
+Admin configurable user ranks
+Board settings module for fully customizable features and restrictions
+Notifications
+Profile settings
+Keyword searching (find threads, posts, and users)
+Fully responsive design (4k, desktop, tablet and mobile)
 
 
 Future
 
 Polls
 Moderators
-Admin configurable user ranks
-Reputation of some sort
-Notifications
+Upvotes/Downvotes
+"What's New" section
+Improved content searching
