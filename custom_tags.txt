@@ -47,3 +47,9 @@ HR TAG (standalone)
 
   [hr]
   <hr/>
+
+
+SHADOW TAG
+
+  [shadow={TEXT1}]{TEXT2}[/shadow]
+  <span style="text-shadow: 0px 0px 1em {TEXT1}">{TEXT2}</span>
