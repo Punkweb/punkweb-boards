@@ -52,12 +52,13 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class ShoutSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
+    rendered_username = serializers.ReadOnlyField(source='user.rendered_username')
 
     class Meta:
         model = Shout
         fields = (
-            'id', 'user', 'username', 'content', '_content_rendered', 'created',
-            'modified')
+            'id', 'user', 'username', 'rendered_username', 'content',
+            '_content_rendered', 'created', 'modified')
         read_only_fields = ('user', )
 
     def create(self, validated_data):

@@ -86,7 +86,7 @@ $(function() {
     function shoutLine(shout) {
       var date = new Date(shout.created);
       var dateStr = new Date(date.getTime()).toLocaleTimeString();
-      return $.parseHTML('<div class="shout">' + dateStr + ' - ' + shout.username + ': ' + shout._content_rendered + '</div>');
+      return $.parseHTML('<div class="shout">' + dateStr + ' - ' + shout.rendered_username + ': ' + shout._content_rendered + '</div>');
     }
 
     function getShouts() {
