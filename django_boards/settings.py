@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'apps.api',
     'apps.common',
     'apps.board',
-    'apps.music',
 ]
 
 if BOARD_THEME == 'bootstrap3':
@@ -171,7 +170,6 @@ if BOARD_THEME == 'bootstrap3':
 
 THUMBNAIL_ALIASES = {
     '': {
-        'music_thumbnail': {'size': (300, 300), 'crop': True},
         'avatar': {'size': (200, 200), 'crop': True},
         'avatar_small': {'size': (100, 100), 'crop': True},
         'avatar_smaller': {'size': (50, 50), 'crop': True},
