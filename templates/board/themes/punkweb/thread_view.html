@@ -64,7 +64,13 @@
             <div class="thread__user__name">
               <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username|safe}}</a>
             </div>
+            <div class="thread__user__rank">
+              {{thread.user.rank|default_if_none:"Rookie"}}
+            </div>
             <div class="thread__user__posts">Posts: {{thread.user.post_count}}</div>
+            <div class="thread__user__membersince">
+              Join date: {{thread.user.created|date:'m/d/y'}}
+            </div>
           </div>
           <div class="thread__body">
             <div class="thread__content">
@@ -115,7 +121,13 @@
             <div class="thread__user__name">
               <a href="{% url 'board:profile' post.user.username %}">{{post.user.rendered_username|safe}}</a>
             </div>
+            <div class="thread__user__rank">
+              {{post.user.rank|default_if_none:"Rookie"}}
+            </div>
             <div class="thread__user__posts">Posts: {{post.user.post_count}}</div>
+            <div class="thread__user__membersince">
+              Join date: {{post.user.created|date:'m/d/y'}}
+            </div>
           </div>
           <div class="thread__body">
             <div class="thread__content">
