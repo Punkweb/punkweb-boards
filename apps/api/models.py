@@ -136,8 +136,8 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
     is_banned = models.BooleanField(default=False)
 
     rank = models.ForeignKey('UserRank', blank=True, null=True)
-    username_modifier = models.CharField(
-        max_length=120, blank=True, null=True,
+    username_modifier = models.TextField(
+        max_length=250, blank=True, null=True,
         help_text="BBCode. Just add {USER} where " \
                   "you want the username to be placed at. " \
                   "Setting this will override the UserRank modification")
@@ -212,8 +212,8 @@ class UserRank(models.Model):
     description = models.TextField(max_length=256, blank=True, null=True)
     order = models.IntegerField(
         help_text='Where this rank ranks among the other ranks')
-    username_modifier = models.CharField(
-        max_length=120, blank=True, null=True,
+    username_modifier = models.TextField(
+        max_length=250, blank=True, null=True,
         help_text="BBCode. Just add {USER} where "\
                   "you want the username to be placed at.")
 

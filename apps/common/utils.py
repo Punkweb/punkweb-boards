@@ -1,5 +1,6 @@
-from apps.board import settings as BOARD_SETTINGS
+from django.utils.safestring import mark_safe
 from precise_bbcode.bbcode import get_parser
+from apps.board import settings as BOARD_SETTINGS
 
 def tagged_usernames(content):
     usernames = []
@@ -13,7 +14,8 @@ def tagged_usernames(content):
 
 def render_example_username(rank, username):
     parser = get_parser()
-    return parser.render(rank.username_modifier.replace('{USER}', username))
+    return mark_safe(
+        parser.render(rank.username_modifier.replace('{USER}', username)))
 
 def render_username(user):
     # Returns the username rendered in bbcode defined by the users rank.
@@ -24,10 +26,10 @@ def render_username(user):
     if a and user.username_modifier:
         modifier = user.username_modifier
         replace_username = modifier.replace('{USER}', user.username)
-        return parser.render(replace_username)
+        return mark_safe(parser.render(replace_username))
     elif a and user.rank and user.rank.username_modifier:
         modifier = user.rank.username_modifier
         replace_username = modifier.replace('{USER}', user.username)
-        return parser.render(replace_username)
+        return mark_safe(parser.render(replace_username))
     else:
         return user.username

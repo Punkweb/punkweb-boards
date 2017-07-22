@@ -29,7 +29,7 @@
       <div class="panel__body">
         <div class="padding">
           {% for message in messages %}
-          <a href="{% url 'board:profile' message.user.username %}">{{message.user.rendered_username|safe}}</a>
+          <a href="{% url 'board:profile' message.user.username %}">{{message.user.rendered_username}}</a>
           <p>
             {{message.content.rendered}}
           </p>

@@ -28,7 +28,7 @@
       </div>
       <div class="panel__body padding">
         {% for item in matched_users %}
-        <a href="{% url 'board:profile' item.username %}">{{item.rendered_username|safe}}</a>
+        <a href="{% url 'board:profile' item.username %}">{{item.rendered_username}}</a>
         <br>
         {% endfor %}
       </div>

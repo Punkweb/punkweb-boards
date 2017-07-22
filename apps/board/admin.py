@@ -47,6 +47,9 @@ class ConversationAdmin(admin.ModelAdmin):
 class UserRankAdmin(admin.ModelAdmin):
     list_display = ('title',)
     ordering = ('order',)
+    fields = (
+        'title', 'description', 'order', 'username_modifier', 'example_name')
+    readonly_fields = ('example_name',)
 
 
 admin.site.register(EmailUser)

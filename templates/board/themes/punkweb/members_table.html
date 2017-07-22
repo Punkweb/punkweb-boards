@@ -20,12 +20,12 @@
     <tr>
       <td>
         <!-- <img src="{{user.avatar_smallest}}" alt="..." /> -->
-        <a href="{% url 'board:profile' user.username %}">{{user.rendered_username|safe}}</a>
+        <a href="{% url 'board:profile' user.username %}">{{user.rendered_username}}</a>
       </td>
       <!-- TODO: Replace with actual rank -->
       <td class="align-right">
         {% if user.rank %}
-          {{user.rank.example_name|safe}}
+          {{user.rank.example_name}}
         {% else %}
           Rookie
         {% endif %}

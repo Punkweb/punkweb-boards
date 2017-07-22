@@ -62,7 +62,7 @@
               <img src="{{thread.user.avatar_small}}" alt="..." />
             </a>
             <div class="thread__user__name">
-              <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username|safe}}</a>
+              <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a>
             </div>
             <div class="thread__user__rank">
               {{thread.user.rank|default_if_none:"Rookie"}}
@@ -119,7 +119,7 @@
               <img src="{{post.user.avatar_small}}" alt="..." />
             </a>
             <div class="thread__user__name">
-              <a href="{% url 'board:profile' post.user.username %}">{{post.user.rendered_username|safe}}</a>
+              <a href="{% url 'board:profile' post.user.username %}">{{post.user.rendered_username}}</a>
             </div>
             <div class="thread__user__rank">
               {{post.user.rank|default_if_none:"Rookie"}}
