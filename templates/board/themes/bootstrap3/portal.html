@@ -26,7 +26,7 @@
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
             </td>
             <td>
-              <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
+              <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a>
             </td>
           </tr>
         {% endfor %}
@@ -53,7 +53,7 @@
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
             </td>
             <td>
-              <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
+              <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a>
             </td>
           </tr>
         {% endfor %}

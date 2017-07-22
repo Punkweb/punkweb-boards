@@ -52,7 +52,7 @@
         <a href="{% url 'board:profile' thread.user.username %}">
           <img src="{{thread.user.avatar_smaller}}" alt="..." />
         </a>
-        <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}}</a>
+        <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a>
         <hr />
       </div>
       <div class="col-xs-12">
@@ -103,7 +103,7 @@
     <div class="row">
       <div class="col-xs-12">
         <a href="{% url 'board:profile' post.user.username %}"><img src="{{post.user.avatar_smaller}}" alt="..." /></a>
-        <a href="{% url 'board:profile' post.user.username %}">{{post.user.username}}</a>
+        <a href="{% url 'board:profile' post.user.username %}">{{post.user.rendered_username}}</a>
         <hr />
       </div>
       <div class="col-xs-12">

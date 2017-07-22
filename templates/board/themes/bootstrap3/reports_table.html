@@ -24,7 +24,7 @@
       <a href="{% url 'board:report' report.id %}">View</a>
     </td>
     <td class="align-left">
-      <a href="{% url 'board:profile' report.reporting_user.username %}">{{report.reporting_user.username}}</a>
+      <a href="{% url 'board:profile' report.reporting_user.username %}">{{report.reporting_user.rendered_username}}</a>
     </td>
     <td class="align-left">
       {% if report.thread %}

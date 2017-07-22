@@ -78,7 +78,7 @@
               {% if thread.reported and user.is_authenticated and user.is_staff %}
               <div style="margin: 1rem">
                 <blockquote>
-                  <p>This thread has open reports.</p>
+                  <div>This thread has open reports.</div>
                 </blockquote>
               </div>
               {% endif %}
@@ -135,7 +135,7 @@
               {% if post.reported and user.is_authenticated and user.is_staff %}
               <div style="margin: 1rem">
                 <blockquote>
-                  <p>This post has open reports.</p>
+                  <div>This post has open reports.</div>
                 </blockquote>
               </div>
               {% endif %}

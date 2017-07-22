@@ -30,9 +30,9 @@
         <div class="padding">
           {% for message in messages %}
           <a href="{% url 'board:profile' message.user.username %}">{{message.user.rendered_username}}</a>
-          <p>
+          <div>
             {{message.content.rendered}}
-          </p>
+          </div>
           {% endfor %}
         </div>
       </div>

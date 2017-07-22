@@ -30,35 +30,35 @@
         <br>
 
         <h4>Email</h4>
-        <p>{{user.email}}</p>
+        <div>{{user.email}}</div>
 
         <br>
 
         <h4>Gender</h4>
-        <p>
+        <div>
           {{user.gender}}
-        </p>
+        </div>
 
         <br>
 
         <h4>Birth date</h4>
-        <p>
+        <div>
           {{user.birthday|date:'m/d/Y'}} ({{user.age}})
-        </p>
+        </div>
 
         <br>
 
         <h4>Post Count</h4>
-        <p>
+        <div>
           {{user.post_count}}
-        </p>
+        </div>
 
         <br>
         {% if BOARD_SETTINGS.SIGNATURES_ENABLED %}
         <h4>Signature</h4>
-        <p>
+        <div>
           {{user.signature.rendered}}
-        </p>
+        </div>
 
         <br>
         {% endif %}
@@ -83,24 +83,24 @@
               {% for thread in user.threads.all %}
               <tr>
                 <td class="align-left">
-                  <p>
+                  <div>
                     <a href="{% url 'board:thread' thread.id %}">
                       {{thread.title}}
                     </a>
-                  </p>
-                  <p>
+                  </div>
+                  <div>
                     {{thread.created}}
-                  </p>
+                  </div>
                 </td>
                 <td class="align-center">
-                  <p>{{thread.posts_count}}</p>
+                  <div>{{thread.posts_count}}</div>
                 </td>
                 <td class="align-right hide-on-mobile">
                   {% if thread.last_post %}
-                  <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}}</a></p>
-                  <p>{{thread.last_post.created}}</p>
+                  <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}}</a></div>
+                  <div>{{thread.last_post.created}}</div>
                   {% else %}
-                  <p>No Posts</p>
+                  <div>No Posts</div>
                   {% endif %}
                 </td>
               </tr>

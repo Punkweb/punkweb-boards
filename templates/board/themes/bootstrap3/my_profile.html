@@ -15,7 +15,7 @@
 <div class="panel panel-primary">
   <div class="panel-body">
     <img src="{{user.avatar}}">
-    <h1>{{user.username}}</h1>
+    <h1>{{user.rendered_username}}</h1>
     <br>
 
     <h4>Email</h4>
@@ -86,7 +86,7 @@
           </td>
           <td class="align-right hidden-xs">
             {% if thread.last_post %}
-            <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}}</a></p>
+            <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}}</a></p>
             <p>{{thread.last_post.created}}</p>
             {% else %}
             <p>No Posts</p>

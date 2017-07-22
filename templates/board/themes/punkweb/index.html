@@ -4,20 +4,6 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
-<!-- <div class="pageHeader">
-  <div class="djcontainer">
-    <div class="pageHeader__flex">
-      <div class="pageHeader__left">
-        <h1 class="pageHeader__title">Index</h1>
-      </div>
-      <div class="pageHeader__right">
-        <ul class="breadcrumb">
-          <li>Forum</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div> -->
 <div class="main">
   {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
   {% include './components/shoutbox/shoutbox.html' %}
@@ -44,10 +30,10 @@
           </div>
           <div class="panel__body">
             {% for thread in recent_threads %}
-            <p class="clearMargin padding">
+            <div class="clearMargin padding">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
               {{thread.created}}
-            </p>
+            </div>
             {% endfor %}
           </div>
         </div>
@@ -57,10 +43,10 @@
           </div>
           <div class="panel__body">
             {% for thread in recent_activity %}
-            <p class="clearMargin padding">
+            <div class="clearMargin padding">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
               {{thread.modified}}
-            </p>
+            </div>
             {% endfor %}
           </div>
         </div>
@@ -78,7 +64,12 @@
               <li style="display: inline">Total posts {{total_posts}} •</li>
               <li style="display: inline">Total threads {{total_threads}} •</li>
               <li style="display: inline">Total members {{member_count}} •</li>
-              <li style="display: inline">Newest member <a href="{% url 'board:profile' newest_member.username %}">{{newest_member.rendered_username}}</a></li>
+              <li style="display: inline">
+                Newest member
+                <a href="{% url 'board:profile' newest_member.username %}">
+                  {{newest_member.rendered_username}}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

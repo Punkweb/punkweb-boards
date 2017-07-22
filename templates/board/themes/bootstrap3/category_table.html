@@ -53,7 +53,7 @@
       <p>{{sub.obj.last_thread.created}}</p>
       <p>
         by <a href="{% url 'board:profile' sub.obj.last_thread.user.username %}">
-        {{sub.obj.last_thread.user.username}} <img src="{{sub.obj.last_thread.user.avatar_smallest}}" alt="" /></a>
+        {{sub.obj.last_thread.user.rendered_username}} <img src="{{sub.obj.last_thread.user.avatar_smallest}}" alt="" /></a>
       </p>
       {% else %}
       <p>No Threads</p>

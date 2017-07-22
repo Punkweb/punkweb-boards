@@ -34,14 +34,14 @@
           {{thread.title}}
         </a>
       </p>
-      <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.username}} </a>{{thread.created}}</p>
+      <p>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}} </a>{{thread.created}}</p>
     </td>
     <td class="align-center">
       <p>{{thread.posts_count}}</p>
     </td>
     <td class="align-right hidden-xs">
       {% if thread.last_post %}
-      <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.username}} <img src="{{thread.last_post.user.avatar_smallest}}" alt="" /></a></p>
+      <p><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}} <img src="{{thread.last_post.user.avatar_smallest}}" alt="" /></a></p>
       <p>{{thread.last_post.created}}</p>
       {% else %}
       <p>No Posts</p>
