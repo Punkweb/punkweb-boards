@@ -24,7 +24,11 @@
       </td>
       <!-- TODO: Replace with actual rank -->
       <td class="align-right">
-        {{user.rank|default_if_none:'Rookie'}}
+        {% if user.rank %}
+          {{user.rank.example_name|safe}}
+        {% else %}
+          Rookie
+        {% endif %}
       </td>
       <td class="align-center">
         {{user.post_count}}

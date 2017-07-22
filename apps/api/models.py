@@ -16,7 +16,6 @@ from django.urls import reverse
 from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
-from precise_bbcode.bbcode import get_parser
 
 from apps.board import settings as BOARD_SETTINGS
 from apps.common import utils
@@ -202,21 +201,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     @property
     def rendered_username(self):
-        # Returns the username rendered in bbcode defined by the users rank.
-        a = BOARD_SETTINGS.USERNAME_MODIFIERS_ENABLED
-        parser = get_parser()
-        if self.is_banned:
-            return 'BANNED'
-        if a and self.username_modifier:
-            modifier = self.username_modifier
-            replace_username = modifier.replace('{USER}', self.username)
-            return parser.render(replace_username)
-        elif a and self.rank and self.rank.username_modifier:
-            modifier = self.rank.username_modifier
-            replace_username = modifier.replace('{USER}', self.username)
-            return parser.render(replace_username)
-        else:
-            return self.username
+        return utils.render_username(self)
 
     def get_absolute_url(self):
         return reverse('board:profile', self.username)
@@ -231,6 +216,10 @@ class UserRank(models.Model):
         max_length=120, blank=True, null=True,
         help_text="BBCode. Just add {USER} where "\
                   "you want the username to be placed at.")
+
+    @property
+    def example_name(self):
+        return utils.render_example_username(self, self.title)
 
     class Meta:
         ordering = ('order',)
