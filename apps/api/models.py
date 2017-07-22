@@ -19,9 +19,9 @@ from precise_bbcode.fields import BBCodeTextField
 from precise_bbcode.bbcode import get_parser
 
 from apps.board import settings as BOARD_SETTINGS
+from apps.common import utils
 from apps.common.models import (
     CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin)
-from . import utils
 
 
 def get_placeholder_url():
