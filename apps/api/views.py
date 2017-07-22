@@ -113,7 +113,7 @@ class MessageViewSet(mixins.RetrieveModelMixin,
         return qs.all()
 
 
-class ShoutViewSet(mixins.RetrieveModelMixin,
+class ShoutViewSet(mixins.CreateModelMixin,
                    mixins.ListModelMixin,
                    viewsets.GenericViewSet):
     queryset = Shout.objects.all()[:25]

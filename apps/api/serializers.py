@@ -58,6 +58,7 @@ class ShoutSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'user', 'username', 'content', '_content_rendered', 'created',
             'modified')
+        read_only_fields = ('user', )
 
     def create(self, validated_data):
         for key in SHOUTBOX_DISABLED_TAGS:
