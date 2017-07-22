@@ -1,26 +1,6 @@
 # django-boards/punkweb
 Django forum boards with bbcode support.
 
-## Quick start
-
-### Installation and running
-`
-pip install -r requirements.txt
-
-./db.sh
-
-./manage.py makemigrations
-
-./manage.py migrate
-
-./manage.py runserver
-`
-
-### Create a super user
-`
-./manage.py createsuperuser
-`
-
 
 ### A note about sceditor (BBCode editor)
 
@@ -34,7 +14,6 @@ fit special needs for this project.
 
 For now, download [SCEditor](http://www.sceditor.com/) and unzip it at:
 `django-boards/static/sceditor/`
-
 
 
 ### Some custom bbcode tags
