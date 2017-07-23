@@ -394,6 +394,14 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     def last_post(self):
         return self.posts.order_by('-created').first()
 
+    @property
+    def upvotes(self):
+        return len(self.upvoted_by.all())
+
+    @property
+    def downvotes(self):
+        return len(self.downvoted_by.all())
+
     def get_absolute_url(self):
         return reverse('board:thread', kwargs={'pk': self.id})
 
@@ -437,6 +445,14 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     @property
     def page_number(self, page_size=10):
         return math.ceil(self.post_number / page_size)
+
+    @property
+    def upvotes(self):
+        return len(self.upvoted_by.all())
+
+    @property
+    def downvotes(self):
+        return len(self.downvoted_by.all())
 
     def get_absolute_url(self):
         return '/board/thread/{}/?page={}#{}'.format(

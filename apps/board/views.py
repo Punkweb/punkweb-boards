@@ -537,3 +537,14 @@ def members_list(request):
         'board/themes/{}/members_list.html'.format(BOARD_THEME),
         context
     )
+
+
+def statistics_view(request):
+    context = {
+
+    }
+    return render(
+        request,
+        'board/themes/{}/statistics.html'.format(BOARD_THEME),
+        context
+    )

@@ -89,6 +89,8 @@
             </div>
             {% endif %}
             <div class="thread__actions">
+              <a><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{thread.upvotes}}</a>
+              <a><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{thread.downvotes}}</a>
               {% if user.is_authenticated and thread.user.id != user.id %}
               <a href="{% url 'board:report-thread' thread.id %}" name="button">Report</a>
               {% endif %}
@@ -146,6 +148,8 @@
             </div>
             {% endif %}
             <div class="thread__actions">
+              <a><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{post.upvotes}}</a>
+              <a><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{post.downvotes}}</a>
               {% if user.is_authenticated and post.user.id != user.id %}
               <a href="{% url 'board:report-post' post.id %}" name="button">Report</a>
               {% endif %}

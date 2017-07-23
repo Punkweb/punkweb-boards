@@ -57,4 +57,7 @@ urlpatterns = [
 
     url(r'^members/$',
         views.members_list, name='members-list'),
+
+    url(r'^statistics/$',
+        views.statistics_view, name='statistics'),
 ]
