@@ -48,9 +48,9 @@ class EmailUserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'rank', 'is_superuser',)
     ordering = ('username',)
     fields = (
-        'username', 'email', 'gender', 'birthday', 'is_superuser', 'is_banned',
-         'last_login', 'image', 'avatar_thumbnail', 'signature',
-         'rendered_signature', 'username_modifier', 'rendered_username', )
+        'username', 'email', 'gender', 'birthday', 'rank', 'is_superuser',
+        'is_banned', 'last_login', 'image', 'avatar_thumbnail', 'signature',
+        'rendered_signature', 'username_modifier', 'rendered_username', )
     readonly_fields = (
         'avatar_thumbnail', 'rendered_signature', 'rendered_username', )
 
