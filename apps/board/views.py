@@ -2,6 +2,7 @@ from django.contrib.postgres.search import (
     SearchQuery, SearchRank, SearchVector, TrigramSimilarity)
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 
@@ -521,6 +522,15 @@ def report_create(request, thread=None, post=None):
         'board/themes/{}/report_create_form.html'.format(BOARD_THEME),
         context
     )
+
+
+def notification_redirect(request, pk):
+    notification = Notification.objects.filter(user=request.user, pk=pk)
+    if notification:
+        notification = notification[0]
+        notification.read = True
+        notification.save()
+        return redirect(notification.link)
 
 
 def members_list(request):

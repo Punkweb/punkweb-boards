@@ -46,10 +46,7 @@ a:link, a:visited {
       color: $upper-nav-link;
       cursor: pointer;
       padding: .25rem 0;
-
-      &+& {
-        padding-left: 0.5rem;
-      }
+      padding-left: 0.5rem;
     }
 
   }

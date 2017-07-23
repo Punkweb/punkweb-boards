@@ -60,4 +60,7 @@ urlpatterns = [
 
     url(r'^statistics/$',
         views.statistics_view, name='statistics'),
+
+    url(r'^notification_redirect/(?P<pk>[^/]+)/$',
+        views.notification_redirect, name='notification-redirect'),
 ]
