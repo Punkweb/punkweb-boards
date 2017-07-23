@@ -28,9 +28,9 @@
           <div class="panel__header">
             <div class="panel__title">Recent Threads</div>
           </div>
-          <div class="panel__body">
+          <div class="panel__body padding">
             {% for thread in recent_threads %}
-            <div class="clearMargin padding">
+            <div class="clearMargin padding-bottom">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
               <div>{{thread.created}}</div>
               <div>by {{thread.user.rendered_username}}</div>
@@ -42,9 +42,9 @@
           <div class="panel__header">
             <div class="panel__title">Recent Activity</div>
           </div>
-          <div class="panel__body">
+          <div class="panel__body padding">
             {% for thread in recent_activity %}
-            <div class="clearMargin padding">
+            <div class="clearMargin padding-bottom">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
               <div>{{thread.modified}}</div>
               <div>by {{thread.last_post.user.rendered_username}}</div>
