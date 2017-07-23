@@ -44,15 +44,26 @@ class ConversationAdmin(admin.ModelAdmin):
     ordering = ('created',)
 
 
+class EmailUserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'rank', 'is_superuser',)
+    ordering = ('username',)
+    fields = (
+        'username', 'email', 'gender', 'birthday', 'is_superuser', 'is_banned',
+         'last_login', 'image', 'avatar_thumbnail', 'signature',
+         'rendered_signature', 'username_modifier', 'rendered_username', )
+    readonly_fields = (
+        'avatar_thumbnail', 'rendered_signature', 'rendered_username', )
+
+
 class UserRankAdmin(admin.ModelAdmin):
     list_display = ('title',)
     ordering = ('order',)
     fields = (
-        'title', 'description', 'order', 'username_modifier', 'example_name')
+        'title', 'description', 'order', 'username_modifier', 'example_name',)
     readonly_fields = ('example_name',)
 
 
-admin.site.register(EmailUser)
+admin.site.register(EmailUser, EmailUserAdmin)
 admin.site.register(UserRank, UserRankAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)

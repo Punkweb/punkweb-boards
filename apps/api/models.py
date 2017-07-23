@@ -13,6 +13,7 @@ from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
@@ -202,6 +203,17 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
     @property
     def rendered_username(self):
         return utils.render_username(self)
+
+    @property
+    def rendered_signature(self):
+        """Used on admin page"""
+        return mark_safe(self.signature.rendered)
+
+    @property
+    def avatar_thumbnail(self):
+        """Returns html tag with user image. Used on admin page"""
+        return mark_safe('<img src="{}" />'.format(self.avatar_small))
+
 
     def get_absolute_url(self):
         return reverse('board:profile', self.username)
