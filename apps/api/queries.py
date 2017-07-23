@@ -5,7 +5,7 @@ from django.db import connection
 def posts_and_threads_by_day():
     QUERY = """
         SELECT
-          EXTRACT(day FROM thread.created) AS chunk,
+          EXTRACT(dow FROM thread.created) AS chunk,
           COUNT(thread.id) AS count_threads,
           COUNT(post.id) AS count_posts
         FROM api_thread as thread
