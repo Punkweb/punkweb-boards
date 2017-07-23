@@ -32,7 +32,8 @@
             {% for thread in recent_threads %}
             <div class="clearMargin padding">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
-              {{thread.created}}
+              <div>{{thread.created}}</div>
+              <div>by {{thread.user.rendered_username}}</div>
             </div>
             {% endfor %}
           </div>
@@ -45,7 +46,8 @@
             {% for thread in recent_activity %}
             <div class="clearMargin padding">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
-              {{thread.modified}}
+              <div>{{thread.modified}}</div>
+              <div>by {{thread.last_post.user.rendered_username}}</div>
             </div>
             {% endfor %}
           </div>
