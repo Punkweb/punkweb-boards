@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, permissions, mixins
+from rest_framework import viewsets, permissions, mixins, views
 from rest_framework.response import Response
 
 from .models import (Category, Subcategory, Thread, Post, Conversation, Message,
@@ -8,6 +8,7 @@ from .serializers import (CategorySerializer, SubcategorySerializer,
     ThreadSerializer, PostSerializer, MessageSerializer, ShoutSerializer,
     ConversationSerializer, UserSerializer)
 from .permissions import IsTargetUser
+from . import queries
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -123,3 +124,13 @@ class ShoutViewSet(mixins.CreateModelMixin,
         if self.request.user.is_authenticated and self.request.user.is_banned:
             return Shout.objects.none()
         serializer.save(user=self.request.user)
+
+
+class StatisticsView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, format=None):
+        posts_and_threads_by_day = queries.posts_and_threads_by_day()
+        return Response({
+            'posts_and_threads_by_day': posts_and_threads_by_day
+        })

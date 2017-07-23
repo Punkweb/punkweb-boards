@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from apps.board.settings import SHOUTBOX_DISABLED_TAGS
-from .models import Category, Subcategory, Thread, Post, \
-    Conversation, Message, Report, Shout
+from .models import (
+    Category, Subcategory, Thread, Post, Conversation, Message, Report, Shout)
 
 
 class UserSerializer(serializers.ModelSerializer):

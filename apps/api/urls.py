@@ -1,7 +1,8 @@
 from django.conf.urls import url, include
 from rest_framework import routers
 from .views import (CategoryViewSet, SubcategoryViewSet, ThreadViewSet,
-    PostViewSet, ConversationViewSet, MessageViewSet, ShoutViewSet, UserViewSet)
+    PostViewSet, ConversationViewSet, MessageViewSet, ShoutViewSet, UserViewSet,
+    StatisticsView)
 
 router = routers.DefaultRouter()
 router.register(r'categories', CategoryViewSet)
@@ -15,6 +16,7 @@ router.register(r'users', UserViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^statistics/', StatisticsView.as_view(), name='statistics'),
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework'))
 ]
