@@ -582,7 +582,8 @@ input[type="text"], input[type="password"], textarea {
 .thread {
   display: flex;
   flex-direction: row;
-  padding: 1rem; }
+  padding: 1rem;
+  overflow-wrap: break-word; }
   .thread__user {
     display: flex;
     flex-direction: column;
@@ -594,9 +595,12 @@ input[type="text"], input[type="password"], textarea {
     .thread__user__posts {
       margin: .25rem 0; }
   .thread__body {
-    flex: 10; }
+    flex: 10;
+    max-width: 84%;
+    overflow-wrap: break-word; }
   .thread__content {
-    padding: 1rem; }
+    padding: 1rem;
+    overflow-wrap: break-word; }
   .thread__signature {
     border-top: 2px solid #282c30;
     padding: 1rem; }
@@ -671,7 +675,10 @@ input[type="text"], input[type="password"], textarea {
     flex-direction: column; }
     .thread__user {
       border-bottom: 2px solid #282c30;
-      border-right: none; } }
+      border-right: none;
+      padding-bottom: 1rem; }
+    .thread__body {
+      max-width: 100%; } }
 
 .sceditor-container {
   background: #0f1011;

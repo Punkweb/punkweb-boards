@@ -130,7 +130,11 @@ class StatisticsView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        posts_and_threads_by_day = queries.posts_and_threads_by_day()
+        posts_by_dow = queries.posts_by_dow()
+        threads_by_dow = queries.threads_by_dow()
+        threads_in_subcategories = queries.threads_in_subcategories()
         return Response({
-            'posts_and_threads_by_day': posts_and_threads_by_day
+            'posts_by_dow': posts_by_dow,
+            'threads_by_dow': threads_by_dow,
+            'threads_in_subcategories': threads_in_subcategories
         })

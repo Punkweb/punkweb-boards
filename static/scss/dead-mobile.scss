@@ -83,6 +83,10 @@
     &__user {
       border-bottom: 2px solid mix(black, $primary, 45%);
       border-right: none;
+      padding-bottom: 1rem;
+    }
+    &__body {
+      max-width: 100%;
     }
   }
 

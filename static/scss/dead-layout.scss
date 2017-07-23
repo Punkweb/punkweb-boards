@@ -404,6 +404,7 @@ input[type="text"], input[type="password"], textarea {
   display: flex;
   flex-direction: row;
   padding: 1rem;
+  overflow-wrap: break-word;
 
   &__user {
     display: flex;
@@ -422,9 +423,12 @@ input[type="text"], input[type="password"], textarea {
   }
   &__body {
     flex: 10;
+    max-width: 84%;
+    overflow-wrap: break-word;
   }
   &__content {
     padding: 1rem;
+    overflow-wrap: break-word;
   }
   &__signature {
     border-top: 2px solid mix(black, $primary, 45%);

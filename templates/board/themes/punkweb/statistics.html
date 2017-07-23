@@ -1,4 +1,5 @@
 {% extends './base.html' %}
+{% load static %}
 
 
 {% block content %}
@@ -24,7 +25,10 @@
         <div class="panel__title">Heh</div>
       </div>
       <div class="panel__body padding">
-        <canvas id="gratefulData" style="max-width: 560px;"></canvas>
+        <div class="flexcol">
+          <canvas id="dowPostsChart" class="margin-bottom" style="max-width: 600px;"></canvas>
+          <canvas id="subcategoryThreadsChart" style="max-width: 600px;"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -33,51 +37,5 @@
 
 {% block extrascript %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-<script>
-$(function() {
-  $(document).ready(function() {
-    var ctx = document.getElementById('gratefulData').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [
-              'Sunday', 'Monday', 'Tuesday', 'Wednesday',
-              'Thursday', 'Friday', 'Saturday'
-            ],
-            datasets: [
-              {
-                label: "Posts",
-                backgroundColor: 'rgba(255, 0, 0, .2)',
-                borderColor: 'rgb(255, 0, 0)',
-                data: [],
-              },
-              {
-                label: "Threads",
-                borderColor: 'rgb(0, 0, 255)',
-                data: [],
-                fill: false
-              },
-            ]
-        },
-        options: {}
-    });
-
-    function getStats() {
-      $.get('/api/statistics/', function(data) {
-        var threads = Array(7).fill(0);
-        var posts = Array(7).fill(0);
-        data.posts_and_threads_by_day.forEach(function(chunk) {
-          threads[parseInt(chunk.chunk)] = chunk.count_threads;
-          posts[parseInt(chunk.chunk)] = chunk.count_posts;
-        });
-        chart.data.datasets[0].data = threads;
-        chart.data.datasets[1].data = posts;
-        chart.update();
-      });
-    }
-
-    getStats();
-  });
-});
-</script>
+<script src="{% static 'js/statistics.js' %}"></script>
 {% endblock %}

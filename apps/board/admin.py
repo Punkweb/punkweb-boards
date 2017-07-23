@@ -28,6 +28,11 @@ class ThreadAdmin(admin.ModelAdmin):
     ]
     list_display = ('title', 'category', 'user')
     ordering = ('title',)
+    fields = (
+        'user', 'category', 'title', 'content', 'modified', 'created',
+        'pinned', 'closed', 'tags', 'upvoted_by', 'downvoted_by',)
+    readonly_fields = (
+        'modified', 'created',)
 
 
 class MessageInline(admin.TabularInline):
