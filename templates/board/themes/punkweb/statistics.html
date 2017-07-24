@@ -1,6 +1,8 @@
 {% extends './base.html' %}
 {% load static %}
 
+{% block title %}Board Statistics{% endblock %}
+
 
 {% block content %}
 <div class="pageHeader">
@@ -27,7 +29,7 @@
       <div class="panel__body padding">
         <div class="flexcol">
           <canvas id="dowPostsChart" class="margin-bottom" style="max-width: 600px;"></canvas>
-          <canvas id="subcategoryThreadsChart" style="max-width: 600px;"></canvas>
+          <canvas id="subcategoryThreadsChart" style="max-width: 400px;"></canvas>
         </div>
       </div>
     </div>

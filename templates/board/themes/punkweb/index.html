@@ -5,15 +5,15 @@
 
 {% block content %}
 <div class="main">
-  {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
-  {% include './components/shoutbox/shoutbox.html' %}
-  {% endif %}
   <div class="djcontainer">
     {% if BOARD_SETTINGS.USER_BIRTHDAY_MESSAGE %}
     {% include './components/birthday/birthday.html' %}
     {% endif %}
     <div class="flexrow">
       <div class="flexcol" style="flex: 3;">
+        {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
+        {% include './components/shoutbox/shoutbox.html' %}
+        {% endif %}
         {% for category in categories %}
         <a name="{{category.parent.name}}"></a>
         <div class="panel">

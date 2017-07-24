@@ -40,7 +40,7 @@ a:link, a:visited {
   &--upper {
     @include font-range(9, 11);
     background-color: $upper-nav;
-    padding: 0.4rem 0;
+    padding: 0.5rem 0;
 
     &__link {
       color: $upper-nav-link;
@@ -48,7 +48,6 @@ a:link, a:visited {
       padding: .25rem 0;
       padding-left: 0.5rem;
     }
-
   }
 
   &--main {
@@ -82,7 +81,8 @@ a:link, a:visited {
     @include medium;
     @include font-range(20, 24);
     color: $main-nav-title;
-    padding: 2rem 1.5rem 2rem 0;
+    padding: 2rem 0;
+    margin-right: 1rem;
     letter-spacing: 3px;
     font-family: 'Storybook';
 
@@ -149,7 +149,7 @@ a:link, a:visited {
   li+li:before {
     color: $breadcrumb-separator;
     content: "/\00a0";
-    margin: 0 .5rem;
+    margin: 0 0.5rem;
   }
 }
 
@@ -452,12 +452,15 @@ input[type="text"], input[type="password"], textarea {
 .shoutList {
   min-height: 300px;
   max-height: 300px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-wrap: break-word;
   .shout {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: .5rem;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
   .shout:not(:last-of-type) {
     border-bottom: 1px solid $hr;

@@ -1,6 +1,6 @@
 @media only screen and (max-width: 840px) {
   .djcontainer {
-    padding: 0 0.4rem;
+    padding: 0 0.5rem;
   }
   .flexrow {
     flex-direction: column;
@@ -22,7 +22,7 @@
 
   .pageHeader {
     &__title {
-      padding: .5rem 0;
+      padding: 1rem 0;
     }
 
     &__flex {
@@ -42,7 +42,7 @@
   }
 
   .breadcrumb {
-    margin: .5rem 0;
+    margin: 1rem 0;
 
     li+li:before {
       margin: 0 .25rem;
