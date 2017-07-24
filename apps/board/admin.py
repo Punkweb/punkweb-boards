@@ -20,19 +20,20 @@ class CategoryAdmin(admin.ModelAdmin):
 class PostInline(admin.TabularInline):
     model = Post
     ordering = ('created',)
+    fields = (
+        'user', 'content', 'upvoted_by', 'downvoted_by',)
 
 
 class ThreadAdmin(admin.ModelAdmin):
     inlines = [
         PostInline
     ]
-    list_display = ('title', 'category', 'user')
-    ordering = ('title',)
+    list_display = ('title', 'category', 'user', 'created', )
+    ordering = ('-created', 'title',)
     fields = (
         'user', 'category', 'title', 'content', 'modified', 'created',
         'pinned', 'closed', 'tags', 'upvoted_by', 'downvoted_by',)
-    readonly_fields = (
-        'modified', 'created',)
+    readonly_fields = ('modified', 'created',)
 
 
 class MessageInline(admin.TabularInline):
@@ -68,11 +69,25 @@ class UserRankAdmin(admin.ModelAdmin):
     readonly_fields = ('example_name',)
 
 
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('reporting_user', 'thread', 'post', 'resolved', )
+    ordering = ('-created',)
+    fields = (
+        'reporting_user', 'thread', 'post', 'reason', 'created', 'modified',
+        'resolved', 'resolved_by', 'date_resolved', )
+    readonly_fields = ('created', 'modified', )
+
+
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'link', 'created', 'read',)
+    ordering = ('-created', )
+
+
 admin.site.register(EmailUser, EmailUserAdmin)
 admin.site.register(UserRank, UserRankAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)
-admin.site.register(Conversation, ConversationAdmin)
-admin.site.register(Report)
+# admin.site.register(Conversation, ConversationAdmin)
+admin.site.register(Report, ReportAdmin)
 admin.site.register(Shout)
 admin.site.register(Notification)

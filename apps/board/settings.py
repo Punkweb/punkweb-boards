@@ -22,3 +22,9 @@ USERNAME_MODIFIERS_ENABLED = True
 USERNAME_MODIFIERS_DISABLED_TAGS = [
     'img', 'hr', 'ol', 'ul', 'li', 'youtube'
 ]
+
+# TODO: make this work
+PRIVATE_MESSAGING_ENABLED = True
+
+# TODO: make this work
+GRAVATAR_SUPPORT_ENABLED = True

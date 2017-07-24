@@ -548,7 +548,7 @@ class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
         related_name='notifications'
     )
     text = models.CharField(max_length=140, blank=False, null=False)
-    link = models.CharField(max_length=140, blank=True, null=True)
+    link = models.CharField(max_length=140, blank=False, null=False)
     read = models.BooleanField(default=False)
 
     class Meta:

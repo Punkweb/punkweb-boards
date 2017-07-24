@@ -1,0 +1,56 @@
+import datetime
+import random
+import string
+import time
+from random import randint
+
+users = EmailUser.objects.all()
+categories = Subcategory.objects.all()
+
+def random_date_from_now(days=0, hours=0, minutes=0):
+    now = datetime.datetime.now()
+    ran_days = randint(0, days)
+    ran_hours = randint(0, hours)
+    ran_minutes = randint(0, minutes)
+    then = now - datetime.timedelta(
+                            days=ran_days, hours=ran_hours, minutes=ran_minutes)
+    return then
+
+def random_date_from_thread(date, days=0, hours=0, minutes=0):
+    now = date
+    ran_days = randint(0, days)
+    ran_hours = randint(0, hours)
+    ran_minutes = randint(0, minutes)
+    then = now + datetime.timedelta(
+                            days=ran_days, hours=ran_hours, minutes=ran_minutes)
+    return then
+
+
+for i in range(100):
+    rand_user = users[randint(0, len(users) - 1)]
+    rand_category = categories[randint(0, len(categories) - 1)]
+    thread_i = Thread(
+        user=rand_user, category=rand_category, title='Thread {}'.format(i),
+        content='Thread {} content'.format(i))
+    thread_i.save()
+    for i in range(randint(0, 15)):
+        rand_user = users[randint(0, len(users) - 1)]
+        post = Post(
+          user=rand_user,
+          thread=thread_i, content='Thread {} content'.format(i))
+        rand = random_date_from_thread(
+                                thread_i.created, days=2, hours=23, minutes=54)
+        post.save()
+
+for thread in Thread.objects.all():
+    rand = random_date_from_now(days=7, hours=23, minutes=54)
+    thread.created = rand
+    thread.modified = rand
+    thread.save()
+
+for post in Post.objects.all():
+    rand = random_date_from_thread(
+                              post.thread.created, days=2, hours=23, minutes=54)
+    post.created = rand
+    post.modified = rand
+    post.save()

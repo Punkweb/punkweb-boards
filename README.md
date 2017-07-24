@@ -2,6 +2,11 @@
 Django forum boards with bbcode support.
 
 
+### Documentation
+
+Check out docs.txt for a detailed list of the state of most of the features in the project.
+
+
 ### A note about sceditor (BBCode editor)
 
 In order to keep this repository clean I am not including the source for the
@@ -20,11 +25,6 @@ For now, download [SCEditor](http://www.sceditor.com/) and unzip it at:
 
 Check out custom_tags.txt for a list of bbcode tag definitions and replacement
 html.  Add these in the admin page.
-
-
-### Features
-
-Check out features.txt for a list of current and upcoming features.
 
 
 ### Almost ready for use!
