@@ -10,7 +10,7 @@
       <th class="align-center" width="10%">
         Posts
       </th>
-      <th class="align-left hide-on-mobile" width="30%">
+      <th class="align-left hide-on-mobile" width="40%">
         Last Thread
       </th>
     </tr>
@@ -41,7 +41,7 @@
         {% if sub.obj.last_thread %}
         <div>
           <a href="{% url 'board:thread' sub.obj.last_thread.id %}">
-            {{sub.obj.last_thread.title|truncatechars_html:30}}
+            {{sub.obj.last_thread.title|truncatechars_html:50}}
           </a>
         </div>
         <div>{{sub.obj.last_thread.created}}</div>

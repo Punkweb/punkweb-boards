@@ -32,7 +32,7 @@
         {% if child.last_thread %}
         <div>
           <a href="{% url 'board:thread' child.last_thread.id %}">
-            {{child.last_thread.title|truncatechars_html:30}}
+            {{child.last_thread.title|truncatechars_html:50}}
           </a>
         </div>
         <div>{{child.last_thread.created}}</div>

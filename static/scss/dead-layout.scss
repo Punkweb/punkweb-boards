@@ -40,7 +40,7 @@ a:link, a:visited {
   &--upper {
     @include font-range(9, 11);
     background-color: $upper-nav;
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
 
     &__link {
       color: $upper-nav-link;
@@ -81,7 +81,7 @@ a:link, a:visited {
     @include medium;
     @include font-range(20, 24);
     color: $main-nav-title;
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     margin-right: 1rem;
     letter-spacing: 3px;
     font-family: 'Storybook';
@@ -109,7 +109,7 @@ a:link, a:visited {
     @include bold;
     @include font-range(16, 20);
     color: $page-header-text;
-    padding: 2rem 0;
+    margin: 1rem 0;
   }
 
   &__flex {
@@ -158,12 +158,12 @@ a:link, a:visited {
 }
 
 .main {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 }
 
 .djcontainer {
   box-sizing: border-box;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
@@ -187,7 +187,7 @@ a:link, a:visited {
   list-style: none;
 
   li {
-    padding: 1rem;
+    padding: 0.5rem;
     cursor: pointer;
   }
 }
@@ -208,7 +208,7 @@ a:link, a:visited {
 
 
 .panel {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   opacity: $panel-opacity;
 
   &__header {
@@ -218,7 +218,7 @@ a:link, a:visited {
     flex-direction: row;
     align-items: center;
     background-color: $panel-header;
-    padding: 1rem 1rem;
+    padding: 0.5rem 0.5rem;
   }
   &__title {
     @include medium;
@@ -235,7 +235,7 @@ a:link, a:visited {
   &__footer {
     @include font-range(12, 14);
     background-color: $panel-footer;
-    padding: 1rem .5rem;
+    padding: 0.5rem .5rem;
   }
 }
 
@@ -249,7 +249,7 @@ a:link, a:visited {
       th {
         @include medium;
         @include font-range(12, 14);
-        padding: 1rem 1rem;
+        padding: 0.5rem;
         a {
           color: $table-header-link;
         }
@@ -268,7 +268,7 @@ a:link, a:visited {
       }
       td {
         @include font-range(12, 14);
-        padding: .5rem 1rem;
+        padding: .5rem .5rem;
         vertical-align: top;
         a {
           color: $table-body-link;
@@ -305,13 +305,13 @@ a:link, a:visited {
   display: none;
   position: absolute;
   min-width: 160px;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   z-index: 1;
 }
 
 .notification {
   background-color: mix(black, $primary, 65%);
-  padding: 1rem;
+  padding: 0.5rem;
   opacity: .75;
   a {
     color: $primary-link;
@@ -355,7 +355,7 @@ input[type="text"], input[type="password"], textarea {
 }
 
 .recentActivity, .recentThreads {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .flexrow {
@@ -400,7 +400,7 @@ input[type="text"], input[type="password"], textarea {
 .thread {
   display: flex;
   flex-direction: row;
-  padding: 1rem;
+  padding: 0.5rem;
   overflow-wrap: break-word;
 
   &__user {
@@ -424,28 +424,28 @@ input[type="text"], input[type="password"], textarea {
     overflow-wrap: break-word;
   }
   &__content {
-    padding: 1rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
     overflow-wrap: break-word;
   }
   &__signature {
     border-top: 2px solid mix(black, $primary, 45%);
-    padding: 1rem;
+    padding: 0.5rem;
   }
   &__actions {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    padding: 1rem;
+    padding: 0.5rem;
     a+a {
-      margin-left: 1rem;
+      margin-left: 0.5rem;
     }
   }
 }
 
 .category {
   &__description {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 }
 
