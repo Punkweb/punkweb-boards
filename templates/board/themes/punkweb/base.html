@@ -22,7 +22,16 @@
       <div class="nav nav--upper">
         <div class="djcontainer">
           <div class="nav__flex">
-            <div class="nav__left"></div>
+            <div class="nav__left">
+            {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+            <a class="nav--upper__link" href="/admin/">
+              <i class="fa fa-cog fa-fw" aria-hidden="true"></i> 
+              Admin
+            </a>
+            {% endif %}
+            {% endif %}
+            </div>
             <div class="nav__right">
               {% if user.is_authenticated %}
               {% if user.is_staff %}

@@ -94,7 +94,7 @@ EXPERIMENTAL (in development but not ready to use in a public website)
   Ambiguous bootstrap3 theme.  I started off with using this but a use case for
   this project came up that lead to the punkweb theme being my main target.
   With that being said, everything on this theme is usable.  Some changes
-  developed after the switch to punkweb has been backported to this theme but
+  developed after the switch to punkweb have been backported to this theme but
   you'll find most of the newer, more experimental content, is missing.
 
   A notification is created when a user is tagged in a post or a thread.
@@ -126,7 +126,7 @@ EXPERIMENTAL (in development but not ready to use in a public website)
 
   The board settings module has loads of configurations that work, but I want
   to go through every feature in the forum and make sure that they can be
-  configured to fit any specific needs to lack of need.
+  configured to fit any specific needs as well as lack of need.
 
 
 TODO
@@ -134,7 +134,7 @@ TODO
   Per-user theme selection
 
   Sceditor hacking to show exactly what you'll see when the bbcode is rendered.
-  Also to all the custom commands in custom_tags.txt on the editor.
+  Also show all the custom commands in custom_tags.txt on the editor.
 
   Polls
 
