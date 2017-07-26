@@ -8,7 +8,7 @@
   <div class="djcontainer">
     <div class="pageHeader__flex">
       <div class="pageHeader__left">
-        <h1 class="pageHeader__title">Inbox</h1>
+        <h1 class="pageHeader__title">{{conversation.subject}}</h1>
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
@@ -23,19 +23,37 @@
 <div class="main">
   <div class="djcontainer">
     <div class="panel">
-      <div class="panel__header">
-        <div class="panel__title">{{conversation.subject}}</div>
-      </div>
-      <div class="panel__body">
-        <div class="padding">
-          {% for message in messages %}
-          <a href="{% url 'board:profile' message.user.username %}">{{message.user.rendered_username}}</a>
-          <div>
-            {{message.content.rendered}}
+      {% for message in messages %}
+      <div class="panel margin-bottom">
+        <div class="panel__body">
+          <div class="thread">
+            <div class="thread__user">
+              <a href="{% url 'board:profile' message.user.username %}">
+                <img src="{{message.user.avatar_small}}" alt="..." />
+              </a>
+              <div class="thread__user__name">
+                <a href="{% url 'board:profile' message.user.username %}">{{message.user.rendered_username}}</a>
+              </div>
+              <div class="thread__user__rank">
+                {{message.user.rank|default_if_none:"Rookie"}}
+              </div>
+              <div class="thread__user__posts">Posts: {{message.user.post_count}}</div>
+              <div class="thread__user__membersince">
+                Join date: {{message.user.created|date:'m/d/y'}}
+              </div>
+            </div>
+            <div class="thread__body">
+              <div class="thread__content">
+                {{message.content.rendered}}
+              </div>
+            </div>
           </div>
-          {% endfor %}
+        </div>
+        <div class="panel__footer">
+          {{message.created}}
         </div>
       </div>
+      {% endfor %}
     </div>
     {% if user.is_authenticated %}
     <div class="panel">

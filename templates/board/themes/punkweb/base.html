@@ -25,10 +25,7 @@
             <div class="nav__left">
             {% if user.is_authenticated %}
             {% if user.is_superuser %}
-            <a class="nav--upper__link" href="/admin/">
-              <i class="fa fa-cog fa-fw" aria-hidden="true"></i> 
-              Admin
-            </a>
+            <a class="nav--upper__link" href="/admin/"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Admin</a>
             {% endif %}
             {% endif %}
             </div>

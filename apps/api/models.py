@@ -467,6 +467,9 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
     unread_by = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='unread_conversations', blank=True)
 
+    class Meta:
+        ordering = ('-modified', )
+
     def __str__(self):
         return self.subject
 

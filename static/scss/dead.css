@@ -244,8 +244,8 @@ a:link, a:visited {
     font-weight: 500;
     font-size: calc(1.42857rem + (24 - 20) * (100vw - 22.85714rem) / (1440 - 320));
     color: #e6e6e6;
-    padding: 2rem 0;
-    margin-right: 1rem;
+    padding: 1.5rem 0;
+    margin: 0 0.5rem;
     letter-spacing: 3px;
     font-family: 'Storybook'; }
     @media only screen and (max-width: 320) {
@@ -277,7 +277,7 @@ a:link, a:visited {
     font-weight: 700;
     font-size: calc(1.14286rem + (20 - 16) * (100vw - 22.85714rem) / (1440 - 320));
     color: #e6e6e6;
-    margin: 1.5rem 0; }
+    margin: 1rem 0; }
     @media only screen and (max-width: 320) {
       .pageHeader__title {
         font-size: 1.14286rem; } }
@@ -426,7 +426,7 @@ a:link, a:visited {
     .table thead tr th {
       font-weight: 500;
       font-size: calc(0.85714rem + (14 - 12) * (100vw - 22.85714rem) / (1440 - 320));
-      padding: 1rem 1rem; }
+      padding: 0.5rem; }
       @media only screen and (max-width: 320) {
         .table thead tr th {
           font-size: 0.85714rem; } }

@@ -82,7 +82,7 @@ a:link, a:visited {
     @include font-range(20, 24);
     color: $main-nav-title;
     padding: 1.5rem 0;
-    margin-right: 1rem;
+    margin: 0 0.5rem;
     letter-spacing: 3px;
     font-family: 'Storybook';
 
