@@ -175,7 +175,6 @@ def profile_view(request, username):
         return redirect('board:unpermitted')
     # Redirect to /board/me/ if trying to view own profile.
     if request.user.id == user.id:
-        print('really why is it not getting here then?')
         # TODO do not redirect so that users
         # can view their profile as others see it.
         return redirect('board:me')
