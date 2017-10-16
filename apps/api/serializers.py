@@ -7,12 +7,14 @@ from .models import (
 
 class UserSerializer(serializers.ModelSerializer):
     rendered_username = serializers.ReadOnlyField()
+    post_count = serializers.ReadOnlyField()
+    can_shout = serializers.ReadOnlyField()
     class Meta:
         model = get_user_model()
         exclude = ('password', 'groups', 'user_permissions',)
         read_only_fields = (
             'last_login', 'is_superuser', 'created', 'modified', 'email',
-            'is_banned', 'username_modifier', 'rank', 'rendered_username',)
+            'is_banned', 'username_modifier', 'rank',)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -28,12 +30,28 @@ class SubcategorySerializer(serializers.ModelSerializer):
     last_thread_user = serializers.ReadOnlyField(source='last_thread.user.rendered_username')
     thread_count = serializers.ReadOnlyField()
     post_count = serializers.ReadOnlyField()
+    can_post = serializers.SerializerMethodField()
+
+    def get_can_post(self, obj):
+        return obj.can_post(self.context.get('request').user)
+
     class Meta:
         model = Subcategory
         fields = '__all__'
 
 
 class ThreadSerializer(serializers.ModelSerializer):
+    last_post = serializers.ReadOnlyField(source='last_post.id')
+    last_post_title = serializers.ReadOnlyField(source='last_post.title')
+    last_post_created = serializers.ReadOnlyField(source='last_post.created')
+    last_post_user = serializers.ReadOnlyField(source='last_post.user.rendered_username')
+    flagged = serializers.ReadOnlyField(source='reported')
+    posts_count = serializers.ReadOnlyField()
+    can_edit = serializers.SerializerMethodField()
+
+    def get_can_edit(self, obj):
+        return obj.can_edit(self.context.get('request').user)
+
     class Meta:
         model = Thread
         fields = '__all__'
@@ -42,6 +60,12 @@ class ThreadSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    flagged = serializers.ReadOnlyField(source='reported')
+    can_edit = serializers.SerializerMethodField()
+
+    def get_can_edit(self, obj):
+        return obj.can_edit(self.context.get('request').user)
+
     class Meta:
         model = Post
         fields = '__all__'
@@ -49,6 +73,11 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class ConversationSerializer(serializers.ModelSerializer):
+    last_message = serializers.ReadOnlyField(source='last_message.id')
+    last_message_title = serializers.ReadOnlyField(source='last_message.title')
+    last_message_created = serializers.ReadOnlyField(source='last_message.created')
+    last_message_user = serializers.ReadOnlyField(source='last_message.user.rendered_username')
+    message_count = serializers.ReadOnlyField()
     class Meta:
         model = Conversation
         fields = '__all__'
