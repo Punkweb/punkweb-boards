@@ -6,12 +6,13 @@ from .models import (
 
 
 class UserSerializer(serializers.ModelSerializer):
+    rendered_username = serializers.ReadOnlyField()
     class Meta:
         model = get_user_model()
         exclude = ('password', 'groups', 'user_permissions',)
         read_only_fields = (
             'last_login', 'is_superuser', 'created', 'modified', 'email',
-            'is_banned', 'username_modifier', 'rank', )
+            'is_banned', 'username_modifier', 'rank', 'rendered_username',)
 
 
 class CategorySerializer(serializers.ModelSerializer):

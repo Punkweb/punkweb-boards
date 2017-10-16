@@ -18,7 +18,7 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^statistics/', StatisticsView.as_view(), name='statistics'),
-    url(r'^api-auth/',
+    url(r'^auth/',
         include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', obtain_auth_token),
+    url(r'^token-auth/', obtain_auth_token),
 ]
