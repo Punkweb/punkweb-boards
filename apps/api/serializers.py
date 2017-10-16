@@ -22,6 +22,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class SubcategorySerializer(serializers.ModelSerializer):
+    last_thread = serializers.ReadOnlyField(source='last_thread.id')
+    last_thread_title = serializers.ReadOnlyField(source='last_thread.title')
+    last_thread_created = serializers.ReadOnlyField(source='last_thread.created')
+    last_thread_user = serializers.ReadOnlyField(source='last_thread.user.rendered_username')
+    thread_count = serializers.ReadOnlyField()
+    post_count = serializers.ReadOnlyField()
     class Meta:
         model = Subcategory
         fields = '__all__'
