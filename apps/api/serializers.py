@@ -30,24 +30,29 @@ class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = '__all__'
+        read_only_fields = ('pinned', 'closed', 'user',
+                            'upvoted_by', 'downvoted_by',)
 
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
+        read_only_fields = ('user', 'upvoted_by', 'downvoted_by',)
 
 
 class ConversationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = '__all__'
+        read_only_fields = ('unread_by',)
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = '__all__'
+        read_only_fields = ('user',)
 
 
 class ShoutSerializer(serializers.ModelSerializer):

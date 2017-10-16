@@ -1,5 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, mixins, views
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken as OriginalObtain
+from rest_framework.decorators import list_route
 from rest_framework.response import Response
 
 from .models import (Category, Subcategory, Thread, Post, Conversation, Message,
@@ -7,7 +12,7 @@ from .models import (Category, Subcategory, Thread, Post, Conversation, Message,
 from .serializers import (CategorySerializer, SubcategorySerializer,
     ThreadSerializer, PostSerializer, MessageSerializer, ShoutSerializer,
     ConversationSerializer, UserSerializer)
-from .permissions import IsTargetUser
+from .permissions import IsTargetUser, BelongsToUser
 from . import queries
 
 
@@ -18,6 +23,29 @@ class UserViewSet(mixins.RetrieveModelMixin,
     queryset = get_user_model().objects.order_by('username')
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated, IsTargetUser,)
+
+    @list_route()
+    def from_token(self, request, *args, **kwargs):
+        token_string = request.query_params.get('token')
+        if not token_string:
+            return Response('Token query param required', status=400)
+        token = get_object_or_404(Token, key=token_string)
+        self.kwargs['pk'] = token.user_id
+        user = self.get_object()
+        return Response(self.get_serializer(user).data)
+
+
+class ObtainAuthToken(OriginalObtain):
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'id': user.id
+        })
+obtain_auth_token = ObtainAuthToken.as_view()
 
 
 class CategoryViewSet(mixins.RetrieveModelMixin,
@@ -50,11 +78,14 @@ class SubcategoryViewSet(mixins.RetrieveModelMixin,
         return qs.all()
 
 
-class ThreadViewSet(mixins.RetrieveModelMixin,
+class ThreadViewSet(mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
                     mixins.ListModelMixin,
+                    mixins.UpdateModelMixin,
                     viewsets.GenericViewSet):
     queryset = Thread.objects.order_by('-created')
     serializer_class = ThreadSerializer
+    permission_classes = (BelongsToUser,)
 
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.is_banned:
@@ -66,12 +97,20 @@ class ThreadViewSet(mixins.RetrieveModelMixin,
                 category__parent__auth_req=False)
         return qs.all()
 
+    def perform_create(self, serializer):
+        if self.request.user.is_authenticated and self.request.user.is_banned:
+            return Thread.objects.none()
+        serializer.save(user=self.request.user)
 
-class PostViewSet(mixins.RetrieveModelMixin,
+
+class PostViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
                   mixins.ListModelMixin,
+                  mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
     queryset = Post.objects.order_by('-created')
     serializer_class = PostSerializer
+    permission_classes = (BelongsToUser,)
 
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.is_banned:
@@ -83,9 +122,16 @@ class PostViewSet(mixins.RetrieveModelMixin,
                 thread__category__parent__auth_req=False)
         return qs.all()
 
+    def perform_create(self, serializer):
+        if self.request.user.is_authenticated and self.request.user.is_banned:
+            return Post.objects.none()
+        serializer.save(user=self.request.user)
 
-class ConversationViewSet(mixins.RetrieveModelMixin,
+
+class ConversationViewSet(mixins.CreateModelMixin,
+                          mixins.RetrieveModelMixin,
                           mixins.ListModelMixin,
+                          mixins.UpdateModelMixin,
                           viewsets.GenericViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
@@ -98,9 +144,16 @@ class ConversationViewSet(mixins.RetrieveModelMixin,
         qs = qs.filter(users__in=[self.request.user])
         return qs.all()
 
+    def perform_create(self, serializer):
+        if self.request.user.is_authenticated and self.request.user.is_banned:
+            return Conversation.objects.none()
+        serializer.save(user=self.request.user)
 
-class MessageViewSet(mixins.RetrieveModelMixin,
+
+class MessageViewSet(mixins.CreateModelMixin,
+                     mixins.RetrieveModelMixin,
                      mixins.ListModelMixin,
+                     mixins.UpdateModelMixin,
                      viewsets.GenericViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
@@ -112,6 +165,11 @@ class MessageViewSet(mixins.RetrieveModelMixin,
         qs = self.queryset
         qs = qs.filter(conversation__users__in=[self.request.user])
         return qs.all()
+
+    def perform_create(self, serializer):
+        if self.request.user.is_authenticated and self.request.user.is_banned:
+            return Message.objects.none()
+        serializer.save(user=self.request.user)
 
 
 class ShoutViewSet(mixins.CreateModelMixin,

@@ -4,6 +4,7 @@ pillow
 psycopg2
 django-precise-bbcode
 django-crispy-forms
+django-cors-headers
 easy-thumbnails
 
 # Scss

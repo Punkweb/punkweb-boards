@@ -3,6 +3,7 @@ from rest_framework import routers
 from .views import (CategoryViewSet, SubcategoryViewSet, ThreadViewSet,
     PostViewSet, ConversationViewSet, MessageViewSet, ShoutViewSet, UserViewSet,
     StatisticsView)
+from apps.api.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register(r'categories', CategoryViewSet)
@@ -18,5 +19,6 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^statistics/', StatisticsView.as_view(), name='statistics'),
     url(r'^api-auth/',
-        include('rest_framework.urls', namespace='rest_framework'))
+        include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', obtain_auth_token),
 ]
