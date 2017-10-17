@@ -75,6 +75,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'apps.api.authentication.NoCSRFSessionAuthentication',
     ),
+    'PAGE_SIZE': 25
 }
 
 ROOT_URLCONF = 'django_boards.urls'
