@@ -75,6 +75,9 @@ class SubcategoryViewSet(mixins.RetrieveModelMixin,
         qs = self.queryset
         if not self.request.user.is_authenticated:
             qs = qs.filter(auth_req=False, parent__auth_req=False)
+        parent = self.request.query_params.get('parent_id')
+        if parent:
+            qs = qs.filter(parent__id=parent)
         return qs.all()
 
 
