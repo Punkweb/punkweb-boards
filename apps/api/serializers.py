@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        exclude = ('auth_req',)
 
 
 class SubcategorySerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class SubcategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subcategory
-        fields = '__all__'
+        exclude = ('auth_req',)
 
 
 class ThreadSerializer(serializers.ModelSerializer):
