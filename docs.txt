@@ -43,8 +43,7 @@ STABLE (works well)
   settings module.  No token or session authentication, as this is more for
   plugins than writing a custom frontend.
 
-  All custom tags from custom_tags.txt are supported in the punkweb theme, but
-  could possibly not work in the bootstrap3 theme.
+  Custom bbcode tags registered at apps/api/bbcode_tags
 
   Gravatar user image support in place as a fallback for users who don't set a
   profile picture.  A typical profile placeholder image is used if neither are
@@ -134,7 +133,7 @@ TODO
   Per-user theme selection
 
   Sceditor hacking to show exactly what you'll see when the bbcode is rendered.
-  Also show all the custom commands in custom_tags.txt on the editor.
+  Show custom tags on the editor.
 
   Polls
 

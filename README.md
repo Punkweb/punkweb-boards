@@ -21,10 +21,9 @@ For now, download [SCEditor](http://www.sceditor.com/) and unzip it at:
 `django-boards/static/sceditor/`
 
 
-### Some custom bbcode tags
+### Custom bbcode tags
 
-Check out custom_tags.txt for a list of bbcode tag definitions and replacement
-html.  Add these in the admin page.
+Check out `apps/api/bbcode_tags.py` to see the available custom tags and add others.
 
 
 ### Almost ready for use!
