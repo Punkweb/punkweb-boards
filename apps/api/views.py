@@ -100,6 +100,9 @@ class ThreadViewSet(mixins.CreateModelMixin,
             qs = qs.filter(
                 category__auth_req=False,
                 category__parent__auth_req=False)
+        subcategory_id = self.request.query_params.get('subcategory_id')
+        if subcategory_id:
+            qs = qs.filter(category__id=subcategory_id)
         return qs.all()
 
     def perform_create(self, serializer):
@@ -193,10 +196,16 @@ class StatisticsView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
+        total_posts = Post.objects.count()
+        total_threads = Thread.objects.count()
+        total_members = get_user_model().objects.count()
         posts_by_dow = queries.posts_by_dow()
         threads_by_dow = queries.threads_by_dow()
         threads_in_subcategories = queries.threads_in_subcategories()
         return Response({
+            'total_posts': total_posts,
+            'total_threads': total_threads,
+            'total_members': total_members,
             'posts_by_dow': posts_by_dow,
             'threads_by_dow': threads_by_dow,
             'threads_in_subcategories': threads_in_subcategories

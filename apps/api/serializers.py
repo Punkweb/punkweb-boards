@@ -28,6 +28,7 @@ class SubcategorySerializer(serializers.ModelSerializer):
     last_thread_title = serializers.ReadOnlyField(source='last_thread.title')
     last_thread_created = serializers.ReadOnlyField(source='last_thread.created')
     last_thread_user = serializers.ReadOnlyField(source='last_thread.user.rendered_username')
+    parent_name = serializers.ReadOnlyField(source='parent.name')
     thread_count = serializers.ReadOnlyField()
     post_count = serializers.ReadOnlyField()
     can_post = serializers.SerializerMethodField()
@@ -42,9 +43,12 @@ class SubcategorySerializer(serializers.ModelSerializer):
 
 class ThreadSerializer(serializers.ModelSerializer):
     last_post = serializers.ReadOnlyField(source='last_post.id')
-    last_post_title = serializers.ReadOnlyField(source='last_post.title')
     last_post_created = serializers.ReadOnlyField(source='last_post.created')
-    last_post_user = serializers.ReadOnlyField(source='last_post.user.rendered_username')
+    last_post_username = serializers.ReadOnlyField(source='last_post.user.username')
+    last_post_rendered_username = serializers.ReadOnlyField(source='last_post.user.rendered_username')
+    user_username = serializers.ReadOnlyField(source='user.username')
+    user_rendered_username = serializers.ReadOnlyField(source='user.rendered_username')
+    user_image = serializers.ReadOnlyField(source='user.avatar')
     flagged = serializers.ReadOnlyField(source='reported')
     posts_count = serializers.ReadOnlyField()
     can_edit = serializers.SerializerMethodField()
