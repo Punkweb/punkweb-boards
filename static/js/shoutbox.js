@@ -92,7 +92,7 @@ $(function() {
     function getShouts() {
       $.get('/api/shouts/', function(data) {
         clearShoutList();
-        shoutList = data;
+        shoutList = data.results;
 
         shoutList.forEach(function(shout) {
           $('#shoutBox').append(shoutLine(shout));
