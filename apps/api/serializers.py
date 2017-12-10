@@ -49,6 +49,8 @@ class ThreadSerializer(serializers.ModelSerializer):
     user_username = serializers.ReadOnlyField(source='user.username')
     user_rendered_username = serializers.ReadOnlyField(source='user.rendered_username')
     user_image = serializers.ReadOnlyField(source='user.avatar')
+    user_post_count = serializers.ReadOnlyField(source='user.post_count')
+    user_join_date = serializers.ReadOnlyField(source='user.created')
     flagged = serializers.ReadOnlyField(source='reported')
     posts_count = serializers.ReadOnlyField()
     can_edit = serializers.SerializerMethodField()

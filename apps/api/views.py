@@ -81,8 +81,6 @@ class SubcategoryViewSet(mixins.RetrieveModelMixin,
         return qs.all()
 
 
-# TODO: There is probably nothing stopping a user from creating a thread
-# through the API in a category marked admin_req
 class ThreadViewSet(mixins.CreateModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.ListModelMixin,
