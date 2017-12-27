@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'sass_processor',
     'easy_thumbnails',
     'apps.api',
-    'apps.common',
     'apps.board',
 ]
 

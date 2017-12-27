@@ -19,40 +19,10 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
 
 from apps.board import settings as BOARD_SETTINGS
-from apps.common import utils
-from apps.common.models import (
-    CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin)
-
-
-def get_placeholder_url():
-    url = '/'.join(['placeholder_profile.png'])
-    # url = '{}placeholder_profile.png'.format(settings.MEDIA_ROOT)
-    return url
-
-
-def get_gravatar_url(email, size=80, secure=True, default='mm'):
-    if secure:
-        url_base = 'https://secure.gravatar.com/'
-    else:
-        url_base = 'http://www.gravatar.com/'
-    email_hash = hashlib.md5(email.encode('utf-8').strip().lower()).hexdigest()
-    qs = urlencode({
-        's': str(size),
-        'd': default,
-        'r': 'pg',
-    })
-    url = '{}avatar/{}.jpg?{}'.format(url_base, email_hash, qs)
-    return url
-
-
-def has_gravatar(email):
-    url = get_gravatar_url(email, default='404')
-    try:
-        request = Request(url)
-        request.get_method = lambda: 'HEAD'
-        return 200 == urlopen(request).code
-    except (HTTPError, URLError):
-        return False
+from .mixins import (
+    CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin,
+    AvatarImagesMixin,)
+from . import utils
 
 
 def user_image_file_name(instance, filename):
@@ -60,48 +30,6 @@ def user_image_file_name(instance, filename):
     ext = (filename.split('.')[-1]).lower()
     filename = '{}.{}'.format(instance.username, ext)
     return '/'.join(['user_images', folder, filename])
-
-
-class AvatarImagesMixin(models.Model):
-    @property
-    def avatar(self):
-        if not self.image:
-            if has_gravatar(self.email):
-                return get_gravatar_url(self.email, size=200)
-            return get_thumbnailer(get_placeholder_url())['avatar'].url
-        else:
-            return self.image['avatar'].url
-
-    @property
-    def avatar_small(self):
-        if not self.image:
-            if has_gravatar(self.email):
-                return get_gravatar_url(self.email, size=100)
-            return get_thumbnailer(get_placeholder_url())['avatar_small'].url
-        else:
-            return self.image['avatar_small'].url
-
-    @property
-    def avatar_smaller(self):
-        if not self.image:
-            if has_gravatar(self.email):
-                return get_gravatar_url(self.email, size=50)
-            return get_thumbnailer(get_placeholder_url())['avatar_smaller'].url
-        else:
-            return self.image['avatar_smaller'].url
-
-    @property
-    def avatar_smallest(self):
-        if not self.image:
-            if has_gravatar(self.email):
-                return get_gravatar_url(self.email, size=25)
-            return get_thumbnailer(get_placeholder_url())['avatar_smallest'].url
-        else:
-            return self.image['avatar_smallest'].url
-
-
-    class Meta:
-        abstract = True
 
 
 class EmailUserManager(BaseUserManager):

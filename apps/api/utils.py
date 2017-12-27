@@ -33,3 +33,31 @@ def render_username(user):
         return mark_safe(parser.render(replace_username))
     else:
         return user.username
+
+def get_gravatar_url(email, size=80, secure=True, default='mm'):
+    if secure:
+        url_base = 'https://secure.gravatar.com/'
+    else:
+        url_base = 'http://www.gravatar.com/'
+    email_hash = hashlib.md5(email.encode('utf-8').strip().lower()).hexdigest()
+    qs = urlencode({
+        's': str(size),
+        'd': default,
+        'r': 'pg',
+    })
+    url = '{}avatar/{}.jpg?{}'.format(url_base, email_hash, qs)
+    return url
+
+def has_gravatar(email):
+    url = get_gravatar_url(email, default='404')
+    try:
+        request = Request(url)
+        request.get_method = lambda: 'HEAD'
+        return 200 == urlopen(request).code
+    except (HTTPError, URLError):
+        return False
+
+def get_placeholder_url():
+    url = '/'.join(['placeholder_profile.png'])
+    # url = '{}placeholder_profile.png'.format(settings.MEDIA_ROOT)
+    return url
