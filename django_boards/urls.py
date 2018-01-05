@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
+from graphene_django.views import GraphQLView
 
 from django_boards import settings
 from django_boards import views
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^board/', include('apps.board.urls', namespace='board')),
     url(r'^api/', include('apps.api.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^graphql/', GraphQLView.as_view(graphiql=True)),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

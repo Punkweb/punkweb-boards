@@ -46,10 +46,8 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'apps.api',
     'apps.board',
+    'graphene_django',
 ]
-
-if BOARD_THEME == 'bootstrap3':
-    INSTALLED_APPS.append('crispy_forms')
 
 # Auth Configuration
 AUTH_USER_MODEL = 'api.EmailUser'
@@ -73,6 +71,10 @@ REST_FRAMEWORK = {
         'apps.api.authentication.NoCSRFSessionAuthentication',
     ),
     'PAGE_SIZE': 25
+}
+
+GRAPHENE = {
+    'SCHEMA': 'django_boards.schema.schema',
 }
 
 ROOT_URLCONF = 'django_boards.urls'
@@ -167,11 +169,6 @@ STATICFILES_FINDERS = (
     # Other finders..
     'sass_processor.finders.CssFinder',
 )
-
-# Crispy forms
-
-if BOARD_THEME == 'bootstrap3':
-    CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 # Easy thumbnails
