@@ -22,6 +22,7 @@ class UserTag(BBCodeTag):
     class Options:
         standalone = True
 
+
 class CodeTag(BBCodeTag):
     name = 'code'
     definition_string = '[code]{TEXT}[/code]'

@@ -5,7 +5,7 @@ GLOBAL_BIRTHDAYS = True # TODO: create component for this
 # Display user signatures and allow users to set them in profile settings
 SIGNATURES_ENABLED = True
 
-# Theme (bootstrap3, punkweb)
+# Theme (punkweb)
 BOARD_THEME = 'punkweb'
 
 # Shoutbox settings
