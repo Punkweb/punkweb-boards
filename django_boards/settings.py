@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.api',
     'apps.board',
     'graphene_django',
+    'captcha',
 ]
 
 # Auth Configuration

@@ -7,6 +7,7 @@ django-cors-headers
 easy-thumbnails
 graphene-django
 django-filter
+django-simple-captcha
 
 # Scss
 # Make sure that you have sass executable installed. See SASS official site for details.
