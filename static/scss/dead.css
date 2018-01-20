@@ -184,6 +184,9 @@ a:link, a:visited {
   a:link:hover, a:link :active, a:visited:hover, a:visited :active {
     text-decoration: underline; }
 
+.errorlist li {
+  color: #e03131; }
+
 .spoiler__content {
   background-color: #0f1011;
   visibility: hidden;

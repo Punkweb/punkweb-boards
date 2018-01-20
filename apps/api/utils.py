@@ -1,3 +1,7 @@
+import hashlib
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
 from django.utils.safestring import mark_safe
 from precise_bbcode.bbcode import get_parser
 from apps.board import settings as BOARD_SETTINGS

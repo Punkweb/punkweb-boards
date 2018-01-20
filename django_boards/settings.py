@@ -50,9 +50,6 @@ INSTALLED_APPS = [
     'captcha',
 ]
 
-if CAPTCHAS_ENABLED:
-    INSTALLED_APPS += ['captcha']
-
 # Auth Configuration
 AUTH_USER_MODEL = 'api.EmailUser'
 LOGIN_REDIRECT_URL = '/board/'

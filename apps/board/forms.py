@@ -85,7 +85,7 @@ class RegistrationForm(forms.Form):
         label=_("Password (again)")
     )
     if CAPTCHAS_ENABLED:
-        captcha = forms.CaptchaField()
+        captcha = CaptchaField()
 
     def clean_username(self):
         try:

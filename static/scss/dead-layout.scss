@@ -22,6 +22,12 @@ a:link, a:visited {
   }
 }
 
+.errorlist {
+  li {
+    color: $oc-red-8;
+  }
+}
+
 .spoiler {
   &__content {
     background-color: $body-background;
@@ -32,7 +38,6 @@ a:link, a:visited {
     cursor: pointer;
   }
 }
-
 
 .nav {
   width: 100%;
