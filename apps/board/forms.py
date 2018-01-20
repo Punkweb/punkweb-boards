@@ -84,7 +84,7 @@ class RegistrationForm(forms.Form):
             attrs=dict(required=True, max_length=30, render_value=False)),
         label=_("Password (again)")
     )
-    captcha = forms.CaptchaField()
+    captcha = CaptchaField()
 
     def clean_username(self):
         try:
