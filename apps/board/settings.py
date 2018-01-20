@@ -17,6 +17,8 @@ SHOUTBOX_DISABLED_TAGS = [
     'img', 'hr', 'ol', 'ul', 'li', 'youtube'
 ]
 
+CAPTCHAS_ENABLED = True
+
 USERNAME_MODIFIERS_ENABLED = True
 # TODO: Make disabled tags work
 USERNAME_MODIFIERS_DISABLED_TAGS = [

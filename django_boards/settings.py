@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from apps.board.settings import BOARD_THEME
+from apps.board.settings import BOARD_THEME, CAPTCHAS_ENABLED
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'graphene_django',
     'captcha',
 ]
+
+if CAPTCHAS_ENABLED:
+    INSTALLED_APPS += ['captcha']
 
 # Auth Configuration
 AUTH_USER_MODEL = 'api.EmailUser'

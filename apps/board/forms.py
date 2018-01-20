@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from captcha.fields import CaptchaField
 from easy_thumbnails.widgets import ImageClearableFileInput
-from .settings import BOARD_THEME, SIGNATURES_ENABLED
+from .settings import BOARD_THEME, CAPTCHAS_ENABLED, SIGNATURES_ENABLED
 from apps.api.models import EmailUser, Thread, Post, Shout, Report, Message
 
 
@@ -84,7 +84,8 @@ class RegistrationForm(forms.Form):
             attrs=dict(required=True, max_length=30, render_value=False)),
         label=_("Password (again)")
     )
-    captcha = forms.CaptchaField()
+    if CAPTCHAS_ENABLED:
+        captcha = forms.CaptchaField()
 
     def clean_username(self):
         try:
