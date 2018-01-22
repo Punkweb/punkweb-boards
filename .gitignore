@@ -1,5 +1,7 @@
 sceditor/
 
+checklist.txt
+
 
 ### Sqlite database
 *.sqlite3
