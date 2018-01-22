@@ -23,7 +23,7 @@ from django_boards import views
 
 urlpatterns = [
     # url(r'^$', views.portal_view, name='portal'),
-    url(r'^/', include('apps.board.urls', namespace='board')),
+    url(r'^board/', include('apps.board.urls', namespace='board')),
     url(r'^api/', include('apps.api.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^graphql/', GraphQLView.as_view(graphiql=True)),
