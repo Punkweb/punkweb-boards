@@ -152,11 +152,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'server', 'dev', 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'server', 'dev', 'media')
+STATIC_ROOT = '/var/www/punkweb.us/static/'
+MEDIA_ROOT = '/var/www/punkweb.us/media/'
 
-STATIC_URL = '/var/www/punkweb.us/static/'
-MEDIA_URL = '/var/www/punkweb.us/media/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
