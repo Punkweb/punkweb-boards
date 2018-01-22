@@ -77,6 +77,8 @@ STABLE (works well)
 
   Fully responsive punkweb layout and theme.
 
+  Integrates with django-simple-captcha.
+
 
 
 
@@ -126,6 +128,9 @@ EXPERIMENTAL (in development but not ready to use in a public website)
   The board settings module has loads of configurations that work, but I want
   to go through every feature in the forum and make sure that they can be
   configured to fit any specific needs as well as lack of need.
+
+  graphene-django API, very unrestrictive, needs to be tightened up before using
+  in production.
 
 
 TODO

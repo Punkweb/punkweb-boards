@@ -1,22 +1,22 @@
-$primary: $oc-gray-7;
+$primary: $oc-red-7;
 $primary-link: $oc-blue-7;
-$default-text-on-light: lighten(black, 10%);
-$default-text-on-dark: darken(white, 10%);
-$default-text: $default-text-on-dark;
+$default-text-on-light: $oc-gray-9;
+$default-text-on-dark: $oc-gray-2;
+$default-text: $default-text-on-light;
 
-$body-background: mix(black, $primary, 80%);
+$body-background: $oc-gray-2;
 $upper-nav: mix(black, $primary, 85%);
 $upper-nav-link: darken(white, 20%);
 $main-nav: mix(black, $primary, 45%);
-$main-nav-title: $default-text;
-$main-nav-text: $default-text;
-$main-nav-link: $default-text;
+$main-nav-title: $default-text-on-dark;
+$main-nav-text: $default-text-on-dark;
+$main-nav-link: $default-text-on-dark;
 $page-header: mix(black, $primary, 55%);
-$page-header-text: $default-text;
+$page-header-text: $default-text-on-dark;
 
-$breadcrumb-active: $default-text;
+$breadcrumb-active: darken($default-text-on-dark, 15%);
 $breadcrumb-separator: $default-text;
-$breadcrumb-link: $primary-link;
+$breadcrumb-link: $default-text-on-dark;
 
 $hr: mix(black, $primary, 45%);
 
@@ -28,22 +28,23 @@ $dropdown-shadow: 0px .5rem 1rem 0px rgba(0, 0, 0, 0.2);
 
 $panel-header: mix(black, $primary, 45%);
 $panel-title: $oc-white;
-$panel-body: mix(black, $primary, 70%);
+$panel-body: white;
+$panel-text: $default-text-on-light;
 $panel-footer: mix(black, $primary, 50%);
 $panel-opacity: 1;
 
 $table-header: $panel-header;
-$table-header-text: $default-text;
-$table-header-link: $default-text;
+$table-header-text: $default-text-on-dark;
+$table-header-link: $default-text-on-dark;
 $table-body: $panel-body;
 $table-body-text: $default-text;
 $table-body-link: $primary-link;
 
-$footer: $upper-nav;
-$footer-text: $default-text;
-$footer-link: $primary-link;
+$footer: $panel-header;
+$footer-text: $default-text-on-dark;
+$footer-link: $oc-gray-3;
 
-$input-placeholder: darken($default-text, 15%);
+$input-placeholder: darken($default-text-on-dark, 15%);
 
 $editor-container: $body-background;
 $editor-text: $default-text-on-dark;
