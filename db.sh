@@ -2,7 +2,7 @@
 #
 #
 sudo apt-get update
-sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contrib libz-dev libjpeg-dev libfreetype6-dev python-dev
+sudo apt-get install python-pip python-dev python3-dev libpq-dev postgresql postgresql-contrib libz-dev libjpeg-dev libfreetype6-dev
 
 echo "CREATE DATABASE django_boards; \
 CREATE USER django_boards WITH PASSWORD 'django_boards'; \

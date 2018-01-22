@@ -13,3 +13,4 @@ integration ideas -
   paypal
   twitch
   mailchimp
+  nfl
