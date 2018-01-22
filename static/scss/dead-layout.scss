@@ -114,7 +114,7 @@ a:link, a:visited {
     @include bold;
     @include font-range(16, 20);
     color: $page-header-text;
-    margin: 1rem 0;
+    padding: 1.25rem 0;
   }
 
   &__flex {
@@ -213,7 +213,7 @@ a:link, a:visited {
 
 
 .panel {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   opacity: $panel-opacity;
 
   &__header {
@@ -223,7 +223,7 @@ a:link, a:visited {
     flex-direction: row;
     align-items: center;
     background-color: $panel-header;
-    padding: 0.5rem 0.5rem;
+    padding: 1rem 0.75rem;
   }
   &__title {
     @include medium;
@@ -233,6 +233,7 @@ a:link, a:visited {
   &__body {
     @include font-range(12, 14);
     background-color: $panel-body;
+    color: $panel-text;
     a {
       color: $primary-link;
     }
@@ -240,6 +241,7 @@ a:link, a:visited {
   &__footer {
     @include font-range(12, 14);
     background-color: $panel-footer;
+    color: $panel-text;
     padding: 0.5rem .5rem;
   }
 }
@@ -254,7 +256,7 @@ a:link, a:visited {
       th {
         @include medium;
         @include font-range(12, 14);
-        padding: 0.5rem;
+        padding: 1rem 0.75rem;
         a {
           color: $table-header-link;
         }
@@ -331,7 +333,7 @@ a:link, a:visited {
 
 input[type="text"], input[type="password"], textarea {
   background-color: transparent;
-  color: $default-text;
+  color: inherit;
   border: 1px solid desaturate($primary, 25%);
   display: block;
   margin: 0;
@@ -341,17 +343,7 @@ input[type="text"], input[type="password"], textarea {
   box-shadow: none;
   border-radius: 2px;
   padding: .5rem;
-
-  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: $input-placeholder;
-  }
-  &::-moz-placeholder { /* Firefox 19+ */
-    color: $input-placeholder;
-  }
-  &:-ms-input-placeholder { /* IE 10+ */
-    color: $input-placeholder;
-  }
-  &:-moz-placeholder { /* Firefox 18- */
+  @include placeholder {
     color: $input-placeholder;
   }
   &:focus {
@@ -360,7 +352,7 @@ input[type="text"], input[type="password"], textarea {
 }
 
 .recentActivity, .recentThreads {
-  margin-left: 0.5rem;
+  margin-left: 1rem;
 }
 
 .flexrow {
@@ -380,11 +372,6 @@ input[type="text"], input[type="password"], textarea {
 .search {
   background-color: transparent !important;
   position: relative;
-
-  input {
-    background-color: transparent !important;
-    padding-right: 2.5rem;
-  }
 }
 
 .search .fa-search {
@@ -413,7 +400,7 @@ input[type="text"], input[type="password"], textarea {
     flex-direction: column;
     align-items: center;
     flex: 2;
-    border-right: 2px solid mix(black, $primary, 45%);
+    border-right: 2px solid $oc-gray-4;
 
     &__name {
       margin: .25rem 0;
@@ -429,11 +416,11 @@ input[type="text"], input[type="password"], textarea {
     overflow-wrap: break-word;
   }
   &__content {
-    padding: 0 0.5rem 0.5rem 0.5rem;
+    padding: 0 1rem 0.5rem 1rem;
     overflow-wrap: break-word;
   }
   &__signature {
-    border-top: 2px solid mix(black, $primary, 45%);
+    border-top: 2px solid $oc-gray-4;
     padding: 0.5rem;
   }
   &__actions {

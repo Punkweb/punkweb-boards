@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3u@gq^l@i5ji7obrnjm8x3@1f!=998++k7w-v^7md)830x@zvx'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -110,9 +110,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'django_boards',
         'USER': 'django_boards',
-        'PASSWORD': 'django_boards',
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
@@ -155,8 +155,8 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'server', 'dev', 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'server', 'dev', 'media')
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+STATIC_URL = '/var/www/punkweb.us/static/'
+MEDIA_URL = '/var/www/punkweb.us/media/'
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
