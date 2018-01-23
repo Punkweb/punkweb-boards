@@ -49,21 +49,13 @@ $(function() {
 
     var editor = $('#shoutEditor').sceditor({
       plugins: 'bbcode',
-      toolbar: 'bold,italic,underline,strike|font,size,color,link,emoticon|date,time|source,removeformat',
+      toolbar: 'bold,italic,underline,strike|font,size,color,link|date,time|source,removeformat',
       style: '/static/scss/_editor.min.css',
       fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
       autoExpand: true,
-      emoticonsEnabled: true,
+      emoticonsEnabled: false,
       emoticonsCompat: true,
       emoticonsRoot: '/media/precise_bbcode/smilies/',
-      emoticons: {
-        dropdown: {
-          ":gd:": "gd.png",
-          ":gimli:": "gimli.jpg",
-          ":tool:": "tool.jpg"
-        },
-        hidden: {}
-      }
     });
 
     $('#submitShout').click(function($event) {
