@@ -195,6 +195,18 @@ a:link, a:visited {
 .spoiler__open {
   cursor: pointer; }
 
+.button {
+  appearance: none;
+  background: #9c2828;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  padding: .75rem 1.5rem; }
+  .button a {
+    color: white; }
+
 .nav {
   width: 100%; }
   .nav--upper {

@@ -59,7 +59,7 @@ $(function() {
       emoticons: {
         dropdown: {
           ":gd:": "gd.png",
-          "gimli:": "gimli.jpg"
+          ":gimli:": "gimli.jpg"
         },
         hidden: {}
       }
