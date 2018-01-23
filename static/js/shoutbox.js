@@ -48,14 +48,21 @@ $(function() {
     });
 
     var editor = $('#shoutEditor').sceditor({
-      plugins: 'bbcode',
-      toolbar: 'bold,italic,underline,strike|font,size,color,link|date,time|source,removeformat',
+      format: 'bbcode',
+      toolbar: 'bold,italic,underline,strike|font,size,color,link,emoticon|date,time|source,removeformat',
       style: '/static/scss/_editor.css',
       fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
       autoExpand: true,
-      emoticonsEnabled: false,
+      emoticonsEnabled: true,
       emoticonsCompat: true,
       emoticonsRoot: '/media/precise_bbcode/smilies/',
+      emoticons: {
+        dropdown: {
+          ":gd:": "gd.png",
+          "gimli:": "gimli.jpg"
+        },
+        hidden: {}
+      }
     });
 
     $('#submitShout').click(function($event) {
@@ -84,7 +91,7 @@ $(function() {
     function getShouts() {
       $.get('/api/shouts/', function(data) {
         clearShoutList();
-        shoutList = data.results;
+        shoutList = data;
 
         shoutList.forEach(function(shout) {
           $('#shoutBox').append(shoutLine(shout));

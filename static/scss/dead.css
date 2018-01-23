@@ -55,19 +55,19 @@ pre {
 /* Padding classes
 *******************************************************************************/
 .padding {
-  padding: 0.5rem; }
+  padding: 1rem; }
 
 .padding-left {
-  padding-left: 0.5rem; }
+  padding-left: 1rem; }
 
 .padding-right {
-  padding-right: 0.5rem; }
+  padding-right: 1rem; }
 
 .padding-top {
-  padding-top: 0.5rem; }
+  padding-top: 1rem; }
 
 .padding-bottom {
-  padding-bottom: 0.5rem; }
+  padding-bottom: 1rem; }
 
 /* Margin classes
 *******************************************************************************/
@@ -75,19 +75,19 @@ pre {
   margin: 0; }
 
 .margin {
-  margin: 0.5rem; }
+  margin: 1rem; }
 
 .margin-left {
-  margin-left: 0.5rem; }
+  margin-left: 1rem; }
 
 .margin-right {
-  margin-right: 0.5rem; }
+  margin-right: 1rem; }
 
 .margin-top {
-  margin-top: 0.5rem; }
+  margin-top: 1rem; }
 
 .margin-bottom {
-  margin-bottom: 0.5rem; }
+  margin-bottom: 1rem; }
 
 html, body {
   font-family: 'Open-Sans', 'Calibri', 'sans-serif';
@@ -325,7 +325,7 @@ a:link, a:visited {
   min-height: 100vh; }
 
 .main {
-  margin: 0.5rem 0; }
+  margin: 1rem 0; }
 
 .djcontainer {
   box-sizing: border-box;
@@ -399,6 +399,8 @@ a:link, a:visited {
     @media only screen and (max-width: 1440) {
       .panel__title {
         font-size: 1rem; } }
+    .panel__title a {
+      color: #ffffff; }
   .panel__body {
     font-size: calc(0.85714rem + (14 - 12) * (100vw - 22.85714rem) / (1440 - 320));
     background-color: white;
@@ -414,8 +416,8 @@ a:link, a:visited {
   .panel__footer {
     font-size: calc(0.85714rem + (14 - 12) * (100vw - 22.85714rem) / (1440 - 320));
     background-color: #781f1f;
-    color: #212529;
-    padding: 0.5rem .5rem; }
+    color: white;
+    padding: 0.75rem; }
     @media only screen and (max-width: 320) {
       .panel__footer {
         font-size: 0.85714rem; } }
@@ -512,12 +514,12 @@ a:link, a:visited {
   display: none;
   position: absolute;
   min-width: 160px;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   z-index: 1; }
 
 .notification {
   background-color: #541616;
-  padding: 0.5rem;
+  padding: 1rem;
   opacity: .75; }
   .notification a {
     color: #1c7cd6; }
@@ -580,7 +582,7 @@ input[type="text"], input[type="password"], textarea {
 .thread {
   display: flex;
   flex-direction: row;
-  padding: 0.5rem;
+  padding: 0;
   overflow-wrap: break-word; }
   .thread__user {
     display: flex;
@@ -597,7 +599,7 @@ input[type="text"], input[type="password"], textarea {
     max-width: 84%;
     overflow-wrap: break-word; }
   .thread__content {
-    padding: 0 1rem 0.5rem 1rem;
+    padding: 1rem;
     overflow-wrap: break-word; }
   .thread__signature {
     border-top: 2px solid #ced4da;
@@ -693,22 +695,21 @@ input[type="text"], input[type="password"], textarea {
     padding: .5rem 0; } }
 
 .sceditor-container {
-  background: #e9ecef;
+  background: #f1f3f5;
   border: 1px solid #d65858;
-  color: #e9ecef; }
+  color: #212529; }
 
 .sceditor-container iframe,
 .sceditor-container textarea {
-  background: #e9ecef;
-  color: #e9ecef; }
+  background: #f1f3f5;
+  color: #212529; }
 
 div.sceditor-toolbar {
-  background: white;
-  border-bottom: 1px solid #d65858; }
+  background: #ffffff; }
 
 div.sceditor-group {
-  background: #e9ecef;
-  border-bottom: 1px solid #d65858; }
+  background: #ffffff;
+  border-color: #ced4da !important; }
 
 .sceditor-button:hover,
 .sceditor-button:active,
@@ -720,18 +721,18 @@ div.sceditor-group {
 
 div.sceditor-dropdown {
   border: 1px solid #d65858;
-  background: #e9ecef;
-  color: #e9ecef; }
+  background: #f1f3f5;
+  color: #212529; }
 
 .sceditor-dropdown a:hover {
   background: #d65858; }
 
 div.sceditor-dropdown a,
 div.sceditor-dropdown a:link {
-  color: #e9ecef; }
+  color: #212529; }
 
 div.sceditor-dropdown label {
-  color: #e9ecef; }
+  color: #212529; }
 
 div.sceditor-dropdown input,
 div.sceditor-dropdown textarea {
@@ -745,14 +746,17 @@ div.sceditor-dropdown textarea:focus {
 
 div.sceditor-dropdown .button {
   color: #e9ecef;
-  background: #e9ecef;
+  background: #ffffff;
   border: solid 1px #d65858; }
 
 div.sceditor-dropdown .button:hover {
   background: #f8f9fa; }
 
 .sceditor-color-option {
-  border: 1px solid #e9ecef; }
+  border: 1px solid #f1f3f5; }
 
 .sceditor-color-option:hover {
   border: 1px solid white; }
+
+.sceditor-button {
+  background: #ffffff; }

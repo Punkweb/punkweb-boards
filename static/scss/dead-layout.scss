@@ -163,7 +163,7 @@ a:link, a:visited {
 }
 
 .main {
-  margin: 0.5rem 0;
+  margin: 1rem 0;
 }
 
 .djcontainer {
@@ -229,6 +229,9 @@ a:link, a:visited {
     @include medium;
     @include font-range(12, 14);
     color: $panel-title;
+    a {
+      color: $panel-title;
+    }
   }
   &__body {
     @include font-range(12, 14);
@@ -241,8 +244,8 @@ a:link, a:visited {
   &__footer {
     @include font-range(12, 14);
     background-color: $panel-footer;
-    color: $panel-text;
-    padding: 0.5rem .5rem;
+    color: white;
+    padding: 0.75rem;
   }
 }
 
@@ -312,13 +315,13 @@ a:link, a:visited {
   display: none;
   position: absolute;
   min-width: 160px;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   z-index: 1;
 }
 
 .notification {
   background-color: mix(black, $primary, 65%);
-  padding: 0.5rem;
+  padding: 1rem;
   opacity: .75;
   a {
     color: $primary-link;
@@ -392,7 +395,7 @@ input[type="text"], input[type="password"], textarea {
 .thread {
   display: flex;
   flex-direction: row;
-  padding: 0.5rem;
+  padding: 0;
   overflow-wrap: break-word;
 
   &__user {
@@ -416,7 +419,7 @@ input[type="text"], input[type="password"], textarea {
     overflow-wrap: break-word;
   }
   &__content {
-    padding: 0 1rem 0.5rem 1rem;
+    padding: 1rem;
     overflow-wrap: break-word;
   }
   &__signature {

@@ -46,13 +46,13 @@ $footer-link: $oc-gray-3;
 
 $input-placeholder: darken($default-text-on-dark, 15%);
 
-$editor-container: $body-background;
-$editor-text: $default-text-on-dark;
+$editor-container: $oc-gray-1;
+$editor-text: $default-text-on-light;
 $editor-border: desaturate($primary, 25%);
-$editor-toolbar: lighten($body-background, 15%);
-$editor-toolbar-group: $oc-gray-2;
+$editor-toolbar: $oc-white;
+$editor-toolbar-group: $oc-white;
 $editor-toolbar-group-hover: lighten($body-background, 70%);
-$editor-button: $body-background;
+$editor-button: $oc-white;
 $editor-button-hover: lighten($body-background, 5%);
 $editor-button-text: $default-text-on-dark;
 $editor-button-border: desaturate($primary, 25%);

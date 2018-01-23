@@ -10,11 +10,10 @@
 }
 div.sceditor-toolbar {
   background: $editor-toolbar;
-  border-bottom: 1px solid $editor-border;
 }
 div.sceditor-group {
   background: $editor-toolbar-group;
-  border-bottom: 1px solid $editor-border;
+  border-color: $oc-gray-4 !important;
 }
 .sceditor-button:hover,
 .sceditor-button:active,
@@ -63,4 +62,7 @@ div.sceditor-dropdown .button:hover {
 }
 .sceditor-color-option:hover {
   border: 1px solid white;
+}
+.sceditor-button {
+  background: $editor-button;
 }

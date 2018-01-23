@@ -29,6 +29,7 @@
             <div class="panel__title">Recent Threads</div>
           </div>
           <div class="panel__body padding">
+            {% if not recent_threads %}
             {% for thread in recent_threads %}
             <div class="clearMargin padding-bottom">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
@@ -42,6 +43,9 @@
               {% endif %}
             </div>
             {% endfor %}
+            {% else %}
+            No recent threads
+            {% endif %}
           </div>
         </div>
         <div class="panel recentActivity">
@@ -49,6 +53,7 @@
             <div class="panel__title">Recent Activity</div>
           </div>
           <div class="panel__body padding">
+            {% if not recent_activity %}
             {% for thread in recent_activity %}
             <div class="clearMargin padding-bottom">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
@@ -68,6 +73,9 @@
               {% endif %}
             </div>
             {% endfor %}
+            {% else %}
+            No recent activity
+            {% endif %}
           </div>
         </div>
       </div>
