@@ -4,7 +4,7 @@ html, body, p, code:before, table {
   padding: 0;
   font-family: 'sans-serif';
   font-size: 14px;
-  color: #e6e6e6; }
+  color: black; }
 
 html {
   height: 100%;
