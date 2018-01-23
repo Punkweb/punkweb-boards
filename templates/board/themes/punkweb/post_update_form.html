@@ -30,8 +30,8 @@
       <div class="panel__body padding">
         <form method="post">
           {% csrf_token %}
-          {{ form }}
-          <input type="submit" value="Submit" />
+          {{ form.as_p }}
+          <input class="button" type="submit" value="Submit" />
         </form>
       </div>
     </div>

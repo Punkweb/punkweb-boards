@@ -16,8 +16,10 @@
     <form>
       <div id="shoutboxError"></div>
       <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
-      <input class="button" id="submitShout" type="button" name="name" value="Post Shout">
-      <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+      <div class="padding-top padding-bottom">
+        <input class="button" id="submitShout" type="button" name="name" value="Post Shout">
+        <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+      </div>
     </form>
     {% else %}
     <input id="reloadShouts" type="button" name="name" value="Reload Shouts">

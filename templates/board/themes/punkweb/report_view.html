@@ -34,15 +34,15 @@
         {{report.post.content.rendered}}
         <br/>
         <br/>
-        <a href="{% url 'board:post-update' report.post.id %}">Update Post</a>
-        <a href="{% url 'board:post-delete' report.post.id %}">Delete Post</a>
+        <a class="button" href="{% url 'board:post-update' report.post.id %}">Update Post</a>
+        <a class="button" href="{% url 'board:post-delete' report.post.id %}">Delete Post</a>
         {% elif report.thread%}
         <h3>Thread Content</h3>
         {{report.thread.content.rendered}}
         <br/>
         <br/>
-        <a href="{% url 'board:thread-update' report.thread.id %}">Update Thread</a>
-        <a href="{% url 'board:thread-delete' report.thread.id %}">Delete Thread</a>
+        <a class="button" href="{% url 'board:thread-update' report.thread.id %}">Update Thread</a>
+        <a class="button" href="{% url 'board:thread-delete' report.thread.id %}">Delete Thread</a>
         {% endif %}
         {% if not report.resolved %}
         <br/>
