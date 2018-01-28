@@ -15,7 +15,7 @@ $page-header: mix(black, $primary, 55%);
 $page-header-text: $default-text-on-dark;
 
 $breadcrumb-active: darken($default-text-on-dark, 15%);
-$breadcrumb-separator: $default-text;
+$breadcrumb-separator: darken($default-text-on-dark, 20%);
 $breadcrumb-link: $default-text-on-dark;
 
 $hr: mix(black, $primary, 45%);

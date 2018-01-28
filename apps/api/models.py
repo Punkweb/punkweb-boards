@@ -64,7 +64,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     is_banned = models.BooleanField(default=False)
 
-    rank = models.ForeignKey('UserRank', blank=True, null=True)
+    rank = models.ForeignKey('UserRank', blank=True, null=True, on_delete=models.SET_NULL)
     username_modifier = models.TextField(
         max_length=250, blank=True, null=True,
         help_text="BBCode. Just add {USER} where " \
@@ -99,7 +99,6 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     @property
     def age(self):
-        # Ugly but hey, it works.
         if not self.birthday:
             return 0
         today = datetime.date.today()

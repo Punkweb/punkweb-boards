@@ -418,6 +418,7 @@ input[type="text"], input[type="password"], textarea {
     align-items: center;
     flex: 2;
     border-right: 2px solid $oc-gray-4;
+    padding: 1rem 0;
 
     &__name {
       margin: .25rem 0;
@@ -438,7 +439,7 @@ input[type="text"], input[type="password"], textarea {
   }
   &__signature {
     border-top: 2px solid $oc-gray-4;
-    padding: 0.5rem;
+    padding: 1rem;
   }
   &__actions {
     display: flex;
