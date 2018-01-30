@@ -198,7 +198,7 @@ class Category(UUIDPrimaryKey):
 
 class Subcategory(UUIDPrimaryKey):
     parent = models.ForeignKey(
-        Category, blank=True, null=True, default=None)
+        Category, blank=True, null=True, default=None, on_delete=models.CASCADE)
     name = models.CharField(max_length=96, blank=False, null=False)
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
