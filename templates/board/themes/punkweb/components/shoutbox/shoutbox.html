@@ -7,24 +7,24 @@
     <div class="panel__title">Shoutbox</div>
   </div>
   {% if BOARD_SETTINGS.SHOUTBOX_DEFAULT_CLOSED %}
-  <div class="panel__body padding spoiler__content">
+  <div class="panel__body spoiler__content">
   {% else %}
-  <div class="panel__body padding spoiler__content spoiler__content--show">
+  <div class="panel__body spoiler__content spoiler__content--show">
   {% endif %}
     <div id="shoutBox" class="shoutList"></div>
     {% if user.is_authenticated and user.can_shout %}
-    <div class="shoutbox">
-      <form>
-        <div id="shoutboxError"></div>
-        <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
-        <div class="padding-top padding-bottom">
-          <input class="button" id="submitShout" type="button" name="name" value="Post Shout">
-          <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
-        </div>
-      </form>
-    </div>
+    <form class="shoutForm">
+      <div id="shoutboxError"></div>
+      <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
+      <div class="padding-top">
+        <input class="button" id="submitShout" type="button" name="name" value="Post Shout">
+        <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+      </div>
+    </form>
     {% else %}
-    <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+    <div class="padding-top">
+      <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+    </div>
     {% endif %}
   </div>
 </div>

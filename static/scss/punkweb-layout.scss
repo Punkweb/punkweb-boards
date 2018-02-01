@@ -460,10 +460,11 @@ input[type="text"], input[type="password"], textarea {
 }
 
 .shoutList {
-  min-height: 300px;
-  max-height: 300px;
+  min-height: 225px;
+  max-height: 225px;
   overflow-y: auto;
   overflow-wrap: break-word;
+  padding: .5rem .5rem 0 .5rem;
   .shout {
     display: flex;
     flex-direction: row;
@@ -477,4 +478,8 @@ input[type="text"], input[type="password"], textarea {
   .shout:not(:last-of-type) {
     border-bottom: 1px solid $hr;
   }
+}
+
+.shoutForm {
+  padding: 0 .5rem .5rem .5rem;
 }
