@@ -13,16 +13,18 @@
   {% endif %}
     <div id="shoutBox" class="shoutList"></div>
     {% if user.is_authenticated and user.can_shout %}
-    <form>
-      <div id="shoutboxError"></div>
-      <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
-      <div class="padding-top padding-bottom">
-        <input class="button" id="submitShout" type="button" name="name" value="Post Shout">
-        <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
-      </div>
-    </form>
+    <div class="shoutbox">
+      <form>
+        <div id="shoutboxError"></div>
+        <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
+        <div class="padding-top padding-bottom">
+          <input class="button" id="submitShout" type="button" name="name" value="Post Shout">
+          <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+        </div>
+      </form>
+    </div>
     {% else %}
-    <input id="reloadShouts" type="button" name="name" value="Reload Shouts">
+    <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
     {% endif %}
   </div>
 </div>
