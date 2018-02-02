@@ -1,0 +1,41 @@
+#header {
+  align-items: center;
+  background: $main-nav;
+  box-shadow: 0 2px 4px rgba(33, 37, 41, 0.5);
+  color: $main-nav-text;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  height: auto;
+  line-height: auto;
+}
+
+#site-name {
+  @include noselect;
+  @include bold;
+  color: $main-nav-title;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+
+  a {
+    color: $main-nav-title;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+div.breadcrumbs {
+  background: $page-header;
+  border-bottom: 2px solid $hr;
+  padding: 2rem;
+}
+
+.module caption {
+  @include medium;
+  @include font-range(12, 14);
+  background: $panel-header;
+  padding: 1rem 0.75rem;
+}

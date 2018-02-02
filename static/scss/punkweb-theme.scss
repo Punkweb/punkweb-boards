@@ -7,18 +7,18 @@ $default-text: $default-text-on-light;
 $body-background: $oc-gray-2;
 $upper-nav: mix(black, $primary, 85%);
 $upper-nav-link: darken(white, 20%);
-$main-nav: mix(black, $primary, 45%);
+$main-nav: mix(black, $primary, 40%);
 $main-nav-title: $default-text-on-dark;
 $main-nav-text: $default-text-on-dark;
 $main-nav-link: $default-text-on-dark;
-$page-header: mix(black, $primary, 55%);
+$page-header: mix(black, $primary, 50%);
 $page-header-text: $default-text-on-dark;
 
-$breadcrumb-active: darken($default-text-on-dark, 15%);
+$breadcrumb-active: $default-text-on-dark;
 $breadcrumb-separator: darken($default-text-on-dark, 20%);
 $breadcrumb-link: $default-text-on-dark;
 
-$hr: mix(black, $primary, 45%);
+$hr: mix(black, $body-background, 10%);
 
 $badge-background: $oc-red-9;
 $badge-text: $oc-white;
@@ -27,7 +27,7 @@ $dropdown: mix(black, $primary, 65%);
 $dropdown-shadow: 0px .5rem 1rem 0px rgba(0, 0, 0, 0.2);
 
 $panel-header: mix(black, $primary, 45%);
-$panel-title: $oc-white;
+$panel-title: $default-text-on-dark;
 $panel-body: white;
 $panel-text: $default-text-on-light;
 $panel-footer: mix(black, $primary, 50%);

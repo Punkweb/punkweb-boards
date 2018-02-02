@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% load sass_tags %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrahead %}
+<link href="{% sass_src 'scss/punkweb.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

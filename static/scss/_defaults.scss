@@ -4,6 +4,10 @@ body {
   min-width: 320px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 ul {
   list-style: none;
   margin: 0;

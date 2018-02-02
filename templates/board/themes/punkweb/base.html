@@ -20,7 +20,6 @@
   <body>
     <div class="page-wrap">
       <div class="nav nav--upper">
-        <div class="djcontainer">
           <div class="nav__flex">
             <div class="nav__left">
             {% if user.is_authenticated %}
@@ -76,10 +75,8 @@
               {% endif %}
             </div>
           </div>
-        </div>
       </div>
       <div class="nav nav--main">
-        <div class="djcontainer">
           <div class="nav__flex">
             <div class="nav__left">
               <div class="nav__title"><a href="/">Punk Web</a></div>
@@ -95,7 +92,6 @@
               </form>
             </div>
           </div>
-        </div>
       </div>
       {% block content %}{% endblock %}
     </div>
