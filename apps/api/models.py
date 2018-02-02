@@ -133,7 +133,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     @property
     def rendered_rank(self):
-        return utils.render_example_username()
+        return utils.render_example_username(self.rank, self.rank.title)
 
     @property
     def rendered_signature(self):
