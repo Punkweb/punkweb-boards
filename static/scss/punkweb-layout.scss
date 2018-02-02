@@ -49,6 +49,7 @@ a:link, a:visited {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
   color: white !important;
   cursor: pointer;
+  display: inline-block;
   font-size: 13px;
   letter-spacing: 1px;
   outline: none;
@@ -232,7 +233,7 @@ a:link, a:visited {
 }
 
 .pagination {
-  @include font-range(12, 14);
+  @include font-range(14, 16);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -263,6 +264,7 @@ a:link, a:visited {
 
 .panel {
   box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
+  color: $panel-text;
   margin-bottom: 1rem;
   opacity: $panel-opacity;
 
@@ -387,22 +389,25 @@ a:link, a:visited {
   }
 }
 
-input[type="text"], input[type="password"], textarea {
+input, select, textarea {
   background-color: transparent;
   color: inherit;
-  border: 1px solid desaturate($primary, 25%);
+  border: 1px solid $hr;
+  border-radius: 2px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
   display: block;
   margin: 0;
   font-family: sans-serif;
-  font-size: 14px;
-  appearance: none;
-  box-shadow: none;
-  border-radius: 2px;
-  padding: .5rem;
+  font-size: 16px;
+  outline: none;
+  padding: 0.25em 0.5rem;
+  transition: 0.25s ease-in-out;
   @include placeholder {
     color: $input-placeholder;
   }
   &:focus {
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1), 0px 0px 6px $primary;
+    border-color: $primary;
     outline: none;
   }
 }
@@ -426,15 +431,21 @@ input[type="text"], input[type="password"], textarea {
 }
 
 .search {
-  background-color: transparent !important;
   position: relative;
+  input {
+    border: 1px solid rgba(255, 255, 255, .12);
+    color: $default-text-on-dark;
+    @include placeholder {
+      color: $default-text-on-dark;
+    }
+  }
 }
 
 .search .fa-search {
   position: absolute;
-  padding: 8px 16px;
   pointer-events: none;
-  right: 0px;
+  top: 5px;
+  right: 8px;
 }
 
 .profile {

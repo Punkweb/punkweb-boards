@@ -35,7 +35,7 @@ pre {
   white-space: pre-wrap;
 }
 
-$rem-base: 14px;
+$rem-base: 16px;
 
 @function strip-unit($num) {
   @return $num / ($num * 0 + 1);

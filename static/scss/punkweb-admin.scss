@@ -39,3 +39,19 @@ div.breadcrumbs {
   background: $panel-header;
   padding: 1rem 0.75rem;
 }
+
+.module {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
+}
+
+#content-related {
+  background: transparent;
+}
+
+#content-related .module {
+  background: white;
+}
+
+h1 {
+  margin: 0 0 20px;
+}
