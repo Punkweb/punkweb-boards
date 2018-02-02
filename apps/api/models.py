@@ -132,6 +132,10 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
         return utils.render_username(self)
 
     @property
+    def rendered_rank(self):
+        return utils.render_example_username()
+
+    @property
     def rendered_signature(self):
         """Used on admin page"""
         return mark_safe(self.signature.rendered)

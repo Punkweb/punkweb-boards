@@ -7,6 +7,7 @@ from .models import (
 
 class UserSerializer(serializers.ModelSerializer):
     rendered_username = serializers.ReadOnlyField()
+    rendered_rank = serializers.ReadOnlyField()
     post_count = serializers.ReadOnlyField()
     can_shout = serializers.ReadOnlyField()
     class Meta:
