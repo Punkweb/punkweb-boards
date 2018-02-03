@@ -43,7 +43,7 @@
 
         <h4>Birth date</h4>
         <div>
-          {{user.birthday|date:'m/d/Y'}} ({{user.age}})
+          {{user.birthday|date:'d M Y'}} ({{user.age}})
         </div>
 
         <br>
@@ -89,7 +89,7 @@
                     </a>
                   </div>
                   <div>
-                    {{thread.created}}
+                    {{thread.created|date:"d M Y, g:h A"}}
                   </div>
                 </td>
                 <td class="align-center">
@@ -98,7 +98,7 @@
                 <td class="align-right hide-on-mobile">
                   {% if thread.last_post %}
                   <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}}</a></div>
-                  <div>{{thread.last_post.created}}</div>
+                  <div>{{thread.last_post.created|date:"d M Y, g:h A"}}</div>
                   {% else %}
                   <div>No Posts</div>
                   {% endif %}
@@ -108,11 +108,7 @@
             </tbody>
           </table>
         </div>
-
-        <br>
-
         <h4>Posts</h4>
-        <br>
         <div class="profile__tables">
           <table class="table full-width">
             <thead>
@@ -134,7 +130,7 @@
                   </a>
                 </td>
                 <td class="align-right">
-                  {{post.created}}
+                  {{post.created|date:"d M Y, g:h A"}}
                 </td>
               </tr>
               {% endfor %}

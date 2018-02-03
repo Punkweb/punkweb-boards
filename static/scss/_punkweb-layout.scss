@@ -348,13 +348,17 @@ a:link, a:visited {
 
 .footer {
   @include font-range(10, 12);
-	background-color: $footer;
-	color: $footer-text;
+  background-color: $footer;
+  color: $footer-text;
   padding: 0.4rem 0;
-
-	a {
-		color: $footer-link;
-	}
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  a {
+    color: $footer-link;
+  }
 }
 
 .dropdown {
@@ -410,6 +414,10 @@ input, select, textarea {
     border-color: $primary;
     outline: none;
   }
+}
+
+input[type=button], input[type=submit] {
+  display: inline-block;
 }
 
 .recentActivity, .recentThreads {

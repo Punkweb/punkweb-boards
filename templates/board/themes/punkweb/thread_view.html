@@ -89,8 +89,8 @@
             </div>
             {% endif %}
             <div class="thread__actions">
-              <a><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{thread.upvotes}}</a>
-              <a><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{thread.downvotes}}</a>
+              <a><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{thread.upvotes}}</a>
+              <a><i class="fa fa-thumbs-down" aria-hidden="true"></i> {{thread.downvotes}}</a>
               {% if user.is_authenticated and thread.user.id != user.id %}
               <a class="button" href="{% url 'board:report-thread' thread.id %}" name="button">Report</a>
               {% endif %}
@@ -103,7 +103,7 @@
         </div>
       </div>
       <div class="panel__footer">
-        {{thread.created}}
+        {{thread.created|date:"d M Y, g:h A"}}
       </div>
     </div>
     {% endif %}
@@ -148,8 +148,8 @@
             </div>
             {% endif %}
             <div class="thread__actions">
-              <a><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{post.upvotes}}</a>
-              <a><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{post.downvotes}}</a>
+              <a><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{post.upvotes}}</a>
+              <a><i class="fa fa-thumbs-down" aria-hidden="true"></i> {{post.downvotes}}</a>
               {% if user.is_authenticated and post.user.id != user.id %}
               <a class="button" href="{% url 'board:report-post' post.id %}" name="button">Report</a>
               {% endif %}
@@ -162,7 +162,7 @@
         </div>
       </div>
       <div class="panel__footer">
-        {{post.created}}
+        {{post.created|date:"d M Y, g:h A"}}
       </div>
     </div>
     {% endfor %}
@@ -206,7 +206,7 @@
         <form method="post">
           {% csrf_token %}
           {{ post_form.as_p }}
-          <input type="submit" class="btn btn-success form-control" value="Post Reply" />
+          <input type="submit" class="button btn-success form-control" value="Post Reply" />
         </form>
         {% else %}
         This thread has been closed.

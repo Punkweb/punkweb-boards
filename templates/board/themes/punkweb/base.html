@@ -1,3 +1,4 @@
+{% load humanize %}
 {% load static %}
 {% load sass_tags %}
 <!DOCTYPE html>
@@ -6,11 +7,8 @@
     <meta charset="utf-8">
     <title>Forum | {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- Enables 'Add to Homescreen' for Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="{% static 'img/icons/steal_your_face_mayan.png' %}">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'sceditor/minified/themes/square.min.css' %}" />
     <!-- Use in production -->
     <!-- <link href="{% static 'scss/punkweb.min.css' %}" rel="stylesheet" type="text/css" /> -->
@@ -24,7 +22,7 @@
           <div class="nav__left">
           {% if user.is_authenticated %}
           {% if user.is_superuser %}
-          <a class="nav--upper__link" href="/admin/"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Admin</a>
+          <a class="nav--upper__link" href="/admin/"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Admin</a>
           {% endif %}
           {% endif %}
           </div>
@@ -34,7 +32,7 @@
             <a class="nav--upper__link" href="{% url 'board:reports-list' %}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i> Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
             {% endif %}
             <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i> Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
-            <div class="dropdown nav--upper__link">
+            <div class="nav--upper__link dropdown">
               <i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications {% if unread_notifications > 0%}<span class="badge">{{unread_notifications}}</span>{% endif %}
               <div class="dropdown__content">
                 {% for notification in notifications %}
@@ -48,7 +46,7 @@
                   {{notification.text}}
                   {% endif %}
                   <br/>
-                  {{notification.created}}
+                  {{notification.created|naturaltime}}
                 </div>
                 {% else %}
                 <div class="notification notification--unread">
@@ -60,7 +58,7 @@
                   {{notification.text}}
                   {% endif %}
                   <br/>
-                  {{notification.created}}
+                  {{notification.created|naturaltime}}
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -68,7 +66,7 @@
             </div>
             <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
             <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
-            <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a>
+            <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out-alt fa-fw" aria-hidden="true"></i> Logout</a>
             {% else %}
             <a class="nav--upper__link" href="{% url 'board:register' %}"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Sign up</a>
             <a class="nav--upper__link" href="{% url 'board:login' %}"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i> Login</a>
@@ -86,7 +84,7 @@
           <div class="nav__right">
             <form action="/board/search/" method="get">
               <div class="search">
-                <span class="fa fa-search"></span>
+                <span class="fa fa-search fa-fw"></span>
                 <input id="id_keyword" maxlength="80" name="keyword" type="text" placeholder="Search" required />
               </div>
             </form>
@@ -95,15 +93,21 @@
       </div>
       {% block content %}{% endblock %}
     </div>
-    <footer>
-      <div class="footer">
-        <div class="djcontainer">
-          Powered by <i class="fa fa-github" aria-hidden="true"></i> <a target="_blank" href="https://github.com/shakedown-street/django-boards">shakedown-street/django-boards</a>
+    <footer class="footer">
+      <div class="djcontainer">
+        <div class="footer__content">
+          <div>
+            Powered by <a target="_blank" href="https://github.com/shakedown-street/django-boards">shakedown-street/django-boards</a>
+          </div>
+          <div>
+            <a href="/api/"><i class="fa fa-terminal fa-fw"></i> API</a>
+          </div>
         </div>
       </div>
     </footer>
   </body>
   <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <!-- Use in production -->
   <!-- <script src="{% static 'js/bundle.min.js' %}"></script> -->
   <!-- Use in development -->

@@ -29,7 +29,7 @@
                 <div class="panel__title">Inbox</div>
               </div>
               <div class="panel__body padding">
-                <button class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Compose</button>
+                <button class="button"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Compose</button>
               </div>
             </div>
           </div>
@@ -53,7 +53,7 @@
                     <a href="{% url 'board:conversation' conversation.id %}">{{conversation.subject}}</a>
                   </td>
                   <td class="align-left">
-                    {{conversation.created}}
+                    {{conversation.created|date:"d M Y, g:h A"}}
                   </td>
                   <td class="align-left">
                     {{conversation.last_message.user.rendered_username}}

@@ -34,7 +34,7 @@
         {{user.post_count}}
       </td>
       <td class="align-right hide-on-xsmall">
-        {{user.created}}
+        {{user.created|date:"d M Y"}}
       </td>
     </tr>
     {% endfor %}
