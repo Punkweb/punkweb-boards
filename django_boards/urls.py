@@ -21,9 +21,11 @@ from graphene_django.views import GraphQLView
 from django_boards import settings
 from django_boards import views
 
+app_name = "django_boards"
+
 urlpatterns = [
     # url(r'^$', views.portal_view, name='portal'),
-    url(r'^board/', include('apps.board.urls', namespace='board')),
+    url(r'^board/', include('apps.board.urls')),
     url(r'^api/', include('apps.api.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^graphql/', GraphQLView.as_view(graphiql=True)),

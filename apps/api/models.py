@@ -64,7 +64,8 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     is_banned = models.BooleanField(default=False)
 
-    rank = models.ForeignKey('UserRank', blank=True, null=True, on_delete=models.SET_NULL)
+    rank = models.ForeignKey(
+        'UserRank', blank=True, null=True, on_delete=models.SET_NULL)
     username_modifier = models.TextField(
         max_length=250, blank=True, null=True,
         help_text="BBCode. Just add {USER} where " \
@@ -264,9 +265,11 @@ class Subcategory(UUIDPrimaryKey):
 
 
 class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             related_name='threads', blank=False, null=False)
-    category = models.ForeignKey(Subcategory, blank=False, null=False)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='threads', blank=False,
+        null=False, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Subcategory, blank=False, null=False, on_delete=models.CASCADE)
     title = models.CharField(max_length=96, blank=False, null=False)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
     pinned = models.BooleanField(default=False)
@@ -339,9 +342,11 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
 
 class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='posts', blank=False, null=False)
+        settings.AUTH_USER_MODEL, related_name='posts', blank=False, null=False,
+        on_delete=models.CASCADE)
     thread = models.ForeignKey(
-        Thread, related_name='posts', blank=False, null=False)
+        Thread, related_name='posts', blank=False, null=False,
+        on_delete=models.CASCADE)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     class Meta:
@@ -422,8 +427,10 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
 
 class Message(UUIDPrimaryKey, CreatedModifiedMixin):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='sent_messages')
-    conversation = models.ForeignKey(Conversation, related_name='messages')
+        settings.AUTH_USER_MODEL, related_name='sent_messages',
+        on_delete=models.CASCADE)
+    conversation = models.ForeignKey(Conversation, related_name='messages',
+        on_delete=models.CASCADE)
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     class Meta:
@@ -437,16 +444,18 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
 
 
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
-    reporting_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                       related_name='reports_created',
-                                       blank=False, null=False)
+    reporting_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='reports_created', blank=False,
+        null=False, on_delete=models.CASCADE)
     reason = models.TextField(max_length=1024, blank=False, null=False)
-    thread = models.ForeignKey(Thread, blank=True, null=True, default=None)
-    post = models.ForeignKey(Post, blank=True, null=True, default=None)
+    thread = models.ForeignKey(
+        Thread, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, blank=True, null=True, default=None, on_delete=models.CASCADE)
     resolved = models.BooleanField(default=False)
-    resolved_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                    related_name='reports_resolved', blank=True,
-                                    null=True)
+    resolved_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='reports_resolved', blank=True,
+        null=True, on_delete=models.CASCADE)
     date_resolved = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
@@ -462,7 +471,9 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
 
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True,
+        on_delete=models.CASCADE)
     content = BBCodeTextField(max_length=280, blank=False, null=False)
 
     class Meta:
@@ -477,10 +488,8 @@ class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
 
 class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        blank=False, null=False,
-        related_name='notifications'
-    )
+        settings.AUTH_USER_MODEL, blank=False, null=False,
+        related_name='notifications', on_delete=models.CASCADE)
     text = models.CharField(max_length=140, blank=False, null=False)
     link = models.CharField(max_length=140, blank=False, null=False)
     read = models.BooleanField(default=False)

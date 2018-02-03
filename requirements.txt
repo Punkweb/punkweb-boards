@@ -1,4 +1,4 @@
-django==1.11.5
+django
 djangorestframework
 pillow
 psycopg2

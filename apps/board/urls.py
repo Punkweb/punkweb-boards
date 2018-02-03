@@ -1,8 +1,10 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 import django.contrib.auth.views as auth_views
 
 from .settings import BOARD_THEME
 from . import views
+
+app_name = "board"
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),
