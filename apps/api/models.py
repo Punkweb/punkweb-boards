@@ -207,10 +207,10 @@ class Subcategory(UUIDPrimaryKey):
     name = models.CharField(max_length=96, blank=False, null=False)
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
-    admin_req = models.BooleanField(default=False,
-                                    help_text='Can only admin users create threads in this subcategory?')
+    staff_req = models.BooleanField(default=False,
+        help_text='Can only staff members can create threads in this subcategory?')
     auth_req = models.BooleanField(default=False,
-                                   help_text='Can only logged in users view this subcategory?')
+       help_text='Can only logged in users view this subcategory?')
 
     class Meta:
         verbose_name = 'subcategory'
@@ -232,9 +232,9 @@ class Subcategory(UUIDPrimaryKey):
     def can_post(self, user):
         if user.is_authenticated and user.is_banned:
             return False
-        if self.admin_req and user.is_authenticated and user.is_staff:
+        if self.staff_req and user.is_authenticated and user.is_staff:
             return True
-        if not self.admin_req and user.is_authenticated:
+        if not self.staff_req and user.is_authenticated:
             return True
         return False
 
