@@ -70,19 +70,19 @@ $rem-base: 16px;
 
 @mixin no-transition { transition: none; }
 
-@mixin disc {
-  list-style: disc outside;
-  margin-left: 20px;
+@mixin no-disc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 @mixin noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 @mixin optional-at-root($sel) {
@@ -127,21 +127,15 @@ $rem-base: 16px;
   }
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  min-width: 320px;
-}
-
 * {
   @include scrollbar;
   box-sizing: border-box;
 }
 
-ul {
-  list-style: none;
+body {
   margin: 0;
   padding: 0;
+  min-width: 320px;
 }
 
 /* images can't be wider than their containers */
@@ -160,7 +154,29 @@ table {
 }
 
 pre {
-  background-color: $oc-yellow-0;
+  background: #eee;
   font-family: monospace;
   white-space: pre-wrap;
+}
+
+blockquote {
+  background: #eee;
+  border: 1px solid #aaa;
+  position: relative;
+  margin: .25em 0;
+  padding: .25em;
+}
+
+blockquote cite {
+  font-weight: bold;
+  display: block;
+  font-size: 1em;
+  border-bottom: 2px solid $hr;
+}
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }

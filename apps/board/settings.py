@@ -14,7 +14,7 @@ SHOUTBOX_MINIMUM_POSTS = False
 SHOUTBOX_MINIMUM_POSTS_REQ = 25
 SHOUTBOX_DEFAULT_CLOSED = True
 SHOUTBOX_DISABLED_TAGS = [
-    'img', 'hr', 'ol', 'ul', 'li', 'youtube'
+    'img', 'hr', 'ol', 'ul', 'li', 'youtube', 'code',
 ]
 
 CAPTCHAS_ENABLED = True

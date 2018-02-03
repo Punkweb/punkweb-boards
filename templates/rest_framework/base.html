@@ -85,10 +85,10 @@
                 </div>
                 <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
                 <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
-                <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a>
+                <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out-alt fa-fw" aria-hidden="true"></i> Logout</a>
                 {% else %}
                 <a class="nav--upper__link" href="{% url 'board:register' %}"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Sign up</a>
-                <a class="nav--upper__link" href="{% url 'board:login' %}"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i> Login</a>
+                <a class="nav--upper__link" href="{% url 'board:login' %}"><i class="fa fa-sign-in-alt fa-fw" aria-hidden="true"></i> Login</a>
                 {% endif %}
               </div>
             </div>

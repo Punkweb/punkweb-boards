@@ -189,8 +189,8 @@ a:link, a:visited {
 }
 
 .breadcrumb {
+  @include no-disc;
   @include font-range(11, 13);
-  list-style: none;
 
   li {
     color: $breadcrumb-active;
@@ -542,4 +542,10 @@ input[type=button], input[type=submit] {
 
 .shoutForm {
   padding: 0 .5rem .5rem .5rem;
+}
+
+.statisticsPanel {
+  &__list {
+    @include no-disc;
+  }
 }

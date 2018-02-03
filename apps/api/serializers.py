@@ -106,7 +106,7 @@ class ShoutSerializer(serializers.ModelSerializer):
         model = Shout
         fields = (
             'id', 'user', 'username', 'rendered_username', 'content',
-            '_content_rendered', 'created', 'modified')
+            '_content_rendered', 'created', 'modified', )
         read_only_fields = ('user', )
 
     def create(self, validated_data):

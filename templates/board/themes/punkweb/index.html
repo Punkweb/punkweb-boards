@@ -12,6 +12,10 @@
     {% endif %}
     <div class="flexrow">
       <div class="flexcol" style="flex: 3;">
+        <blockquote>
+          <cite><a href="{% url 'board:profile' 'Shakedown' %}"><span style="color:green;">Shakedown</span></a> said:</cite>
+          Hello this is totally something I said that was worth quoting
+        </blockquote>
         {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
         {% include './components/shoutbox/shoutbox.html' %}
         {% endif %}
@@ -84,12 +88,12 @@
     <div class="flexrow">
       <div class="flexcol" style="flex: 1;">
         <a name="statistics"></a>
-        <div class="panel">
+        <div class="panel statisticsPanel">
           <div class="panel__header">
             <div class="panel__title"><a href="{% url 'board:statistics' %}">Statistics</a></div>
           </div>
           <div class="panel__body padding">
-            <ul>
+            <ul class="statisticsPanel__list">
               <li style="display: inline">Total posts {{total_posts}} •</li>
               <li style="display: inline">Total threads {{total_threads}} •</li>
               <li style="display: inline">Total members {{member_count}} •</li>
