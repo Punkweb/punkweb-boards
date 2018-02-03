@@ -64,6 +64,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     is_banned = models.BooleanField(default=False)
 
+    is_staff= models.BooleanField(default=False)
     rank = models.ForeignKey(
         'UserRank', blank=True, null=True, on_delete=models.SET_NULL)
     username_modifier = models.TextField(
