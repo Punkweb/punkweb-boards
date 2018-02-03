@@ -57,14 +57,13 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
     image = ThumbnailerImageField(
         upload_to=user_image_file_name, null=True, blank=True)
     signature = BBCodeTextField(max_length=1024, blank=True, null=True)
-    gender = models.CharField(null=True, blank=True, max_length=1,
-                              choices=GENDER_CHOICES, default=None)
+    gender = models.CharField(
+        null=True, blank=True, max_length=1, choices=GENDER_CHOICES, default=None)
     birthday = models.DateField(
         null=True, blank=True, verbose_name='Birth date')
-
+    admin_access = models.BooleanField(
+        default=False, help_text="User has access to the admin.")
     is_banned = models.BooleanField(default=False)
-
-    is_staff= models.BooleanField(default=False)
     rank = models.ForeignKey(
         'UserRank', blank=True, null=True, on_delete=models.SET_NULL)
     username_modifier = models.TextField(
@@ -93,7 +92,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     @property
     def is_staff(self):
-        return self.is_superuser
+        return self.admin_access or self.is_superuser
 
     @property
     def post_count(self):
