@@ -21,7 +21,6 @@
         {% block bootstrap_theme %}
           <!-- <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/bootstrap.min.css" %}"/>
           <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/bootstrap-tweaks.css" %}"/> -->
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
           <link href="{% sass_src 'scss/punkweb.scss' %}" rel="stylesheet" type="text/css" />
         {% endblock %}
 
@@ -342,6 +341,7 @@
           csrfCookieName: "{{ csrf_cookie_name|default:'csrftoken' }}"
         };
       </script>
+      <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
       <script src="{% static "rest_framework/js/jquery-1.12.4.min.js" %}"></script>
       <script src="{% static "rest_framework/js/ajax-form.js" %}"></script>
       <script src="{% static "rest_framework/js/csrf.js" %}"></script>

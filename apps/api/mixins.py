@@ -77,6 +77,5 @@ class AvatarImagesMixin(models.Model):
         else:
             return self.image['avatar_smallest'].url
 
-
     class Meta:
         abstract = True

@@ -72,32 +72,52 @@ def keyword_search_view(request):
     else:
         keyword = ''
 
-    user_vector = TrigramSimilarity(
+    query = SearchQuery(keyword)
+
+    # Users
+    user_trigram = TrigramSimilarity(
         'username', keyword
     ) + TrigramSimilarity(
         'email', keyword
     )
-    thread_vector = TrigramSimilarity(
+    matched_users = EmailUser.objects.annotate(
+        similarity=user_trigram,
+    ).filter(similarity__gt=0.3).order_by('-similarity')
+
+    # Threads
+    thread_vector = SearchVector(
+        'tags', weight='A'
+    ) + SearchVector(
+        'title', weight='A'
+    ) + SearchVector(
+        'content', weight='B'
+    ) + SearchVector(
+        'user__username', weight='C'
+    )
+    thread_trigram = TrigramSimilarity(
         'title', keyword
-    ) + TrigramSimilarity(
-        'content', keyword
     ) + TrigramSimilarity(
         'user__username', keyword
     ) + TrigramSimilarity(
         'tags', keyword
     )
-    post_vector = TrigramSimilarity(
-        'content', keyword
-    )
-    matched_users = EmailUser.objects.annotate(
-        similarity=user_vector,
-    ).filter(similarity__gt=0.3).order_by('-similarity')
     matched_threads = Thread.objects.annotate(
-        similarity=thread_vector,
-    ).filter(similarity__gt=0.15).order_by('-similarity')
+        search=thread_vector,
+        similarity=thread_trigram,
+    ).annotate(
+        rank=SearchRank(thread_vector, query)
+    ).filter(Q(search=query) | Q(similarity__gt=0.15)).order_by('-rank')
+
+    # Posts
+    post_vector = SearchVector(
+        'content', weight='A'
+    )
     matched_posts = Post.objects.annotate(
-        similarity=post_vector,
-    ).filter(similarity__gt=0.15).order_by('-similarity')
+        search=post_vector,
+    ).annotate(
+        rank=SearchRank(post_vector, query)
+    ).filter(search=query).order_by('-rank')
+
     context = {
         'matched_users': matched_users,
         'matched_threads': matched_threads,
