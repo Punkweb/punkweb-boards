@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from django.utils.log import DEFAULT_LOGGING
 from apps.board.settings import BOARD_THEME, CAPTCHAS_ENABLED
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -162,6 +163,74 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
 )
+
+# Logging
+# The numeric values of logging levels are in the following table:
+#
+# CRITICAL    50
+# ERROR       40
+# WARNING     30
+# INFO        20
+# DEBUG       10
+# NOTSET      0 [default]
+#
+# Messages which are less severe than the specified level will be ignored.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'filters': DEFAULT_LOGGING['filters'],
+    'formatters': {
+        'default': {
+            '()': 'logging.Formatter',
+            'format': '[%(asctime)s] %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'debug': {
+            '()': 'logging.Formatter',
+            'format': '[%(asctime)s] %(levelname)s - %(name)s: %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+            'filters': ['require_debug_false'],
+        },
+        'debug-console': {
+            'level': 'INFO',  # DEBUG level here is *extremely* noisy
+            'class': 'logging.StreamHandler',
+            'formatter': 'debug',
+            'filters': ['require_debug_true'],
+        },
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'default',
+            'filename': '/var/log/django-boards/django.log',
+            'maxBytes': 1000000,  # 1MB
+            'delay': True,
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'debug-console', 'file'],
+            'level': 'NOTSET',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['console', 'debug-console', 'file'],
+            'level': 'NOTSET',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console', 'debug-console', 'file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
 
 
 # Non default app configuration

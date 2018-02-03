@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load i18n %}
+{% load humanize %}
 {% load rest_framework %}
 {% load static %}
 {% load sass_tags %}
@@ -41,7 +42,7 @@
               <div class="nav__left">
               {% if user.is_authenticated %}
               {% if user.is_superuser %}
-              <a class="nav--upper__link" href="/admin/"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Admin</a>
+              <a class="nav--upper__link" href="/admin/"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Admin</a>
               {% endif %}
               {% endif %}
               </div>
@@ -65,7 +66,7 @@
                       {{notification.text}}
                       {% endif %}
                       <br/>
-                      {{notification.created}}
+                      {{notification.created|naturaltime}}
                     </div>
                     {% else %}
                     <div class="notification notification--unread">
@@ -77,7 +78,7 @@
                       {{notification.text}}
                       {% endif %}
                       <br/>
-                      {{notification.created}}
+                      {{notification.created|naturaltime}}
                     </div>
                     {% endif %}
                     {% endfor %}
