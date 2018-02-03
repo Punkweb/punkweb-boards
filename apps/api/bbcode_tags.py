@@ -16,11 +16,8 @@ class SizeTag(BBCodeTag):
 
 class UserTag(BBCodeTag):
     name = 'user'
-    definition_string = '[user={TEXT}]'
+    definition_string = '[user]{TEXT}[/user]'
     format_string = '<a href="/board/profile/{TEXT}/"><i class="fa fa-user" aria-hidden="true"></i> {TEXT}</a>'
-
-    class Options:
-        standalone = True
 
 
 class CodeTag(BBCodeTag):

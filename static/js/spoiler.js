@@ -5,7 +5,7 @@ $(function() {
     //   $('.dropdown__content').hide();
     // });
     $('.dropdown').click(function() {
-      $(this).children('.dropdown__content').slideToggle();
+      $(this).children('.dropdown__content').toggle("100", "swing");
     });
     // $('.spoiler__open').click(function() {
     //   $(this).siblings('.spoiler__content').slideToggle();

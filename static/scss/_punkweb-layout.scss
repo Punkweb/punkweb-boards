@@ -379,9 +379,11 @@ a:link, a:visited {
 }
 
 .notification {
-  background-color: mix(black, $primary, 65%);
+  background-color: $oc-white;
+  color: $default-text-on-light;
   padding: 1rem;
-  opacity: .75;
+  min-width: 250px;
+  opacity: .9;
   a {
     color: $primary-link;
   }
@@ -389,7 +391,7 @@ a:link, a:visited {
     opacity: 1;
   }
   &:not(:last-of-type) {
-    border-bottom: 1px solid desaturate($primary, 15%);
+    border-bottom: 1px solid $hr;
   }
 }
 

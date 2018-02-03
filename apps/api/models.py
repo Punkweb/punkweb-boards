@@ -512,7 +512,7 @@ def thread_notifications(sender, instance, created, **kwargs):
                 user_obj = EmailUser.objects.get(username=user)
             except Exception as e:
                 user_obj = None
-            if user_obj and instance.user != user_obj:
+            if user_obj:
                 notification = Notification(
                     user=user_obj,
                     text='{} tagged you in a post.'.format(
