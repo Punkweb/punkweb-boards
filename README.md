@@ -2,10 +2,10 @@
 Django forum boards with bbcode support.
 
 
-### Documentation
+### Demo/Documentation
 
-Check out docs.txt for a detailed list of the state of most of the features in the project.
-
+Check out our community at [PunkWeb](https://punkweb.us/board/) for
+documentation and a live demonstration of django-boards!
 
 ### A note about sceditor (BBCode editor)
 
@@ -30,10 +30,3 @@ Check out `apps/api/bbcode_tags.py` to see the available custom tags and add oth
 
 Check out the 'Ready' milestone under issues to see what's left before this is at
 a usable state.
-
-
-[CodePen Theme Preview](https://codepen.io/ShakedownSt/pen/JyGWZm)
-
-
-
-![Image of PunkWeb](http://storage8.static.itmages.com/i/17/0723/h_1500771838_1324595_27fbf049f9.png)
