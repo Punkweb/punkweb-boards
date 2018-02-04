@@ -270,8 +270,8 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
         null=False, on_delete=models.CASCADE)
     category = models.ForeignKey(
         Subcategory, blank=False, null=False, on_delete=models.CASCADE)
-    title = models.CharField(max_length=96, blank=False, null=False)
-    content = BBCodeTextField(max_length=10000, blank=False, null=False)
+    title = models.CharField(max_length=120, blank=False, null=False)
+    content = BBCodeTextField(max_length=30000, blank=False, null=False)
     pinned = models.BooleanField(default=False)
     closed = models.BooleanField(
         default=False,
@@ -326,7 +326,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
 
     @property
     def last_post(self):
-        return self.posts.order_by('-created').first()
+        return self.posts.order_by('created').first()
 
     @property
     def upvotes(self):
@@ -374,7 +374,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
 
     @property
     def post_number(self):
-        qs = self.thread.posts.all()
+        qs = self.thread.posts.order_by('created')
         post_index = list(qs.values_list('id', flat=True)).index(self.id)
         return post_index + 1
 
@@ -391,7 +391,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
         return len(self.downvoted_by.all())
 
     def get_absolute_url(self):
-        return '/board/thread/{}/?page={}#{}'.format(
+        return '/board/thread/{}/?page={}#p{}'.format(
             self.thread.id, self.page_number, self.post_number)
 
 
@@ -434,7 +434,7 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('created',)
 
     def __str__(self):
         return self.user.username
