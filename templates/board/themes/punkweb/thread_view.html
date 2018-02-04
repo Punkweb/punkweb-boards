@@ -103,13 +103,13 @@
         </div>
       </div>
       <div class="panel__footer">
-        {{thread.created|date:"d M Y, g:h A"}}
+        {{thread.created|date:"d M Y, g:i A"}}
       </div>
     </div>
     {% endif %}
     {% if posts %}
     {% for post in posts %}
-    <a name="{{post.post_number}}"></a>
+    <a name="p{{post.post_number}}"></a>
     <div class="panel">
       <div class="panel__header">
         <div class="panel__title align-right">#{{post.post_number}}</div>
@@ -162,7 +162,7 @@
         </div>
       </div>
       <div class="panel__footer">
-        {{post.created|date:"d M Y, g:h A"}}
+        {{post.created|date:"d M Y, g:i A"}}
       </div>
     </div>
     {% endfor %}

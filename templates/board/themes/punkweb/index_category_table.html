@@ -36,7 +36,7 @@
             {{child.last_thread.title|truncatechars_html:50}}
           </a>
         </div>
-        <div>{{child.last_thread.created|date:"d M Y, g:h A"}}</div>
+        <div>{{child.last_thread.created|date:"d M Y, g:i A"}}</div>
         <div>by
           <a href="{% url 'board:profile' child.last_thread.user.username %}">
             {{child.last_thread.user.rendered_username}}
