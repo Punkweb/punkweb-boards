@@ -58,7 +58,7 @@
     </div>
     <div class="panel__body padding">
       {% load log %}
-      {% get_admin_log 20 as admin_log %}
+      {% get_admin_log 10 as admin_log %}
       {% if not admin_log %}
       <p>{% trans 'None available' %}</p>
       {% else %}
