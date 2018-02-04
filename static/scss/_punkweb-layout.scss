@@ -90,7 +90,7 @@ a:link, a:visited {
     padding: 0.4rem 1rem;
 
     &__link {
-      color: $upper-nav-link;
+      color: $upper-nav-link !important;
       cursor: pointer;
       padding: .25rem 0;
       padding-left: 0.5rem;
@@ -148,7 +148,7 @@ a:link, a:visited {
   &__link {
     @include bold;
     @include font-range(14, 16);
-    color: $main-nav-link;
+    color: $main-nav-link !important;
     cursor: pointer;
     padding: 0 1rem;
   }

@@ -35,82 +35,7 @@
   <body class="{% block bodyclass %}{% endblock %}">
     <div class="page-wrap">
       {% block navbar %}
-        <div class="nav">
-          <div class="nav nav--upper">
-            <div class="nav__flex">
-              <div class="nav__left">
-              {% if user.is_authenticated %}
-              {% if user.is_staff %}
-              <a class="nav--upper__link" href="/admin/"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Admin</a>
-              {% endif %}
-              {% endif %}
-              </div>
-              <div class="nav__right">
-                {% if user.is_authenticated %}
-                {% if user.is_staff %}
-                <a class="nav--upper__link" href="{% url 'board:reports-list' %}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i> Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
-                {% endif %}
-                <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i> Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a>
-                <div class="dropdown nav--upper__link">
-                  <i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications {% if unread_notifications > 0%}<span class="badge">{{unread_notifications}}</span>{% endif %}
-                  <div class="dropdown__content">
-                    {% for notification in notifications %}
-                    {% if notification.read %}
-                    <div class="notification">
-                      {% if notification.link %}
-                      <a href="{% url 'board:notification-redirect' notification.id %}">
-                        {{notification.text}}
-                      </a>
-                      {% else %}
-                      {{notification.text}}
-                      {% endif %}
-                      <br/>
-                      {{notification.created|naturaltime}}
-                    </div>
-                    {% else %}
-                    <div class="notification notification--unread">
-                      {% if notification.link %}
-                      <a href="{% url 'board:notification-redirect' notification.id %}">
-                        {{notification.text}}
-                      </a>
-                      {% else %}
-                      {{notification.text}}
-                      {% endif %}
-                      <br/>
-                      {{notification.created|naturaltime}}
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                  </div>
-                </div>
-                <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
-                <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
-                <a class="nav--upper__link" href="{% url 'board:logout' %}"><i class="fa fa-sign-out-alt fa-fw" aria-hidden="true"></i> Logout</a>
-                {% else %}
-                <a class="nav--upper__link" href="{% url 'board:register' %}"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> Sign up</a>
-                <a class="nav--upper__link" href="{% url 'board:login' %}"><i class="fa fa-sign-in-alt fa-fw" aria-hidden="true"></i> Login</a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-          <div class="nav nav--main">
-            <div class="nav__flex">
-              <div class="nav__left">
-                <div class="nav__title"><a href="/">Punk Web</a></div>
-                <a class="nav__link" href="{% url 'board:index' %}">Forum</a>
-                <a class="nav__link" href="{% url 'board:members-list' %}">Members</a>
-              </div>
-              <div class="nav__right">
-                <form action="/board/search/" method="get">
-                  <div class="search">
-                    <span class="fa fa-search"></span>
-                    <input id="id_keyword" maxlength="80" name="keyword" type="text" placeholder="Search" required />
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% include 'board/themes/punkweb/nav.html' %}
       {% endblock %}
       <div class="pageHeader">
         <div class="djcontainer">
@@ -329,6 +254,7 @@
         </div><!-- /.content -->
       </div>
     </div><!-- ./wrapper -->
+    {% include 'board/themes/punkweb/footer.html' %}
 
     {% if filter_form %}
       {{ filter_form }}
@@ -348,6 +274,7 @@
       <script src="{% static "rest_framework/js/bootstrap.min.js" %}"></script>
       <script src="{% static "rest_framework/js/prettify-min.js" %}"></script>
       <script src="{% static "rest_framework/js/default.js" %}"></script>
+      <script src="{% static 'js/spoiler.js' %}"></script>
       <script>
         $(document).ready(function() {
           $('form').ajaxForm();

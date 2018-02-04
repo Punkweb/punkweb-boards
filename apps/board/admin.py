@@ -84,6 +84,8 @@ class NotificationAdmin(admin.ModelAdmin):
     ordering = ('-created', )
 
 
+admin.site.site_header = 'Punk Web'
+
 admin.site.register(EmailUser, EmailUserAdmin)
 admin.site.register(UserRank, UserRankAdmin)
 admin.site.register(Category, CategoryAdmin)

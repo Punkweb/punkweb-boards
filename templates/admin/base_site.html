@@ -9,7 +9,11 @@
 {% endblock %}
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+<a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
+
+{% block footer %}
+{% include 'board/themes/punkweb/footer.html' %}
+{% endblock %}
