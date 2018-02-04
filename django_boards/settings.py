@@ -43,16 +43,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'django_extensions',
+    'sass_processor',
+    'easy_thumbnails',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'precise_bbcode',
-    'sass_processor',
-    'easy_thumbnails',
-    'apps.api',
-    'apps.board',
     'graphene_django',
     'captcha',
+    'meta',
+    'apps.api',
+    'apps.board',
 ]
 
 MIDDLEWARE = [
@@ -245,6 +246,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'apps.api.authentication.NoCSRFSessionAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25
 }
 

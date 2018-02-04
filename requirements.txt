@@ -9,6 +9,7 @@ graphene-django
 django-filter
 django-simple-captcha
 gunicorn
+django-meta
 
 # Scss
 # Make sure that you have sass executable installed. See SASS official site for details.

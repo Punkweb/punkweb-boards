@@ -77,6 +77,30 @@ class QuoteTag(BBCodeTag):
     format_string = '<blockquote><cite><a href="/board/profile/{TEXT1}"><span style="color:green;">{TEXT1}</span></a> said:</cite>{TEXT2}</blockquote>'
 
 
+class UncheckedBoxTag(BBCodeTag):
+    name = 'n'
+    definition_string = '[n]{TEXT}'
+    format_string = '<label><input type="checkbox" disabled="disabled" /> {TEXT}</label>'
+
+    class Options:
+        newline_closes = True
+        same_tag_closes = True
+        end_tag_closes = True
+        strip = True
+
+
+class CheckedBoxTag(BBCodeTag):
+    name = 'y'
+    definition_string = '[y]{TEXT}'
+    format_string = '<label for="bbchecked"><input name="bbchecked" type="checkbox" disabled="disabled" checked="checked" /> {TEXT}</label>'
+
+    class Options:
+        newline_closes = True
+        same_tag_closes = True
+        end_tag_closes = True
+        strip = True
+
+
 tag_pool.register_tag(SpoilerTag)
 tag_pool.register_tag(SizeTag)
 tag_pool.register_tag(UserTag)
@@ -89,3 +113,5 @@ tag_pool.register_tag(HrTag)
 tag_pool.register_tag(ShadowTag)
 tag_pool.register_tag(AnchorTag)
 tag_pool.register_tag(QuoteTag)
+tag_pool.register_tag(UncheckedBoxTag)
+tag_pool.register_tag(CheckedBoxTag)
