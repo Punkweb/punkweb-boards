@@ -1,5 +1,5 @@
 {% extends './base.html' %}
-{% load static %}
+{% load static humanize %}
 
 {% block title %}Members | {{user.username}}{% endblock %}
 
@@ -26,7 +26,7 @@
         <center>
           <img src="{{user.avatar}}">
           <div></div><h2>{{user.rendered_username}}</h2>
-          <div class="thread__user__lastseen">Last Seen: {% if user.last_seen %}{{ user.last_seen|timesince }}{% else %}awhile{% endif %} ago</div>
+          <div class="thread__user__lastseen">Last Seen: {% if user.last_seen %}{{ user.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
         </center>
         <br>
 
