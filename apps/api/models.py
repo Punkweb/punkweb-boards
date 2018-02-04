@@ -286,7 +286,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
                   "(eg. news, important, update)")
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
 
     def __str__(self):
         return '{} by {}'.format(self.title, self.user)
@@ -350,7 +350,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
 
     def __str__(self):
         return '{}\'s post on {}, {}'.format(
@@ -434,7 +434,7 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
 
     def __str__(self):
         return self.user.username
@@ -458,6 +458,9 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
         null=True, on_delete=models.CASCADE)
     date_resolved = models.DateTimeField(blank=True, null=True)
 
+    class Meta:
+        ordering = ('-created',)
+
     def __str__(self):
         if self.thread:
             in_question = self.thread
@@ -477,7 +480,7 @@ class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
     content = BBCodeTextField(max_length=280, blank=False, null=False)
 
     class Meta:
-        ordering = ['-created']
+        ordering = ('-created', )
 
     def __str__(self):
         return str(self.user)
@@ -495,7 +498,7 @@ class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
     read = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-created']
+        ordering = ('-created', )
 
     def __str__(self):
         return self.text
