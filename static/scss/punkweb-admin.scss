@@ -4,8 +4,6 @@
 
 div.breadcrumbs {
   background: $page-header;
-  border-bottom: 2px solid $hr;
-  padding: 2rem;
 }
 
 .module caption {
@@ -17,10 +15,6 @@ div.breadcrumbs {
 
 .module {
   box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
-}
-
-#content-related {
-  background: transparent;
 }
 
 #content-related .module {
@@ -52,7 +46,13 @@ a:link, a:visited {
 }
 
 #content {
+  padding: 1rem 0;
   width: auto !important;
+}
+
+#content-related {
+  background: transparent;
+  width: 280px;
 }
 
 #content-related .actionlist {
