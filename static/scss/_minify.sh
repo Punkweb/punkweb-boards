@@ -1,3 +1,4 @@
 #!/bin/bash
-uglifycss _editor.css --output _editor.min.css
+uglifycss editor.css --output editor.min.css
 uglifycss punkweb.css --output punkweb.min.css
+uglifycss punkweb-admin.css --output punkweb-admin.min.css
