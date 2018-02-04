@@ -1,7 +1,28 @@
 from django.contrib import admin
+from django.contrib.admin.models import LogEntry
+
 from apps.api.models import (
     EmailUser, Category, Subcategory, Thread, Post, Shout, Conversation,
     Message, Report, Notification, UserRank)
+
+
+class LogEntryAdmin(admin.ModelAdmin):
+    readonly_fields = ('content_type',
+        'user',
+        'action_time',
+        'object_id',
+        'object_repr',
+        'action_flag',
+        'change_message'
+    )
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_actions(self, request):
+        actions = super(LogEntryAdmin, self).get_actions(request)
+        del actions['delete_selected']
+        return actions
 
 
 class SubcategoryInline(admin.TabularInline):
@@ -85,7 +106,7 @@ class NotificationAdmin(admin.ModelAdmin):
 
 
 admin.site.site_header = 'Punk Web'
-
+admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(EmailUser, EmailUserAdmin)
 admin.site.register(UserRank, UserRankAdmin)
 admin.site.register(Category, CategoryAdmin)

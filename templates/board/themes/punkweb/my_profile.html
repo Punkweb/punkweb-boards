@@ -25,7 +25,8 @@
       <div class="panel__body padding">
         <center>
           <img src="{{user.avatar}}">
-          <h2>{{user.rendered_username}}</h2>
+          <div></div><h2>{{user.rendered_username}}</h2>
+          <div class="thread__user__lastseen">Last Seen: {% if user.last_seen %}{{ user.last_seen|timesince }}{% else %}awhile{% endif %} ago</div>
         </center>
         <br>
 

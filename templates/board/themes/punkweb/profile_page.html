@@ -27,6 +27,7 @@
         <center>
           <img src="{{profile.avatar}}">
           <h2>{{profile.rendered_username}}</h2>
+          <div class="thread__user__lastseen">Last Seen: {% if profile.last_seen %}{{ profile.last_seen|timesince }}{% else %}awhile{% endif %} ago</div>
         </center>
         <br>
 

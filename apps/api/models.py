@@ -6,6 +6,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 
 from django.conf import settings
+from django.core.cache import cache
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin)
 from django.db import models
@@ -89,6 +90,20 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     def get_short_name(self):
         return self.username
+
+    def last_seen(self):
+        return cache.get('seen_%s' % self.username)
+
+    def online(self):
+        if self.last_seen():
+            now = datetime.datetime.now()
+            if now > self.last_seen() + \
+                datetime.timedelta(seconds=settings.USER_ONLINE_TIMEOUT):
+                return False
+            else:
+                return True
+        else:
+            return False
 
     @property
     def is_staff(self):

@@ -10,6 +10,7 @@ django-filter
 django-simple-captcha
 gunicorn
 django-meta
+python-memcached
 
 # Scss
 # Make sure that you have sass executable installed. See SASS official site for details.

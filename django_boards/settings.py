@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.board.middleware.ActiveUserMiddleware',
 ]
 
 ROOT_URLCONF = 'django_boards.urls'
@@ -103,6 +104,14 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASSWORD', 'django_boards'),
         'HOST': 'localhost',
         'PORT': '5432',
+    }
+}
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 
@@ -262,3 +271,10 @@ THUMBNAIL_ALIASES = {
         'avatar_smallest': {'size': (25, 25), 'crop': True}
     },
 }
+
+# Number of seconds of inactivity before a user is marked offline
+USER_ONLINE_TIMEOUT = 300
+
+# Number of seconds that we will keep track of inactive users for before
+# their last seen is removed from the cache
+USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
