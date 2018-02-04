@@ -18,6 +18,8 @@ def tagged_usernames(content):
 
 def render_example_username(rank, username):
     parser = get_parser()
+    if not rank:
+        return username
     return mark_safe(
         parser.render(rank.username_modifier.replace('{USER}', username)))
 

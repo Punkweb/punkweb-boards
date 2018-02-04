@@ -47,6 +47,16 @@ class EmailUserManager(BaseUserManager):
         user.save()
         return user
 
+    def staff_users(self):
+        qs = self.get_queryset()
+        staff_ids = [user.id for user in qs if user.is_staff()]
+        return qs.filter(id__in=staff_ids)
+
+    def online_users(self):
+        qs = self.get_queryset()
+        online_ids = [user.id for user in qs if user.online()]
+        return qs.filter(id__in=online_ids)
+
 
 class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
                 PermissionsMixin, AvatarImagesMixin):
@@ -100,7 +110,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
         if self.last_seen():
             now = datetime.datetime.now()
             if now > self.last_seen() + \
-                datetime.timedelta(seconds=settings.USER_ONLINE_TIMEOUT):
+                datetime.timedelta(seconds=BOARD_SETTINGS.USER_ONLINE_TIMEOUT):
                 return False
             else:
                 return True
@@ -151,7 +161,13 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
     @property
     def rendered_rank(self):
-        return utils.render_example_username(self.rank, self.rank.title)
+        if not self.rank:
+            rank = None
+            name = 'Rookie'
+        else:
+            rank = self.rank
+            name = self.rank.title
+        return utils.render_example_username(rank, name)
 
     @property
     def rendered_signature(self):

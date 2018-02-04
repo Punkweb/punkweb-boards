@@ -77,6 +77,27 @@
       <div class="flexcol" style="flex: 1;">
         <div class="panel recentThreads">
           <div class="panel__header">
+            <div class="panel__title">Staff Online</div>
+          </div>
+          <div class="panel__body padding">
+            <table>
+            {% for user in staff_online %}
+              <tr>
+                <td>
+
+                  <img src="{{user.avatar_smallest}}" alt="">
+                </td>
+                <td>
+                  <a href="{% url 'board:profile' user.username %}">{{user.rendered_username}}</a>
+
+                </td>
+              </tr>
+            {% endfor %}
+            </table>
+          </div>
+        </div>
+        <div class="panel recentThreads">
+          <div class="panel__header">
             <div class="panel__title">Recent Threads</div>
           </div>
           <div class="panel__body padding">
@@ -133,6 +154,16 @@
     </div>
     <div class="flexrow">
       <div class="flexcol" style="flex: 1;">
+        <div class="panel">
+          <div class="panel__header">
+            <div class="panel__title">Users Online</div>
+          </div>
+          <div class="panel__body padding">
+            {% for user in users_online %}
+            <a href="{% url 'board:profile' user.username %}">{{user.rendered_username}},</a>
+            {% endfor %}
+          </div>
+        </div>
         <a name="statistics"></a>
         <div class="panel statisticsPanel">
           <div class="panel__header">

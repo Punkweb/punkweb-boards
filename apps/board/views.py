@@ -47,6 +47,9 @@ def index_view(request):
             category__auth_req=False, category__parent__auth_req=False)
         recent_activity = recent_activity.filter(
             category__auth_req=False, category__parent__auth_req=False)
+    staff_online = EmailUser.objects.online_users().filter(
+        Q(is_superuser=True) | Q(admin_access=True))
+    users_online = EmailUser.objects.online_users().filter()
     newest_member = EmailUser.objects.all().order_by('-created').first()
     member_count = EmailUser.objects.all().count()
     context = {
@@ -56,8 +59,10 @@ def index_view(request):
         'categories': category_groups,
         'recent_threads': recent_threads[:5],
         'recent_activity': recent_activity[:5],
+        'users_online': users_online,
+        'staff_online': staff_online,
         'newest_member': newest_member,
-        'member_count': member_count
+        'member_count': member_count,
     }
     return render(
         request, 'board/themes/{}/index.html'.format(BOARD_THEME), context)

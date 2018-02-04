@@ -1,4 +1,4 @@
-from . import settings as BOARD_SETTINGS
+from apps.board import settings as BOARD_SETTINGS
 from apps.api.models import Report
 
 
