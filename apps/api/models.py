@@ -1,6 +1,7 @@
 import datetime
 import hashlib
 import math
+import base64
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -92,7 +93,8 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
         return self.username
 
     def last_seen(self):
-        return cache.get('seen_%s' % self.username)
+        name = self.username.replace(' ', '_')
+        return cache.get('seen_%s' % name)
 
     def online(self):
         if self.last_seen():
