@@ -25,6 +25,9 @@ class CodeTag(BBCodeTag):
     definition_string = '[code]{TEXT}[/code]'
     format_string = '<pre class="prettyprint"><code>{TEXT}</code></pre>'
 
+    class Options:
+        render_embedded = False
+
 
 class FontTag(BBCodeTag):
     name = 'font'
@@ -101,6 +104,15 @@ class CheckedBoxTag(BBCodeTag):
         strip = True
 
 
+class EscapeTag(BBCodeTag):
+    name = 'escape'
+    definition_string = '[escape]{TEXT}[/escape]'
+    format_string = '{TEXT}'
+
+    class Options:
+        render_embedded = False
+
+
 tag_pool.register_tag(SpoilerTag)
 tag_pool.register_tag(SizeTag)
 tag_pool.register_tag(UserTag)
@@ -115,3 +127,4 @@ tag_pool.register_tag(AnchorTag)
 tag_pool.register_tag(QuoteTag)
 tag_pool.register_tag(UncheckedBoxTag)
 tag_pool.register_tag(CheckedBoxTag)
+tag_pool.register_tag(EscapeTag)
