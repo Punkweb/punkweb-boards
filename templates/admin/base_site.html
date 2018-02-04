@@ -4,10 +4,6 @@
 
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
-{% block extrahead %}
-<link href="{% sass_src 'scss/punkweb.scss' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
 {% block branding %}
 <a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a>
 {% endblock %}
@@ -15,5 +11,5 @@
 {% block nav-global %}{% endblock %}
 
 {% block footer %}
-{% include 'board/themes/punkweb/footer.html' %}
+{% include 'board/themes/punkweb/includes/footer.html' %}
 {% endblock %}

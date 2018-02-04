@@ -7,6 +7,8 @@
 <link href="{% sass_src 'scss/punkweb-admin.scss' %}" rel="stylesheet" type="text/css" />
 {% block extrastyle %}{% endblock %}
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}
+<link rel="stylesheet" href="{% static 'sceditor/minified/themes/square.min.css' %}" />
+<link href="{% sass_src 'scss/punkweb.scss' %}" rel="stylesheet" type="text/css" />
 {% block extrahead %}{% endblock %}
 {% block responsive %}
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -55,6 +57,12 @@
 <!-- END Container -->
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<!-- Use in production -->
+<!-- <script src="{% static 'js/bundle.min.js' %}"></script> -->
+<!-- Use in development -->
+<script src="{% static 'js/run_prettify.js' %}"></script>
+<script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
 <script src="{% static 'js/spoiler.js' %}"></script>
+<script src="{% static 'js/editor_config.js' %}"></script>
 </body>
 </html>

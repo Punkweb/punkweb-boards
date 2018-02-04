@@ -35,7 +35,7 @@
   <body class="{% block bodyclass %}{% endblock %}">
     <div class="page-wrap">
       {% block navbar %}
-        {% include 'board/themes/punkweb/nav.html' %}
+        {% include 'board/themes/punkweb/includes/nav.html' %}
       {% endblock %}
       <div class="pageHeader">
         <div class="djcontainer">
@@ -254,7 +254,7 @@
         </div><!-- /.content -->
       </div>
     </div><!-- ./wrapper -->
-    {% include 'board/themes/punkweb/footer.html' %}
+    {% include 'board/themes/punkweb/includes/footer.html' %}
 
     {% if filter_form %}
       {{ filter_form }}

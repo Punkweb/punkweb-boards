@@ -27,12 +27,8 @@ div.breadcrumbs {
   background: white;
 }
 
-h1 {
-  margin: 0 0 20px;
-}
-
 .submit-row a.deletelink {
-  height: auto;
+  height: auto !important;
 }
 
 .inline-group .tabular td.original p {
@@ -57,4 +53,13 @@ a:link, a:visited {
 
 #content {
   width: auto !important;
+}
+
+#content-related .actionlist {
+  margin: 0;
+}
+
+#content-related p {
+  padding: 0;
+  margin: 0;
 }
