@@ -62,7 +62,7 @@
               <img src="{{thread.user.avatar_small}}" alt="..." />
             </a>
             <div class="thread__user__name">
-              <div class="onlineDot"></div> <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a>
+              {% if user.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a>
             </div>
             <div class="thread__user__rank">
               {{thread.user.rank|default_if_none:"Rookie"}}
