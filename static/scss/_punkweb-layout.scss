@@ -129,7 +129,7 @@ a:link, a:visited {
     @include noselect;
     @include bold;
     @include font-range(20, 24);
-    color: $main-nav-title;
+    color: $main-nav-title !important;
     padding: 1.5rem 0;
     margin: 0 0.5rem;
     letter-spacing: 1.2px;
@@ -137,7 +137,7 @@ a:link, a:visited {
     text-transform: uppercase;
 
     a {
-      color: $main-nav-title;
+      color: $main-nav-title !important;
 
       &:hover {
         text-decoration: none;
@@ -383,7 +383,6 @@ a:link, a:visited {
   color: $default-text-on-light;
   padding: 1rem;
   min-width: 250px;
-  opacity: .9;
   a {
     color: $primary-link;
   }
