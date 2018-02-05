@@ -19,8 +19,8 @@
           <li><a href="{% url 'board:index' %}">Forum</a></li>
           <li><a href="{% url 'board:category' object.category.parent.id %}">{{object.category.parent.name}}</a></li>
           <li><a href="{% url 'board:subcategory' object.category.id %}">{{object.category.name}}</a></li>
-          <li><a href="{% url 'board:thread' object.id %}">{{object.title}}</a></li>
-          <li>Delete Thread</li>
+          <li><a href="{% url 'board:thread' object.id %}">Thread</a></li>
+          <li>Delete</li>
         </ul>
       </div>
     </div>

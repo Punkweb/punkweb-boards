@@ -19,12 +19,12 @@
           {% if post %}
           <li><a href="{% url 'board:category' post.thread.category.parent.id %}">{{post.thread.category.parent.name}}</a></li>
           <li><a href="{% url 'board:subcategory' post.thread.category.id %}">{{post.thread.category.name}}</a></li>
-          <li><a href="{% url 'board:thread' post.thread.id %}">{{post.thread.title}}</a></li>
+          <li><a href="{% url 'board:thread' post.thread.id %}">Thread</a></li>
           <li>Report Post</li>
           {% elif thread %}
           <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
           <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
-          <li><a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a></li>
+          <li><a href="{% url 'board:thread' thread.id %}">Thread</a></li>
           <li>Report Thread</li>
           {% endif %}
         </ul>
