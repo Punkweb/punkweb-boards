@@ -2,8 +2,8 @@
 html, body, p, code:before, table {
   margin: 0;
   padding: 0;
-  font-family: 'sans-serif';
-  font-size: 16px;
+  font-family: 'Open-Sans';
+  font-size: calc(.875rem + (16 - 14) * (100vw - 20rem) / (1440 - 320));;
   color: black;
 }
 
@@ -91,4 +91,25 @@ h1, h2, h3, h4, h5, h6 {
 /* Prevent empty paragraphs from collapsing */
 div, p {
   min-height: 1.25em;
+}
+
+@font-face {
+  font-family: 'Open-Sans';
+  src: url('../fonts/OpenSans-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: 'Storybook';
+	src: url('../fonts/Storybook.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Winterland';
+	src: url('../fonts/WINTERLAND.ttf');
+	font-weight: normal;
+	font-style: normal;
 }
