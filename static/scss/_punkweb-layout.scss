@@ -13,17 +13,7 @@ hr {
   background: $hr;
 }
 
-a:link, a:visited {
-  @include bold;
-  color: $primary-link;
-  text-decoration: none;
-  transition: text-decoration 0.3s ease-in-out;
-
-  &:hover, :active {
-    color: $primary-link;
-    text-decoration: underline;
-  }
-}
+@include link($primary-link, null, true, true);
 
 .errorlist {
   li {
@@ -31,11 +21,16 @@ a:link, a:visited {
   }
 }
 
+.helptext {
+  display: block;
+  padding-top: .5rem;
+}
+
 .spoiler {
   &__content {
     background-color: $body-background;
-    visibility: hidden;
-    height: 0;
+    display: none;
+    padding: .25rem;
   }
   &__open {
     cursor: pointer;
@@ -52,43 +47,36 @@ a:link, a:visited {
   width: 8px;
 }
 
+
 .button {
-  @include medium;
-  background-color: $oc-gray-7;
-  appearance: none;
-  border: 1px solid mix(black, $oc-gray-7, 20%);
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
-  color: white !important;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 13px;
-  letter-spacing: 1px;
-  outline: none;
-  padding: .5rem .75rem;
-  min-width: 100px;
-  text-align: center;
-  text-decoration: none !important;
-  transition: all .25s ease-in-out;
-
-  &:hover {
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, .2), 0 0 6px mix(white, $oc-gray-7, 10%);
-    background: mix(black, $oc-gray-7, 10%);
+  @include button($oc-gray-7, white);
+  &-primary {
+    @include button($primary, white);
   }
-  &:disabled {
-    background-color: $oc-gray-5;
-    border: 1px solid $oc-gray-6;
-    cursor: not-allowed;
-    &:hover {
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
-    }
+  &-green {
+    @include button($oc-green-8, white);
   }
-  a {
-    color: white !important;
+  &-red {
+    @include button($oc-red-9, white);
+  }
+  &-orange {
+    @include button($oc-orange-9, white);
+  }
+}
 
-    &:hover {
-      text-decoration: none;
-    }
+.button-hollow {
+  @include button-hollow($oc-gray-7, white);
+  &-primary {
+    @include button-hollow($primary, white);
+  }
+  &-green {
+    @include button-hollow($oc-green-7, white);
+  }
+  &-red {
+    @include button-hollow($oc-red-9, white);
+  }
+  &-orange {
+    @include button-hollow($oc-orange-7, white);
   }
 }
 
@@ -412,6 +400,7 @@ input, select, textarea {
   border: 1px solid $hr;
   border-radius: 2px;
   box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+  display: block;
   margin: 0;
   font-family: sans-serif;
   font-size: 16px;
@@ -434,6 +423,22 @@ input[type=button], input[type=submit] {
 
 .sidebar {
   margin-left: 1rem;
+}
+
+.flex {
+  display: flex;
+  &__row {
+    flex-direction: row;
+  }
+  &__column {
+    flex-direction: column;
+  }
+  &__align-center {
+    align-items: center;
+  }
+  &__justify-center {
+    justify-content: center;
+  }
 }
 
 .flexrow {
@@ -501,10 +506,13 @@ input[type=button], input[type=submit] {
   }
   &__body {
     flex: 10;
+    display: flex;
+    flex-direction: column;
     max-width: 84%;
     overflow-wrap: break-word;
   }
   &__content {
+    flex: 1;
     padding: 1rem;
     overflow-wrap: break-word;
   }
@@ -513,10 +521,7 @@ input[type=button], input[type=submit] {
     padding: 1rem;
   }
   &__actions {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
+    text-align: right;
     padding: 0.5rem;
     a+a {
       margin-left: 0.5rem;

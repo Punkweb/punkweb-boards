@@ -1,5 +1,78 @@
 $rem-base: 16px;
 
+@mixin link($color, $hover: null, $bold: true, $underline: true) {
+  a:link, a:visited {
+    @if bold {
+      @include bold;
+    }
+    color: $color;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease-in-out;
+    &:hover, &:active {
+      @if hover {
+        color: $hover;
+      }
+      @if $underline {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@mixin button($background, $color) {
+  @include medium;
+  @include link($color, null, false, false);
+  appearance: none;
+  background-color: $background;
+  border: 1px solid mix(black, $background, 20%);
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+  color: $color !important;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Open-Sans';
+  font-size: 13px;
+  letter-spacing: 1px;
+  outline: none;
+  padding: .5rem .75rem;
+  min-width: 100px;
+  text-align: center;
+  text-decoration: none !important;
+  transition: all .25s ease-in-out;
+  &:hover {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .2), 0px 0px 6px mix(white, $background, 10%);
+    background-color: mix(black, $background, 10%);
+  }
+  &:disabled {
+    background-color: $oc-gray-5;
+    border: 1px solid $oc-gray-6;
+    cursor: not-allowed;
+    &:hover {
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    }
+  }
+}
+
+@mixin button-hollow($background, $color) {
+  @include button($background, $color);
+  background: transparent;
+  border: 1px solid darken($background, 10%);
+  color: $background !important;
+  &:hover {
+    background-color: darken($background, 5%);
+    color: $color !important;
+  }
+  &:active {
+    background-color: darken($background, 10%);
+    color: $color !important;
+  }
+  &:disabled {
+    background-color: transparent;
+    border: 1px solid $oc-gray-5;
+    color: $oc-gray-7 !important;
+  }
+}
+
 @function strip-unit($num) {
   @return $num / ($num * 0 + 1);
 }
@@ -170,6 +243,7 @@ blockquote {
 }
 
 blockquote cite {
+  @include link($primary-link, null, true, true);
   font-weight: bold;
   display: block;
   font-size: 1em;

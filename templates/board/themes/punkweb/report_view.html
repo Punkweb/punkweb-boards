@@ -25,33 +25,36 @@
         <div class="panel__title">{{report}}</div>
       </div>
       <div class="panel__body padding">
-        <h3>Reason for Report</h3>
-        {{report.reason}}
-        <br/>
-        <br/>
-        {% if report.post %}
-        <h3>Post Content</h3>2
-        {{report.post.content.rendered}}
-        <br/>
-        <br/>
-        <a class="button" href="{% url 'board:post-update' report.post.id %}">Update Post</a>
-        <a class="button" href="{% url 'board:post-delete' report.post.id %}">Delete Post</a>
-        {% elif report.thread%}
-        <h3>Thread Content</h3>
-        {{report.thread.content.rendered}}
-        <br/>
-        <br/>
-        <a class="button" href="{% url 'board:thread-update' report.thread.id %}">Update Thread</a>
-        <a class="button" href="{% url 'board:thread-delete' report.thread.id %}">Delete Thread</a>
-        {% endif %}
-        {% if not report.resolved %}
-        <br/>
-        <br/>
-        <form method="post">
-          {% csrf_token %}
-          <input type="submit" value="Mark as Resolved" />
-        </form>
-        {% endif %}
+        <div class="margin-bottom">
+          {% if report.post %}<a class="button" href="{% url 'board:thread' report.post.thread.id %}?page={{report.post.page_number}}#p{{report.post.post_number}}"><i class="fa fa-link fa-fw"></i> Jump to post</a>
+          {% elif report.thread %}<a class="button" href="{% url 'board:thread' report.thread.id %}"><i class="fa fa-link fa-fw"></i> Jump to thread</a>{% endif %}
+        </div>
+        <div class="margin-bottom">
+          <h2>Reason for Report</h2>
+          <hr class="hr" />
+          {{report.reason}}
+        </div>
+        <div class="margin-bottom">
+          <h2>{% if report.post %}Post{% elif report.thread %}Thread{% endif %} Content</h2>
+          <hr class="hr" />
+          {% if report.post %}{{report.post.content.rendered}}{% elif report.thread %}{{report.thread.content.rendered}}{% endif %}
+          <hr class="hr" />
+          {% if not report.resolved %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="align-right">
+              <button class="button-green" type="submit"><i class="fa fa-check fa-fw"></i> Mark as Resolved</button>
+              {% if report.post %}
+              <a class="button" href="{% url 'board:post-update' report.post.id %}"><i class="fa fa-edit fa-fw"></i> Update Post</a>
+              <a class="button-red" href="{% url 'board:post-delete' report.post.id %}"><i class="fa fa-trash fa-fw"></i> Delete Post</a>
+              {% elif report.thread %}
+              <a class="button" href="{% url 'board:thread-update' report.thread.id %}"><i class="fa fa-edit fa-fw"></i> Update Thread</a>
+              <a class="button-red" href="{% url 'board:thread-delete' report.thread.id %}"><i class="fa fa-trash fa-fw"></i> Delete Thread</a>
+            {% endif %}
+            </div>
+          </form>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>

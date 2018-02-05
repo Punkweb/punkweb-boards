@@ -124,7 +124,7 @@ class ThreadForm(forms.ModelForm):
 
     class Meta:
         model = Thread
-        fields = ['title', 'content']
+        fields = ['title', 'tags', 'content']
 
 
 class PostForm(forms.ModelForm):
@@ -166,6 +166,9 @@ class ReportForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super(ReportForm, self).__init__(*args, **kwargs)
         self.request = request
+        self.fields['reason'].label = 'Reason for report:'
+        self.fields['reason'].widget.attrs['cols'] = '80'
+        self.fields['reason'].widget.attrs['rows'] = '6'
 
     def save(self, thread=None, post=None, set_user=False, commit=True):
         obj = super(ReportForm, self).save(commit=False)

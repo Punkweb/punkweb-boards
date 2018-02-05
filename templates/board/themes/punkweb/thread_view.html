@@ -78,7 +78,7 @@
               {% if thread.reported and user.is_authenticated and user.is_staff %}
               <div style="margin: 1rem">
                 <blockquote>
-                  <div>This thread has open reports.</div>
+                  <div>This thread has unresolved reports.</div>
                 </blockquote>
               </div>
               {% endif %}
@@ -91,12 +91,12 @@
             <div class="thread__actions">
               <a><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{thread.upvotes}}</a>
               <a><i class="fa fa-thumbs-down" aria-hidden="true"></i> {{thread.downvotes}}</a>
-              {% if user.is_authenticated and thread.user.id != user.id %}
-              <a class="button" href="{% url 'board:report-thread' thread.id %}" name="button">Report</a>
+              {% if user.is_authenticated %}
+              <a class="button" href="{% url 'board:report-thread' thread.id %}" name="button"><i class="fa fa-flag fa-fw"></i> Report</a>
               {% endif %}
               {% if user.is_authenticated and user.id == thread.user.id or user.is_staff %}
-              <a class="button" href="{% url 'board:thread-update' thread.id %}" name="button">Update</a>
-              <a class="button" href="{% url 'board:thread-delete' thread.id %}" name="button">Delete</a>
+              <a class="button" href="{% url 'board:thread-update' thread.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>
+              <a class="button-red" href="{% url 'board:thread-delete' thread.id %}" name="button"><i class="fa fa-trash fa-fw"></i> Delete</a>
               {% endif %}
             </div>
           </div>
@@ -121,7 +121,7 @@
               <img src="{{post.user.avatar_small}}" alt="..." />
             </a>
             <div class="thread__user__name">
-              <a href="{% url 'board:profile' post.user.username %}">{{post.user.rendered_username}}</a>
+              {% if post.user.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' post.user.username %}">{{post.user.rendered_username}}</a>
             </div>
             <div class="thread__user__rank">
               {{post.user.rank|default_if_none:"Rookie"}}
@@ -134,14 +134,12 @@
           <div class="thread__body">
             <div class="thread__content">
               {{post.content.rendered}}
-              {% if post.reported and user.is_authenticated and user.is_staff %}
-              <div style="margin: 1rem">
-                <blockquote>
-                  <div>This post has open reports.</div>
-                </blockquote>
-              </div>
-              {% endif %}
             </div>
+            {% if post.reported and user.is_authenticated and user.is_staff %}
+            <blockquote style="margin: .5rem;">
+              <span><i class="fa fa-flag fa-fw"></i> This post has open reports.</span>
+            </blockquote>
+            {% endif %}
             {% if post.user.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
             <div class="thread__signature">
               {{post.user.signature.rendered}}
@@ -150,12 +148,12 @@
             <div class="thread__actions">
               <a><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{post.upvotes}}</a>
               <a><i class="fa fa-thumbs-down" aria-hidden="true"></i> {{post.downvotes}}</a>
-              {% if user.is_authenticated and post.user.id != user.id %}
-              <a class="button" href="{% url 'board:report-post' post.id %}" name="button">Report</a>
+              {% if user.is_authenticated %}
+              <a class="button" href="{% url 'board:report-post' post.id %}" name="button"><i class="fa fa-flag fa-fw"></i> Report</a>
               {% endif %}
               {% if user.is_authenticated and user.id == post.user.id or user.is_staff %}
-              <a class="button" href="{% url 'board:post-update' post.id %}" name="button">Update</a>
-              <a class="button" href="{% url 'board:post-delete' post.id %}" name="button">Delete</a>
+              <a class="button" href="{% url 'board:post-update' post.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>
+              <a class="button-red" href="{% url 'board:post-delete' post.id %}" name="button"><i class="fa fa-trash fa-fw"></i> Delete</a>
               {% endif %}
             </div>
           </div>
@@ -206,7 +204,7 @@
         <form method="post">
           {% csrf_token %}
           {{ post_form.as_p }}
-          <input type="submit" class="button btn-success form-control" value="Post Reply" />
+          <input type="submit" class="button button-green" value="Post Reply" />
         </form>
         {% else %}
         This thread has been closed.

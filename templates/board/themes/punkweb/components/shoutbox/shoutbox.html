@@ -17,13 +17,13 @@
       <div id="shoutboxError"></div>
       <textarea id="shoutEditor" class="shout-editor" rows="10" cols="40" style="display: none;"></textarea>
       <div class="padding-top">
-        <input class="button" id="submitShout" type="button" name="name" value="Post Shout">
-        <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+        <button class="button-green" id="submitShout" type="button"><i class="fa fa-bullhorn fa-fw"></i> Shout</button>
+        <button class="button" id="reloadShouts" type="button"><i class="fa fa-sync-alt fa-fw"></i> Reload</button>
       </div>
     </form>
     {% else %}
     <div class="padding-top">
-      <input class="button" id="reloadShouts" type="button" name="name" value="Reload Shouts">
+      <button class="button" id="reloadShouts" type="button"><i class="fa fa-sync-alt fa-fw"></i> Reload</button>
     </div>
     {% endif %}
   </div>
