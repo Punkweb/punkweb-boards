@@ -15,7 +15,7 @@
           <li><a href="/">Forum</a></li>
           <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
           <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
-          <li>{{thread.title}}</li>
+          <li>Thread</li>
         </ul>
       </div>
     </div>
