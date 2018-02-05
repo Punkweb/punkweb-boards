@@ -163,7 +163,9 @@ blockquote {
   background: #eee;
   border: 1px solid #aaa;
   position: relative;
-  margin: .25em 0;
+  // margin: .25em 0;
+  margin: 0;
+  margin-bottom: 1rem;
   padding: .25em;
 }
 

@@ -1,6 +1,7 @@
 {% extends './base.html' %}
 {% load humanize %}
 {% load static %}
+{% load bbcode_tags %}
 
 {% block title %}Index{% endblock %}
 
@@ -12,6 +13,7 @@
     {% endif %}
     <div class="flexrow">
       <div class="flexcol" style="flex: 3;">
+        {{ '[quote=Jack Straw][b]Attention[/b]: Feel free to register and start posting!  Back up your important threads by saving the bbcode to a text file, [url=https://github.com/shakedown-street/django-boards]django-boards[/url] is in an early test phase of production use, and the database models are highly likely to change resulting in loss of data.[/quote]' | bbcode }}
         {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
         {% include './components/shoutbox/shoutbox.html' %}
         {% endif %}

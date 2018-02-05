@@ -77,7 +77,7 @@ class AnchorTag(BBCodeTag):
 class QuoteTag(BBCodeTag):
     name = 'quote'
     definition_string = '[quote={TEXT1}]{TEXT2}[/quote]'
-    format_string = '<blockquote><cite><a href="/board/profile/{TEXT1}"><span style="color:green;">{TEXT1}</span></a> said:</cite>{TEXT2}</blockquote>'
+    format_string = '<blockquote><cite><a href="/board/profile/{TEXT1}/"><i class="fa fa-user" aria-hidden="true"></i> {TEXT1}</a> said:</cite> {TEXT2}</blockquote>'
 
 
 class UncheckedBoxTag(BBCodeTag):

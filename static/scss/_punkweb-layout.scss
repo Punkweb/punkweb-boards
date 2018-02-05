@@ -15,10 +15,12 @@ hr {
 
 a:link, a:visited {
   @include bold;
+  color: $primary-link;
   text-decoration: none;
   transition: text-decoration 0.3s ease-in-out;
 
   &:hover, :active {
+    color: $primary-link;
     text-decoration: underline;
   }
 }
