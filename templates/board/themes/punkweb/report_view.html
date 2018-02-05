@@ -38,7 +38,6 @@
           <h2>{% if report.post %}Post{% elif report.thread %}Thread{% endif %} Content</h2>
           <hr class="hr" />
           {% if report.post %}{{report.post.content.rendered}}{% elif report.thread %}{{report.thread.content.rendered}}{% endif %}
-          <hr class="hr" />
           {% if not report.resolved %}
           <form method="post">
             {% csrf_token %}

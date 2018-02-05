@@ -1,6 +1,11 @@
 {% extends './base.html' %}
+{% load static %}
 
 {% block title %}Delete Thread{% endblock %}
+
+{% block extrascript %}
+<script type="text/javascript" src="{% static 'js/navigate.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -32,8 +37,8 @@
           <form method="post">{% csrf_token %}
             <p>Are you sure you want to delete this thread?</p>
             <div class="align-right">
-              <button class="pageBack button" type="button">Back</button>
-              <input class="button-red" type="submit" value="Confirm" />
+              <button class="pageBack button" type="button"><i class="fa fa-arrow-left fa-fw"></i> Back</button>
+              <button class="button-red" type="submit"><i class="fa fa-trash fa-fw"></i> Confirm</button>
             </div>
           </form>
         </div>

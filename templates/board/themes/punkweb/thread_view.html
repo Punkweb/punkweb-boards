@@ -204,7 +204,7 @@
         <form method="post">
           {% csrf_token %}
           {{ post_form.as_p }}
-          <input type="submit" class="button button-green" value="Post Reply" />
+          <button class="button-green" type="submit"><i class="fa fa-pencil-alt"></i> Post Reply</button>
         </form>
         {% else %}
         This thread has been closed.
