@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'meta',
     'apps.api',
     'apps.board',
+    'apps.pages',
 ]
 
 MIDDLEWARE = [

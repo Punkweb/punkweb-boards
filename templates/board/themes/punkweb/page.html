@@ -1,0 +1,20 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}{{page.title}}{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="djcontainer">
+    <div class="margin-bottom">
+      <h1 class="margin-bottom">{{page.title}}</h1>
+      {% if user.is_superuser %}<a class="button" href="{{page.get_admin_url}}"><i class="fa fa-edit fa-fw"></i> Edit Page</a>{% endif %}
+    </div>
+    <div class="panel">
+      <div class="panel__body padding">
+        {{page.content.rendered}}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
