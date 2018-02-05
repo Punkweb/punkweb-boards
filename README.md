@@ -2,10 +2,16 @@
 Django forum boards with bbcode support.
 
 
+This project aims to eventually be pip installable and easily integrated into
+your own project.  However, at the moment this code base is tied specifically
+to a running community.  If you really wanted to you could clone/fork this project
+and start making the necessary customizations to run it yourself, in which case
+I would gladly offer support.
+
 ### Demo/Documentation
 
 Check out our community at [PunkWeb](https://punkweb.us/board/) for
-documentation and a live demonstration of django-boards!
+a live demonstration of django-boards, or view the [documentation](https://punkweb.us/board/page/docs-index/)!
 
 ### A note about sceditor (BBCode editor)
 
@@ -21,9 +27,10 @@ For now, download [SCEditor](http://www.sceditor.com/) and unzip it at:
 `django-boards/static/sceditor/`
 
 
-### Custom bbcode tags
+### Supported BBCode tags
 
-Check out `apps/api/bbcode_tags.py` to see the available custom tags and add others.
+Click [here](https://punkweb.us/board/page/supported-bbcodes/) to see a list of
+all the supported BBCode tags on django-boards and how to use them.
 
 
 ### Almost ready for use!
