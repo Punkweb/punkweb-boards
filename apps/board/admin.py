@@ -77,10 +77,10 @@ class MessageForm(forms.ModelForm):
 
 class EmailUserAdmin(admin.ModelAdmin):
     form = EmailUserForm
-    list_display = ('username', 'email', 'rank', 'is_superuser',)
+    list_display = ('username', 'email', 'admin_access', 'is_superuser',)
     ordering = ('username',)
     fields = (
-        'username', 'email', 'gender', 'birthday', 'rank', 'is_superuser',
+        'username', 'email', 'gender', 'birthday', 'ranks', 'is_superuser',
         'admin_access', 'is_banned', 'groups', 'user_permissions',
         'last_login', 'image', 'avatar_thumbnail', 'signature',
         'rendered_signature', 'username_modifier', 'rendered_username',)
@@ -90,10 +90,11 @@ class EmailUserAdmin(admin.ModelAdmin):
 
 class UserRankAdmin(admin.ModelAdmin):
     form = UserRankForm
-    list_display = ('title',)
-    ordering = ('order',)
+    list_display = ('title', 'order', 'is_award', 'award_type', 'award_count', )
+    ordering = ('order', )
     fields = (
-        'title', 'description', 'order', 'username_modifier', 'example_name',)
+        'title', 'description', 'order', 'is_award', 'award_type', 'award_count',
+        'username_modifier', 'example_name', )
     readonly_fields = ('example_name',)
 
 

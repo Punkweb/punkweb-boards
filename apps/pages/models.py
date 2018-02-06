@@ -6,7 +6,7 @@ from precise_bbcode.fields import BBCodeTextField
 from apps.api.mixins import UUIDPrimaryKey, CreatedModifiedMixin
 
 
-class Page(models.Model):
+class Page(UUIDPrimaryKey, CreatedModifiedMixin):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=140, unique=True,
         help_text="The url that this page will be at: /board/pages/{{slug}}")

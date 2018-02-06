@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ('password', 'groups', 'user_permissions',)
         read_only_fields = (
             'last_login', 'is_superuser', 'created', 'modified', 'email',
-            'is_banned', 'username_modifier', 'rank',)
+            'is_banned', 'username_modifier', 'ranks',)
 
 
 class CategorySerializer(serializers.ModelSerializer):

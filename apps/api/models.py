@@ -76,8 +76,7 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
     admin_access = models.BooleanField(
         default=False, help_text="User has access to the admin.")
     is_banned = models.BooleanField(default=False)
-    rank = models.ForeignKey(
-        'UserRank', blank=True, null=True, on_delete=models.SET_NULL)
+    ranks = models.ManyToManyField('UserRank', blank=True)
     username_modifier = models.TextField(
         max_length=250, blank=True, null=True,
         help_text="BBCode. Just add {USER} where " \
@@ -156,18 +155,29 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
         return True
 
     @property
+    def rank(self):
+        if not self.ranks:
+            return None
+        return self.ranks.order_by('order').first()
+
+    @property
+    def rank_title(self):
+        if not self.rank:
+            return 'Rookie'
+        else:
+            return self.rank.title
+
+    @property
     def rendered_username(self):
         return utils.render_username(self)
 
     @property
     def rendered_rank(self):
         if not self.rank:
-            rank = None
             name = 'Rookie'
         else:
-            rank = self.rank
             name = self.rank.title
-        return utils.render_example_username(rank, name)
+        return utils.render_example_username(self.rank, name)
 
     @property
     def rendered_signature(self):
@@ -185,10 +195,17 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
 
 
 class UserRank(models.Model):
+    AWARD_TYPE_CHOICES = (
+        ('post_count', 'Post Count'),
+    )
     title = models.CharField(max_length=96, blank=False, null=False, unique=True)
     description = models.TextField(max_length=256, blank=True, null=True)
     order = models.IntegerField(
         help_text='Where this rank ranks among the other ranks')
+    is_award = models.BooleanField(default=False)
+    award_type = models.CharField(
+        max_length=50, choices=AWARD_TYPE_CHOICES, null=True, blank=True, default=None)
+    award_count = models.IntegerField(default=0, null=True, blank=True)
     username_modifier = models.TextField(
         max_length=250, blank=True, null=True,
         help_text="BBCode. Just add {USER} where "\
@@ -273,8 +290,7 @@ class Subcategory(UUIDPrimaryKey):
 
     @property
     def threads(self):
-        return Thread.objects.filter(
-            category__id=self.id)
+        return Thread.objects.filter(category__id=self.id)
 
     @property
     def thread_count(self):
@@ -282,8 +298,7 @@ class Subcategory(UUIDPrimaryKey):
 
     @property
     def posts(self):
-        return Post.objects.filter(
-            thread__category__id=self.id)
+        return Post.objects.filter(thread__category__id=self.id)
 
     @property
     def post_count(self):
@@ -541,6 +556,14 @@ class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
 @receiver(post_save, sender=Post)
 def thread_notifications(sender, instance, created, **kwargs):
     if created:
+        # Award ranks if applicable
+        awardable_ranks = UserRank.objects.filter(
+            is_award=True, award_type='post_count')
+        for rank in awardable_ranks:
+            if instance.user.post_count >= rank.award_count:
+                instance.user.ranks.add(rank)
+                instance.user.save()
+        # Send notification to tagged users
         content = str(instance.content)
         tagged_users = utils.tagged_usernames(content)
         for user in tagged_users:
