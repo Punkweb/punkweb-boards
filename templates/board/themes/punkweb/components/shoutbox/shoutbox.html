@@ -3,14 +3,10 @@
 <!-- Shoutbox component -->
 <a name="shoutbox"></a>
 <div class="panel">
-  <div class="panel__header spoiler__open">
+  <div class="panel__header" data-role="collapsible-toggle" data-key="shoutbox">
     <div class="panel__title">Shoutbox</div>
   </div>
-  {% if BOARD_SETTINGS.SHOUTBOX_DEFAULT_CLOSED %}
-  <div class="panel__body spoiler__content">
-  {% else %}
-  <div class="panel__body spoiler__content spoiler__content--show">
-  {% endif %}
+  <div class="panel__body" data-role="collapsible" data-key="shoutbox">
     <div id="shoutBox" class="shoutList"></div>
     {% if user.is_authenticated and user.can_shout %}
     <form class="shoutForm">

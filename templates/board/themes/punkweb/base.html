@@ -23,14 +23,18 @@
     {% include 'board/themes/punkweb/includes/footer.html' %}
   </body>
   <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+  <script src="{% static 'js/lodash.js' %}"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <!-- Use in production -->
   <!-- <script src="{% static 'js/bundle.min.js' %}"></script> -->
   <!-- Use in development -->
-  <script src="{% static 'js/run_prettify.js' %}"></script>
+  <script src="{% static 'js/run-prettify.js' %}"></script>
   <script src="{% static 'sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
-  <script src="{% static 'js/spoiler.js' %}"></script>
-  <script src="{% static 'js/editor_config.js' %}"></script>
+  <script src="{% static 'js/ui/spoiler.js' %}"></script>
+  <script src="{% static 'js/editor-config.js' %}"></script>
   {% include './components/scripts.html' %}
-  {% block extrascript %}{% endblock %}
+
+  {% block extrascript %}
+  <script src="{% static 'js/ui/collapse.js' %}"></script>
+  {% endblock %}
 </html>

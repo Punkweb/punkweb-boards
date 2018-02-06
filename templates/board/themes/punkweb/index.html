@@ -22,7 +22,7 @@
         <div class="panel">
           <div class="panel__body">
             <table class="table full-width">
-              <thead>
+              <thead data-role="collapsible-toggle" data-key="index-category-{{category.parent.name}}">
                 <tr>
                   <th class="align-left" width="40%">
                     <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
@@ -38,7 +38,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody data-role="collapsible" data-key="index-category-{{category.parent.name}}">
                 {% for child in category.children %}
                 <tr>
                   <td class="align-left">
@@ -78,10 +78,10 @@
       </div>
       <div class="flexcol sidebar" style="flex: 1;">
         <div class="panel">
-          <div class="panel__header">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-recent-threads">
             <div class="panel__title">Recent Threads</div>
           </div>
-          <div class="panel__body padding">
+          <div class="panel__body padding" data-role="collapsible" data-key="index-recent-threads">
             {% if recent_threads %}
             {% for thread in recent_threads %}
             <div class="clearMargin padding-bottom">
@@ -102,10 +102,10 @@
           </div>
         </div>
         <div class="panel">
-          <div class="panel__header">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-recent-activity">
             <div class="panel__title">Recent Activity</div>
           </div>
-          <div class="panel__body padding">
+          <div class="panel__body padding" data-role="collapsible" data-key="index-recent-activity">
             {% if recent_activity %}
             {% for thread in recent_activity %}
             <div class="clearMargin padding-bottom">
@@ -132,10 +132,10 @@
           </div>
         </div>
         <div class="panel">
-          <div class="panel__header">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-staff-online">
             <div class="panel__title">Staff Online</div>
           </div>
-          <div class="panel__body padding">
+          <div class="panel__body padding" data-role="collapsible" data-key="index-staff-online">
             <table>
               {% for user in staff_online %}
               <tr>
@@ -157,10 +157,10 @@
     <div class="flexrow">
       <div class="flexcol" style="flex: 1;">
         <div class="panel">
-          <div class="panel__header">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-users-online">
             <div class="panel__title">Users Online</div>
           </div>
-          <div class="panel__body padding">
+          <div class="panel__body padding" data-role="collapsible" data-key="index-users-online">
             {% for user in users_online %}
             <a href="{% url 'board:profile' user.username %}">{{user.rendered_username}}</a>
             {% empty %}
@@ -170,10 +170,10 @@
         </div>
         <a name="statistics"></a>
         <div class="panel statisticsPanel">
-          <div class="panel__header">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-statistics">
             <div class="panel__title"><a href="{% url 'board:statistics' %}">Statistics</a></div>
           </div>
-          <div class="panel__body padding">
+          <div class="panel__body padding" data-role="collapsible" data-key="index-statistics">
             <ul class="statisticsPanel__list">
               <li style="display: inline">Total posts {{total_posts}} •</li>
               <li style="display: inline">Total threads {{total_threads}} •</li>

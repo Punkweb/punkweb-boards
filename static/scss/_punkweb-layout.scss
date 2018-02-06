@@ -31,6 +31,10 @@ hr {
     background-color: $body-background;
     display: none;
     padding: .25rem;
+
+    &--padding-lg {
+      padding: 1rem;
+    }
   }
   &__open {
     cursor: pointer;

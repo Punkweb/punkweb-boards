@@ -115,7 +115,9 @@ def keyword_search_view(request):
 
     # Posts
     post_vector = SearchVector(
-        'content', weight='A'
+        'content', weight='A',
+    ) + SearchVector(
+        'user__username', weight='B'
     )
     matched_posts = Post.objects.annotate(
         search=post_vector,

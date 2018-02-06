@@ -52,10 +52,10 @@
     </center>
     {% if posts.number == 1 %}
     <div class="panel">
-      <div class="panel__header">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="thread-{{thread.id}}">
         <div class="panel__title">{{thread.title}}</div>
       </div>
-      <div class="panel__body">
+      <div class="panel__body" data-role="collapsible" data-key="thread-{{thread.id}}">
         <div class="thread">
           <div class="thread__user">
             <a href="{% url 'board:profile' thread.user.username %}">
@@ -111,10 +111,10 @@
     {% for post in posts %}
     <a name="p{{post.post_number}}"></a>
     <div class="panel">
-      <div class="panel__header">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="post-{{post.id}}">
         <div class="panel__title align-right">#{{post.post_number}}</div>
       </div>
-      <div class="panel__body">
+      <div class="panel__body" data-role="collapsible" data-key="post-{{post.id}}">
         <div class="thread">
           <div class="thread__user">
             <a href="{% url 'board:profile' post.user.username %}">
@@ -194,10 +194,10 @@
     </center>
     {% if user.is_authenticated %}
     <div class="panel">
-      <div class="panel__header">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="thread-reply">
         <div class="panel__title">Reply to this thread</div>
       </div>
-      <div class="panel__body padding">
+      <div class="panel__body padding" data-role="collapsible" data-key="thread-reply">
         {% if not thread.closed %}
         <img src="{{user.avatar_smaller}}" />
         <hr />

@@ -23,39 +23,45 @@
   <div class="djcontainer">
     {% if matched_users %}
     <div class="panel">
-      <div class="panel__header">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-users">
         <div class="panel__title">Users</div>
       </div>
-      <div class="panel__body padding">
+      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-users">
         {% for item in matched_users %}
-        <a href="{% url 'board:profile' item.username %}">{{item.rendered_username}}</a>
-        <br>
+        <div>
+          <img src="{{item.avatar_smallest}}" />
+          <a href="{% url 'board:profile' item.username %}">{{item.rendered_username}}</a>
+        </div>
         {% endfor %}
       </div>
     </div>
     {% endif %}
     {% if matched_threads %}
     <div class="panel">
-      <div class="panel__header">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-threads">
         <div class="panel__title">Threads</div>
       </div>
-      <div class="panel__body padding">
+      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-threads">
         {% for item in matched_threads %}
-        <a href="{{item.get_absolute_url}}">{{item}}</a>
-        <br>
+        <div>
+          <a href="{{item.get_absolute_url}}">{{item}}</a>
+          <p>{{item.content.rendered|striptags|truncatewords:25}}</p>
+        </div>
         {% endfor %}
       </div>
     </div>
     {% endif %}
     {% if matched_posts %}
     <div class="panel">
-      <div class="panel__header">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-posts">
         <div class="panel__title">Posts</div>
       </div>
-      <div class="panel__body padding">
+      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-posts">
         {% for item in matched_posts %}
-        <a href="{{item.get_absolute_url}}">{{item}}</a>
-        <br>
+        <div>
+          <a href="{{item.get_absolute_url}}">{{item}}</a>
+          <p>{{item.content.rendered|striptags|truncatewords:25}}</p>
+        </div>
         {% endfor %}
       </div>
     </div>
