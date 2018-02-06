@@ -22,7 +22,7 @@
         <div class="panel">
           <div class="panel__body">
             <table class="table full-width">
-              <thead data-role="collapsible-toggle" data-key="index-category-{{category.parent.name}}">
+              <thead data-role="collapsible-toggle" data-key="index-category-{{category.parent.id}}">
                 <tr>
                   <th class="align-left" width="40%">
                     <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
@@ -38,7 +38,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody data-role="collapsible" data-key="index-category-{{category.parent.name}}">
+              <tbody data-role="collapsible" data-key="index-category-{{category.parent.id}}">
                 {% for child in category.children %}
                 <tr>
                   <td class="align-left">
