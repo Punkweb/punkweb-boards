@@ -1,0 +1,40 @@
+{% load humanize %}
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Forum | {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="{% static 'django_boards/img/icons/steal_your_face_mayan.png' %}">
+    <link rel="stylesheet" href="{% static 'django_boards/sceditor/minified/themes/square.min.css' %}" />
+    <!-- Use in production -->
+    <!-- <link href="{% static 'django_boards/scss/punkweb.min.css' %}" rel="stylesheet" type="text/css" /> -->
+    <!-- Use in development -->
+    <link href="{% sass_src 'django_boards/scss/punkweb.scss' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="page-wrap">
+      {% include 'django_boards/themes/punkweb/includes/nav.html' %}
+      {% block content %}{% endblock %}
+    </div>
+    {% include 'django_boards/themes/punkweb/includes/footer.html' %}
+  </body>
+  <script src="{% static 'django_boards/js/deps/jquery-3.1.1.min.js' %}"></script>
+  <script src="{% static 'django_boards/js/deps/lodash.js' %}"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <!-- Use in production -->
+  <!-- <script src="{% static 'js/bundle.min.js' %}"></script> -->
+  <!-- Use in development -->
+  <script src="{% static 'django_boards/js/run-prettify.js' %}"></script>
+  <script src="{% static 'django_boards/sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
+  <script src="{% static 'django_boards/js/ui/spoiler.js' %}"></script>
+  <script src="{% static 'django_boards/js/editor-config.js' %}"></script>
+
+  {% block extrascript %}
+  <script src="{% static 'django_boards/js/ui/collapse.js' %}"></script>
+  <script src="{% static 'django_boards/js/shoutbox.js' %}"></script>
+  {% endblock %}
+</html>

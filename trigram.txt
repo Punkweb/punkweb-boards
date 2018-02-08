@@ -1,2 +1,0 @@
-sudo su postgres
-psql -d django_boards -c "create extension pg_trgm;"

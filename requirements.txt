@@ -1,22 +1,11 @@
-django
-djangorestframework
+django>=1.8
+djangorestframework>=3.0.0
 pillow
-psycopg2
 django-precise-bbcode
 django-cors-headers
 easy-thumbnails
-graphene-django
-django-filter
 django-simple-captcha
-gunicorn
-django-meta
 python-memcached
-
-# Scss
-# Make sure that you have sass executable installed. See SASS official site for details.
 libsass
 django-compressor
 django-sass-processor
-
-# Dev tools
-django-extensions

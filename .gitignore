@@ -8,7 +8,6 @@ digitialocean.txt
 *.sqlite3
 *.pyc
 npm-debug.log
-migrations/
 __pycache__/
 
 
