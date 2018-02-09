@@ -14,8 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         exclude = ('password', 'groups', 'user_permissions',)
         read_only_fields = (
-            'last_login', 'is_superuser', 'created', 'modified', 'email',
-            'is_banned', 'username_modifier', 'ranks',)
+            'last_login', 'date_joined', 'is_staff', 'is_superuser', 'email',
+            'username',)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class SubcategorySerializer(serializers.ModelSerializer):
     last_thread = serializers.ReadOnlyField(source='last_thread.id')
     last_thread_title = serializers.ReadOnlyField(source='last_thread.title')
     last_thread_created = serializers.ReadOnlyField(source='last_thread.created')
-    last_thread_user = serializers.ReadOnlyField(source='last_thread.user.rendered_username')
+    last_thread_user = serializers.ReadOnlyField(source='last_thread.user.profile.rendered_username')
     parent_name = serializers.ReadOnlyField(source='parent.name')
     thread_count = serializers.ReadOnlyField()
     post_count = serializers.ReadOnlyField()
@@ -46,11 +46,11 @@ class ThreadSerializer(serializers.ModelSerializer):
     last_post = serializers.ReadOnlyField(source='last_post.id')
     last_post_created = serializers.ReadOnlyField(source='last_post.created')
     last_post_username = serializers.ReadOnlyField(source='last_post.user.username')
-    last_post_rendered_username = serializers.ReadOnlyField(source='last_post.user.rendered_username')
+    last_post_rendered_username = serializers.ReadOnlyField(source='last_post.user.profile.rendered_username')
     user_username = serializers.ReadOnlyField(source='user.username')
-    user_rendered_username = serializers.ReadOnlyField(source='user.rendered_username')
-    user_image = serializers.ReadOnlyField(source='user.avatar')
-    user_post_count = serializers.ReadOnlyField(source='user.post_count')
+    user_rendered_username = serializers.ReadOnlyField(source='user.profile.rendered_username')
+    user_image = serializers.ReadOnlyField(source='user.profile.avatar')
+    user_post_count = serializers.ReadOnlyField(source='user.profile.post_count')
     user_join_date = serializers.ReadOnlyField(source='user.created')
     flagged = serializers.ReadOnlyField(source='reported')
     posts_count = serializers.ReadOnlyField()
@@ -83,7 +83,7 @@ class ConversationSerializer(serializers.ModelSerializer):
     last_message = serializers.ReadOnlyField(source='last_message.id')
     last_message_title = serializers.ReadOnlyField(source='last_message.title')
     last_message_created = serializers.ReadOnlyField(source='last_message.created')
-    last_message_user = serializers.ReadOnlyField(source='last_message.user.rendered_username')
+    last_message_user = serializers.ReadOnlyField(source='last_message.user.profile.rendered_username')
     message_count = serializers.ReadOnlyField()
     class Meta:
         model = Conversation
@@ -100,7 +100,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class ShoutSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
-    rendered_username = serializers.ReadOnlyField(source='user.rendered_username')
+    rendered_username = serializers.ReadOnlyField(source='user.profile.rendered_username')
 
     class Meta:
         model = Shout

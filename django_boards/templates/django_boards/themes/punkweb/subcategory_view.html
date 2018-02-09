@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
 {% block title %}{{category.name}}{% endblock %}
@@ -61,14 +61,14 @@
                   <br />
                   {{thread.created|date:"d M Y, g:i A"}}
                 </div>
-                <div>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a></div>
+                <div>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.profile.rendered_username}}</a></div>
               </td>
               <td class="align-center">
                 <div>{{thread.posts_count}}</div>
               </td>
               <td class="align-right hidden-xs">
                 {% if thread.last_post %}
-                <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}}</a></div>
+                <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.profile.rendered_username}}</a></div>
                 <div>{{thread.last_post.created|date:"d M Y, g:i A"}}</div>
                 {% else %}
                 <div>No Posts</div>

@@ -4,7 +4,6 @@ pillow
 django-precise-bbcode
 django-cors-headers
 easy-thumbnails
-django-simple-captcha
 python-memcached
 libsass
 django-compressor

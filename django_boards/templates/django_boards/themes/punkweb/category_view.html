@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
 {% block title %}{{category.name}}{% endblock %}
@@ -74,7 +74,7 @@
                 <div>
                   by
                   <a href="{% url 'board:profile' sub.obj.last_thread.user.username %}">
-                    {{sub.obj.last_thread.user.rendered_username}}
+                    {{sub.obj.last_thread.user.profile.rendered_username}}
                   </a>
                 </div>
                 {% else %}

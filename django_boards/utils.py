@@ -23,22 +23,22 @@ def render_example_username(rank, username):
     return mark_safe(
         parser.render(rank.username_modifier.replace('{USER}', username)))
 
-def render_username(user):
+def render_username(profile):
     # Returns the username rendered in bbcode defined by the users rank.
     a = BOARD_SETTINGS.USERNAME_MODIFIERS_ENABLED
     parser = get_parser()
-    if user.is_banned:
+    if profile.is_banned:
         return 'BANNED'
-    if a and user.username_modifier:
-        modifier = user.username_modifier
-        replace_username = modifier.replace('{USER}', user.username)
+    if a and profile.username_modifier:
+        modifier = profile.username_modifier
+        replace_username = modifier.replace('{USER}', profile.user.username)
         return mark_safe(parser.render(replace_username))
-    elif a and user.rank and user.rank.username_modifier:
-        modifier = user.rank.username_modifier
-        replace_username = modifier.replace('{USER}', user.username)
+    elif a and profile.rank and profile.rank.username_modifier:
+        modifier = profile.rank.username_modifier
+        replace_username = modifier.replace('{USER}', profile.user.username)
         return mark_safe(parser.render(replace_username))
     else:
-        return user.username
+        return profile.user.username
 
 def get_gravatar_url(email, size=80, secure=True, default='mm'):
     if secure:

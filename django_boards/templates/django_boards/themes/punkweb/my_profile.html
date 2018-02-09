@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static humanize %}
 
 {% block title %}Members | {{user.username}}{% endblock %}
@@ -24,9 +24,9 @@
     <div class="panel">
       <div class="panel__body padding">
         <center>
-          <img src="{{user.avatar}}">
-          <div></div><h2>{{user.rendered_username}}</h2>
-          <div class="thread__user__lastseen">Last Seen: {% if user.last_seen %}{{ user.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
+          <img src="{{user.profile.avatar}}">
+          <div></div><h2>{{user.profile.rendered_username}}</h2>
+          <div class="thread__user__lastseen">Last Seen: {% if user.profile.last_seen %}{{ user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
         </center>
         <br>
 
@@ -37,28 +37,28 @@
 
         <h4>Gender</h4>
         <div>
-          {{user.gender}}
+          {{user.profile.gender}}
         </div>
 
         <br>
 
         <h4>Birth date</h4>
         <div>
-          {{user.birthday|date:'d M Y'}} ({{user.age}})
+          {{user.profile.birthday|date:'d M Y'}} ({{user.age}})
         </div>
 
         <br>
 
         <h4>Post Count</h4>
         <div>
-          {{user.post_count}}
+          {{user.profile.post_count}}
         </div>
 
         <br>
         {% if BOARD_SETTINGS.SIGNATURES_ENABLED %}
         <h4>Signature</h4>
         <div>
-          {{user.signature.rendered}}
+          {{user.profile.signature.rendered}}
         </div>
 
         <br>
@@ -98,7 +98,7 @@
                 </td>
                 <td class="align-right hide-on-mobile">
                   {% if thread.last_post %}
-                  <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}}</a></div>
+                  <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.profile.rendered_username}}</a></div>
                   <div>{{thread.last_post.created|date:"d M Y, g:i A"}}</div>
                   {% else %}
                   <div>No Posts</div>

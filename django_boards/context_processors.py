@@ -16,7 +16,7 @@ def settings(request):
 
 def base_context(request):
     ctx = {}
-    if request.user.is_authenticated and not request.user.is_banned:
+    if request.user.is_authenticated and not request.user.profile.is_banned:
         ctx.update({
             'notifications': request.user.notifications.all()[:5]
         })

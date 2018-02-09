@@ -55,7 +55,7 @@ class CategoryViewSet(mixins.RetrieveModelMixin,
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Category.objects.none()
         qs = self.queryset
         if not self.request.user.is_authenticated:
@@ -70,7 +70,7 @@ class SubcategoryViewSet(mixins.RetrieveModelMixin,
     serializer_class = SubcategorySerializer
 
     def get_queryset(self):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Subcategory.objects.none()
         qs = self.queryset
         if not self.request.user.is_authenticated:
@@ -91,7 +91,7 @@ class ThreadViewSet(mixins.CreateModelMixin,
     permission_classes = (BelongsToUser,)
 
     def get_queryset(self):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Thread.objects.none()
         qs = self.queryset
         if not self.request.user.is_authenticated:
@@ -104,7 +104,7 @@ class ThreadViewSet(mixins.CreateModelMixin,
         return qs.all()
 
     def perform_create(self, serializer):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Thread.objects.none()
         serializer.save(user=self.request.user)
 
@@ -119,7 +119,7 @@ class PostViewSet(mixins.CreateModelMixin,
     permission_classes = (BelongsToUser,)
 
     def get_queryset(self):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Post.objects.none()
         qs = self.queryset
         if not self.request.user.is_authenticated:
@@ -144,14 +144,14 @@ class ConversationViewSet(mixins.CreateModelMixin,
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Conversation.objects.none()
         qs = self.queryset
         qs = qs.filter(users__in=[self.request.user])
         return qs.all()
 
     def perform_create(self, serializer):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Conversation.objects.none()
         serializer.save(user=self.request.user)
 
@@ -166,14 +166,14 @@ class MessageViewSet(mixins.CreateModelMixin,
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Message.objects.none()
         qs = self.queryset
         qs = qs.filter(conversation__users__in=[self.request.user])
         return qs.all()
 
     def perform_create(self, serializer):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Message.objects.none()
         serializer.save(user=self.request.user)
 
@@ -185,7 +185,7 @@ class ShoutViewSet(mixins.CreateModelMixin,
     serializer_class = ShoutSerializer
 
     def perform_create(self, serializer):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Shout.objects.none()
         serializer.save(user=self.request.user)
 

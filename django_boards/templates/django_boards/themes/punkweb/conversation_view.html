@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
 {% block title %}{{conversation.subject}}{% endblock %}
@@ -29,17 +29,17 @@
           <div class="thread">
             <div class="thread__user">
               <a href="{% url 'board:profile' message.user.username %}">
-                <img src="{{message.user.avatar_small}}" alt="..." />
+                <img src="{{message.user.profile.avatar_small}}" alt="..." />
               </a>
               <div class="thread__user__name">
-                <a href="{% url 'board:profile' message.user.username %}">{{message.user.rendered_username}}</a>
+                <a href="{% url 'board:profile' message.user.username %}">{{message.user.profile.rendered_username}}</a>
               </div>
               <div class="thread__user__rank">
-                {{message.user.rank|default_if_none:"Rookie"}}
+                {{message.user.profile.rank|default_if_none:"Rookie"}}
               </div>
-              <div class="thread__user__posts">Posts: {{message.user.post_count}}</div>
+              <div class="thread__user__posts">Posts: {{message.user.profile.post_count}}</div>
               <div class="thread__user__membersince">
-                Join date: {{message.user.created|date:'m/d/y'}}
+                Join date: {{message.user.profile.created|date:'m/d/y'}}
               </div>
             </div>
             <div class="thread__body">
@@ -61,7 +61,7 @@
         <div class="panel__title">Reply to this conversation</div>
       </div>
       <div class="panel__body padding">
-        <img src="{{user.avatar_smaller}}" />
+        <img src="{{user.profile.avatar_smaller}}" />
         <hr />
         <form method="post">
           {% csrf_token %}

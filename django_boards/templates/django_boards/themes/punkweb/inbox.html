@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 
 {% block title %}Inbox{% endblock %}
 
@@ -56,7 +56,7 @@
                     {{conversation.created|date:"d M Y, g:i A"}}
                   </td>
                   <td class="align-left">
-                    {{conversation.last_message.user.rendered_username}}
+                    {{conversation.last_message.user.profile.rendered_username}}
                   </td>
                 </tr>
                 {% endfor %}

@@ -4,7 +4,7 @@ import django.contrib.auth.views as auth_views
 from django_boards.conf.settings import BOARD_THEME
 from django_boards import views
 
-app_name = "board"
+app_name = 'board'
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),

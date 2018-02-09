@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
 {% block title %}{{thread.title}}{% endblock %}
@@ -59,17 +59,17 @@
         <div class="thread">
           <div class="thread__user">
             <a href="{% url 'board:profile' thread.user.username %}">
-              <img src="{{thread.user.avatar_small}}" alt="..." />
+              <img src="{{thread.user.profile.avatar_small}}" alt="..." />
             </a>
             <div class="thread__user__name">
-              {% if thread.user.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.rendered_username}}</a>
+              {% if thread.user.profile.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.profile.rendered_username}}</a>
             </div>
             <div class="thread__user__rank">
-              {{thread.user.rank_title}}
+              {{thread.user.profile.rank_title}}
             </div>
-            <div class="thread__user__posts">Posts: {{thread.user.post_count}}</div>
+            <div class="thread__user__posts">Posts: {{thread.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date: {{thread.user.created|date:'m/d/y'}}
+              Join date: {{thread.user.profile.created|date:'m/d/y'}}
             </div>
           </div>
           <div class="thread__body">
@@ -83,9 +83,9 @@
               </div>
               {% endif %}
             </div>
-            {% if thread.user.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
+            {% if thread.user.profile.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
             <div class="thread__signature">
-              {{thread.user.signature.rendered}}
+              {{thread.user.profile.signature.rendered}}
             </div>
             {% endif %}
             {% if user.is_authenticated %}
@@ -118,17 +118,17 @@
         <div class="thread">
           <div class="thread__user">
             <a href="{% url 'board:profile' post.user.username %}">
-              <img src="{{post.user.avatar_small}}" alt="..." />
+              <img src="{{post.user.profile.avatar_small}}" alt="..." />
             </a>
             <div class="thread__user__name">
-              {% if post.user.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' post.user.username %}">{{post.user.rendered_username}}</a>
+              {% if post.user.profile.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' post.user.username %}">{{post.user.profile.rendered_username}}</a>
             </div>
             <div class="thread__user__rank">
-              {{post.user.rank|default_if_none:"Rookie"}}
+              {{post.user.profile.rank|default_if_none:'Rookie'}}
             </div>
-            <div class="thread__user__posts">Posts: {{post.user.post_count}}</div>
+            <div class="thread__user__posts">Posts: {{post.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date: {{post.user.created|date:'m/d/y'}}
+              Join date: {{post.user.profile.created|date:'m/d/y'}}
             </div>
           </div>
           <div class="thread__body">
@@ -140,9 +140,9 @@
               <span><i class="fa fa-flag fa-fw"></i> This post has open reports.</span>
             </blockquote>
             {% endif %}
-            {% if post.user.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
+            {% if post.user.profile.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
             <div class="thread__signature">
-              {{post.user.signature.rendered}}
+              {{post.user.profile.signature.rendered}}
             </div>
             {% endif %}
             {% if user.is_authenticated %}
@@ -199,7 +199,7 @@
       </div>
       <div class="panel__body padding" data-role="collapsible" data-key="thread-reply">
         {% if not thread.closed %}
-        <img src="{{user.avatar_smaller}}" />
+        <img src="{{user.profile.avatar_smaller}}" />
         <hr />
         <form method="post">
           {% csrf_token %}

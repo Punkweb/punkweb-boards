@@ -7,7 +7,7 @@ def posts_by_dow():
         SELECT
           EXTRACT(dow FROM post.created) AS chunk,
           COUNT(post.id) AS count_posts
-        FROM api_post as post
+        FROM django_boards_post as post
         GROUP BY chunk
         ORDER BY chunk
     """
@@ -25,7 +25,7 @@ def threads_by_dow():
         SELECT
           EXTRACT(dow FROM thread.created) AS chunk,
           COUNT(thread.id) AS count_threads
-        FROM api_thread as thread
+        FROM django_boards_thread as thread
         GROUP BY chunk
         ORDER BY chunk
     """
@@ -44,8 +44,8 @@ def threads_in_subcategories():
           subcategory.id AS chunk,
           subcategory.name AS name,
           COUNT(thread.id) AS count_threads
-        FROM api_subcategory as subcategory
-        LEFT JOIN api_thread as thread
+        FROM django_boards_subcategory as subcategory
+        LEFT JOIN django_boards_thread as thread
           ON thread.category_id = subcategory.id
         GROUP BY chunk
         ORDER BY count_threads DESC

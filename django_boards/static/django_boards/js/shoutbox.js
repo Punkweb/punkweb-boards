@@ -89,7 +89,7 @@ $(function() {
     }
 
     function getShouts() {
-      $.get('/api/shouts/', function(data) {
+      $.get('/board/api/shouts/', function(data) {
         clearShoutList();
         shoutList = data.results;
 
@@ -105,7 +105,7 @@ $(function() {
       }
       $.ajax({
         type: 'POST',
-        url: '/api/shouts/',
+        url: '/board/api/shouts/',
         data: {
           content: shout
         },

@@ -83,7 +83,7 @@ $(function() {
     }
 
     function getStats() {
-      $.get('/api/statistics/', function(data) {
+      $.get('/board/api/statistics/', function(data) {
         updateDowPostsChart(data);
         updateSubcategoryThreadsChart(data);
       });

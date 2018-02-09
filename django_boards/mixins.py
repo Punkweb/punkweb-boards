@@ -1,5 +1,6 @@
 import uuid
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from easy_thumbnails.files import get_thumbnailer
 from django_boards import utils
@@ -21,8 +22,7 @@ class UploadedAtMixin(models.Model):
 
 
 class UUIDPrimaryKey(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     class Meta:
         abstract = True
@@ -30,10 +30,10 @@ class UUIDPrimaryKey(models.Model):
 
 class UpvoteDownvoteMixin(models.Model):
     upvoted_by = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_upvoted',
+        get_user_model(), related_name='%(app_label)s_%(class)s_upvoted',
         blank=True)
     downvoted_by = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_downvoted',
+        get_user_model(), related_name='%(app_label)s_%(class)s_downvoted',
         blank=True)
 
     class Meta:
@@ -44,8 +44,8 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar(self):
         if not self.image:
-            if utils.has_gravatar(self.email):
-                return utils.get_gravatar_url(self.email, size=200)
+            if utils.has_gravatar(self.user.email):
+                return utils.get_gravatar_url(self.user.email, size=200)
             return get_thumbnailer(utils.get_placeholder_url())['avatar'].url
         else:
             return self.image['avatar'].url
@@ -53,8 +53,8 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar_small(self):
         if not self.image:
-            if utils.has_gravatar(self.email):
-                return utils.get_gravatar_url(self.email, size=100)
+            if utils.has_gravatar(self.user.email):
+                return utils.get_gravatar_url(self.user.email, size=100)
             return get_thumbnailer(utils.get_placeholder_url())['avatar_small'].url
         else:
             return self.image['avatar_small'].url
@@ -62,8 +62,8 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar_smaller(self):
         if not self.image:
-            if utils.has_gravatar(self.email):
-                return utils.get_gravatar_url(self.email, size=50)
+            if utils.has_gravatar(self.user.email):
+                return utils.get_gravatar_url(self.user.email, size=50)
             return get_thumbnailer(utils.get_placeholder_url())['avatar_smaller'].url
         else:
             return self.image['avatar_smaller'].url
@@ -71,8 +71,8 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar_smallest(self):
         if not self.image:
-            if utils.has_gravatar(self.email):
-                return utils.get_gravatar_url(self.email, size=25)
+            if utils.has_gravatar(self.user.email):
+                return utils.get_gravatar_url(self.user.email, size=25)
             return get_thumbnailer(utils.get_placeholder_url())['avatar_smallest'].url
         else:
             return self.image['avatar_smallest'].url

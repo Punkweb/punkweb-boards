@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load humanize %}
 {% load static %}
 {% load bbcode_tags %}
@@ -13,10 +13,6 @@
     {% endif %}
     <div class="flexrow">
       <div class="flexcol" style="flex: 3;">
-        {{ '[quote=Jack Straw][b]Attention[/b]: Feel free to register and start posting!  Back up your important threads by saving the bbcode to a text file, [url=https://github.com/shakedown-street/django-boards]django-boards[/url] is in an early test phase of production use, and the database models are highly likely to change resulting in loss of data.[/quote]' | bbcode }}
-        {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
-        {% include 'django_boards/themes/punkweb/components/shoutbox/shoutbox.html' %}
-        {% endif %}
         {% for category in categories %}
         <a name="{{category.parent.name}}"></a>
         <div class="panel">
@@ -61,7 +57,7 @@
                     <div>{{child.last_thread.created|date:"d M Y, g:i A"}}</div>
                     <div>by
                       <a href="{% url 'board:profile' child.last_thread.user.username %}">
-                        {{child.last_thread.user.rendered_username}}
+                        {{child.last_thread.user.profile.rendered_username}}
                       </a>
                     </div>
                     {% else %}
@@ -87,13 +83,11 @@
             <div class="clearMargin padding-bottom">
               <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
               <div>{{thread.created|naturaltime}}</div>
-              {% if thread.user %}
               <div>by
                 <a href="{% url 'board:profile' thread.user.username %}">
-                  {{thread.user.rendered_username}}
+                  {{thread.user.profile.rendered_username}}
                 </a>
               </div>
-              {% endif %}
             </div>
             {% endfor %}
             {% else %}
@@ -114,13 +108,13 @@
               {% if thread.last_post.user %}
               <div>by
                 <a href="{% url 'board:profile' thread.last_post.user.username %}">
-                  {{thread.last_post.user.rendered_username}}
+                  {{thread.last_post.user.profile.rendered_username}}
                 </a>
               </div>
               {% else %}
               <div>by
                 <a href="{% url 'board:profile' thread.user.username %}">
-                  {{thread.user.rendered_username}}
+                  {{thread.user.profile.rendered_username}}
                 </a>
               </div>
               {% endif %}
@@ -140,10 +134,10 @@
               {% for user in staff_online %}
               <tr>
                 <td>
-                  <img src="{{user.avatar_smallest}}" alt="">
+                  <img src="{{user.profile.avatar_smallest}}" alt="">
                 </td>
                 <td>
-                  <a href="{% url 'board:profile' user.username %}">{{user.rendered_username}}</a>
+                  <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
                 </td>
               </tr>
               {% empty %}
@@ -162,7 +156,7 @@
           </div>
           <div class="panel__body padding" data-role="collapsible" data-key="index-users-online">
             {% for user in users_online %}
-            <a href="{% url 'board:profile' user.username %}">{{user.rendered_username}}</a>
+            <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
             {% empty %}
             <span>No users are online</span>
             {% endfor %}
@@ -182,7 +176,7 @@
               <li style="display: inline">
                 Newest member
                 <a href="{% url 'board:profile' newest_member.username %}">
-                  {{newest_member.rendered_username}}
+                  {{newest_member.profile.rendered_username}}
                 </a>
               </li>
               {% else %}
@@ -191,10 +185,15 @@
             </ul>
           </div>
         </div>
-        <p>Click <a href="{% url 'pages:page' 'supported-bbcodes' %}">here</a> to see a list of all the supported bbcode tags and how to use them.</p>
-        <p>Click <a href="{% url 'pages:page' 'docs-index' %}">here</a> to view the temporary documentation.</p>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extrascript %}
+{{ block.super }}
+{% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
+<script src="{% static 'django_boards/js/shoutbox.js' %}"></script>
+{% endif %}
 {% endblock %}

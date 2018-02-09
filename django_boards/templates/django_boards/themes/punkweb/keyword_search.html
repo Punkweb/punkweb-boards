@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
 {% block title %}Index{% endblock %}
@@ -29,8 +29,8 @@
       <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-users">
         {% for item in matched_users %}
         <div>
-          <img src="{{item.avatar_smallest}}" />
-          <a href="{% url 'board:profile' item.username %}">{{item.rendered_username}}</a>
+          <img src="{{item.profile.avatar_smallest}}" />
+          <a href="{% url 'board:profile' item.username %}">{{item.profile.rendered_username}}</a>
         </div>
         {% endfor %}
       </div>

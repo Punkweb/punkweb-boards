@@ -1,18 +1,26 @@
+import logging
 from django.contrib.postgres.search import (
     SearchQuery, SearchRank, SearchVector, TrigramSimilarity)
 from django.db.models import Q
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
-
 from django_boards.conf.settings import BOARD_THEME, SIGNATURES_ENABLED
 from django_boards.forms import (
     ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm,
     SettingsForm, KeywordSearchForm)
+# from django_boards.models import (
+#     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
+#     Message, Notification, Shout, Page)
 from django_boards.models import (
-    EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
+    Category, Subcategory, Thread, Post, Report, Conversation,
     Message, Notification, Shout, Page)
+
+
+logger = logging.getLogger(__name__)
 
 
 def unpermitted_view(request):
@@ -47,11 +55,12 @@ def index_view(request):
             category__auth_req=False, category__parent__auth_req=False)
         recent_activity = recent_activity.filter(
             category__auth_req=False, category__parent__auth_req=False)
-    staff_online = EmailUser.objects.online_users().filter(
-        Q(is_superuser=True) | Q(admin_access=True))
-    users_online = EmailUser.objects.online_users().filter()
-    newest_member = EmailUser.objects.all().order_by('-created').first()
-    member_count = EmailUser.objects.all().count()
+
+    users = get_user_model().objects.select_related('profile').all()
+    online = [user for user in users if user.profile.online()]
+    online_staff = [user for user in users if user.profile.online() and user.is_staff]
+    newest_member = users.order_by('-date_joined').first()
+    member_count = users.count()
     context = {
         'total_posts': total_posts,
         'total_threads': total_threads,
@@ -59,8 +68,8 @@ def index_view(request):
         'categories': category_groups,
         'recent_threads': recent_threads[:5],
         'recent_activity': recent_activity[:5],
-        'users_online': users_online,
-        'staff_online': staff_online,
+        'users_online': online,
+        'staff_online': online_staff,
         'newest_member': newest_member,
         'member_count': member_count,
     }
@@ -69,7 +78,7 @@ def index_view(request):
 
 
 def keyword_search_view(request):
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
 
     if request.GET.get('keyword'):
@@ -85,7 +94,7 @@ def keyword_search_view(request):
     ) + TrigramSimilarity(
         'email', keyword
     )
-    matched_users = EmailUser.objects.annotate(
+    matched_users = get_user_model().objects.annotate(
         similarity=user_trigram,
     ).filter(similarity__gt=0.3).order_by('-similarity')
 
@@ -142,10 +151,10 @@ def registration_view(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            user = EmailUser.objects.create_user(
+            user = get_user_model().objects.create_user(
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password1'],
-                email=form.cleaned_data['email']
+                email=form.cleaned_data['email'],
             )
             return redirect('/board/login/')
     else:
@@ -160,7 +169,7 @@ def registration_view(request):
 def my_profile(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
     context = {}
     return render(
@@ -170,19 +179,19 @@ def my_profile(request):
 def settings_view(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
     if request.method == 'POST':
         form = SettingsForm(request, request.POST, request.FILES)
         if form.is_valid():
             if form.cleaned_data['image']:
-                request.user.image = form.cleaned_data['image']
+                request.user.profile.image = form.cleaned_data['image']
             if form.cleaned_data['gender']:
-                request.user.gender = form.cleaned_data['gender']
+                request.user.profile.gender = form.cleaned_data['gender']
             if form.cleaned_data['birthday']:
-                request.user.birthday = form.cleaned_data['birthday']
+                request.user.profile.birthday = form.cleaned_data['birthday']
             if SIGNATURES_ENABLED and form.cleaned_data['signature']:
-                request.user.signature = form.cleaned_data['signature']
+                request.user.profile.signature = form.cleaned_data['signature']
             request.user.save()
             return redirect('/board/me/')
     else:
@@ -193,12 +202,12 @@ def settings_view(request):
     return render(
         request, 'django_boards/themes/{}/settings.html'.format(BOARD_THEME), context)
 
-
+# TODO: Don't call the context variable profile
 def profile_view(request, username):
-    user = EmailUser.objects.get(username=username)
+    user = get_user_model().objects.get(username=username)
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
     # Redirect to /board/me/ if trying to view own profile.
     if request.user.id == user.id:
@@ -428,7 +437,7 @@ def post_delete(request, pk):
 
 def conversations_list(request):
     # Redirect to unpermitted page if not authenticated or is banned
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return unpermitted_view(request)
     conversations = request.user.conversations.all()
     context = {
@@ -443,7 +452,7 @@ def conversations_list(request):
 
 def conversation_view(request, pk):
     # Redirect to unpermitted page if not authenticated or is banned
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
     conversation = request.user.conversations.get(id=pk)
     messages = conversation.messages.all()
@@ -482,7 +491,7 @@ def reports_list(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned or is not an admin
     if not request.user.is_authenticated or \
-        not request.user.is_staff or request.user.is_banned:
+        not request.user.is_staff or request.user.profile.is_banned:
         return redirect('board:unpermitted')
     context = {
         'reports': Report.objects.all()
@@ -498,7 +507,7 @@ def report_view(request, pk):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned or is not an admin
     if not request.user.is_authenticated or \
-        not request.user.is_staff or request.user.is_banned:
+        not request.user.is_staff or request.user.profile.is_banned:
         return redirect('board:unpermitted')
     instance = Report.objects.get(id=pk)
     if request.method == 'POST':
@@ -527,7 +536,7 @@ def report_create(request, thread=None, post=None):
         context.update({'post': post_obj})
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
     if request.method == 'POST':
         form = ReportForm(request, request.POST)
@@ -562,9 +571,9 @@ def notification_redirect(request, pk):
 def members_list(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
-    if not request.user.is_authenticated or request.user.is_banned:
+    if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
-    users = EmailUser.objects.filter(is_banned=False).order_by('username')
+    users = get_user_model().objects.filter(profile__is_banned=False).order_by('username')
     context = {
         'users': users
     }
@@ -588,7 +597,7 @@ def statistics_view(request):
 def page_view(request, slug):
     if not slug:
         return redirect('board:index')
-    if request.user.is_authenticated and request.user.is_banned:
+    if request.user.is_authenticated and request.user.profile.is_banned:
         return redirect('board:unpermitted')
     try:
         page = Page.objects.get(slug=slug)

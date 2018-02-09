@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
 {% block title %}Board Statistics{% endblock %}
@@ -39,5 +39,5 @@
 
 {% block extrascript %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-<script src="{% static 'js/statistics.js' %}"></script>
+<script src="{% static 'django_boards/js/statistics.js' %}"></script>
 {% endblock %}

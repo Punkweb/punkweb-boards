@@ -2,15 +2,15 @@ from django import forms
 from django.contrib import admin
 
 from django_boards.models import (
-    EmailUser, Category, Subcategory, Thread, Post, Shout, Conversation,
+    BoardProfile, Category, Subcategory, Thread, Post, Shout, Conversation,
     Message, Report, Notification, UserRank, Page)
 
 
 # Forms
 
-class EmailUserForm(forms.ModelForm):
+class BoardProfileForm(forms.ModelForm):
     class Meta:
-        model = EmailUser
+        model = BoardProfile
         widgets = {
             'signature': forms.Textarea(attrs={'class': 'post-editor'}),
             'username_modifier': forms.Textarea(attrs={'class': 'post-editor'}),
@@ -74,17 +74,27 @@ class MessageForm(forms.ModelForm):
 
 # ModelAdmin
 
-class EmailUserAdmin(admin.ModelAdmin):
-    form = EmailUserForm
-    list_display = ('username', 'email', 'admin_access', 'is_superuser',)
-    ordering = ('username',)
+class BoardProfileAdmin(admin.ModelAdmin):
+    form = BoardProfileForm
+    list_display = ('get_username', 'get_email',)
+    ordering = ('user__username',)
     fields = (
-        'username', 'email', 'gender', 'birthday', 'ranks', 'is_superuser',
-        'admin_access', 'is_banned', 'groups', 'user_permissions',
-        'last_login', 'image', 'avatar_thumbnail', 'signature',
-        'rendered_signature', 'username_modifier', 'rendered_username',)
+        'get_username', 'get_email', 'gender', 'birthday', 'ranks', 'is_banned',
+        'image', 'avatar_thumbnail', 'signature', 'rendered_signature',
+        'username_modifier', 'rendered_username',)
     readonly_fields = (
-        'avatar_thumbnail', 'rendered_signature', 'rendered_username',)
+        'get_username', 'get_email', 'avatar_thumbnail', 'rendered_signature',
+        'rendered_username',)
+
+    def get_username(self, obj):
+        return obj.user.username
+    get_username.short_description = 'Username'
+    get_username.admin_order_field = 'user__username'
+
+    def get_email(self, obj):
+        return obj.user.email
+    get_email.short_description = 'Email'
+    get_email.admin_order_field = 'user__email'
 
 
 class UserRankAdmin(admin.ModelAdmin):
@@ -178,7 +188,7 @@ class PageAdmin(admin.ModelAdmin):
         'slug': ('title', )
     }
 
-admin.site.register(EmailUser, EmailUserAdmin)
+admin.site.register(BoardProfile, BoardProfileAdmin)
 admin.site.register(UserRank, UserRankAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Thread, ThreadAdmin)

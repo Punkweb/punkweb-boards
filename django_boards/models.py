@@ -6,13 +6,11 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 
-from django.conf import settings
 from django.core.cache import cache
-from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager, PermissionsMixin)
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import resolve, reverse
@@ -23,61 +21,35 @@ from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
 from precise_bbcode.fields import BBCodeTextField
 
+from django_boards import utils
 from django_boards.conf import settings as BOARD_SETTINGS
 from django_boards.mixins import (
     CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin,
     AvatarImagesMixin,)
-from django_boards import utils
 
 
-def user_image_file_name(instance, filename):
-    folder = instance.username
+def profile_image_file_name(instance, filename):
+    folder = instance.user.username
     ext = (filename.split('.')[-1]).lower()
-    filename = '{}.{}'.format(instance.username, ext)
+    filename = '{}.{}'.format(instance.user.username, ext)
     return '/'.join(['user_images', folder, filename])
 
 
-class EmailUserManager(BaseUserManager):
-    def create_user(self, email, username, password=None, **kwargs):
-        user = self.model(email=self.normalize_email(email), username=username)
-        user.set_password(password)
-        user.save()
-        return user
-
-    def create_superuser(self, email, username, password=None, **kwargs):
-        user = self.create_user(email, username, password, **kwargs)
-        user.is_superuser = True
-        user.save()
-        return user
-
-    def staff_users(self):
-        qs = self.get_queryset()
-        staff_ids = [user.id for user in qs if user.is_staff()]
-        return qs.filter(id__in=staff_ids)
-
-    def online_users(self):
-        qs = self.get_queryset()
-        online_ids = [user.id for user in qs if user.online()]
-        return qs.filter(id__in=online_ids)
-
-
-class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
-                PermissionsMixin, AvatarImagesMixin):
+class BoardProfile(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin,
+                   AvatarImagesMixin):
     GENDER_CHOICES = [
         ('f', 'Female'),
         ('m', 'Male'),
     ]
-    email = models.EmailField(unique=True, blank=False)
-    username = models.CharField(max_length=16, unique=True, blank=False)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, related_name="profile", on_delete=models.CASCADE)
     image = ThumbnailerImageField(
-        upload_to=user_image_file_name, null=True, blank=True)
+        upload_to=profile_image_file_name, null=True, blank=True)
     signature = BBCodeTextField(max_length=1024, blank=True, null=True)
     gender = models.CharField(
         null=True, blank=True, max_length=1, choices=GENDER_CHOICES, default=None)
     birthday = models.DateField(
         null=True, blank=True, verbose_name='Birth date')
-    admin_access = models.BooleanField(
-        default=False, help_text="User has access to the admin.")
     is_banned = models.BooleanField(default=False)
     ranks = models.ManyToManyField('UserRank', blank=True)
     username_modifier = models.TextField(
@@ -86,26 +58,8 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
                   "you want the username to be placed at. " \
                   "Setting this will override the UserRank modification")
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-
-    class Meta:
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
-
-    objects = EmailUserManager()
-
-    def __str__(self):
-        return self.username
-
-    def get_full_name(self):
-        return self.username
-
-    def get_short_name(self):
-        return self.username
-
     def last_seen(self):
-        name = self.username.replace(' ', '_')
+        name = self.user.username.replace(' ', '_')
         return cache.get('seen_%s' % name)
 
     def online(self):
@@ -120,12 +74,8 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
             return False
 
     @property
-    def is_staff(self):
-        return self.admin_access or self.is_superuser
-
-    @property
     def post_count(self):
-        return len(self.threads.all()) + len(self.posts.all())
+        return len(self.user.threads.all()) + len(self.user.posts.all())
 
     @property
     def age(self):
@@ -192,9 +142,8 @@ class EmailUser(AbstractBaseUser, UUIDPrimaryKey, CreatedModifiedMixin,
         """Returns html tag with user image. Used on admin page"""
         return mark_safe('<img src="{}" />'.format(self.avatar_small))
 
-
     def get_absolute_url(self):
-        return reverse('board:profile', self.username)
+        return reverse('board:profile', self.user.username)
 
 
 class UserRank(models.Model):
@@ -240,7 +189,7 @@ class Category(UUIDPrimaryKey):
         return "{}. {}".format(self.order, self.name)
 
     def can_view(self, user):
-        if user.is_authenticated and user.is_banned:
+        if user.is_authenticated and user.profile.is_banned:
             return False
         if not user.is_authenticated and self.auth_req:
             return False
@@ -274,7 +223,7 @@ class Subcategory(UUIDPrimaryKey):
         return "{} > {}. {}".format(self.parent, self.order, self.name)
 
     def can_view(self, user):
-        if user.is_authenticated and user.is_banned:
+        if user.is_authenticated and user.profile.is_banned:
             return False
         if not user.is_authenticated and self.auth_req:
             return False
@@ -283,7 +232,7 @@ class Subcategory(UUIDPrimaryKey):
         return True
 
     def can_post(self, user):
-        if user.is_authenticated and user.is_banned:
+        if user.is_authenticated and user.profile.is_banned:
             return False
         if self.staff_req and user.is_authenticated and user.is_staff:
             return True
@@ -343,7 +292,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
         return '{} by {}'.format(self.title, self.user)
 
     def can_view(self, user):
-        if user.is_authenticated and user.is_banned:
+        if user.is_authenticated and user.profile.is_banned:
             return False
         if self.category.auth_req and not user.is_authenticated:
             return False
@@ -352,7 +301,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
         return True
 
     def can_edit(self, user):
-        if user.is_authenticated and user.is_banned:
+        if user.is_authenticated and user.profile.is_banned:
             return False
         if user.is_authenticated and user.is_staff:
             return True
@@ -408,7 +357,7 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
             self.user, self.thread, self.created.strftime("%Y-%m-%d %H:%M"))
 
     def can_edit(self, user):
-        if user.is_authenticated and user.is_banned:
+        if user.is_authenticated and user.profile.is_banned:
             return False
         if user.is_authenticated and user.is_staff:
             return True
@@ -537,7 +486,7 @@ class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
         return str(self.user)
 
     def get_absolute_url(self):
-        return reverse('board:index')  # TODO Actual url
+        return reverse('board:index')
 
 
 class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
@@ -586,6 +535,15 @@ class Page(UUIDPrimaryKey, CreatedModifiedMixin):
         return reverse('pages:page', kwargs={'slug': self.slug})
 
 
+@receiver(post_save, sender=get_user_model())
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        BoardProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=get_user_model())
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
 @receiver(post_save, sender=Thread)
 @receiver(post_save, sender=Post)
 def thread_notifications(sender, instance, created, **kwargs):
@@ -594,15 +552,15 @@ def thread_notifications(sender, instance, created, **kwargs):
         awardable_ranks = UserRank.objects.filter(
             is_award=True, award_type='post_count')
         for rank in awardable_ranks:
-            if instance.user.post_count >= rank.award_count:
-                instance.user.ranks.add(rank)
-                instance.user.save()
+            if instance.user.profile.post_count >= rank.award_count:
+                instance.user.profile.ranks.add(rank)
+                instance.user.profile.save()
         # Send notification to tagged users
         content = str(instance.content)
         tagged_users = utils.tagged_usernames(content)
         for user in tagged_users:
             try:
-                user_obj = EmailUser.objects.get(username=user)
+                user_obj = get_user_model().objects.get(username=user)
             except Exception as e:
                 user_obj = None
             if user_obj:
