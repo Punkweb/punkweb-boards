@@ -2,6 +2,8 @@ from django.conf import settings
 
 SETTINGS_OVERRIDES = getattr(settings, 'DJANGO_BOARDS', {})
 
+BOARD_NAME = SETTINGS_OVERRIDES.get('BOARD_NAME', 'Django Boards')
+
 # Theme (punkweb)
 BOARD_THEME = SETTINGS_OVERRIDES.get('BOARD_THEME', 'punkweb')
 

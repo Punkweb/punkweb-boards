@@ -5,6 +5,7 @@ from django_boards.models import Report
 def settings(request):
     return {
         'BOARD_SETTINGS': {
+            'BOARD_NAME': BOARD_SETTINGS.BOARD_NAME,
             'BOARD_THEME': BOARD_SETTINGS.BOARD_THEME,
             'SHOUTBOX_ENABLED': BOARD_SETTINGS.SHOUTBOX_ENABLED,
             'SIGNATURES_ENABLED': BOARD_SETTINGS.SIGNATURES_ENABLED,
