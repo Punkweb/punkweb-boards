@@ -8,3 +8,4 @@ python-memcached
 libsass
 django-compressor
 django-sass-processor
+psycopg2

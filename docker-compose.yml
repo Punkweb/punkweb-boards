@@ -1,0 +1,22 @@
+ version: '3.3'
+
+ services:
+   # Postgres
+   db:
+     image: postgres
+     environment:
+       - POSTGRES_USER=postgres
+       - POSTGRES_PASSWORD=postgres
+       - POSTGRES_DB=postgres
+
+   web:
+     build: .
+     command: ["./run_web.sh"]
+     volumes:
+       - .:/webapps
+     ports:
+       - "8000:8000"
+     links:
+       - db
+     depends_on:
+       - db
