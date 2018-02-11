@@ -2,6 +2,7 @@
 {% load static humanize %}
 
 {% block title %}Members | {{profile.username}}{% endblock %}
+{% block meta_description %}View {{profile.username}}'s profile{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -12,7 +13,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li><a href="{% url 'board:members-list' %}">Members</a></li>
           <li>{{profile.username}}</li>
         </ul>

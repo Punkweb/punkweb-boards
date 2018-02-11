@@ -15,7 +15,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           {% if post %}
           <li><a href="{% url 'board:category' post.thread.category.parent.id %}">{{post.thread.category.parent.name}}</a></li>
           <li><a href="{% url 'board:subcategory' post.thread.category.id %}">{{post.thread.category.name}}</a></li>

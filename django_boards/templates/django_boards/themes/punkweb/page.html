@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %}{{page.title}}{% endblock %}
+{% block meta_description %}{{page.content.rendered|striptags|truncatewords:160}}{% endblock %}
 
 {% block content %}
 <div class="main">

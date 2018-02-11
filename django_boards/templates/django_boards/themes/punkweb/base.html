@@ -4,8 +4,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Forum | {% block title %}{% endblock %}</title>
+    <title>{{ BOARD_SETTINGS.BOARD_NAME }} | {% block title %}{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="{% block meta_description %}For the record, the music never stopped{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="{% static 'django_boards/img/icons/steal_your_face_mayan.png' %}">

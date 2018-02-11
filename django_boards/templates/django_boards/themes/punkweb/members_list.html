@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %}Members{% endblock %}
+{% block meta_description %}View the members list{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -12,7 +13,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li>Members</li>
         </ul>
       </div>

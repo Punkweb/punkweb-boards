@@ -1,6 +1,7 @@
 {% extends 'django_boards/themes/punkweb/base.html' %}
 
 {% block title %}Inbox{% endblock %}
+{% block meta_description %}View your messages from other users{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -11,7 +12,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li>Inbox</li>
         </ul>
       </div>

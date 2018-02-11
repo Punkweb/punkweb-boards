@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %}{{category.name}}{% endblock %}
+{% block meta_description %}{{category.description.rendered|striptags|truncatewords:160}}{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -12,7 +13,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li><a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a></li>
           <li>{{category.name}}</li>
         </ul>

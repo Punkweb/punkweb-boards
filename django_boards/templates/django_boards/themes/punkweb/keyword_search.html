@@ -1,7 +1,8 @@
 {% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
-{% block title %}Index{% endblock %}
+{% block title %}Keyword Search{% endblock %}
+{% block meta_description %}Search for threads, posts, and users on this board{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -12,7 +13,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index'%}">Forum</a></li>
+          <li><a href="{% url 'board:index'%}">Board</a></li>
           <li>Search: {{keyword}}</li>
         </ul>
       </div>

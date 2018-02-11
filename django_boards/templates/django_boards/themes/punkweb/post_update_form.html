@@ -11,7 +11,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li><a href="{% url 'board:category' obj.thread.category.parent.id %}">{{obj.thread.category.parent.name}}</a></li>
           <li><a href="{% url 'board:subcategory' obj.thread.category.id %}">{{obj.thread.category.name}}</a></li>
           <li><a href="{% url 'board:thread' obj.thread.id %}">Thread</a></li>

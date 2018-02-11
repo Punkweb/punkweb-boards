@@ -1,6 +1,7 @@
 {% extends 'django_boards/themes/punkweb/base.html' %}
 
 {% block title %}Create Thread{% endblock %}
+{% block meta_description %}Create a thread in {{subcategory.name}}{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -11,7 +12,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li><a href="{% url 'board:category' subcategory.parent.id %}">{{subcategory.parent.name}}</a></li>
           <li><a href="{% url 'board:subcategory' subcategory.id %}">{{subcategory.name}}</a></li>
           <li>Create Thread</li>

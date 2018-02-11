@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %}Profile Settings{% endblock %}
+{% block meta_description %}Edit your profile settings{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -12,7 +13,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li><a href="{% url 'board:me' %}">Profile</a></li>
           <li>Settings</li>
         </ul>

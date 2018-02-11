@@ -1,7 +1,9 @@
 {% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static %}
 
+{% block meta_description %}{{category.description.rendered|striptags|truncatewords:160}}{% endblock %}
 {% block title %}{{category.name}}{% endblock %}
+
 
 {% block content %}
 <div class="pageHeader">
@@ -12,7 +14,7 @@
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
-          <li><a href="{% url 'board:index' %}">Forum</a></li>
+          <li><a href="{% url 'board:index' %}">Board</a></li>
           <li>{{category.name}}</li>
         </ul>
       </div>
