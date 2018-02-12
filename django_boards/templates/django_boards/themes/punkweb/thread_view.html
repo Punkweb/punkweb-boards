@@ -24,6 +24,7 @@
 </div>
 <div class="main">
   <div class="djcontainer">
+    {% if posts.num_pages %}
     <center>
       <nav class="margin">
         <ul class="pagination">
@@ -51,6 +52,7 @@
         </ul>
       </nav>
     </center>
+    {% endif %}
     {% if posts.number == 1 %}
     <div class="panel">
       <div class="panel__header" data-role="collapsible-toggle" data-key="thread-{{thread.id}}">
@@ -166,6 +168,7 @@
     </div>
     {% endfor %}
     {% endif %}
+    {% if posts.num_pages %}
     <center>
       <nav class="margin">
         <ul class="pagination">
@@ -193,6 +196,7 @@
         </ul>
       </nav>
     </center>
+    {% endif %}
     {% if user.is_authenticated %}
     <div class="panel">
       <div class="panel__header" data-role="collapsible-toggle" data-key="thread-reply">

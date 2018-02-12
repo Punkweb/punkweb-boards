@@ -22,7 +22,6 @@
 </div>
 <div class="main">
   <div class="djcontainer">
-    {% if matched_users %}
     <div class="panel">
       <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-users">
         <div class="panel__title">Users</div>
@@ -33,11 +32,11 @@
           <img src="{{item.profile.avatar_smallest}}" />
           <a href="{% url 'board:profile' item.username %}">{{item.profile.rendered_username}}</a>
         </div>
+        {% empty %}
+        No users matching query found
         {% endfor %}
       </div>
     </div>
-    {% endif %}
-    {% if matched_threads %}
     <div class="panel">
       <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-threads">
         <div class="panel__title">Threads</div>
@@ -48,11 +47,11 @@
           <a href="{{item.get_absolute_url}}">{{item}}</a>
           <p>{{item.content.rendered|striptags|truncatewords:25}}</p>
         </div>
+        {% empty %}
+        No threads matching query found
         {% endfor %}
       </div>
     </div>
-    {% endif %}
-    {% if matched_posts %}
     <div class="panel">
       <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-posts">
         <div class="panel__title">Posts</div>
@@ -63,10 +62,11 @@
           <a href="{{item.get_absolute_url}}">{{item}}</a>
           <p>{{item.content.rendered|striptags|truncatewords:25}}</p>
         </div>
+        {% empty %}
+        No posts matching query found
         {% endfor %}
       </div>
     </div>
-    {% endif %}
   </div>
 </div>
 {% endblock %}

@@ -202,7 +202,6 @@ def settings_view(request):
     return render(
         request, 'django_boards/themes/{}/settings.html'.format(BOARD_THEME), context)
 
-# TODO: Don't call the context variable profile
 def profile_view(request, username):
     user = get_user_model().objects.get(username=username)
     # Redirect to unpermitted page if requesting user
@@ -215,7 +214,7 @@ def profile_view(request, username):
         # can view their profile as others see it.
         return redirect('board:me')
     context = {
-        'profile': user
+        'this_user': user
     }
     return render(
         request,

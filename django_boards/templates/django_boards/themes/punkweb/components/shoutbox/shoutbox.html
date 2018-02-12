@@ -9,14 +9,22 @@
   <div class="panel__body" data-role="collapsible" data-key="shoutbox">
     <div id="shoutBox" class="shoutList"></div>
     {% if user.is_authenticated and user.profile.can_shout %}
-    <form class="shoutForm">
+    <div class="shoutForm" >
       <div id="shoutboxError"></div>
-      <textarea id="shoutEditor" class="shout-editor" rows="2" cols="40" style="display: none;"></textarea>
-      <div class="padding-top">
-        <button class="button-green" id="submitShout" type="button"><i class="fa fa-bullhorn fa-fw"></i> Shout</button>
-        <button class="button" id="reloadShouts" type="button"><i class="fa fa-sync-alt fa-fw"></i> Reload</button>
-      </div>
-    </form>
+      <table>
+        <tr>
+          <td class="full-width">
+            <input id="shoutInput" class="full-width" type="text" autocomplete="off" />
+          </td>
+          <td>
+            <button class="button-green" id="submitShout" type="button"><i class="fa fa-bullhorn fa-fw"></i> Shout</button>
+          </td>
+          <td>
+            <button class="button" id="reloadShouts" type="button"><i class="fa fa-sync-alt fa-fw"></i> Reload</button>
+          </td>
+        </tr>
+      </table>
+    </div>
     {% else %}
     <div class="shoutForm">
       <div class="padding-top">

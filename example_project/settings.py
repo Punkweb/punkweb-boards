@@ -89,11 +89,11 @@ WSGI_APPLICATION = 'example_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_boards',
+        'USER': 'django_boards',
+        'PASSWORD': 'django_boards',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -189,5 +189,6 @@ THUMBNAIL_ALIASES = {
 }
 
 DJANGO_BOARDS = {
+    'SHOUTBOX_ENABLED': True,
     'CAPTCHAS_ENABLED': True,
 }

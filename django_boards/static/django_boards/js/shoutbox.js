@@ -47,32 +47,41 @@ $(function() {
       }
     });
 
-    var editor = $('#shoutEditor').sceditor({
-      format: 'bbcode',
-      toolbar: 'bold,italic,underline,strike|font,size,color,link,emoticon|date,time|source,removeformat',
-      style: '/static/django_boards/scss/editor.css',
-      fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
-      autoExpand: true,
-      emoticonsEnabled: true,
-      emoticonsCompat: true,
-      emoticonsRoot: '/media/precise_bbcode/smilies/',
-      emoticons: {
-        dropdown: {
-          ":gd:": "gd.png",
-          ":gimli:": "gimli.jpg"
-        },
-        hidden: {}
-      }
+    // var editor = $('#shoutEditor').sceditor({
+    //   format: 'bbcode',
+    //   toolbar: 'bold,italic,underline,strike|color,link,emoticon|source,removeformat',
+    //   style: '/static/django_boards/scss/editor.css',
+    //   fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
+    //   autoExpand: true,
+    //   emoticonsEnabled: true,
+    //   emoticonsCompat: true,
+    //   emoticonsRoot: '/media/precise_bbcode/smilies/',
+    //   emoticons: {
+    //     dropdown: {
+    //       ":gd:": "gd.png",
+    //       ":gimli:": "gimli.jpg"
+    //     },
+    //     hidden: {}
+    //   }
+    // });
+
+    $('#submitShout').click(function(event) {
+      // var editorContent = editor.sceditor('instance').val();
+      // editor.sceditor('instance').val('');
+      var shoutInput = $('#shoutInput');
+      postShout(shoutInput.val());
+      shoutInput.val('');
     });
 
-    $('#submitShout').click(function($event) {
-      var editorContent = editor.sceditor('instance').val();
-      editor.sceditor('instance').val('');
-      postShout(editorContent);
-    });
-
-    $('#reloadShouts').click(function($event) {
+    $('#reloadShouts').click(function(event) {
       getShouts();
+    });
+
+    $('#shoutInput').keyup(function(event) {
+      if (event.keyCode === 13) {
+        postShout($(this).val());
+        $(this).val('');
+      }
     });
 
     var shoutList = [];
@@ -88,14 +97,23 @@ $(function() {
       return $.parseHTML('<p class="shout">' + dateStr + ' <a href="/board/profile/' + shout.username + '">' + shout.rendered_username + '</a>: ' + shout._content_rendered + '</p>');
     }
 
+    function shoutLineEmpty() {
+      return $.parseHTML('<p>There are no shouts to show within the last 24 hours.</p>');
+    }
+
     function getShouts() {
       $.get('/board/api/shouts/', function(data) {
         clearShoutList();
         shoutList = data.results;
 
-        shoutList.forEach(function(shout) {
-          $('#shoutBox').append(shoutLine(shout));
-        });
+        if (shoutList.length === 0) {
+          $('#shoutBox').append(shoutLineEmpty());
+        } else {
+          shoutList.forEach(function(shout) {
+            $('#shoutBox').append(shoutLine(shout));
+          });
+        }
+
       });
     }
 

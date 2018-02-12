@@ -1,21 +1,21 @@
 {% extends 'django_boards/themes/punkweb/base.html' %}
 {% load static humanize %}
 
-{% block title %}Members | {{profile.username}}{% endblock %}
-{% block meta_description %}View {{profile.username}}'s profile{% endblock %}
+{% block title %}Members | {{this_user.username}}{% endblock %}
+{% block meta_description %}View {{this_user.username}}'s profile{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
   <div class="djcontainer">
     <div class="pageHeader__flex">
       <div class="pageHeader__left">
-        <div class="pageHeader__title">{{profile.username}}</div>
+        <div class="pageHeader__title">{{this_user.username}}</div>
       </div>
       <div class="pageHeader__right">
         <ul class="breadcrumb">
           <li><a href="{% url 'board:index' %}">Board</a></li>
           <li><a href="{% url 'board:members-list' %}">Members</a></li>
-          <li>{{profile.username}}</li>
+          <li>{{this_user.username}}</li>
         </ul>
       </div>
     </div>
@@ -26,41 +26,53 @@
     <div class="panel">
       <div class="panel__body padding">
         <center>
-          <img src="{{profile.avatar}}">
-          <h2>{{profile.rendered_username}}</h2>
-          <div class="thread__user__lastseen">Last Seen: {% if profile.last_seen %}{{ profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
+          <img src="{{this_user.profile.avatar}}">
+          <h2>{{this_user.profile.rendered_username}}</h2>
+          <div class="thread__user__lastseen">Last Seen: {% if this_user.profile.last_seen %}{{ this_user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
         </center>
         <br>
 
         <h4>Email</h4>
-        <div>{{profile.email}}</div>
+        <div>{{this_user.email}}</div>
 
         <br>
 
         <h4>Gender</h4>
         <div>
-          {{profile.gender}}
+          {% if this_user.profile.gender %}
+          {{this_user.profile.gender}}
+          {% else %}
+          Not set
+          {% endif %}
         </div>
 
         <br>
 
         <h4>Birth date</h4>
         <div>
-          {{profile.birthday|date:'d M Y'}} ({{profile.age}})
+          {% if this_user.profile.birthday %}
+          {{this_user.profile.birthday|date:'d M Y'}} ({{this_user.profile.age}})
+          {% else %}
+          Not set
+          {% endif %}
         </div>
 
         <br>
 
         <h4>Post Count</h4>
         <div>
-          {{profile.post_count}}
+          {{this_user.profile.post_count}}
         </div>
 
         <br>
         {% if BOARD_SETTINGS.SIGNATURES_ENABLED %}
         <h4>Signature</h4>
         <div>
+          {% if this_user.profile.signature %}
           {{profile.signature.rendered}}
+          {% else %}
+          Not set
+          {% endif %}
         </div>
 
         <br>
@@ -107,13 +119,15 @@
                   {% endif %}
                 </td>
               </tr>
+              {% empty %}
+              <tr>
+                <td>This user has not created any threads yet</td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
-
-        <br>
-
+        <br />
         <h4>Posts</h4>
         <br>
         <div class="profile__tables">
@@ -139,6 +153,10 @@
                 <td class="align-right">
                   {{post.created|date:"d M Y, g:i A"}}
                 </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td>This user has not created any posts yet</td>
               </tr>
               {% endfor %}
             </tbody>

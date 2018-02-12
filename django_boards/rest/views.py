@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, mixins, views
@@ -181,8 +182,15 @@ class MessageViewSet(mixins.CreateModelMixin,
 class ShoutViewSet(mixins.CreateModelMixin,
                    mixins.ListModelMixin,
                    viewsets.GenericViewSet):
-    queryset = Shout.objects.all()[:25]
+    queryset = Shout.objects.all()
     serializer_class = ShoutSerializer
+
+    def get_queryset(self):
+        qs = self.queryset
+        today = datetime.datetime.now()
+        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        qs = qs.filter(created__range=(yesterday, today))[:25]
+        return qs.all()
 
     def perform_create(self, serializer):
         if self.request.user.is_authenticated and self.request.user.profile.is_banned:

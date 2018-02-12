@@ -27,7 +27,7 @@
               {{notification.text}}
             </a>
             {% else %}
-            {{notification.text}}
+            <span>{{notification.text}}</span>
             {% endif %}
             <br/>
             {{notification.created|naturaltime}}
@@ -45,6 +45,10 @@
             {{notification.created|naturaltime}}
           </div>
           {% endif %}
+          {% empty %}
+          <div class="notification">
+            <span>You have no notifications</span>
+          </div>
           {% endfor %}
         </div>
       </div>

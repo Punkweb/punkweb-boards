@@ -24,13 +24,13 @@
 <div class="main">
   <div class="djcontainer">
     {% if can_post %}
-    <button class="button margin-bottom" type="button" name="button">
-      <a href="{% url 'board:thread-create' category.id %}">
+    <div class="margin-bottom">
+      <a class="button" href="{% url 'board:thread-create' category.id %}">
         <div class="align-right">
           <i class="fa fa-pencil-alt fa-fw" aria-hidden="true"></i> Post a new thread
         </div>
       </a>
-    </button>
+    </div>
     {% endif %}
     <div class="panel">
       <div class="panel__body">
@@ -76,9 +76,14 @@
                 {% endif %}
               </td>
             </tr>
+            {% empty %}
+            <tr>
+              <td>No threads have been created in this category yet</td>
+            </tr>
             {% endfor %}
           </tbody>
         </table>
+        {% if threads.num_pages %}
         <div class="align-right">
           <ul class="pagination">
             {% if threads.has_previous %}
@@ -104,6 +109,7 @@
             {% endif %}
           </ul>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>

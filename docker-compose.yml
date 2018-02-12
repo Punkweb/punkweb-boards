@@ -5,9 +5,9 @@
    db:
      image: postgres
      environment:
-       - POSTGRES_USER=postgres
-       - POSTGRES_PASSWORD=postgres
-       - POSTGRES_DB=postgres
+       - POSTGRES_USER=django_boards
+       - POSTGRES_PASSWORD=django_boards
+       - POSTGRES_DB=django_boards
 
    web:
      build: .

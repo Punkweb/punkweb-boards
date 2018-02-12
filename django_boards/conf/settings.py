@@ -20,7 +20,8 @@ SHOUTBOX_ENABLED = SETTINGS_OVERRIDES.get('SHOUTBOX_ENABLED', True)
 SHOUTBOX_MINIMUM_POSTS = SETTINGS_OVERRIDES.get('SHOUTBOX_MINIMUM_POSTS', False)
 SHOUTBOX_MINIMUM_POSTS_REQ = SETTINGS_OVERRIDES.get('SHOUTBOX_MINIMUM_POSTS_REQ', 25)
 SHOUTBOX_DISABLED_TAGS = SETTINGS_OVERRIDES.get('SHOUTBOX_DISABLED_TAGS', [
-    'img', 'hr', 'ol', 'ul', 'li', 'youtube', 'code',
+    'img', 'hr', 'ol', 'ul', 'li', 'youtube', 'code', 'user', 'quote', 'size',
+    'spoiler', 'anchor', 'n', 'y', 'list', '*', 'center',
 ])
 
 # Number of seconds of inactivity before a user is marked offline
