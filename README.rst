@@ -3,6 +3,9 @@ django-boards/punkweb
 
 Django forum boards with bbcode support.
 
+This project aims to be a full featured **classic style** forum board.  As opposed to the
+new *modern* style of discussion board, such as discourse.
+
 Demo/Documentation
 ~~~~~~~~~~~~~~~~~~
 
@@ -10,27 +13,19 @@ Check out our community at `PunkWeb <https://punkweb.us/board/>`__ for a
 live demonstration of django-boards, or view the
 `documentation <https://punkweb.us/board/page/docs-index/>`__!
 
-A note about sceditor (BBCode editor)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I'm just getting started on the documentation, there's dozens of pages I still
+need to write out, but what's there now should help get you started.
 
-In order to keep this repository clean I am not including the source for
-the bbcode editor in the static assets folder.
-
-I may make a separate repository for the bbcode editor, as I plan to
-hack it to fit special needs for this project.
-
-For now, download `SCEditor <http://www.sceditor.com/>`__ and unzip it
-at: ``django-boards/static/sceditor/``
-
-Supported BBCode tags
+Ready (somewhat) for use!
 ~~~~~~~~~~~~~~~~~~~~~
 
-Click `here <https://punkweb.us/board/page/supported-bbcodes/>`__ to see
-a list of all the supported BBCode tags on django-boards and how to use
-them.
+Punkweb is currently being hosted in production using Django Boards for it's forum
+software.  With that being said, you could very well use this in production for your
+own community but except some things to not work or be as robust as you'd like for the
+time being.
 
-Almost ready for use!
-~~~~~~~~~~~~~~~~~~~~~
+Now that the project is designed as a reusable app format, you could start using it
+today, and be pleasantly surprised when things change.
 
-Check out the 'Ready' milestone under issues to see what's left before
-this is at a usable state.
+Check out the 'Ready' milestone under issues to see what's left before I release
+a solid v1.0.0.
