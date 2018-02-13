@@ -21,8 +21,8 @@ Ready (somewhat) for use!
 
 Punkweb is currently being hosted in production using Django Boards for it's forum
 software.  With that being said, you could very well use this in production for your
-own community but except some things to not work or be as robust as you'd like for the
-time being.
+own community but only if you're willing to accept some things to not work or be
+as robust as you'd like for the time being.
 
 Now that the project is designed as a reusable app format, you could start using it
 today, and be pleasantly surprised when things change.
