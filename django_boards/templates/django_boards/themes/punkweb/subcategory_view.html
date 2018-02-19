@@ -26,11 +26,11 @@
     {% if can_post %}
     <div class="margin-bottom">
       <a class="button" href="{% url 'board:thread-create' category.id %}">
-        <div class="align-right">
-          <i class="fa fa-pencil-alt fa-fw" aria-hidden="true"></i> Post a new thread
-        </div>
+        <i class="fa fa-pencil-alt fa-fw" aria-hidden="true"></i> Post a new thread
       </a>
     </div>
+    {% else %}
+    <p>You do not have permission to create threads in this category.</p>
     {% endif %}
     <div class="panel">
       <div class="panel__body">
