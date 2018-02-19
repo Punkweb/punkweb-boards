@@ -501,7 +501,7 @@ input[type=button], input[type=submit] {
     flex-direction: column;
     align-items: center;
     flex: 2;
-    border-right: 2px solid $oc-gray-4;
+    border-right: 2px solid $hr;
     padding: 1rem 0;
 
     &__name {
@@ -526,7 +526,7 @@ input[type=button], input[type=submit] {
     overflow-wrap: break-word;
   }
   &__signature {
-    border-top: 2px solid $oc-gray-4;
+    border-top: 2px solid $hr;
     padding: 1rem;
   }
   &__actions {

@@ -66,7 +66,6 @@
     }
 
     &__left {
-      flex-direction: column;
       justify-content: center;
     }
     &__right {
@@ -84,7 +83,7 @@
     flex-direction: column;
 
     &__user {
-      border-bottom: 2px solid $oc-gray-4;
+      border-bottom: 2px solid $hr;
       border-right: none;
       padding-bottom: 0.5rem;
     }
