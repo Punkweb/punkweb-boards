@@ -20,8 +20,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^board/', include('django_boards.urls')),
-    url(r'^board/page/', include('django_boards.page_urls')),
-    url(r'^board/api/', include('django_boards.rest.urls')),
+    url(r'^board/', include('punkweb_boards.urls')),
+    url(r'^board/page/', include('punkweb_boards.page_urls')),
+    url(r'^board/api/', include('punkweb_boards.rest.urls')),
     url(r'^captcha/', include('captcha.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

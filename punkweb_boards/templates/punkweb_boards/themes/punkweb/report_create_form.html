@@ -1,0 +1,84 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+
+{% block title %}Create Report{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        {% if post %}
+        <div class="pageHeader__title">Reporting user {{post.user.username}}'s post</div>
+        {% elif thread %}
+        <div class="pageHeader__title">Reporting user {{thread.user.username}}'s thread</div>
+        {% endif %}
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          {% if post %}
+          <li><a href="{% url 'board:category' post.thread.category.parent.id %}">{{post.thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' post.thread.category.id %}">{{post.thread.category.name}}</a></li>
+          <li><a href="{% url 'board:thread' post.thread.id %}">Thread</a></li>
+          <li>Report Post</li>
+          {% elif thread %}
+          <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
+          <li><a href="{% url 'board:thread' thread.id %}">Thread</a></li>
+          <li>Report Thread</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Create Report</div>
+      </div>
+      <div class="panel__body padding">
+        <h1>Report {% if post %}post{% elif thread %}thread{% endif %} to the staff team</h1>
+        <p>A few <b>valid</b> reasons for creating a report:</p>
+        <ul>
+          <li>Valid BBCode syntax not rendering correctly.</li>
+          <li>A staff member needs to review this content.</li>
+          <li>This content might be spam.</li>
+          <li>This content might be against the board rules.</li>
+          <li>This content might be better suited in a different category.</li>
+        </ul>
+        <p>A few <b>invalid reasons</b> for creating a report:</p>
+        <ul>
+          <li>You mean to alert a specific staff member, not the whole team.  Consider using a user tag.</li>
+          <li>You personally felt offended by this content but it does not break any board rules.</li>
+        </ul>
+        <p>If you abuse this system your permissions may be revoked.</p>
+        <div class="spoiler">
+          {% if post %}
+          <button class="button spoiler__open" type="button" name="button">Toggle Post Content</button>
+          {% elif thread %}
+          <button class="button spoiler__open" type="button" name="button">Toggle Thread Content</button>
+          {% endif %}
+          <div class="spoiler__content">
+            {% if post %}
+            <div>
+              {{post.content.rendered}}
+            </div>
+            {% elif thread %}
+            <div>
+              {{thread.content.rendered}}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="button-green" type="submit"><i class="fa fa-flag fa-fw"></i> Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

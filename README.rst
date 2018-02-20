@@ -1,5 +1,7 @@
-django-boards/punkweb
+punkweb-boards
 =====================
+
+Note: Rename from django-boards to punkweb-boards, sorry for any inconvience.
 
 Django forum boards with bbcode support.
 
@@ -10,7 +12,7 @@ Demo/Documentation
 ~~~~~~~~~~~~~~~~~~
 
 Check out our community at `PunkWeb <https://punkweb.us/board/>`__ for a
-live demonstration of django-boards, or view the
+live demonstration of punkweb-boards, or view the
 `documentation <https://punkweb.us/board/page/docs-index/>`__!
 
 I'm just getting started on the documentation, there's dozens of pages I still
@@ -19,7 +21,7 @@ need to write out, but what's there now should help get you started.
 Ready (somewhat) for use!
 ~~~~~~~~~~~~~~~~~~~~~
 
-Punkweb is currently being hosted in production using Django Boards for it's forum
+Punkweb is currently being hosted in production using Punkweb Boards for it's forum
 software.  With that being said, you could very well use this in production for your
 own community but only if you're willing to accept some things to not work or be
 as robust as you'd like for the time being.

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Django boards
+    # Punkweb boards
     'sass_processor',
     'easy_thumbnails',
     'rest_framework',
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'precise_bbcode',
     'captcha',
-    'django_boards',
+    'punkweb_boards',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_boards.middleware.ActiveUserMiddleware',
+    'punkweb_boards.middleware.ActiveUserMiddleware',
 ]
 
 ROOT_URLCONF = 'example_project.urls'
@@ -74,8 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django_boards.context_processors.settings',
-                'django_boards.context_processors.base_context',
+                'punkweb_boards.context_processors.settings',
+                'punkweb_boards.context_processors.base_context',
             ],
         },
     },
@@ -90,9 +90,9 @@ WSGI_APPLICATION = 'example_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_boards',
-        'USER': 'django_boards',
-        'PASSWORD': 'django_boards',
+        'NAME': 'punkweb_boards',
+        'USER': 'punkweb_boards',
+        'PASSWORD': 'punkweb_boards',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -173,7 +173,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'django_boards.rest.authentication.NoCSRFSessionAuthentication',
+        'punkweb_boards.rest.authentication.NoCSRFSessionAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25
@@ -188,7 +188,7 @@ THUMBNAIL_ALIASES = {
     },
 }
 
-DJANGO_BOARDS = {
+PUNKWEB_BOARDS = {
     'SHOUTBOX_ENABLED': True,
     'CAPTCHAS_ENABLED': True,
 }

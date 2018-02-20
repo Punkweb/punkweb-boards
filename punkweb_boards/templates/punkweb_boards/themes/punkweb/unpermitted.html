@@ -1,0 +1,23 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}Unpermitted{% endblock %}
+{% block meta_description %}You are not authorized to view this page.  Redirecting to the board index.{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="djcontainer">
+    <h2>
+      Unpermitted
+    </h2>
+    <div>
+      You will be redirected to the index in 2 seconds.
+    </div>
+  </div>
+</div>
+<script>
+  setTimeout(function() {
+    window.location.href = '/board/';
+  }, 2000);
+</script>
+{% endblock %}

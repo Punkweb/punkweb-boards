@@ -1,0 +1,70 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}Members{% endblock %}
+{% block meta_description %}View the members list{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">Members List</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li>Members</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- TODO: Find members by first letter -->
+<!-- TODO: Pagination -->
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__body">
+        <table class="table full-width">
+          <thead>
+            <tr>
+              <th class="align-left" width="27.5%">
+                Username
+              </th>
+              <th class="align-right" width="27.5%">
+                Rank
+              </th>
+              <th class="align-center" width="10%">
+                Posts
+              </th>
+              <th class="align-right hide-on-xsmall" width="35%">
+                Joined
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr>
+              <td>
+                <!-- <img src="{{user.profile.avatar_smallest}}" alt="..." /> -->
+                <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
+              </td>
+              <td class="align-right">
+                {{user.profile.rank_title}}
+              </td>
+              <td class="align-center">
+                {{user.profile.post_count}}
+              </td>
+              <td class="align-right hide-on-xsmall">
+                {{user.profile.created|date:"d M Y"}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

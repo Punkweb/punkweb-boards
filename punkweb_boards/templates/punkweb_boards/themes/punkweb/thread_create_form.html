@@ -1,0 +1,40 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+
+{% block title %}Create Thread{% endblock %}
+{% block meta_description %}Create a thread in {{subcategory.name}}{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">Create Thread</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li><a href="{% url 'board:category' subcategory.parent.id %}">{{subcategory.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' subcategory.id %}">{{subcategory.name}}</a></li>
+          <li>Create Thread</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Create New Thread</div>
+      </div>
+      <div class="panel__body padding">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="button-green" type="submit"><i class="fa fa-pencil-alt fa-fw"></i> Post Thread</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% block title %}Report{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">Resolve Report</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li><a href="{% url 'board:reports-list' %}">Reports</a></li>
+          <li>{{report.id}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">{{report}}</div>
+      </div>
+      <div class="panel__body padding">
+        <div class="margin-bottom">
+          {% if report.post %}<a class="button" href="{% url 'board:thread' report.post.thread.id %}?page={{report.post.page_number}}#p{{report.post.post_number}}"><i class="fa fa-link fa-fw"></i> Jump to post</a>
+          {% elif report.thread %}<a class="button" href="{% url 'board:thread' report.thread.id %}"><i class="fa fa-link fa-fw"></i> Jump to thread</a>{% endif %}
+        </div>
+        <div class="margin-bottom">
+          <h2>Reason for Report</h2>
+          <hr class="hr" />
+          {{report.reason}}
+        </div>
+        <div class="margin-bottom">
+          <h2>{% if report.post %}Post{% elif report.thread %}Thread{% endif %} Content</h2>
+          <hr class="hr" />
+          {% if report.post %}{{report.post.content.rendered}}{% elif report.thread %}{{report.thread.content.rendered}}{% endif %}
+          {% if not report.resolved %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="align-right">
+              <button class="button-green" type="submit"><i class="fa fa-check fa-fw"></i> Mark as Resolved</button>
+              {% if report.post %}
+              <a class="button" href="{% url 'board:post-update' report.post.id %}"><i class="fa fa-edit fa-fw"></i> Update Post</a>
+              <a class="button-red" href="{% url 'board:post-delete' report.post.id %}"><i class="fa fa-trash fa-fw"></i> Delete Post</a>
+              {% elif report.thread %}
+              <a class="button" href="{% url 'board:thread-update' report.thread.id %}"><i class="fa fa-edit fa-fw"></i> Update Thread</a>
+              <a class="button-red" href="{% url 'board:thread-delete' report.thread.id %}"><i class="fa fa-trash fa-fw"></i> Delete Thread</a>
+            {% endif %}
+            </div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

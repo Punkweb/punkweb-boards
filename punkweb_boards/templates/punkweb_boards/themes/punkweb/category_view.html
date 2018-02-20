@@ -1,0 +1,94 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block meta_description %}{{category.description.rendered|striptags|truncatewords:160}}{% endblock %}
+{% block title %}{{category.name}}{% endblock %}
+
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">{{category.name}}</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li>{{category.name}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="category__description">{{category.description.rendered}}</div>
+    <div class="panel">
+      <div class="panel__body">
+        <table class="table full-width">
+          <thead>
+            <tr>
+              <th class="align-left" width="40%">
+                Subcategory
+              </th>
+              <th class="align-center" width="10%">
+                Threads
+              </th>
+              <th class="align-center" width="10%">
+                Posts
+              </th>
+              <th class="align-left hide-on-mobile" width="40%">
+                Last Thread
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sub in subcategories %}
+            <tr>
+              <td class="align-left">
+                <div>
+                  <a href="{% url 'board:subcategory' sub.obj.id %}">{{sub.obj.name}}</a>
+                </div>
+                <div>{{sub.obj.description.rendered}}</div>
+                {% if sub.can_post %}
+                <div>
+                  <a href="{% url 'board:thread-create' sub.obj.id %}">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Create Thread
+                  </a>
+                </div>
+                {% endif %}
+              </td>
+              <td class="align-center">
+                <div>{{sub.obj.thread_count}}</div>
+              </td>
+              <td class="align-center">
+                <div>{{sub.obj.post_count}}</div>
+              </td>
+              <td class="align-left hide-on-mobile">
+                {% if sub.obj.last_thread %}
+                <div>
+                  <a href="{% url 'board:thread' sub.obj.last_thread.id %}">
+                    {{sub.obj.last_thread.title|truncatechars_html:50}}
+                  </a>
+                </div>
+                <div>{{sub.obj.last_thread.created|date:"d M Y, g:i A"}}</div>
+                <div>
+                  by
+                  <a href="{% url 'board:profile' sub.obj.last_thread.user.username %}">
+                    {{sub.obj.last_thread.user.profile.rendered_username}}
+                  </a>
+                </div>
+                {% else %}
+                <div>No Threads</div>
+                {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

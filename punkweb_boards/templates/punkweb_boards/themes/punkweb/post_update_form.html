@@ -1,0 +1,40 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+
+{% block title %}Update Post{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">Update Post</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li><a href="{% url 'board:category' obj.thread.category.parent.id %}">{{obj.thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory' obj.thread.category.id %}">{{obj.thread.category.name}}</a></li>
+          <li><a href="{% url 'board:thread' obj.thread.id %}">Thread</a></li>
+          <li>Update Post</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Update {{obj}}</div>
+      </div>
+      <div class="panel__body padding">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="button"><i class="fa fa-edit fa-fw"></i> Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

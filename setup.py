@@ -7,7 +7,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name="django_boards",
+    name="punkweb_boards",
     version="0.0.2",
     packages=find_packages(),
     include_package_data=True,

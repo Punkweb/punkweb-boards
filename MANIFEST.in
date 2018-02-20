@@ -1,4 +1,4 @@
 include README.rst
 include requirements.txt
 global-exclude *.pyc
-recursive-include django_boards *
+recursive-include punkweb_boards *
