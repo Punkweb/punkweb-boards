@@ -14,8 +14,8 @@ setup(
     description='Django forum boards with bbcode support.',
     long_description=README,
     url='https://punkweb.us/',
-    author='Jordan Price',
-    author_email='Jordan Price <pricejordan@outlook.com>',
+    author='Punkweb',
+    author_email='Punkweb <djangoboards@gmail.com>',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
