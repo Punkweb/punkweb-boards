@@ -1,6 +1,4 @@
 django>=1.8
 django-precise-bbcode
-pillow
 easy-thumbnails
-python-memcached
-psycopg2
+pillow
