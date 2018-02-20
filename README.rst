@@ -15,7 +15,8 @@ you can use to rename your existing tables without losing any data:
 https://gist.github.com/rafaponieman/201054ddf725cda1e60be3fe845850a5
 
 rename.sh
-```
+
+```bash
 #/bin/bash
 
 ./manage.py rename_tables django_boards punkweb_boards boardprofile category conversation message notification page post report shout subcategory thread userrank
