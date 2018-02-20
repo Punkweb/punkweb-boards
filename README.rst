@@ -16,12 +16,13 @@ https://gist.github.com/rafaponieman/201054ddf725cda1e60be3fe845850a5
 
 rename.sh
 
-``` bash
-#/bin/bash
+::
 
-./manage.py rename_tables django_boards punkweb_boards boardprofile category conversation message notification page post report shout subcategory thread userrank
-./manage.py rename_tables django_boards punkweb_boards boardprofile_downvoted_by boardprofile_ranks boardprofile_upvoted_by conversation_unread_by conversation_users post_downvoted_by post_upvoted_by thread_upvoted_by thread_downvoted_by
-```
+    #/bin/bash
+
+    ./manage.py rename_tables django_boards punkweb_boards boardprofile category conversation message notification page post report shout subcategory thread userrank
+    ./manage.py rename_tables django_boards punkweb_boards boardprofile_downvoted_by boardprofile_ranks boardprofile_upvoted_by conversation_unread_by conversation_users post_downvoted_by post_upvoted_by thread_upvoted_by thread_downvoted_by
+
 
 run ./rename.sh and you should be good.
 
