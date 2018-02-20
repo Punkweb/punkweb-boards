@@ -24,12 +24,24 @@
   <div class="djcontainer">
     <div class="panel">
       <div class="panel__header">
-        <div class="panel__title">Work In Progress</div>
+        <div class="panel__title">Board Statistics</div>
       </div>
       <div class="panel__body padding">
-        <div class="flexcol">
-          <canvas id="dowPostsChart" class="margin-bottom" style="max-width: 600px;"></canvas>
-          <canvas id="subcategoryThreadsChart" style="max-width: 400px;"></canvas>
+        <div class="flexrow padding">
+          <div class="full-width">
+            <h3>New members this week</h3>
+            <canvas id="thisWeeksNewMembersChart" class="margin" style="max-width: 600px;"></canvas>
+          </div>
+          <div class="full-width">
+            <h3>New posts/threads this week</h3>
+            <canvas id="thisWeeksPostsChart" class="margin" style="max-width: 600px;"></canvas>
+          </div>
+        </div>
+        <div class="flexrow padding">
+          <div class="full-width">
+            <h3>Total threads by category</h3>
+            <canvas id="subcategoryThreadsChart" style="max-width: 400px;"></canvas>
+          </div>
         </div>
       </div>
     </div>

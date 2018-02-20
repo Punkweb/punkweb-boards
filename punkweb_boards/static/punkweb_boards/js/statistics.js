@@ -1,9 +1,10 @@
 $(function() {
   $(document).ready(function() {
-    var dowPostsChartCtx = document.getElementById('dowPostsChart').getContext('2d');
+    var thisWeeksPostsChartCtx = document.getElementById('thisWeeksPostsChart').getContext('2d');
+    var thisWeeksNewMembersCtx = document.getElementById('thisWeeksNewMembersChart').getContext('2d');
     var subcategoryThreadsChartCtx = document.getElementById('subcategoryThreadsChart').getContext('2d');
 
-    var dowPostsChart = new Chart(dowPostsChartCtx, {
+    var thisWeeksPostsChart = new Chart(thisWeeksPostsChartCtx, {
       type: 'line',
       data: {
         labels: [
@@ -12,17 +13,34 @@ $(function() {
         ],
         datasets: [
           {
-            label: "Posts",
+            label: 'New Posts',
             backgroundColor: 'rgba(255, 0, 0, .2)',
             borderColor: 'rgb(255, 0, 0)',
             data: [],
           },
           {
-            label: "Threads",
+            label: 'New Threads',
             backgroundColor: 'rgba(0, 0, 255, .2)',
             borderColor: 'rgb(0, 0, 255)',
             data: [],
             fill: true
+          },
+        ]
+      },
+      options: {}
+    });
+
+    var thisWeeksNewMembersChart = new Chart(thisWeeksNewMembersCtx, {
+      type: 'line',
+      data: {
+        labels: [
+          'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+          'Thursday', 'Friday', 'Saturday'
+        ],
+        datasets: [
+          {
+            label: 'New Members',
+            data: [],
           },
         ]
       },
@@ -40,20 +58,6 @@ $(function() {
       options: {}
     });
 
-    function updateDowPostsChart(data) {
-      var threads = Array(7).fill(0);
-      var posts = Array(7).fill(0);
-      data.threads_by_dow.forEach(function(chunk) {
-        threads[parseInt(chunk.chunk)] = chunk.count_threads;
-      });
-      data.posts_by_dow.forEach(function(chunk) {
-        posts[parseInt(chunk.chunk)] = chunk.count_posts;
-      });
-      dowPostsChart.data.datasets[1].data = threads;
-      dowPostsChart.data.datasets[0].data = posts;
-      dowPostsChart.update();
-    }
-
     function getRandomColor() {
       var letters = '0123456789ABCDEF'.split('');
       var color = '#';
@@ -61,6 +65,32 @@ $(function() {
         color += letters[Math.floor(Math.random() * 16)];
       }
       return color;
+    }
+
+    function updateThisWeeksPostsChart(data) {
+      var threads = Array(7).fill(0);
+      var posts = Array(7).fill(0);
+      data.new_threads_this_week.forEach(function(chunk) {
+        threads[parseInt(chunk.chunk)] = chunk.count_threads;
+      });
+      data.new_posts_this_week.forEach(function(chunk) {
+        posts[parseInt(chunk.chunk)] = chunk.count_posts;
+      });
+      thisWeeksPostsChart.data.datasets[1].data = threads;
+      thisWeeksPostsChart.data.datasets[0].data = posts;
+      thisWeeksPostsChart.update();
+    }
+
+    function updateThisWeeksNewMembersChart(data) {
+      var members = Array(7).fill(0);
+      data.new_members_this_week.forEach(function(chunk) {
+        members[parseInt(chunk.chunk)] = chunk.count_members;
+      });
+      var backgroundColor = getRandomColor();
+      thisWeeksNewMembersChart.data.datasets[0].data = members;
+      thisWeeksNewMembersChart.data.datasets[0].backgroundColor = backgroundColor;
+      thisWeeksNewMembersChart.data.datasets[0].borderColor = backgroundColor;
+      thisWeeksNewMembersChart.update();
     }
 
     function updateSubcategoryThreadsChart(data) {
@@ -84,7 +114,8 @@ $(function() {
 
     function getStats() {
       $.get('/board/api/statistics/', function(data) {
-        updateDowPostsChart(data);
+        updateThisWeeksPostsChart(data);
+        updateThisWeeksNewMembersChart(data);
         updateSubcategoryThreadsChart(data);
       });
     }

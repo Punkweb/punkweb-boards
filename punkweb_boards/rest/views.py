@@ -205,14 +205,16 @@ class StatisticsView(views.APIView):
         total_posts = Post.objects.count()
         total_threads = Thread.objects.count()
         total_members = get_user_model().objects.count()
-        posts_by_dow = queries.posts_by_dow()
-        threads_by_dow = queries.threads_by_dow()
+        new_posts_this_week = queries.new_posts_this_week()
+        new_threads_this_week = queries.new_threads_this_week()
         threads_in_subcategories = queries.threads_in_subcategories()
+        new_members_this_week = queries.new_members_this_week()
         return Response({
             'total_posts': total_posts,
             'total_threads': total_threads,
             'total_members': total_members,
-            'posts_by_dow': posts_by_dow,
-            'threads_by_dow': threads_by_dow,
-            'threads_in_subcategories': threads_in_subcategories
+            'new_posts_this_week': new_posts_this_week,
+            'new_threads_this_week': new_threads_this_week,
+            'new_members_this_week': new_members_this_week,
+            'threads_in_subcategories': threads_in_subcategories,
         })
