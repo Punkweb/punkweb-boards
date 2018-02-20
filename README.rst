@@ -1,12 +1,28 @@
 punkweb-boards
 =====================
 
-Note: Rename from django-boards to punkweb-boards, sorry for any inconvience.
-
 Django forum boards with bbcode support.
 
 This project aims to be a full featured **classic style** forum board.  As opposed to the
 new *modern* style of discussion board, such as discourse.
+
+Note: Renamed from django-boards to punkweb-boards
+~~~~~~~~~~~~~~~~~~~~~
+
+Sorry if this causes any inconvience, but I added the following management command
+you can use to rename your existing tables without losing any data:
+
+https://gist.github.com/rafaponieman/201054ddf725cda1e60be3fe845850a5
+
+rename.sh
+```
+#/bin/bash
+
+./manage.py rename_tables django_boards punkweb_boards boardprofile category conversation message notification page post report shout subcategory thread userrank
+./manage.py rename_tables django_boards punkweb_boards boardprofile_downvoted_by boardprofile_ranks boardprofile_upvoted_by conversation_unread_by conversation_users post_downvoted_by post_upvoted_by thread_upvoted_by thread_downvoted_by
+```
+
+run ./rename.sh and you should be good.
 
 Demo/Documentation
 ~~~~~~~~~~~~~~~~~~
