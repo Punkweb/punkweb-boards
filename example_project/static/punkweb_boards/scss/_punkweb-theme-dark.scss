@@ -1,0 +1,61 @@
+$primary: $oc-blue-9;
+$primary-link: $oc-blue-9;
+$default-text-on-light: mix(white, black, 10%);
+$default-text-on-dark: mix(black, white, 10%);
+$default-text: $default-text-on-light;
+
+$body-background: mix(black, $oc-gray-9, 5%);
+
+$upper-nav: $oc-gray-9;
+$upper-nav-link: $default-text-on-dark;
+
+$main-nav: mix(black, $primary, 25%);
+$main-nav-title: $default-text-on-dark;
+$main-nav-text: $default-text-on-dark;
+$main-nav-link: $default-text-on-dark;
+
+$page-header: mix(black, $primary, 15%);
+$page-header-text: $default-text-on-dark;
+
+$breadcrumb-active: $default-text-on-dark;
+$breadcrumb-separator: darken($default-text-on-dark, 20%);
+$breadcrumb-link: $default-text-on-dark;
+
+$hr: mix(black, $body-background, 35%);
+
+$badge-background: $oc-red-9;
+$badge-text: $oc-white;
+
+$dropdown: mix(black, $primary, 65%);
+$dropdown-shadow: 0px .5rem 1rem 0px rgba(0, 0, 0, 0.2);
+
+$panel-header: mix(black, $primary, 25%);
+$panel-title: $default-text-on-dark;
+$panel-body: mix(black, $body-background, 15%);
+$panel-text: $default-text-on-dark;
+$panel-footer: mix(black, $primary, 50%);
+$panel-opacity: 1;
+
+$table-header: $panel-header;
+$table-header-text: $panel-title;
+$table-header-link: $panel-title;
+$table-body: $panel-body;
+$table-body-text: $panel-text;
+$table-body-link: $primary-link;
+
+$footer: $panel-header;
+$footer-text: $default-text-on-dark;
+$footer-link: $oc-gray-3;
+
+$input-placeholder: darken($default-text-on-dark, 15%);
+
+$editor-container: $oc-gray-9;
+$editor-text: $default-text-on-dark;
+$editor-border: $hr;
+$editor-toolbar: mix(black, $oc-gray-9, 10%);
+$editor-toolbar-group: $editor-toolbar;
+$editor-toolbar-group-hover: $editor-toolbar;
+$editor-button: $editor-toolbar;
+$editor-button-hover: mix(black, $editor-toolbar, 10%);
+$editor-button-text: $default-text-on-light;
+$editor-button-border: $editor-button-hover;
