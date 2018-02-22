@@ -22,6 +22,7 @@ $rem-base: 16px;
 @mixin button($background, $color) {
   @include medium;
   @include link($color, null, false, false);
+  @include font-range(11, 13);
   appearance: none;
   background-color: $background;
   border: 1px solid mix(black, $background, 20%);
@@ -31,7 +32,6 @@ $rem-base: 16px;
   cursor: pointer;
   display: inline-block;
   font-family: 'Open-Sans';
-  font-size: 13px;
   letter-spacing: 1px;
   outline: none;
   padding: .5rem .75rem;

@@ -67,13 +67,15 @@
             <div class="thread__user__name">
               {% if thread.user.profile.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.profile.rendered_username}}</a>
             </div>
-            <div class="thread__user__rank">
-              {{thread.user.profile.rank_title}}
-            </div>
             <div class="thread__user__posts">Posts: {{thread.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date: {{thread.user.profile.created|date:'m/d/y'}}
+              Join date: <br/> {{thread.user.profile.created|date:'m/d/y'}}
             </div>
+            {% for rank in thread.user.profile.ranks.all %}
+            <div class="thread__user__rank">
+              {{rank.title}}
+            </div>
+            {% endfor %}
           </div>
           <div class="thread__body">
             <div class="thread__content">
@@ -93,8 +95,6 @@
             {% endif %}
             {% if user.is_authenticated %}
             <div class="thread__actions">
-              <a><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{thread.upvotes}}</a>
-              <a><i class="fa fa-thumbs-down" aria-hidden="true"></i> {{thread.downvotes}}</a>
               <a class="button" href="{% url 'board:report-thread' thread.id %}" name="button"><i class="fa fa-flag fa-fw"></i> Report</a>
               {% if user.id == thread.user.id or user.is_staff %}
               <a class="button" href="{% url 'board:thread-update' thread.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>
@@ -150,8 +150,6 @@
             {% endif %}
             {% if user.is_authenticated %}
             <div class="thread__actions">
-              <a><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{post.upvotes}}</a>
-              <a><i class="fa fa-thumbs-down" aria-hidden="true"></i> {{post.downvotes}}</a>
               <a class="button" href="{% url 'board:report-post' post.id %}" name="button"><i class="fa fa-flag fa-fw"></i> Report</a>
               {% if user.id == post.user.id or user.is_staff %}
               <a class="button" href="{% url 'board:post-update' post.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>

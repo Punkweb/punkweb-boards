@@ -488,16 +488,14 @@ input[type=button], input[type=submit] {
 .thread {
   display: flex;
   flex-direction: row;
-  padding: 0;
-  overflow-wrap: break-word;
 
   &__user {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 2;
     border-right: 2px solid $hr;
-    padding: 1rem 0;
+    min-width: 200px;
+    padding: 1rem .5rem;
 
     &__name {
       margin: .25rem 0;
@@ -507,12 +505,21 @@ input[type=button], input[type=submit] {
     &__posts {
       margin: .25rem 0;
     }
+    &__rank {
+      @include font-range(11, 13);
+      background: $primary;
+      border-radius: 4px;
+      color: white;
+      padding: .75em .125em;
+      margin: .75em 0 0;
+      text-align: center;
+      min-width: 125px;
+    }
   }
   &__body {
-    flex: 10;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    max-width: 84%;
     overflow-wrap: break-word;
   }
   &__content {
