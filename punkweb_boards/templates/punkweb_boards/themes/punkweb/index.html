@@ -1,0 +1,208 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load bbcode_tags %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="djcontainer">
+    {% if BOARD_SETTINGS.USER_BIRTHDAY_MESSAGE %}
+    {% include 'punkweb_boards/themes/punkweb/components/birthday/birthday.html' %}
+    {% endif %}
+    <div class="flexrow">
+      <div class="flexcol" style="flex: 3;">
+        {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
+        {% include 'punkweb_boards/themes/punkweb/components/shoutbox/shoutbox.html' %}
+        {% endif %}
+        {% for category in categories %}
+        <a name="{{category.parent.name}}"></a>
+        <div class="panel">
+          <div class="panel__body">
+            <table class="table full-width">
+              <thead data-role="collapsible-toggle" data-key="index-category-{{category.parent.id}}">
+                <tr>
+                  <th class="align-left" width="40%">
+                    <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
+                  </th>
+                  <th class="align-center" width="10%">
+                    Threads
+                  </th>
+                  <th class="align-center" width="10%">
+                    Posts
+                  </th>
+                  <th class="align-left hide-on-mobile" width="30%">
+                    Last Thread
+                  </th>
+                </tr>
+              </thead>
+              <tbody data-role="collapsible" data-key="index-category-{{category.parent.id}}">
+                {% for child in category.children %}
+                <tr>
+                  <td class="align-left">
+                    <div><a href="{% url 'board:subcategory' child.id %}">{{child.name}}</a></div>
+                    <div>{{child.description.rendered}}</div>
+                  </td>
+                  <td class="align-center">
+                    <div>{{child.thread_count}}</div>
+                  </td>
+                  <td class="align-center">
+                    <div>{{child.post_count}}</div>
+                  </td>
+                  <td class="align-left hide-on-mobile">
+                    {% if child.last_thread %}
+                    <div>
+                      <a href="{% url 'board:thread' child.last_thread.id %}">
+                        {{child.last_thread.title|truncatechars_html:50}}
+                      </a>
+                    </div>
+                    <div>{{child.last_thread.created|date:"d M Y, g:i A"}}</div>
+                    <div>by
+                      <a href="{% url 'board:profile' child.last_thread.user.username %}">
+                        {{child.last_thread.user.profile.rendered_username}}
+                      </a>
+                    </div>
+                    {% else %}
+                    <div>No Threads</div>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td>No subcategories have been created here yet.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% empty %}
+        <p>This board doesn't have any categories yet</p>
+        {% endfor %}
+      </div>
+      <div class="flexcol sidebar" style="flex: 1;">
+        <div class="panel">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-recent-threads">
+            <div class="panel__title">Recent Threads</div>
+          </div>
+          <div class="panel__body padding" data-role="collapsible" data-key="index-recent-threads">
+            {% if recent_threads %}
+            {% for thread in recent_threads %}
+            <div class="clearMargin padding-bottom">
+              <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
+              <div>{{thread.created|naturaltime}}</div>
+              <div>by
+                <a href="{% url 'board:profile' thread.user.username %}">
+                  {{thread.user.profile.rendered_username}}
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            No recent threads
+            {% endif %}
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-recent-activity">
+            <div class="panel__title">Recent Activity</div>
+          </div>
+          <div class="panel__body padding" data-role="collapsible" data-key="index-recent-activity">
+            {% if recent_activity %}
+            {% for thread in recent_activity %}
+            <div class="clearMargin padding-bottom">
+              <a href="{% url 'board:thread' thread.id %}">{{thread.title}}</a>
+              <div>{{thread.modified|naturaltime}}</div>
+              {% if thread.last_post.user %}
+              <div>by
+                <a href="{% url 'board:profile' thread.last_post.user.username %}">
+                  {{thread.last_post.user.profile.rendered_username}}
+                </a>
+              </div>
+              {% else %}
+              <div>by
+                <a href="{% url 'board:profile' thread.user.username %}">
+                  {{thread.user.profile.rendered_username}}
+                </a>
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            No recent activity
+            {% endif %}
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-staff-online">
+            <div class="panel__title">Staff Online</div>
+          </div>
+          <div class="panel__body padding" data-role="collapsible" data-key="index-staff-online">
+            <table>
+              {% for user in staff_online %}
+              <tr>
+                <td>
+                  <img src="{{user.profile.avatar_smallest}}" alt="">
+                </td>
+                <td>
+                  <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
+                </td>
+              </tr>
+              {% empty %}
+              <span>No staff members are online</span>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flexrow">
+      <div class="flexcol" style="flex: 1;">
+        <div class="panel">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-users-online">
+            <div class="panel__title">Users Online</div>
+          </div>
+          <div class="panel__body padding" data-role="collapsible" data-key="index-users-online">
+            {% for user in users_online %}
+            <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
+            {% empty %}
+            <span>No users are online</span>
+            {% endfor %}
+          </div>
+        </div>
+        <a name="statistics"></a>
+        <div class="panel statisticsPanel">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-statistics">
+            <div class="panel__title"><a href="{% url 'board:statistics' %}">Statistics</a></div>
+          </div>
+          <div class="panel__body padding" data-role="collapsible" data-key="index-statistics">
+            <ul class="statisticsPanel__list">
+              <li style="display: inline">Total posts {{total_posts}} •</li>
+              <li style="display: inline">Total threads {{total_threads}} •</li>
+              <li style="display: inline">Total members {{member_count}} •</li>
+              {% if newest_member %}
+              <li style="display: inline">
+                Newest member
+                <a href="{% url 'board:profile' newest_member.username %}">
+                  {{newest_member.profile.rendered_username}}
+                </a>
+              </li>
+              {% else %}
+              <li style="display: inline">No members</li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrascript %}
+{{ block.super }}
+{% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
+<script src="{% static 'punkweb_boards/js/shoutbox.js' %}"></script>
+{% endif %}
+{% endblock %}

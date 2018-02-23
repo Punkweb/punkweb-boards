@@ -1,0 +1,72 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}Keyword Search{% endblock %}
+{% block meta_description %}Search for threads, posts, and users on this board{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">Search</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index'%}">Board</a></li>
+          <li>Search: {{keyword}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-users">
+        <div class="panel__title">Users</div>
+      </div>
+      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-users">
+        {% for item in matched_users %}
+        <div>
+          <img src="{{item.profile.avatar_smallest}}" />
+          <a href="{% url 'board:profile' item.username %}">{{item.profile.rendered_username}}</a>
+        </div>
+        {% empty %}
+        No users matching query found
+        {% endfor %}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-threads">
+        <div class="panel__title">Threads</div>
+      </div>
+      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-threads">
+        {% for item in matched_threads %}
+        <div>
+          <a href="{{item.get_absolute_url}}">{{item}}</a>
+          <p>{{item.content.rendered|striptags|truncatewords:25}}</p>
+        </div>
+        {% empty %}
+        No threads matching query found
+        {% endfor %}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-posts">
+        <div class="panel__title">Posts</div>
+      </div>
+      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-posts">
+        {% for item in matched_posts %}
+        <div>
+          <a href="{{item.get_absolute_url}}">{{item}}</a>
+          <p>{{item.content.rendered|striptags|truncatewords:25}}</p>
+        </div>
+        {% empty %}
+        No posts matching query found
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

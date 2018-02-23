@@ -1,0 +1,50 @@
+html, body {
+  font-family: 'Open-Sans', 'Calibri', 'sans-serif';
+  font-size: 16px;
+  color: $default-text;
+  @include normal;
+}
+
+h1 {
+  @include font-range(24, 32);
+}
+h2 {
+  @include font-range(20, 24);
+}
+h3 {
+  @include font-range(16, 20);
+}
+h4 {
+  @include font-range(14, 16);
+}
+h5 {
+  @include font-range(12, 14);
+}
+h6 {
+  @include font-range(10, 12);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+@font-face {
+  font-family: 'Open-Sans';
+  src: url('../fonts/OpenSans-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: 'Storybook';
+	src: url('../fonts/Storybook.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Winterland';
+	src: url('../fonts/WINTERLAND.ttf');
+	font-weight: normal;
+	font-style: normal;
+}

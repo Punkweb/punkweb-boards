@@ -1,0 +1,259 @@
+$rem-base: 16px;
+
+@mixin link($color, $hover: null, $bold: true, $underline: true) {
+  a:link, a:visited {
+    @if bold {
+      @include bold;
+    }
+    color: $color;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease-in-out;
+    &:hover, &:active {
+      @if hover {
+        color: $hover;
+      }
+      @if $underline {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@mixin button($background, $color) {
+  @include medium;
+  @include link($color, null, false, false);
+  @include font-range(11, 13);
+  appearance: none;
+  background-color: $background;
+  border: 1px solid mix(black, $background, 20%);
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+  color: $color !important;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Open-Sans';
+  letter-spacing: 1px;
+  outline: none;
+  padding: .5rem .75rem;
+  min-width: 100px;
+  text-align: center;
+  text-decoration: none !important;
+  transition: all .25s ease-in-out;
+  &:hover {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .2), 0px 0px 6px mix(white, $background, 10%);
+    background-color: mix(black, $background, 10%);
+  }
+  &:disabled {
+    background-color: $oc-gray-5;
+    border: 1px solid $oc-gray-6;
+    cursor: not-allowed;
+    &:hover {
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    }
+  }
+}
+
+@mixin button-hollow($background, $color) {
+  @include button($background, $color);
+  background: transparent;
+  border: 1px solid darken($background, 10%);
+  color: $background !important;
+  &:hover {
+    background-color: darken($background, 5%);
+    color: $color !important;
+  }
+  &:active {
+    background-color: darken($background, 10%);
+    color: $color !important;
+  }
+  &:disabled {
+    background-color: transparent;
+    border: 1px solid $oc-gray-5;
+    color: $oc-gray-7 !important;
+  }
+}
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@function convert-to-em($value, $context)  {
+  $value: strip-unit($value) / strip-unit($context) * 1em;
+  @if ($value == 0em) { $value: 0; } // Turn 0em into 0
+  @return $value;
+}
+
+@function em-calc($values, $context) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-em(nth($values, 1), $context); }
+
+  $emValues: ();
+  @for $i from 1 through $max {
+    $emValues: append($emValues, convert-to-em(nth($values, $i), $context));
+  }
+  @return $emValues;
+}
+
+@function convert-to-rem($value, $base-value: $rem-base)  {
+  $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+  @if ($value == 0rem) { $value: 0; } // Turn 0rem into 0
+  @return $value;
+}
+
+@function rem-calc($values, $base-value: null) {
+  @if $base-value == null {
+    $base-value: $rem-base;
+  }
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+  $remValues: ();
+  @for $i from 1 through $max {
+    $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+  }
+  @return $remValues;
+}
+
+@mixin light { font-weight: 300; }
+@mixin normal { font-weight: 400; }
+@mixin medium { font-weight: 500; }
+@mixin bold { font-weight: 700; }
+
+@mixin font-range($min-size, $max-size, $min-width: 320, $max-width: 1440) {
+  $min-size-rem: rem-calc($min-size);
+  $max-size-rem: rem-calc($max-size);
+  $min-width-rem: rem-calc($min-width);
+  $max-width-rem: rem-calc($max-width);
+
+  font-size: calc(#{$min-size-rem} + (#{$max-size} - #{$min-size}) * (100vw - #{$min-width-rem}) / (#{$max-width} - #{$min-width}));
+
+  @media only screen and (max-width: $min-width) {
+    font-size: #{$min-size-rem};
+  }
+  @media only screen and (max-width: $max-width) {
+    font-size: #{$max-size-rem};
+  }
+}
+
+@mixin transition ($property: all, $duration: .2s, $timing-function: ease) {
+  transition: $property $duration $timing-function;
+}
+
+@mixin no-transition { transition: none; }
+
+@mixin no-disc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar:horizontal {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: mix(black, $body-background, 30%);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: mix(black, $body-background, 60%);
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
+
+* {
+  @include scrollbar;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+}
+
+/* images can't be wider than their containers */
+img, iframe {
+  max-width: 100%;
+  display: block;
+}
+
+/* tables inherit font size (some browsers set a default table font size) */
+table {
+  font-size: inherit;
+
+  tr td {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+}
+
+pre {
+  background: #eee;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+blockquote {
+  background: #eee;
+  border: 1px solid #aaa;
+  position: relative;
+  // margin: .25em 0;
+  margin: 0;
+  margin-bottom: 1rem;
+  padding: .25em;
+}
+
+blockquote cite {
+  @include link($primary-link, null, true, true);
+  font-weight: bold;
+  display: block;
+  font-size: 1em;
+  border-bottom: 2px solid $hr;
+}
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}

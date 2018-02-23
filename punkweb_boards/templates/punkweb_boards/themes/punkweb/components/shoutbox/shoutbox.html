@@ -1,0 +1,36 @@
+{% load static %}
+
+<!-- Shoutbox component -->
+<a name="shoutbox"></a>
+<div class="panel">
+  <div class="panel__header" data-role="collapsible-toggle" data-key="shoutbox">
+    <div class="panel__title">Shoutbox</div>
+  </div>
+  <div class="panel__body" data-role="collapsible" data-key="shoutbox">
+    <div id="shoutBox" class="shoutList"></div>
+    {% if user.is_authenticated and user.profile.can_shout %}
+    <div class="shoutForm" >
+      <div id="shoutboxError"></div>
+      <table>
+        <tr>
+          <td class="full-width">
+            <input id="shoutInput" class="full-width" type="text" autocomplete="off" />
+          </td>
+          <td>
+            <button class="button-green" id="submitShout" type="button"><i class="fa fa-bullhorn fa-fw"></i> Shout</button>
+          </td>
+          <td>
+            <button class="button" id="reloadShouts" type="button"><i class="fa fa-sync-alt fa-fw"></i> Reload</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    {% else %}
+    <div class="shoutForm">
+      <div class="padding-top">
+        <button class="button" id="reloadShouts" type="button"><i class="fa fa-sync-alt fa-fw"></i> Reload</button>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

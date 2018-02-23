@@ -1,0 +1,109 @@
+@media only screen and (max-width: 840px) {
+  .djcontainer {
+    padding: 0 0.5rem;
+  }
+  .flexrow {
+    flex-direction: column;
+  }
+  .flexcol {
+    flex-direction: column;
+  }
+  .recentActivity, .recentThreads {
+    margin-left: 0;
+  }
+
+  .sidebar {
+    margin-left: 0;
+  }
+
+  .search {
+    margin: 0.5rem 0;
+  }
+
+  .pageHeader {
+    &__title {
+      margin: 0.5rem 0;
+    }
+
+    &__flex {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__left {
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__right {
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .breadcrumb {
+    margin: 0.5rem 0;
+
+    li+li:before {
+      margin: 0 .25rem;
+    }
+  }
+
+  .nav {
+    &--upper {
+      text-align: center;
+    }
+
+    &__flex {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    &__title {
+      padding: 1rem 0 .5rem 0;
+      margin: 0;
+    }
+
+    &__left {
+      justify-content: center;
+      &--mobileColumn {
+        flex-direction: column;
+      }
+    }
+    &__right {
+      justify-content: center;
+    }
+
+    &__link {
+      padding: .5rem 0;
+    }
+  }
+  .thread {
+    flex-direction: column;
+
+    &__user {
+      border-bottom: 2px solid $hr;
+      border-right: none;
+      padding-bottom: 0.5rem;
+    }
+    &__body {
+      max-width: 100%;
+    }
+    &__content {
+      padding: 0.5rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .hide-on-xsmall {
+    display: none;
+  }
+}

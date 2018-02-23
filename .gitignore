@@ -1,11 +1,13 @@
 sceditor/
 
+checklist.txt
+digitialocean.txt
+
 
 ### Sqlite database
 *.sqlite3
 *.pyc
 npm-debug.log
-migrations/
 __pycache__/
 
 
@@ -57,6 +59,7 @@ coverage.xml
 
 # Django stuff:
 *.log
+log.txt
 
 # Sphinx documentation
 docs/_build/

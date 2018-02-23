@@ -1,0 +1,167 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static humanize %}
+
+{% block title %}Members | {{user.username}}{% endblock %}
+{% block meta_description %}View your profile{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">{{user.username}}</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li>Profile</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__body padding">
+        <center>
+          <img src="{{user.profile.avatar}}">
+          <div></div><h2>{{user.profile.rendered_username}}</h2>
+          <div class="thread__user__lastseen">Last Seen: {% if user.profile.last_seen %}{{ user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
+        </center>
+        <br>
+
+        <h4>Email</h4>
+        <div>{{user.email}}</div>
+
+        <br>
+
+        <h4>Gender</h4>
+        <div>
+          {% if user.profile.gender %}
+          {{user.profile.gender}}
+          {% else %}
+          Not set
+          {% endif %}
+        </div>
+
+        <br>
+
+        <h4>Birth date</h4>
+        <div>
+          {% if user.profile.birthday %}
+          {{user.profile.birthday|date:'d M Y'}} ({{user.profile.age}})
+          {% else %}
+          Not set
+          {% endif %}
+        </div>
+
+        <br>
+
+        <h4>Post Count</h4>
+        <div>
+          {{user.profile.post_count}}
+        </div>
+
+        <br>
+        {% if BOARD_SETTINGS.SIGNATURES_ENABLED %}
+        <h4>Signature</h4>
+        <div>
+          {% if user.profile.signature %}
+          {{user.profile.signature.rendered}}
+          {% else %}
+          Not set
+          {% endif %}
+        </div>
+
+        <br>
+        {% endif %}
+        <h4>Threads</h4>
+        <br>
+        <div class="profile__tables">
+          <table class="table full-width">
+            <thead>
+              <tr>
+                <th class="align-left" width="60%">
+                  Title
+                </th>
+                <th class="align-center" widht="10%">
+                  Posts
+                </th>
+                <th class="align-right hide-on-mobile" width="30%">
+                  Last Post
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for thread in user.threads.all %}
+              <tr>
+                <td class="align-left">
+                  <div>
+                    <a href="{% url 'board:thread' thread.id %}">
+                      {{thread.title}}
+                    </a>
+                  </div>
+                  <div>
+                    {{thread.created|date:"d M Y, g:i A"}}
+                  </div>
+                </td>
+                <td class="align-center">
+                  <div>{{thread.posts_count}}</div>
+                </td>
+                <td class="align-right hide-on-mobile">
+                  {% if thread.last_post %}
+                  <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.profile.rendered_username}}</a></div>
+                  <div>{{thread.last_post.created|date:"d M Y, g:i A"}}</div>
+                  {% else %}
+                  <div>No Posts</div>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td>You have not created any threads yet</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <h4>Posts</h4>
+        <br />
+        <div class="profile__tables">
+          <table class="table full-width">
+            <thead>
+              <tr>
+                <th class="align-left">
+                  Thread
+                </th>
+                <th class="align-right" width="30%">
+                  Date
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for post in user.posts.all %}
+              <tr>
+                <td class="align-left">
+                  <a href="{{post.get_absolute_url}}">
+                    {{post.thread.title}}
+                  </a>
+                </td>
+                <td class="align-right">
+                  {{post.created|date:"d M Y, g:i A"}}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td>You have not created any posts yet</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

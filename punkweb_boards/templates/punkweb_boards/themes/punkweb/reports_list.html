@@ -1,0 +1,76 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">Thread/Post Reports</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li>Reports</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__body">
+        <table class="table full-width">
+          <thead>
+            <tr>
+              <th class="align-left">
+                Reporting User
+              </th>
+              <th class="align-left">
+                Thread/Post
+              </th>
+              <th class="align-right">
+                Resolved
+              </th>
+              <th class="align-center">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for report in reports %}
+            <tr>
+              <td class="align-left">
+                <a href="{% url 'board:profile' report.reporting_user.username %}">{{report.reporting_user.profile.rendered_username}}</a>
+              </td>
+              <td class="align-left">
+                {% if report.thread %}
+                <a href="{% url 'board:thread' report.thread.id %}">{{report.thread}}</a>
+                {% endif %}
+                {% if report.post %}
+                <a href="{% url 'board:thread' report.post.thread.id %}">{{report.post}}</a>
+                {% endif %}
+              </td>
+              <td class="align-right">
+                {% if report.resolved %}
+                <i class="fa fa-check fa-fw" style="color: green;" aria-hidden="true"></i>
+                {% else %}
+                <i class="fa fa-times fa-fw" style="color: red;" aria-hidden="true"></i>
+                {% endif %}
+              </td>
+              <td class="align-center">
+                <a href="{% url 'board:report' report.id %}">View</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td>The reports list is empty</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

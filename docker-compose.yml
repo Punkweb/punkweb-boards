@@ -1,0 +1,22 @@
+ version: '3.3'
+
+ services:
+   # Postgres
+   db:
+     image: postgres
+     environment:
+       - POSTGRES_USER=punkweb_boards
+       - POSTGRES_PASSWORD=punkweb_boards
+       - POSTGRES_DB=punkweb_boards
+
+   web:
+     build: .
+     command: ["./run_web.sh"]
+     volumes:
+       - .:/webapps
+     ports:
+       - "8000:8000"
+     links:
+       - db
+     depends_on:
+       - db

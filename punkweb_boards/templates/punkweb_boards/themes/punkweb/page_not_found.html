@@ -1,0 +1,28 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}Page Not Found{% endblock %}
+{% block meta_description %}Requested page was not found{% endblock %}
+
+{% block extrascript %}
+<script src="{% static 'punkweb_boards/js/navigate.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="djcontainer">
+    <div class="flex flex__justify-center">
+      <div class="panel">
+        <div class="panel__header">
+          <div class="panel__title">Not Found</div>
+        </div>
+        <div class="panel__body padding">
+          <p>The page you have requested was not found, it may have been moved or deleted.</p>
+          <button class="button pageBack"><i class="fa fa-arrow-left fa-fw"></i> Back</button>
+          <a class="button" href="{% url 'board:index' %}"><i class="fa fa-home fa-fw"></i> Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

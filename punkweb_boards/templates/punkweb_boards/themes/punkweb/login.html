@@ -1,0 +1,31 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="djcontainer">
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Login</div>
+      </div>
+      <div class="panel__body padding">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="button" type="submit"><i class="fa fa-sign-in-alt fa-fw"></i> Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- TODO Find an alternative for this.  Works for now. -->
+{% if user.is_authenticated %}
+<script>
+  setTimeout(function() {
+    window.location.href = '/board/';
+  }, 0);
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,68 @@
+.sceditor-container {
+  background: $editor-container;
+  border: 1px solid $editor-border;
+  color: $editor-text;
+}
+.sceditor-container iframe,
+.sceditor-container textarea {
+  background: $editor-container;
+  color: $editor-text;
+}
+div.sceditor-toolbar {
+  background: $editor-toolbar;
+}
+div.sceditor-group {
+  background: $editor-toolbar-group;
+  border-color: $oc-gray-4 !important;
+}
+.sceditor-button:hover,
+.sceditor-button:active,
+.sceditor-button.active {
+  background: $editor-toolbar-group-hover;
+}
+.sceditor-button:active {
+  background: $editor-toolbar-group-hover;
+}
+
+div.sceditor-dropdown {
+  border: 1px solid $editor-border;
+  background: $editor-container;
+  color: $editor-text;
+}
+.sceditor-dropdown a:hover {
+  background: $editor-border;
+}
+div.sceditor-dropdown a,
+div.sceditor-dropdown a:link {
+  color: $editor-text;
+}
+div.sceditor-dropdown label {
+  color: $editor-text;
+}
+div.sceditor-dropdown input,
+div.sceditor-dropdown textarea {
+  border: 1px solid $editor-border;
+  border-top-color: $editor-border;
+}
+div.sceditor-dropdown input:focus,
+div.sceditor-dropdown textarea:focus {
+  border-color: lighten($editor-border, 25%);
+  border-top-color: lighten($editor-border, 25%);
+}
+div.sceditor-dropdown .button {
+  color: $editor-button-text;
+  background: $editor-button;
+  border: solid 1px $editor-button-border;
+}
+div.sceditor-dropdown .button:hover {
+  background: $editor-button-hover;
+}
+.sceditor-color-option {
+  border: 1px solid $editor-container;
+}
+.sceditor-color-option:hover {
+  border: 1px solid white;
+}
+.sceditor-button {
+  background: $editor-button;
+}

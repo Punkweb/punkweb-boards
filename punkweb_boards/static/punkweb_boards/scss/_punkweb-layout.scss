@@ -1,0 +1,578 @@
+html, body {
+  background: $body-background;
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  background: $hr;
+}
+
+@include link($primary-link, null, true, true);
+
+.errorlist {
+  li {
+    color: $oc-red-8;
+  }
+}
+
+.helptext {
+  display: block;
+  padding-top: .5rem;
+}
+
+.spoiler {
+  &__content {
+    background-color: $body-background;
+    display: none;
+    padding: .25rem;
+
+    &--padding-lg {
+      padding: 1rem;
+    }
+  }
+  &__open {
+    cursor: pointer;
+  }
+}
+
+.onlineDot {
+  position: absolute;
+  background: $oc-green-7;
+  border-radius: 50%;
+  left: -16px;
+  top: 4px;
+  height: 8px;
+  width: 8px;
+}
+
+
+.button {
+  @include button($oc-gray-7, white);
+  &-primary {
+    @include button($primary, white);
+  }
+  &-green {
+    @include button($oc-green-8, white);
+  }
+  &-red {
+    @include button($oc-red-9, white);
+  }
+  &-orange {
+    @include button($oc-orange-9, white);
+  }
+}
+
+.button-hollow {
+  @include button-hollow($oc-gray-7, white);
+  &-primary {
+    @include button-hollow($primary, white);
+  }
+  &-green {
+    @include button-hollow($oc-green-7, white);
+  }
+  &-red {
+    @include button-hollow($oc-red-9, white);
+  }
+  &-orange {
+    @include button-hollow($oc-orange-7, white);
+  }
+}
+
+.nav {
+  width: 100%;
+
+  &--upper {
+    @include bold;
+    @include font-range(10, 12);
+    background-color: $upper-nav;
+    padding: 0.4rem 1rem;
+
+    &__link {
+      color: $upper-nav-link !important;
+      cursor: pointer;
+      padding: .25rem 0;
+      padding-left: 0.5rem;
+    }
+  }
+
+  &--main {
+    background-color: $main-nav;
+    box-shadow: 0 2px 4px rgba(33, 37, 41, 0.5);
+    color: $main-nav-text;
+    padding: 0 1rem;
+  }
+
+  &__flex {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  &__left {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__right {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__title {
+    @include noselect;
+    @include bold;
+    @include font-range(20, 24);
+    color: $main-nav-title !important;
+    padding: 1.5rem 0;
+    margin: 0 0.5rem;
+    letter-spacing: 1.2px;
+    line-height: 1.2em;
+    text-transform: uppercase;
+
+    a {
+      color: $main-nav-title !important;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__link {
+    @include bold;
+    @include font-range(14, 16);
+    color: $main-nav-link !important;
+    cursor: pointer;
+    padding: 0 1rem;
+  }
+}
+
+.pageHeader {
+  background-color: $page-header;
+  border-bottom: 2px solid $hr;
+  display: flex;
+  flex-direction: row;
+
+  &__title {
+    @include bold;
+    @include font-range(16, 20);
+    color: $page-header-text;
+    padding: 2rem 0;
+  }
+
+  &__flex {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__left {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__right {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.breadcrumb {
+  @include no-disc;
+  @include font-range(11, 13);
+
+  li {
+    color: $breadcrumb-active;
+    display: inline;
+
+    a {
+      color: $breadcrumb-link;
+    }
+  }
+
+  li+li:before {
+    color: $breadcrumb-separator;
+    content: "/\00a0";
+    margin: 0 0.5rem;
+  }
+}
+
+.page-wrap {
+  min-height: 100vh;
+}
+
+.main {
+  margin: 1rem 0;
+}
+
+.djcontainer {
+  box-sizing: border-box;
+  padding: 0 0.5rem;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.post-editor, .shout-editor {
+  min-width: 240px;
+  max-width: 800px;
+  width: 100%;
+  min-height: 300px;
+  max-height: 600px;
+}
+
+.pagination {
+  @include font-range(14, 16);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+  list-style: none;
+
+  li {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+.badge {
+  @include bold;
+  background-color: $badge-background;
+  display: inline-block;
+  padding: .25rem .4rem;
+  font-size: 75%;
+  line-height: 1;
+  color: $badge-text;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
+}
+
+
+.panel {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
+  color: $panel-text;
+  margin-bottom: 1rem;
+  opacity: $panel-opacity;
+
+  &__header {
+    @include medium;
+    @include font-range(12, 14);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: $panel-header;
+    padding: 1rem 0.75rem;
+  }
+  &__title {
+    @include bold;
+    @include font-range(12, 14);
+    color: $panel-title;
+    a {
+      color: $panel-title;
+    }
+  }
+  &__body {
+    @include font-range(12, 14);
+    background-color: $panel-body;
+    color: $panel-text;
+    a {
+      color: $primary-link;
+    }
+  }
+  &__footer {
+    @include font-range(12, 14);
+    background-color: $panel-footer;
+    color: white;
+    padding: 0.75rem;
+  }
+}
+
+.table {
+  border-collapse: collapse;
+
+  thead {
+    background-color: $table-header;
+    color: $table-header-text;
+    tr {
+      th {
+        @include medium;
+        @include font-range(12, 14);
+        padding: 1rem;
+        a {
+          color: $table-header-link;
+        }
+      }
+      td {
+        @include font-range(12, 14);
+      }
+    }
+  }
+  tbody {
+    background-color: $table-body;
+    color: $table-body-text;
+    tr {
+      th {
+        @include font-range(12, 14);
+      }
+      td {
+        @include font-range(12, 14);
+        padding: 1rem;
+        vertical-align: top;
+        a {
+          color: $table-body-link;
+        }
+      }
+      &:not(:last-of-type) {
+        border-bottom: 2px solid $hr;
+      }
+    }
+    .vertically-centered {
+      vertical-align: middle;
+    }
+  }
+}
+
+.footer {
+  @include font-range(10, 12);
+  background-color: $footer;
+  color: $footer-text;
+  padding: 0.4rem 0;
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  a {
+    color: $footer-link;
+  }
+}
+
+.dropdown {
+  @include noselect;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown__content {
+  background-color: $dropdown;
+  box-shadow: $dropdown-shadow;
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  margin-top: 1rem;
+  z-index: 1;
+}
+
+.notification {
+  background-color: $oc-white;
+  color: $default-text-on-light;
+  padding: 1rem;
+  min-width: 250px;
+  a {
+    color: $primary-link;
+  }
+  &--unread {
+    opacity: 1;
+  }
+  &:not(:last-of-type) {
+    border-bottom: 1px solid $hr;
+  }
+}
+
+label {
+  display: block;
+}
+
+input, select, textarea {
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid $hr;
+  border-radius: 2px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+  display: inline-block;
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  outline: none;
+  padding: 0.25em 0.5rem;
+  transition: 0.25s ease-in-out;
+  width: auto;
+  @include placeholder {
+    color: $input-placeholder;
+  }
+  &:focus {
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1), 0px 0px 6px $primary;
+    border-color: $primary;
+    outline: none;
+  }
+}
+
+input[type=button], input[type=submit] {
+  display: inline-block;
+}
+
+.sidebar {
+  margin-left: 1rem;
+}
+
+.flex {
+  display: flex;
+  &__row {
+    flex-direction: row;
+  }
+  &__column {
+    flex-direction: column;
+  }
+  &__align-center {
+    align-items: center;
+  }
+  &__justify-center {
+    justify-content: center;
+  }
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexcol {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.search {
+  position: relative;
+  input {
+    border: 1px solid rgba(255, 255, 255, .12);
+    color: $default-text-on-dark;
+    @include placeholder {
+      color: $default-text-on-dark;
+    }
+  }
+}
+
+.search .fa-search {
+  position: absolute;
+  pointer-events: none;
+  top: 5px;
+  right: 8px;
+}
+
+.profile {
+  &__tables {
+    max-height: 600px;
+    overflow: auto;
+  }
+}
+
+
+.thread {
+  display: flex;
+  flex-direction: row;
+
+  &__user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid $hr;
+    min-width: 200px;
+    padding: 1rem .5rem;
+
+    &__name {
+      margin: .25rem 0;
+      position: relative;
+    }
+
+    &__posts {
+      margin: .25rem 0;
+    }
+    &__rank {
+      @include font-range(11, 13);
+      background: $primary;
+      border-radius: 4px;
+      color: white;
+      padding: .75em .125em;
+      margin: .75em 0 0;
+      text-align: center;
+      min-width: 125px;
+    }
+  }
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+  }
+  &__content {
+    flex: 1;
+    padding: 1rem;
+    overflow-wrap: break-word;
+  }
+  &__signature {
+    border-top: 2px solid $hr;
+    padding: 1rem;
+  }
+  &__actions {
+    text-align: right;
+    padding: 0.5rem;
+    a+a {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+.category {
+  &__description {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.shoutList {
+  min-height: 225px;
+  max-height: 225px;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  padding: .5rem .5rem 0 .5rem;
+  .shout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: .5rem;
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    white-space: pre;
+  }
+  .shout:not(:last-of-type) {
+    border-bottom: 1px solid $hr;
+  }
+}
+
+.shoutForm {
+  padding: 0 .5rem .5rem .5rem;
+}
+
+.statisticsPanel {
+  &__list {
+    @include no-disc;
+  }
+}
