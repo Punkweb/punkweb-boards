@@ -25,9 +25,7 @@ class SizeTag(BBCodeTag):
 class UserTag(BBCodeTag):
     name = 'user'
     definition_string = '[user]{TEXT}[/user]'
-    format_string = """
-    <a href="/board/profile/{TEXT}/">
-        <i class="fa fa-user" aria-hidden="true"></i> {TEXT}</a>"""
+    format_string = """<a href="/board/profile/{TEXT}/"><i class="fa fa-user" aria-hidden="true"></i> {TEXT}</a>"""
 
 
 class CodeTag(BBCodeTag):
@@ -75,15 +73,13 @@ class HrTag(BBCodeTag):
 class ShadowTag(BBCodeTag):
     name = 'shadow'
     definition_string = '[shadow={TEXT1}]{TEXT2}[/shadow]'
-    format_string = """
-        <span style="text-shadow: 0px 0px 1em {TEXT1}">{TEXT2}</span>"""
+    format_string = """<span style="text-shadow: 0px 0px 1em {TEXT1}">{TEXT2}</span>"""
 
 
 class AnchorTag(BBCodeTag):
     name = 'anchor'
     definition_string = '[anchor]{TEXT}[/anchor]'
-    format_string = """<a name="{TEXT}"></a><i class="fa fa-anchor fa-fw"></i>
-        <span style="font-style: italic">#{TEXT}</span>"""
+    format_string = """<a name="{TEXT}"></a><i class="fa fa-anchor fa-fw"></i><span style="font-style: italic">#{TEXT}</span>"""
 
 
 class QuoteTag(BBCodeTag):
@@ -115,10 +111,7 @@ class UncheckedBoxTag(BBCodeTag):
 class CheckedBoxTag(BBCodeTag):
     name = 'y'
     definition_string = '[y]{TEXT}'
-    format_string = """
-        <label for="bbchecked">
-            <input name="bbchecked" type="checkbox"
-                   disabled="disabled" checked="checked" /> {TEXT}</label>"""
+    format_string = """<label for="bbchecked"><input name="bbchecked" type="checkbox" disabled="disabled" checked="checked" /> {TEXT}</label>"""
 
     class Options:
         newline_closes = True
