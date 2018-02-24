@@ -53,7 +53,7 @@
             </div>
             {% endif %}
             <div class="thread__actions">
-              {% if user.id == message.user.id or user.is_staff %}
+              {% if user.id == message.user.id %}
               <a class="button" href="{% url 'board:message-update' message.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>
               <a class="button-red" href="{% url 'board:message-delete' message.id %}" name="button"><i class="fa fa-trash fa-fw"></i> Delete</a>
               {% endif %}
