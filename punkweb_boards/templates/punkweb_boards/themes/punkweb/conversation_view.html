@@ -33,13 +33,15 @@
             <div class="thread__user__name">
               <a href="{% url 'board:profile' message.user.username %}">{{message.user.profile.rendered_username}}</a>
             </div>
-            <div class="thread__user__rank">
-              {{message.user.profile.rank|default_if_none:"Rookie"}}
-            </div>
             <div class="thread__user__posts">Posts: {{message.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
               Join date:<br> {{message.user.profile.created|date:'m/d/y'}}
             </div>
+            {% for rank in message.user.profile.ranks.all %}
+            <div class="thread__user__rank">
+              {{rank.title}}
+            </div>
+            {% endfor %}
           </div>
           <div class="thread__body">
             <div class="thread__content">

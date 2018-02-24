@@ -126,13 +126,15 @@
             <div class="thread__user__name">
               {% if post.user.profile.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' post.user.username %}">{{post.user.profile.rendered_username}}</a>
             </div>
-            <div class="thread__user__rank">
-              {{post.user.profile.rank|default_if_none:'Rookie'}}
-            </div>
             <div class="thread__user__posts">Posts: {{post.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
               Join date: {{post.user.profile.created|date:'m/d/y'}}
             </div>
+            {% for rank in post.user.profile.ranks.all %}
+            <div class="thread__user__rank">
+              {{rank.title}}
+            </div>
+            {% endfor %}
           </div>
           <div class="thread__body">
             <div class="thread__content">
