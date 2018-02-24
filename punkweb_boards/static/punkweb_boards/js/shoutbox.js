@@ -47,27 +47,7 @@ $(function() {
       }
     });
 
-    // var editor = $('#shoutEditor').sceditor({
-    //   format: 'bbcode',
-    //   toolbar: 'bold,italic,underline,strike|color,link,emoticon|source,removeformat',
-    //   style: '/static/punkweb_boards/scss/editor.css',
-    //   fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Truckin,Verdana',
-    //   autoExpand: true,
-    //   emoticonsEnabled: true,
-    //   emoticonsCompat: true,
-    //   emoticonsRoot: '/media/precise_bbcode/smilies/',
-    //   emoticons: {
-    //     dropdown: {
-    //       ":gd:": "gd.png",
-    //       ":gimli:": "gimli.jpg"
-    //     },
-    //     hidden: {}
-    //   }
-    // });
-
     $('#submitShout').click(function(event) {
-      // var editorContent = editor.sceditor('instance').val();
-      // editor.sceditor('instance').val('');
       var shoutInput = $('#shoutInput');
       postShout(shoutInput.val());
       shoutInput.val('');

@@ -1,8 +1,8 @@
-// This script saves collapsed items in local storage,
-// so collapsing an item will persist.
-
 $(function() {
   $(document).ready(function() {
+    // This script saves collapsed items in local storage,
+    // so collapsing an item will persist.
+
     var storageKey = 'collapsed';
 
     var collapsed = JSON.parse(localStorage.getItem(storageKey)) || {
