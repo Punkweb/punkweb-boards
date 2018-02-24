@@ -31,7 +31,7 @@
               <img src="{{message.user.profile.avatar_small}}" alt="..." />
             </a>
             <div class="thread__user__name">
-              <a href="{% url 'board:profile' message.user.username %}">{{message.user.profile.rendered_username}}</a>
+              {% if message.user.profile.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' message.user.username %}">{{message.user.profile.rendered_username}}</a>
             </div>
             <div class="thread__user__posts">Posts: {{message.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
