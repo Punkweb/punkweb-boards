@@ -5,60 +5,11 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.widgets import ImageClearableFileInput
 from punkweb_boards.conf.settings import BOARD_THEME, CAPTCHAS_ENABLED, SIGNATURES_ENABLED
-from punkweb_boards.models import Thread, Post, Shout, Report, Message
-# from punkweb_boards.models import EmailUser, Thread, Post, Shout, Report, Message
-
-
-# class NewConversationForm(forms.Form):
-#     def __init__(self, request, *args, **kwargs):
-#         super(NewConversationForm, self).__init__(*args, **kwargs)
-#
-#     users_queryset = EmailUser.objects.exclude(is_banned=True)
-#     subject = forms.CharField(max_length=140, initial='No subject')
-#     users = forms.ModelMultipleChoiceField(queryset=users_queryset)
-#     message = forms.CharField(
-#         widget=forms.Textarea(attrs={'class': 'post-editor'}),
-#         label=_('Message'),
-#         required=True
-#     )
+from punkweb_boards.models import Thread, Post, Shout, Report, Conversation, Message
 
 
 class KeywordSearchForm(forms.Form):
     keyword = forms.CharField(max_length=80, required=True, label='')
-
-
-class SettingsForm(forms.Form):
-    def __init__(self, request, *args, **kwargs):
-        super(SettingsForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].initial = request.user.profile.gender
-        self.fields['birthday'].initial = request.user.profile.birthday
-        if SIGNATURES_ENABLED:
-            signature = forms.CharField(
-                widget=forms.Textarea(attrs={'class': 'post-editor'}),
-                label=_('Signature'),
-                required=False,
-                initial=request.user.profile.signature
-            )
-            self.fields['signature'] = signature
-
-    GENDER_CHOICES = [
-        ('', ''),
-        ('f', 'Female'),
-        ('m', 'Male'),
-    ]
-    image = forms.ImageField(
-        label=_('Profile Image'),
-        required=False
-    )
-    gender = forms.ChoiceField(
-        choices=GENDER_CHOICES,
-        label=_('Gender'),
-        required=False
-    )
-    birthday = forms.DateField(
-        label=_('Birthday (yyyy-mm-dd)'),
-        required=False
-    )
 
 
 class RegistrationForm(forms.Form):
@@ -95,8 +46,8 @@ class RegistrationForm(forms.Form):
                 username__iexact=self.cleaned_data['username'])
         except get_user_model().DoesNotExist:
             return self.cleaned_data['username']
-        raise forms.ValidationError(_("The username already exists. " \
-                                      "Please try another one."))
+        raise forms.ValidationError(
+            _("The username already exists. Please try another one."))
 
     def clean(self):
         if 'password1' in self.cleaned_data and \
@@ -105,6 +56,40 @@ class RegistrationForm(forms.Form):
                 raise forms.ValidationError(
                     _("The two password fields did not match."))
         return self.cleaned_data
+
+
+class SettingsForm(forms.Form):
+    def __init__(self, request, *args, **kwargs):
+        super(SettingsForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].initial = request.user.profile.gender
+        self.fields['birthday'].initial = request.user.profile.birthday
+        if SIGNATURES_ENABLED:
+            signature = forms.CharField(
+                widget=forms.Textarea(attrs={'class': 'post-editor'}),
+                label=_('Signature'),
+                required=False,
+                initial=request.user.profile.signature
+            )
+            self.fields['signature'] = signature
+
+    GENDER_CHOICES = [
+        ('', ''),
+        ('f', 'Female'),
+        ('m', 'Male'),
+    ]
+    image = forms.ImageField(
+        label=_('Profile Image'),
+        required=False
+    )
+    gender = forms.ChoiceField(
+        choices=GENDER_CHOICES,
+        label=_('Gender'),
+        required=False
+    )
+    birthday = forms.DateField(
+        label=_('Birthday (yyyy-mm-dd)'),
+        required=False
+    )
 
 
 class ThreadForm(forms.ModelForm):
@@ -153,6 +138,42 @@ class PostForm(forms.ModelForm):
         fields = ['content']
 
 
+class ConversationForm(forms.Form):
+    def __init__(self, request, *args, **kwargs):
+        super(ConversationForm, self).__init__(*args, **kwargs)
+
+    users = forms.CharField(max_length=240, required=True, help_text="""
+        List of usernames separated by a comma, spaces are fine
+    """)
+    subject = forms.CharField(max_length=140, initial='No subject')
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'post-editor'}),
+        label=_('Message'),
+        required=True,
+    )
+
+
+class MessageForm(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        self.fields['content'].label = ''
+        self.fields['content'].widget.attrs['class'] = 'post-editor'
+        self.request = request
+
+    def save(self, conversation=None, commit=True):
+        obj = super(MessageForm, self).save(commit=False)
+        obj.user = self.request.user
+        if conversation:
+            obj.conversation = conversation
+        if commit:
+            obj.save()
+        return obj
+
+    class Meta:
+        model = Message
+        fields = ['content']
+
+
 class ShoutForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ShoutForm, self).__init__(*args, **kwargs)
@@ -187,24 +208,3 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ['reason']
-
-
-class MessageForm(forms.ModelForm):
-    def __init__(self, request, *args, **kwargs):
-        super(MessageForm, self).__init__(*args, **kwargs)
-        self.fields['content'].label = ''
-        self.fields['content'].widget.attrs['class'] = 'post-editor'
-        self.request = request
-
-    def save(self, conversation=None, commit=True):
-        obj = super(MessageForm, self).save(commit=False)
-        obj.user = self.request.user
-        if conversation:
-            obj.conversation = conversation
-        if commit:
-            obj.save()
-        return obj
-
-    class Meta:
-        model = Message
-        fields = ['content']

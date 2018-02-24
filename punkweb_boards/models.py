@@ -42,7 +42,7 @@ class BoardProfile(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin,
         ('m', 'Male'),
     ]
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, related_name="profile", on_delete=models.CASCADE)
+        settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE)
     image = ThumbnailerImageField(
         upload_to=profile_image_file_name, null=True, blank=True)
     signature = BBCodeTextField(max_length=1024, blank=True, null=True)

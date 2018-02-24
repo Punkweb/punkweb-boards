@@ -140,6 +140,10 @@ class ConversationViewSet(mixins.CreateModelMixin,
                           mixins.ListModelMixin,
                           mixins.UpdateModelMixin,
                           viewsets.GenericViewSet):
+    """
+    There is no way to access other users conversations through here.  Only the \
+    requesting user's conversations are returned.
+    """
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
     permission_classes = (permissions.IsAuthenticated,)

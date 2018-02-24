@@ -21,64 +21,55 @@
 </div>
 <div class="main">
   <div class="djcontainer">
-    <div class="flexrow">
-      <div style="flex: 1">
-        <div class="panel">
-          <div class="flexcol">
-            <div class="panel">
-              <div class="panel__header">
-                <div class="panel__title">Inbox</div>
-              </div>
-              <div class="panel__body padding">
-                <button class="button"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Compose</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="flex: 4">
-        <div class="panel">
-          <div class="panel__body">
-            <table class="table full-width">
-              <thead>
-                <tr>
-                  <th class="align-left">Subject</th>
-                  <th class="align-left">Created</th>
-                  <th class="align-left">Last Message</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for conversation in conversations %}
-                <tr>
-                  <td class="align-left">
-                    <a href="{% url 'board:conversation' conversation.id %}">{{conversation.subject}}</a>
-                  </td>
-                  <td class="align-left">
-                    {{conversation.created|date:"d M Y, g:i A"}}
-                  </td>
-                  <td class="align-left">
-                    {{conversation.last_message.user.profile.rendered_username}}
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <center>
-          <nav class="margin">
-            <ul class="pagination">
-              <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
-              <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
-              <li class="active"><a>1</a></li>
-              <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
-              <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
-            </ul>
-          </nav>
-        </center>
+    <a class="button margin-bottom" href="{% url 'board:conversation-create' %}"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Compose message</a>
+    <div class="panel">
+      <div class="panel__body">
+        <table class="table full-width">
+          <thead>
+            <tr>
+              <th class="align-left">Subject</th>
+              <th class="align-left">Created</th>
+              <th class="align-center">Users</th>
+              <th class="align-left">Last Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for conversation in conversations %}
+            <tr>
+              <td class="align-left">
+                <a href="{% url 'board:conversation' conversation.id %}">{{conversation.subject}}</a>
+              </td>
+              <td class="align-left">
+                {{conversation.created|date:"d M Y, g:i A"}}
+              </td>
+              <td class="align-center">
+                {{conversation.users.count}}
+              </td>
+              <td class="align-left">
+                {{conversation.last_message.user.profile.rendered_username}}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td>You are not a part of any private conversations</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
+    <!-- TODO: Pagination -->
+    <!-- <center>
+      <nav class="margin">
+        <ul class="pagination">
+          <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+          <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+          <li class="active"><a>1</a></li>
+          <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+          <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+        </ul>
+      </nav>
+    </center> -->
   </div>
-</div>
 </div>
 {% endblock %}

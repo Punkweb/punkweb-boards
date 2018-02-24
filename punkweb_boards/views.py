@@ -10,23 +10,17 @@ from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 from punkweb_boards.conf.settings import BOARD_THEME, SIGNATURES_ENABLED
 from punkweb_boards.forms import (
-    ThreadForm, PostForm, ReportForm, MessageForm, RegistrationForm,
-    SettingsForm, KeywordSearchForm)
-# from punkweb_boards.models import (
-#     EmailUser, Category, Subcategory, Thread, Post, Report, Conversation,
-#     Message, Notification, Shout, Page)
+    RegistrationForm, ThreadForm, PostForm, ReportForm, ConversationForm,
+    MessageForm, SettingsForm, KeywordSearchForm)
 from punkweb_boards.models import (
     Category, Subcategory, Thread, Post, Report, Conversation,
     Message, Notification, Shout, Page)
-
-
-logger = logging.getLogger(__name__)
+from punkweb_boards.utils import username_comma_separated_qs
 
 
 def unpermitted_view(request):
     return render(
         request, 'punkweb_boards/themes/{}/unpermitted.html'.format(BOARD_THEME), {})
-
 
 def index_view(request):
     total_posts = Post.objects.all().count()
@@ -75,7 +69,6 @@ def index_view(request):
     }
     return render(
         request, 'punkweb_boards/themes/{}/index.html'.format(BOARD_THEME), context)
-
 
 def keyword_search_view(request):
     if not request.user.is_authenticated or request.user.profile.is_banned:
@@ -146,7 +139,6 @@ def keyword_search_view(request):
         context
     )
 
-
 def registration_view(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -165,7 +157,6 @@ def registration_view(request):
     return render(
         request, 'punkweb_boards/themes/{}/register.html'.format(BOARD_THEME), context)
 
-
 def my_profile(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
@@ -174,7 +165,6 @@ def my_profile(request):
     context = {}
     return render(
         request, 'punkweb_boards/themes/{}/my_profile.html'.format(BOARD_THEME), context)
-
 
 def settings_view(request):
     # Redirect to unpermitted page if requesting user
@@ -222,7 +212,6 @@ def profile_view(request, username):
         context
     )
 
-
 def category_view(request, pk):
     category = Category.objects.get(id=pk)
     # Redirect to unpermitted page if the requesting user does not have view
@@ -251,7 +240,6 @@ def category_view(request, pk):
         context
     )
 
-
 def subcategory_view(request, pk):
     category = Subcategory.objects.get(id=pk)
     # Redirect to unpermitted page if the requesting user does not have view
@@ -278,7 +266,6 @@ def subcategory_view(request, pk):
         'punkweb_boards/themes/{}/subcategory_view.html'.format(BOARD_THEME),
         context
     )
-
 
 def thread_view(request, pk):
     page_size = 10
@@ -319,7 +306,6 @@ def thread_view(request, pk):
         context
     )
 
-
 def thread_create(request, category_id):
     subcategory = Subcategory.objects.get(id=category_id)
     # Redirect to unpermitted page if the requesting user does not have post
@@ -342,7 +328,6 @@ def thread_create(request, category_id):
         'punkweb_boards/themes/{}/thread_create_form.html'.format(BOARD_THEME),
         context
     )
-
 
 def thread_update(request, pk):
     instance = Thread.objects.get(id=pk)
@@ -367,7 +352,6 @@ def thread_update(request, pk):
         context
     )
 
-
 def thread_delete(request, pk):
     instance = Thread.objects.get(id=pk)
     # Redirect to unpermitted page if the requesting user does not have edit
@@ -386,9 +370,6 @@ def thread_delete(request, pk):
         'punkweb_boards/themes/{}/thread_delete_form.html'.format(BOARD_THEME),
         context
     )
-
-
-# There is no post_view or post_create as both are handled on the thread_view
 
 def post_update(request, pk):
     instance = Post.objects.get(id=pk)
@@ -413,7 +394,6 @@ def post_update(request, pk):
         context
     )
 
-
 def post_delete(request, pk):
     instance = Post.objects.get(id=pk)
     # Redirect to unpermitted page if the requesting user does not have edit
@@ -433,7 +413,6 @@ def post_delete(request, pk):
         context
     )
 
-
 def conversations_list(request):
     # Redirect to unpermitted page if not authenticated or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
@@ -448,6 +427,33 @@ def conversations_list(request):
         context
     )
 
+def conversation_create(request):
+    if not request.user.is_authenticated or request.user.profile.is_banned:
+        return redirect('board:unpermitted')
+
+    if request.method == 'POST':
+        form = ConversationForm(request, request.POST)
+        if form.is_valid():
+            users = username_comma_separated_qs(form.cleaned_data['users'])
+            users = users | request.user
+            subject = form.cleaned_data['subject']
+            message_content = form.cleaned_data['message']
+            conversation = Conversation.objects.create(subject=subject)
+            conversation.users.add(*users)
+            message = Message.objects.create(user=request.user,
+                conversation=conversation, content=message_content)
+            return redirect(conversation.get_absolute_url())
+    else:
+        form = ConversationForm(request)
+
+    context = {
+        'form': form
+    }
+    return render(
+        request,
+        'punkweb_boards/themes/{}/conversation_create_form.html'.format(BOARD_THEME),
+        context
+    )
 
 def conversation_view(request, pk):
     # Redirect to unpermitted page if not authenticated or is banned
@@ -485,7 +491,6 @@ def conversation_view(request, pk):
         context
     )
 
-
 def reports_list(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned or is not an admin
@@ -500,7 +505,6 @@ def reports_list(request):
         'punkweb_boards/themes/{}/reports_list.html'.format(BOARD_THEME),
         context
     )
-
 
 def report_view(request, pk):
     # Redirect to unpermitted page if requesting user
@@ -523,7 +527,6 @@ def report_view(request, pk):
         'punkweb_boards/themes/{}/report_view.html'.format(BOARD_THEME),
         context
     )
-
 
 def report_create(request, thread=None, post=None):
     context = {}
@@ -557,7 +560,6 @@ def report_create(request, thread=None, post=None):
         context
     )
 
-
 def notification_redirect(request, pk):
     notification = Notification.objects.filter(user=request.user, pk=pk)
     if notification:
@@ -565,7 +567,6 @@ def notification_redirect(request, pk):
         notification.read = True
         notification.save()
         return redirect(notification.link)
-
 
 def members_list(request):
     # Redirect to unpermitted page if requesting user
@@ -582,11 +583,8 @@ def members_list(request):
         context
     )
 
-
 def statistics_view(request):
-    context = {
-
-    }
+    context = {}
     return render(
         request,
         'punkweb_boards/themes/{}/statistics.html'.format(BOARD_THEME),

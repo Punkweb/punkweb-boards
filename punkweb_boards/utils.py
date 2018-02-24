@@ -2,9 +2,15 @@ import hashlib
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
+from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from precise_bbcode.bbcode import get_parser
 from punkweb_boards.conf import settings as BOARD_SETTINGS
+
+def username_comma_separated_qs(name_string):
+    # Returns a queryset of users from a string of comma separated usernames
+    usernames = name_string.replace(' ', '').split(',')
+    return get_user_model().objects.filter(username__in=usernames)
 
 def tagged_usernames(content):
     usernames = []

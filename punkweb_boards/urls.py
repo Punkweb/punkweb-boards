@@ -28,14 +28,16 @@ urlpatterns = [
         views.category_view, name='category'),
     url(r'^subcategory/(?P<pk>[^/]+)/$',
         views.subcategory_view, name='subcategory'),
-    url(r'^thread/(?P<pk>[^/]+)/?$',
-        views.thread_view, name='thread'),
 
     url(r'^inbox/$',
         views.conversations_list, name='inbox'),
     url(r'^conversation/(?P<pk>[^/]+)/$',
         views.conversation_view, name='conversation'),
+    url(r'^create_conversation',
+        views.conversation_create, name='conversation-create'),
 
+    url(r'^thread/(?P<pk>[^/]+)/?$',
+        views.thread_view, name='thread'),
     url(r'^create_thread/(?P<category_id>[^/]+)/$',
         views.thread_create, name='thread-create'),
     url(r'^update_thread/(?P<pk>[^/]+)/$',
