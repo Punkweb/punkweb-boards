@@ -435,11 +435,10 @@ def conversation_create(request):
         form = ConversationForm(request, request.POST)
         if form.is_valid():
             users = username_comma_separated_qs(form.cleaned_data['users'])
-            users = users | request.user
             subject = form.cleaned_data['subject']
             message_content = form.cleaned_data['message']
             conversation = Conversation.objects.create(subject=subject)
-            conversation.users.add(*users)
+            conversation.users.add(request.user, *users)
             message = Message.objects.create(user=request.user,
                 conversation=conversation, content=message_content)
             return redirect(conversation.get_absolute_url())
@@ -473,9 +472,6 @@ def conversation_view(request, pk):
             return redirect('board:unpermitted')
         form = MessageForm(request, request.POST)
         if form.is_valid():
-            new_unread = conversation.users.exclude(id=request.user.id)
-            conversation.unread_by.add(*new_unread)
-            conversation.save()
             form.save(conversation=conversation)
             return redirect(conversation.get_absolute_url())
     else:

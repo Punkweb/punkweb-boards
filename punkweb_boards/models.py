@@ -572,3 +572,11 @@ def thread_notifications(sender, instance, created, **kwargs):
                     read=False
                 )
                 notification.save()
+
+@receiver(post_save, sender=Message)
+def unread_messages(sender, instance, created, **kwargs):
+    if created:
+        conversation = instance.conversation
+        new_unread = conversation.users.exclude(id=instance.user.id)
+        conversation.unread_by.add(*new_unread)
+        conversation.save()
