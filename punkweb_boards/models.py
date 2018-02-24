@@ -409,10 +409,6 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
     def __str__(self):
         return self.subject
 
-    # @property
-    # def messages(self):
-    #     return Message.objects.filter(conversation__id=self.id)
-
     @property
     def message_count(self):
         return len(self.messages.all())
@@ -438,6 +434,15 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
 
     def __str__(self):
         return self.user.username
+
+    def can_edit(self, user):
+        if user.is_authenticated and user.profile.is_banned:
+            return False
+        if user.is_authenticated and user.is_staff:
+            return True
+        if self.user.id == user.id:
+            return True
+        return False
 
     def get_absolute_url(self):
         return reverse('board:conversation', kwargs={'pk': self.convseration.id})

@@ -36,6 +36,11 @@ urlpatterns = [
     url(r'^create_conversation',
         views.conversation_create, name='conversation-create'),
 
+    url(r'^update_message/(?P<pk>[^/]+)/$',
+        views.message_update, name='message-update'),
+    url(r'^delete_mesage/(?P<pk>[^/]+)/$',
+        views.message_delete, name='message-delete'),
+
     url(r'^thread/(?P<pk>[^/]+)/?$',
         views.thread_view, name='thread'),
     url(r'^create_thread/(?P<category_id>[^/]+)/$',

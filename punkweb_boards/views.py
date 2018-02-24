@@ -487,6 +487,47 @@ def conversation_view(request, pk):
         context
     )
 
+def message_update(request, pk):
+    instance = Message.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have edit
+    # permissions on this message.
+    if not instance.can_edit(request.user):
+        return redirect('board:unpermitted')
+    if request.method == 'POST':
+        form = MessageForm(request, request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('board:conversation', instance.conversation.id)
+    else:
+        form = MessageForm(request, instance=instance)
+    context = {
+        'form': form,
+        'obj': instance
+    }
+    return render(
+        request,
+        'punkweb_boards/themes/{}/message_update_form.html'.format(BOARD_THEME),
+        context
+    )
+
+def message_delete(request, pk):
+    instance = Message.objects.get(id=pk)
+    # Redirect to unpermitted page if the requesting user does not have edit
+    # permissions on this message.
+    if not instance.can_edit(request.user):
+        return redirect('board:unpermitted')
+    if request.method == 'POST':
+        instance.delete()
+        return redirect('board:conversation', instance.conversation.id)
+    context = {
+        'obj': instance
+    }
+    return render(
+        request,
+        'punkweb_boards/themes/{}/message_delete_form.html'.format(BOARD_THEME),
+        context
+    )
+
 def reports_list(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned or is not an admin

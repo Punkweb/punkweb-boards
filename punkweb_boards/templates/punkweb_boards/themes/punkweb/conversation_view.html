@@ -35,7 +35,7 @@
             </div>
             <div class="thread__user__posts">Posts: {{message.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date:<br> {{message.user.profile.created|date:'m/d/y'}}
+              Join date:<br>{{message.user.profile.created|date:'m/d/y'}}
             </div>
             {% for rank in message.user.profile.ranks.all %}
             <div class="thread__user__rank">
@@ -46,6 +46,17 @@
           <div class="thread__body">
             <div class="thread__content">
               {{message.content.rendered}}
+            </div>
+            {% if message.user.profile.signature.rendered and BOARD_SETTINGS.SIGNATURES_ENABLED %}
+            <div class="thread__signature">
+              {{message.user.profile.signature.rendered}}
+            </div>
+            {% endif %}
+            <div class="thread__actions">
+              {% if user.id == message.user.id or user.is_staff %}
+              <a class="button" href="{% url 'board:message-update' message.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>
+              <a class="button-red" href="{% url 'board:message-delete' message.id %}" name="button"><i class="fa fa-trash fa-fw"></i> Delete</a>
+              {% endif %}
             </div>
           </div>
         </div>

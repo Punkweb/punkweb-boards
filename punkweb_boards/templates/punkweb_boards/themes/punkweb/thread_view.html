@@ -69,7 +69,7 @@
             </div>
             <div class="thread__user__posts">Posts: {{thread.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date: <br/> {{thread.user.profile.created|date:'m/d/y'}}
+              Join date:<br/>{{thread.user.profile.created|date:'m/d/y'}}
             </div>
             {% for rank in thread.user.profile.ranks.all %}
             <div class="thread__user__rank">
@@ -128,7 +128,7 @@
             </div>
             <div class="thread__user__posts">Posts: {{post.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date: {{post.user.profile.created|date:'m/d/y'}}
+              Join date:<br>{{post.user.profile.created|date:'m/d/y'}}
             </div>
             {% for rank in post.user.profile.ranks.all %}
             <div class="thread__user__rank">

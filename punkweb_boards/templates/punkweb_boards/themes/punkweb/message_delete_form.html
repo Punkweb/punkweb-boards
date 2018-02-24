@@ -1,0 +1,48 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}Delete Message{% endblock %}
+
+{% block extrascript %}
+<script type="text/javascript" src="{% static 'punkweb_boards/js/navigate.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="djcontainer">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">Delete Message</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li><a href="{% url 'board:inbox' %}">Inbox</a></li>
+          <li><a href="{% url 'board:conversation' obj.conversation.id %}">Conversation</a></li>
+          <li>Delete Message</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="djcontainer">
+    <div class="flex flex__justify-center">
+      <div class="panel">
+        <div class="panel__header">
+          <div class="panel__title">Delete Message</div>
+        </div>
+        <div class="panel__body padding">
+          <form method="post">{% csrf_token %}
+            <p>Are you sure you want to delete this message?</p>
+            <div class="align-right">
+              <button class="pageBack button" type="button"><i class="fa fa-arrow-left fa-fw"></i> Back</button>
+              <button class="button-red" type="submit"><i class="fa fa-trash fa-fw"></i> Confirm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
