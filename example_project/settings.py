@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'precise_bbcode',
     'captcha',
     'punkweb_boards',
+    'psycopg2',
 ]
 
 MIDDLEWARE = [
@@ -93,7 +94,7 @@ DATABASES = {
         'NAME': 'punkweb_boards',
         'USER': 'punkweb_boards',
         'PASSWORD': 'punkweb_boards',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }

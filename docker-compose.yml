@@ -11,7 +11,7 @@
 
    web:
      build: .
-     command: ["./run_web.sh"]
+     command: ["/webapps/run_web.sh"]
      volumes:
        - .:/webapps
      ports:
