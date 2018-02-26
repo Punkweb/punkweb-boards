@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'precise_bbcode',
     'captcha',
     'punkweb_boards',
-    'psycopg2',
 ]
 
 MIDDLEWARE = [
