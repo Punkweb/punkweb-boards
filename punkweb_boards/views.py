@@ -131,7 +131,7 @@ def keyword_search_view(request):
         'matched_users': matched_users,
         'matched_threads': matched_threads,
         'matched_posts': matched_posts,
-        'keyword': keyword
+        'keyword': keyword,
     }
     return render(
         request,

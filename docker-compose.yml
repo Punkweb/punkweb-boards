@@ -8,6 +8,7 @@
        - POSTGRES_USER=punkweb_boards
        - POSTGRES_PASSWORD=punkweb_boards
        - POSTGRES_DB=punkweb_boards
+       - POSTGRES_HOST=db
 
    web:
      build: .

@@ -47,7 +47,7 @@
             {% for user in users %}
             <tr>
               <td>
-                <!-- <img src="{{user.profile.avatar_smallest}}" alt="..." /> -->
+                <img src="{{user.profile.avatar_smallest}}" alt="..." />
                 <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
               </td>
               <td class="align-right">

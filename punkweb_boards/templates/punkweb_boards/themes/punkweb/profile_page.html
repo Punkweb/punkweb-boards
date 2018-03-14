@@ -25,11 +25,9 @@
   <div class="djcontainer">
     <div class="panel">
       <div class="panel__body padding">
-        <center>
-          <img src="{{this_user.profile.avatar}}">
-          <h2>{{this_user.profile.rendered_username}}</h2>
-          <div class="thread__user__lastseen">Last Seen: {% if this_user.profile.last_seen %}{{ this_user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
-        </center>
+        <img src="{{this_user.profile.avatar}}">
+        <h2>{{this_user.profile.rendered_username}}</h2>
+        <div class="thread__user__lastseen">Last Seen: {% if this_user.profile.last_seen %}{{ this_user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
         <br>
 
         <h4>Email</h4>
