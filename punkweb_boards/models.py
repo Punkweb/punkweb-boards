@@ -445,7 +445,7 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
         return False
 
     def get_absolute_url(self):
-        return reverse('board:conversation', kwargs={'pk': self.convseration.id})
+        return reverse('board:conversation', kwargs={'pk': self.conversation.id})
 
 
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
@@ -585,3 +585,13 @@ def unread_messages(sender, instance, created, **kwargs):
         new_unread = conversation.users.exclude(id=instance.user.id)
         conversation.unread_by.add(*new_unread)
         conversation.save()
+        for user in conversation.users.all():
+            if user != instance.user:
+                notification = Notification(
+                    user=user,
+                    text='{} sent you a message'.format(
+                        instance.user.username),
+                    link=instance.get_absolute_url(),
+                    read=False
+                )
+                notification.save()

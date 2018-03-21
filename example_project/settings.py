@@ -91,10 +91,10 @@ WSGI_APPLICATION = 'example_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'punkweb_boards',
-        'USER': 'punkweb_boards',
-        'PASSWORD': 'punkweb_boards',
-        'HOST': 'db',
+        'NAME': os.environ.get('DATABASE_NAME', 'punkweb_boards'),
+        'USER': os.environ.get('DATABASE_USER', 'punkweb_boards'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'punkweb_boards'),
+        'HOST': os.environ.get('DATABASE_HOST', 'db'),
         'PORT': '5432',
     }
 }
