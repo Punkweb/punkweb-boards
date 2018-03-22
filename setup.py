@@ -13,7 +13,7 @@ setup(
     include_package_data=True,
     description='Django forum boards with bbcode support.',
     long_description=README,
-    url='https://punkweb.us/',
+    url='https://punkweb.net/',
     author='Punkweb',
     author_email='Punkweb <djangoboards@gmail.com>',
     classifiers=[
