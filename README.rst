@@ -1,15 +1,15 @@
 punkweb-boards
 =====================
 
-Downtime
-~~~~~~~~~~~~~~~~~~~~~
-Right now punkweb is experiencing some downtime as the www.punkweb.us domain
-expired.  We'll be back up ASAP on www.punkweb.net!
-
 Django forum boards with bbcode support.
 
 This project aims to be a full featured **classic style** forum board.  As opposed to the
 new *modern* style of discussion board, such as discourse.
+
+Downtime
+~~~~~~~~~~~~~~~~~~~~~
+Right now punkweb is experiencing some downtime as the www.punkweb.us domain
+expired.  We'll be back up ASAP on www.punkweb.net!
 
 Note: Renamed from django-boards to punkweb-boards
 ~~~~~~~~~~~~~~~~~~~~~
