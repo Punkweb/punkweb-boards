@@ -1,8 +1,17 @@
 from django.conf.urls import url, include
 from rest_framework import routers
-from punkweb_boards.rest.views import (CategoryViewSet, SubcategoryViewSet, ThreadViewSet,
-    PostViewSet, ConversationViewSet, MessageViewSet, ShoutViewSet, UserViewSet,
-    StatisticsView, obtain_auth_token)
+from punkweb_boards.rest.views import (
+    CategoryViewSet,
+    SubcategoryViewSet,
+    ThreadViewSet,
+    PostViewSet,
+    ConversationViewSet,
+    MessageViewSet,
+    ShoutViewSet,
+    UserViewSet,
+    StatisticsView,
+    obtain_auth_token,
+)
 
 router = routers.DefaultRouter()
 router.register(r'categories', CategoryViewSet)

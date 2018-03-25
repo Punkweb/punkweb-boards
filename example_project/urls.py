@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^board/page/', include('punkweb_boards.page_urls')),
     url(r'^board/api/', include('punkweb_boards.rest.urls')),
     url(r'^captcha/', include('captcha.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+)

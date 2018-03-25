@@ -18,9 +18,20 @@ class Command(BaseCommand):
             # Rename model
             old_name = old_name[0]
             new_name = new_name[0]
-            cursor.execute("UPDATE django_content_type SET app_label='{}' WHERE app_label='{}'".format(new_name, old_name))
-            cursor.execute("UPDATE django_migrations SET app='{}' WHERE app='{}'".format(new_name, old_name))
+            cursor.execute(
+                "UPDATE django_content_type SET app_label='{}' WHERE app_label='{}'".format(
+                    new_name, old_name
+                )
+            )
+            cursor.execute(
+                "UPDATE django_migrations SET app='{}' WHERE app='{}'".format(
+                    new_name, old_name
+                )
+            )
 
             for model in models:
-                cursor.execute("ALTER TABLE {old_name}_{model_name} RENAME TO {new_name}_{model_name}".format(
-                    old_name=old_name, new_name=new_name, model_name=model))
+                cursor.execute(
+                    "ALTER TABLE {old_name}_{model_name} RENAME TO {new_name}_{model_name}".format(
+                        old_name=old_name, new_name=new_name, model_name=model
+                    )
+                )

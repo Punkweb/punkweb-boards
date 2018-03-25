@@ -30,23 +30,30 @@ class UUIDPrimaryKey(models.Model):
 
 class UpvoteDownvoteMixin(models.Model):
     upvoted_by = models.ManyToManyField(
-        get_user_model(), related_name='%(app_label)s_%(class)s_upvoted',
-        blank=True)
+        get_user_model(),
+        related_name='%(app_label)s_%(class)s_upvoted',
+        blank=True,
+    )
     downvoted_by = models.ManyToManyField(
-        get_user_model(), related_name='%(app_label)s_%(class)s_downvoted',
-        blank=True)
+        get_user_model(),
+        related_name='%(app_label)s_%(class)s_downvoted',
+        blank=True,
+    )
 
     class Meta:
         abstract = True
 
 
 class AvatarImagesMixin(models.Model):
+
     @property
     def avatar(self):
         if not self.image:
             if utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=200)
+
             return get_thumbnailer(utils.get_placeholder_url())['avatar'].url
+
         else:
             return self.image['avatar'].url
 
@@ -55,7 +62,11 @@ class AvatarImagesMixin(models.Model):
         if not self.image:
             if utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=100)
-            return get_thumbnailer(utils.get_placeholder_url())['avatar_small'].url
+
+            return get_thumbnailer(utils.get_placeholder_url())[
+                'avatar_small'
+            ].url
+
         else:
             return self.image['avatar_small'].url
 
@@ -64,7 +75,11 @@ class AvatarImagesMixin(models.Model):
         if not self.image:
             if utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=50)
-            return get_thumbnailer(utils.get_placeholder_url())['avatar_smaller'].url
+
+            return get_thumbnailer(utils.get_placeholder_url())[
+                'avatar_smaller'
+            ].url
+
         else:
             return self.image['avatar_smaller'].url
 
@@ -73,7 +88,11 @@ class AvatarImagesMixin(models.Model):
         if not self.image:
             if utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=25)
-            return get_thumbnailer(utils.get_placeholder_url())['avatar_smallest'].url
+
+            return get_thumbnailer(utils.get_placeholder_url())[
+                'avatar_smallest'
+            ].url
+
         else:
             return self.image['avatar_smallest'].url
 

@@ -7,10 +7,12 @@ from django.utils.safestring import mark_safe
 from precise_bbcode.bbcode import get_parser
 from punkweb_boards.conf import settings as BOARD_SETTINGS
 
+
 def username_comma_separated_qs(name_string):
     # Returns a queryset of users from a string of comma separated usernames
     usernames = name_string.replace(' ', '').split(',')
     return get_user_model().objects.filter(username__in=usernames)
+
 
 def tagged_usernames(content):
     usernames = []
@@ -22,12 +24,16 @@ def tagged_usernames(content):
                 usernames.append(username)
     return usernames
 
+
 def render_example_username(rank, username):
     parser = get_parser()
     if not rank:
         return username
+
     return mark_safe(
-        parser.render(rank.username_modifier.replace('{USER}', username)))
+        parser.render(rank.username_modifier.replace('{USER}', username))
+    )
+
 
 def render_username(profile):
     # Returns the username rendered in bbcode defined by the users rank.
@@ -35,16 +41,20 @@ def render_username(profile):
     parser = get_parser()
     if profile.is_banned:
         return 'BANNED'
+
     if a and profile.username_modifier:
         modifier = profile.username_modifier
         replace_username = modifier.replace('{USER}', profile.user.username)
         return mark_safe(parser.render(replace_username))
+
     elif a and profile.rank and profile.rank.username_modifier:
         modifier = profile.rank.username_modifier
         replace_username = modifier.replace('{USER}', profile.user.username)
         return mark_safe(parser.render(replace_username))
+
     else:
         return profile.user.username
+
 
 def get_gravatar_url(email, size=80, secure=True, default='mm'):
     if secure:
@@ -52,13 +62,10 @@ def get_gravatar_url(email, size=80, secure=True, default='mm'):
     else:
         url_base = 'http://www.gravatar.com/'
     email_hash = hashlib.md5(email.encode('utf-8').strip().lower()).hexdigest()
-    qs = urlencode({
-        's': str(size),
-        'd': default,
-        'r': 'pg',
-    })
+    qs = urlencode({'s': str(size), 'd': default, 'r': 'pg'})
     url = '{}avatar/{}.jpg?{}'.format(url_base, email_hash, qs)
     return url
+
 
 def has_gravatar(email):
     url = get_gravatar_url(email, default='404')
@@ -66,8 +73,10 @@ def has_gravatar(email):
         request = Request(url)
         request.get_method = lambda: 'HEAD'
         return 200 == urlopen(request).code
+
     except (HTTPError, URLError):
         return False
+
 
 def get_placeholder_url():
     url = '/'.join(['placeholder_profile.png'])

@@ -5,15 +5,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
-    dependencies = [
-        ('punkweb_boards', '0001_initial'),
-    ]
+    dependencies = [('punkweb_boards', '0001_initial')]
 
     operations = [
         migrations.AddField(
             model_name='boardprofile',
             name='metadata',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True),
-        ),
+            field=django.contrib.postgres.fields.jsonb.JSONField(
+                blank=True, null=True
+            ),
+        )
     ]

@@ -77,9 +77,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'punkweb_boards.context_processors.settings',
                 'punkweb_boards.context_processors.base_context',
-            ],
+            ]
         },
-    },
+    }
 ]
 
 WSGI_APPLICATION = 'example_project.wsgi.application'
@@ -113,16 +113,14 @@ CACHES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'
+    },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'
     },
 ]
 
@@ -152,9 +150,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'server', 'dev', 'media')
 
 STATIC_DIR = os.path.join(BASE_DIR, 'example_project/static')
 
-STATICFILES_DIRS = (
-    STATIC_DIR,
-)
+STATICFILES_DIRS = (STATIC_DIR,)
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -162,9 +158,7 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
+COMPRESS_PRECOMPILERS = (('text/x-scss', 'django_libsass.SassCompiler'),)
 
 
 # Non default app configuration
@@ -181,7 +175,7 @@ REST_FRAMEWORK = {
         'punkweb_boards.rest.authentication.NoCSRFSessionAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 25
+    'PAGE_SIZE': 25,
 }
 
 THUMBNAIL_ALIASES = {
@@ -189,12 +183,10 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (200, 200), 'crop': True},
         'avatar_small': {'size': (100, 100), 'crop': True},
         'avatar_smaller': {'size': (50, 50), 'crop': True},
-        'avatar_smallest': {'size': (25, 25), 'crop': True}
-    },
+        'avatar_smallest': {'size': (25, 25), 'crop': True},
+    }
 }
 
 PUNKWEB_BOARDS = {
-    'BOARD_NAME': 'Example',
-    'SHOUTBOX_ENABLED': True,
-    'CAPTCHAS_ENABLED': True,
+    'BOARD_NAME': 'Example', 'SHOUTBOX_ENABLED': True, 'CAPTCHAS_ENABLED': True
 }
