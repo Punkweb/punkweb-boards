@@ -6,6 +6,11 @@ Django forum boards with bbcode support.
 This project aims to be a full featured **classic style** forum board.  As opposed to the
 new *modern* style of discussion board, such as discourse.
 
+Downtime
+~~~~~~~~~~~~~~~~~~~~~
+Right now punkweb is experiencing some downtime as the www.punkweb.us domain
+expired.  We'll be back up ASAP on www.punkweb.net!
+
 Note: Renamed from django-boards to punkweb-boards
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -29,9 +34,9 @@ run ./rename.sh and you should be good.
 Demo/Documentation
 ~~~~~~~~~~~~~~~~~~
 
-Check out our community at `PunkWeb <https://punkweb.us/board/>`__ for a
+Check out our community at `PunkWeb <https://punkweb.net/board/>`__ for a
 live demonstration of punkweb-boards, or view the
-`documentation <https://punkweb.us/board/page/docs-index/>`__!
+`documentation <https://punkweb.net/board/page/docs-index/>`__!
 
 I'm just getting started on the documentation, there's dozens of pages I still
 need to write out, but what's there now should help get you started.
