@@ -11,7 +11,8 @@ from django.utils import timezone
 from punkweb_boards.conf.settings import BOARD_THEME, SIGNATURES_ENABLED
 from punkweb_boards.forms import (
     RegistrationForm, ThreadForm, PostForm, ReportForm, ConversationForm,
-    MessageForm, SettingsForm, KeywordSearchForm)
+    MessageForm, SettingsForm, KeywordSearchForm, SubcategoryForm,
+    CategoryForm, )
 from punkweb_boards.models import (
     Category, Subcategory, Thread, Post, Report, Conversation,
     Message, Notification, Shout, Page)
@@ -67,6 +68,22 @@ def index_view(request):
         'newest_member': newest_member,
         'member_count': member_count,
     }
+    if request.method == 'POST':
+        subcategory_form = SubcategoryForm(request.POST)
+        category_form = CategoryForm(request.POST)
+        if subcategory_form.is_valid():
+            subcategory = subcategory_form.save()
+            return redirect('board:index')
+        if category_form.is_valid():
+            category = category_form.save()
+            return redirect('board:index')
+    else:
+        subcategory_form = SubcategoryForm()
+        category_form = CategoryForm()
+    context.update({
+        'subcategory_form': subcategory_form,
+        'category_form': category_form,
+    })
     return render(
         request, 'punkweb_boards/themes/{}/index.html'.format(BOARD_THEME), context)
 
@@ -234,6 +251,16 @@ def category_view(request, pk):
         'category': category,
         'subcategories': subcategories
     }
+    if request.method == 'POST':
+        subcategory_form = SubcategoryForm(request.POST)
+        if subcategory_form.is_valid():
+            subcategory_form.save()
+            return redirect(category.get_absolute_url)
+    else:
+        subcategory_form = SubcategoryForm()
+    context.update({
+        'subcategory_form': subcategory_form,
+    })
     return render(
         request,
         'punkweb_boards/themes/{}/category_view.html'.format(BOARD_THEME),

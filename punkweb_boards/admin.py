@@ -81,7 +81,7 @@ class BoardProfileAdmin(admin.ModelAdmin):
     fields = (
         'get_username', 'get_email', 'gender', 'birthday', 'ranks', 'is_banned',
         'image', 'avatar_thumbnail', 'signature', 'rendered_signature',
-        'username_modifier', 'rendered_username',)
+        'username_modifier', 'rendered_username', 'metadata',)
     readonly_fields = (
         'get_username', 'get_email', 'avatar_thumbnail', 'rendered_signature',
         'rendered_username',)

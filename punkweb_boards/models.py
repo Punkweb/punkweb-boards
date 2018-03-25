@@ -10,6 +10,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -57,6 +58,7 @@ class BoardProfile(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin,
         help_text="BBCode. Just add {USER} where " \
                   "you want the username to be placed at. " \
                   "Setting this will override the UserRank modification")
+    metadata = JSONField(null=True, blank=True)
 
     def last_seen(self):
         name = self.user.username.replace(' ', '_')
@@ -141,6 +143,13 @@ class BoardProfile(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin,
     def avatar_thumbnail(self):
         """Returns html tag with user image. Used on admin page"""
         return mark_safe('<img src="{}" />'.format(self.avatar_small))
+
+    @property
+    def viewing_admin_mode(self):
+        if not self.user.is_superuser:
+            return False
+        else:
+            return self.metadata.get('admin_mode') == True
 
     def get_absolute_url(self):
         return reverse('board:profile', self.user.username)

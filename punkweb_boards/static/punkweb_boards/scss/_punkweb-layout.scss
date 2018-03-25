@@ -17,7 +17,9 @@ hr {
 }
 
 .helptext {
+  color: lighten($default-text, 25%);
   display: block;
+  font-size: .8em;
   padding-top: .5rem;
 }
 
@@ -569,5 +571,90 @@ input[type=button], input[type=submit] {
 .statisticsPanel {
   &__list {
     @include no-disc;
+  }
+}
+
+.adminModeWarning {
+  display: block;
+  background-color: $oc-gray-9;
+  color: $default-text-on-dark;
+  border-radius: 4px;
+  opacity: .85;
+  width: 320px;
+  padding: .5rem .75rem;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  h1 {
+    font-size: 12px;
+  }
+  p {
+    font-size: 10px;
+    margin: .25rem 0;
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3rem;
+  overflow: auto;
+  background-color: rgb(15, 33, 43);
+  background-color: rgba(15, 33, 43, 0.7);
+
+  &__content {
+    margin: 0 auto;
+    z-index: 60;
+    overflow: auto;
+    padding: 1rem;
+    max-width: 1440px;
+    min-width: 280px;
+    max-height: 100%;
+    min-height: 50px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.5);
+
+    & > .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+      &:hover, &:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .modal {
+    padding: 2rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .adminModeWarning {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .modal {
+    padding: 1rem 0;
+  }
+
+  .modal__content {
+    margin: 0 1rem;
+    width: auto !important;
   }
 }

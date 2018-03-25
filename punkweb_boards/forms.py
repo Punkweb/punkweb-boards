@@ -4,8 +4,10 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.widgets import ImageClearableFileInput
-from punkweb_boards.conf.settings import BOARD_THEME, CAPTCHAS_ENABLED, SIGNATURES_ENABLED
-from punkweb_boards.models import Thread, Post, Shout, Report, Conversation, Message
+from punkweb_boards.conf.settings import (BOARD_THEME, CAPTCHAS_ENABLED,
+    SIGNATURES_ENABLED)
+from punkweb_boards.models import (Thread, Post, Shout, Report, Conversation,
+    Message, Subcategory, Category,)
 
 
 class KeywordSearchForm(forms.Form):
@@ -208,3 +210,24 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ['reason']
+
+
+class SubcategoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SubcategoryForm, self).__init__(*args, **kwargs)
+        self.fields['parent'].label = 'Category'
+        self.fields['description'].widget.attrs['class'] = 'post-editor'
+
+    class Meta:
+        model = Subcategory
+        fields = '__all__'
+
+
+class CategoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        self.fields['description'].widget.attrs['class'] = 'post-editor'
+
+    class Meta:
+        model = Category
+        fields = '__all__'
