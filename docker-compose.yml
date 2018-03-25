@@ -5,10 +5,10 @@
    db:
      image: postgres
      environment:
-       - POSTGRES_USER=punkweb_boards
-       - POSTGRES_PASSWORD=punkweb_boards
-       - POSTGRES_DB=punkweb_boards
-       - POSTGRES_HOST=db
+       - DATABASE_NAME=punkweb_boards
+       - DATABASE_USER=punkweb_boards
+       - DATABASE_PASSWORD=punkweb_boards
+       - DATABASE_HOST=db
 
    web:
      build: .
