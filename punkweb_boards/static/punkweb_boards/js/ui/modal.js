@@ -49,5 +49,12 @@ $(function() {
         openModal(self.attr('data-modal-id'));
       });
     });
+
+    modals.each(function() {
+      var self = $(this);
+      if (self.attr('data-init-open') === "true") {
+        openModal(self.attr('data-modal-id'));
+      }
+    });
   });
 });
