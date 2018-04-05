@@ -31,18 +31,18 @@ class UserViewSet(
     mixins.ListModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = get_user_model().objects.order_by('username')
+    queryset = get_user_model().objects.order_by("username")
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated, IsTargetUser)
 
     @list_route()
     def from_token(self, request, *args, **kwargs):
-        token_string = request.query_params.get('token')
+        token_string = request.query_params.get("token")
         if not token_string:
-            return Response('Token query param required', status=400)
+            return Response("Token query param required", status=400)
 
         token = get_object_or_404(Token, key=token_string)
-        self.kwargs['pk'] = token.user_id
+        self.kwargs["pk"] = token.user_id
         user = self.get_object()
         return Response(self.get_serializer(user).data)
 
@@ -52,9 +52,9 @@ class ObtainAuthToken(OriginalObtain):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key, 'id': user.id})
+        return Response({"token": token.key, "id": user.id})
 
 
 obtain_auth_token = ObtainAuthToken.as_view()
@@ -63,7 +63,7 @@ obtain_auth_token = ObtainAuthToken.as_view()
 class CategoryViewSet(
     mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 ):
-    queryset = Category.objects.order_by('order')
+    queryset = Category.objects.order_by("order")
     serializer_class = CategorySerializer
 
     def get_queryset(self):
@@ -79,7 +79,7 @@ class CategoryViewSet(
 class SubcategoryViewSet(
     mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 ):
-    queryset = Subcategory.objects.order_by('order')
+    queryset = Subcategory.objects.order_by("order")
     serializer_class = SubcategorySerializer
 
     def get_queryset(self):
@@ -89,7 +89,7 @@ class SubcategoryViewSet(
         qs = self.queryset
         if not self.request.user.is_authenticated:
             qs = qs.filter(auth_req=False, parent__auth_req=False)
-        parent_id = self.request.query_params.get('parent_id')
+        parent_id = self.request.query_params.get("parent_id")
         if parent_id:
             qs = qs.filter(parent__id=parent_id)
         return qs.all()
@@ -102,7 +102,7 @@ class ThreadViewSet(
     mixins.UpdateModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = Thread.objects.order_by('-created')
+    queryset = Thread.objects.order_by("-created")
     serializer_class = ThreadSerializer
     permission_classes = (BelongsToUser,)
 
@@ -115,7 +115,7 @@ class ThreadViewSet(
             qs = qs.filter(
                 category__auth_req=False, category__parent__auth_req=False
             )
-        subcategory_id = self.request.query_params.get('subcategory_id')
+        subcategory_id = self.request.query_params.get("subcategory_id")
         if subcategory_id:
             qs = qs.filter(category__id=subcategory_id)
         return qs.all()
@@ -134,7 +134,7 @@ class PostViewSet(
     mixins.UpdateModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = Post.objects.order_by('-created')
+    queryset = Post.objects.order_by("-created")
     serializer_class = PostSerializer
     permission_classes = (BelongsToUser,)
 
@@ -246,12 +246,12 @@ class StatisticsView(views.APIView):
         new_members_this_week = queries.new_members_this_week()
         return Response(
             {
-                'total_posts': total_posts,
-                'total_threads': total_threads,
-                'total_members': total_members,
-                'new_posts_this_week': new_posts_this_week,
-                'new_threads_this_week': new_threads_this_week,
-                'new_members_this_week': new_members_this_week,
-                'threads_in_subcategories': threads_in_subcategories,
+                "total_posts": total_posts,
+                "total_threads": total_threads,
+                "total_members": total_members,
+                "new_posts_this_week": new_posts_this_week,
+                "new_threads_this_week": new_threads_this_week,
+                "new_members_this_week": new_members_this_week,
+                "threads_in_subcategories": threads_in_subcategories,
             }
         )

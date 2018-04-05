@@ -5,13 +5,13 @@ from django.db import connection
 
 
 class Command(BaseCommand):
-    help = 'Renames app. Usage rename_app [old_name] [new_name] [classes ...]'
+    help = "Renames app. Usage rename_app [old_name] [new_name] [classes ...]"
 
     def add_arguments(self, parser):
         # Positional arguments
-        parser.add_argument('old_name', nargs=1, type=str)
-        parser.add_argument('new_name', nargs=1, type=str)
-        parser.add_argument('models', nargs=argparse.REMAINDER, type=str)
+        parser.add_argument("old_name", nargs=1, type=str)
+        parser.add_argument("new_name", nargs=1, type=str)
+        parser.add_argument("models", nargs=argparse.REMAINDER, type=str)
 
     def handle(self, old_name, new_name, models, *args, **options):
         with connection.cursor() as cursor:

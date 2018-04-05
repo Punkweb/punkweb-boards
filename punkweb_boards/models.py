@@ -34,9 +34,9 @@ from punkweb_boards.mixins import (
 
 def profile_image_file_name(instance, filename):
     folder = instance.user.username
-    ext = (filename.split('.')[-1]).lower()
-    filename = '{}.{}'.format(instance.user.username, ext)
-    return '/'.join(['user_images', folder, filename])
+    ext = (filename.split(".")[-1]).lower()
+    filename = "{}.{}".format(instance.user.username, ext)
+    return "/".join(["user_images", folder, filename])
 
 
 class BoardProfile(
@@ -45,10 +45,10 @@ class BoardProfile(
     UpvoteDownvoteMixin,
     AvatarImagesMixin,
 ):
-    GENDER_CHOICES = [('f', 'Female'), ('m', 'Male')]
+    GENDER_CHOICES = [("f", "Female"), ("m", "Male")]
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        related_name='profile',
+        related_name="profile",
         on_delete=models.CASCADE,
     )
     image = ThumbnailerImageField(
@@ -63,10 +63,10 @@ class BoardProfile(
         default=None,
     )
     birthday = models.DateField(
-        null=True, blank=True, verbose_name='Birth date'
+        null=True, blank=True, verbose_name="Birth date"
     )
     is_banned = models.BooleanField(default=False)
-    ranks = models.ManyToManyField('UserRank', blank=True)
+    ranks = models.ManyToManyField("UserRank", blank=True)
     username_modifier = models.TextField(
         max_length=250,
         blank=True,
@@ -78,8 +78,8 @@ class BoardProfile(
     metadata = JSONField(null=True, blank=True)
 
     def last_seen(self):
-        name = self.user.username.replace(' ', '_')
-        return cache.get('seen_%s' % name)
+        name = self.user.username.replace(" ", "_")
+        return cache.get("seen_%s" % name)
 
     def online(self):
         if self.last_seen():
@@ -106,11 +106,11 @@ class BoardProfile(
 
         today = datetime.date.today()
         return (
-            today.year -
-            self.birthday.year -
-            (
-                (today.month, today.day) <
-                (self.birthday.month, self.birthday.day)
+            today.year
+            - self.birthday.year
+            - (
+                (today.month, today.day)
+                < (self.birthday.month, self.birthday.day)
             )
         )
 
@@ -143,12 +143,12 @@ class BoardProfile(
         if not self.ranks:
             return None
 
-        return self.ranks.order_by('order').first()
+        return self.ranks.order_by("order").first()
 
     @property
     def rank_title(self):
         if not self.rank:
-            return 'Rookie'
+            return "Rookie"
 
         else:
             return self.rank.title
@@ -160,7 +160,7 @@ class BoardProfile(
     @property
     def rendered_rank(self):
         if not self.rank:
-            name = 'Rookie'
+            name = "Rookie"
         else:
             name = self.rank.title
         return utils.render_example_username(self.rank, name)
@@ -181,20 +181,20 @@ class BoardProfile(
             return False
 
         elif self.metadata:
-            return self.metadata.get('admin_mode') is True
+            return self.metadata.get("admin_mode") is True
 
     def get_absolute_url(self):
-        return reverse('board:profile', self.user.username)
+        return reverse("board:profile", self.user.username)
 
 
 class UserRank(models.Model):
-    AWARD_TYPE_CHOICES = (('post_count', 'Post Count'),)
+    AWARD_TYPE_CHOICES = (("post_count", "Post Count"),)
     title = models.CharField(
         max_length=96, blank=False, null=False, unique=True
     )
     description = models.TextField(max_length=256, blank=True, null=True)
     order = models.IntegerField(
-        help_text='Where this rank ranks among the other ranks'
+        help_text="Where this rank ranks among the other ranks"
     )
     is_award = models.BooleanField(default=False)
     award_type = models.CharField(
@@ -218,7 +218,7 @@ class UserRank(models.Model):
         return utils.render_example_username(self, self.title)
 
     class Meta:
-        ordering = ('order',)
+        ordering = ("order",)
 
     def __str__(self):
         return self.title
@@ -231,13 +231,13 @@ class Category(UUIDPrimaryKey):
     description = BBCodeTextField(max_length=256, blank=True, null=True)
     order = models.IntegerField()
     auth_req = models.BooleanField(
-        default=False, help_text='Can only logged in users view this category?'
+        default=False, help_text="Can only logged in users view this category?"
     )
 
     class Meta:
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
-        ordering = ('order',)
+        verbose_name = "category"
+        verbose_name_plural = "categories"
+        ordering = ("order",)
 
     def __str__(self):
         return "{}. {}".format(self.order, self.name)
@@ -256,7 +256,7 @@ class Category(UUIDPrimaryKey):
         return Subcategory.objects.filter(parent__id=self.id)
 
     def get_absolute_url(self):
-        return reverse('board:category-detail', kwargs={'pk': self.id})
+        return reverse("board:category-detail", kwargs={"pk": self.id})
 
 
 class Subcategory(UUIDPrimaryKey):
@@ -268,17 +268,17 @@ class Subcategory(UUIDPrimaryKey):
     order = models.IntegerField()
     staff_req = models.BooleanField(
         default=False,
-        help_text='Can only staff members can create threads in this subcategory?',
+        help_text="Can only staff members can create threads in this subcategory?",
     )
     auth_req = models.BooleanField(
         default=False,
-        help_text='Can only logged in users view this subcategory?',
+        help_text="Can only logged in users view this subcategory?",
     )
 
     class Meta:
-        verbose_name = 'subcategory'
-        verbose_name_plural = 'subcategories'
-        ordering = ('parent__order', 'order')
+        verbose_name = "subcategory"
+        verbose_name_plural = "subcategories"
+        ordering = ("parent__order", "order")
 
     def __str__(self):
         return "{} > {}. {}".format(self.parent, self.order, self.name)
@@ -325,16 +325,16 @@ class Subcategory(UUIDPrimaryKey):
 
     @property
     def last_thread(self):
-        return self.threads.order_by('-created').first()
+        return self.threads.order_by("-created").first()
 
     def get_absolute_url(self):
-        return reverse('board:subcategory-detail', kwargs={'pk': self.id})
+        return reverse("board:subcategory-detail", kwargs={"pk": self.id})
 
 
 class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='threads',
+        related_name="threads",
         blank=False,
         null=False,
         on_delete=models.CASCADE,
@@ -361,10 +361,10 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     )
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def __str__(self):
-        return '{} by {}'.format(self.title, self.user)
+        return "{} by {}".format(self.title, self.user)
 
     def can_view(self, user):
         if user.is_authenticated and user.profile.is_banned:
@@ -408,7 +408,7 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
 
     @property
     def last_post(self):
-        return self.posts.order_by('created').first()
+        return self.posts.order_by("created").first()
 
     @property
     def upvotes(self):
@@ -419,20 +419,20 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
         return len(self.downvoted_by.all())
 
     def get_absolute_url(self):
-        return reverse('board:thread', kwargs={'pk': self.id})
+        return reverse("board:thread", kwargs={"pk": self.id})
 
 
 class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='posts',
+        related_name="posts",
         blank=False,
         null=False,
         on_delete=models.CASCADE,
     )
     thread = models.ForeignKey(
         Thread,
-        related_name='posts',
+        related_name="posts",
         blank=False,
         null=False,
         on_delete=models.CASCADE,
@@ -440,10 +440,10 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def __str__(self):
-        return '{}\'s post on {}, {}'.format(
+        return "{}'s post on {}, {}".format(
             self.user, self.thread, self.created.strftime("%Y-%m-%d %H:%M")
         )
 
@@ -469,8 +469,8 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
 
     @property
     def post_number(self):
-        qs = self.thread.posts.order_by('created')
-        post_index = list(qs.values_list('id', flat=True)).index(self.id)
+        qs = self.thread.posts.order_by("created")
+        post_index = list(qs.values_list("id", flat=True)).index(self.id)
         return post_index + 1
 
     @property
@@ -486,26 +486,26 @@ class Post(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
         return len(self.downvoted_by.all())
 
     def get_absolute_url(self):
-        return '/board/thread/{}/?page={}#p{}'.format(
+        return "/board/thread/{}/?page={}#p{}".format(
             self.thread.id, self.page_number, self.post_number
         )
 
 
 class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
     users = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name='conversations'
+        settings.AUTH_USER_MODEL, related_name="conversations"
     )
     subject = models.TextField(
-        max_length=140, blank=True, null=True, default='No subject'
+        max_length=140, blank=True, null=True, default="No subject"
     )
     unread_by = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name='unread_conversations',
+        related_name="unread_conversations",
         blank=True,
     )
 
     class Meta:
-        ordering = ('-modified',)
+        ordering = ("-modified",)
 
     def __str__(self):
         return self.subject
@@ -516,25 +516,25 @@ class Conversation(UUIDPrimaryKey, CreatedModifiedMixin):
 
     @property
     def last_message(self):
-        return self.messages.order_by('-created').first()
+        return self.messages.order_by("-created").first()
 
     def get_absolute_url(self):
-        return reverse('board:conversation', kwargs={'pk': self.id})
+        return reverse("board:conversation", kwargs={"pk": self.id})
 
 
 class Message(UUIDPrimaryKey, CreatedModifiedMixin):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='sent_messages',
+        related_name="sent_messages",
         on_delete=models.CASCADE,
     )
     conversation = models.ForeignKey(
-        Conversation, related_name='messages', on_delete=models.CASCADE
+        Conversation, related_name="messages", on_delete=models.CASCADE
     )
     content = BBCodeTextField(max_length=10000, blank=False, null=False)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ("created",)
 
     def __str__(self):
         return self.user.username
@@ -553,14 +553,14 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
 
     def get_absolute_url(self):
         return reverse(
-            'board:conversation', kwargs={'pk': self.conversation.id}
+            "board:conversation", kwargs={"pk": self.conversation.id}
         )
 
 
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
     reporting_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='reports_created',
+        related_name="reports_created",
         blank=False,
         null=False,
         on_delete=models.CASCADE,
@@ -575,7 +575,7 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
     resolved = models.BooleanField(default=False)
     resolved_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='reports_resolved',
+        related_name="reports_resolved",
         blank=True,
         null=True,
         on_delete=models.CASCADE,
@@ -583,19 +583,19 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
     date_resolved = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def __str__(self):
         if self.thread:
             in_question = self.thread
         if self.post:
             in_question = self.post
-        return '{}\'s report on {}'.format(
+        return "{}'s report on {}".format(
             self.reporting_user.username, in_question
         )
 
     def get_absolute_url(self):
-        return reverse('board:report', self.id)
+        return reverse("board:report", self.id)
 
 
 class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
@@ -608,13 +608,13 @@ class Shout(CreatedModifiedMixin, UUIDPrimaryKey):
     content = BBCodeTextField(max_length=280, blank=False, null=False)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def __str__(self):
         return str(self.user)
 
     def get_absolute_url(self):
-        return reverse('board:index')
+        return reverse("board:index")
 
 
 class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
@@ -622,7 +622,7 @@ class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
         settings.AUTH_USER_MODEL,
         blank=False,
         null=False,
-        related_name='notifications',
+        related_name="notifications",
         on_delete=models.CASCADE,
     )
     text = models.CharField(max_length=140, blank=False, null=False)
@@ -630,7 +630,7 @@ class Notification(CreatedModifiedMixin, UUIDPrimaryKey):
     read = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def __str__(self):
         return self.text
@@ -653,7 +653,7 @@ class Page(UUIDPrimaryKey, CreatedModifiedMixin):
         unique_slug = slug
         num = 1
         while Article.objects.filter(slug=unique_slug).exists():
-            unique_slug = '{}-{}'.format(slug, num)
+            unique_slug = "{}-{}".format(slug, num)
             num += 1
         return unique_slug
 
@@ -665,13 +665,13 @@ class Page(UUIDPrimaryKey, CreatedModifiedMixin):
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
         return reverse(
-            'admin:%s_%s_change' %
-            (content_type.app_label, content_type.model),
+            "admin:%s_%s_change"
+            % (content_type.app_label, content_type.model),
             args=(self.id,),
         )
 
     def get_absolute_url(self):
-        return reverse('pages:page', kwargs={'slug': self.slug})
+        return reverse("pages:page", kwargs={"slug": self.slug})
 
 
 @receiver(post_save, sender=get_user_model())
@@ -691,7 +691,7 @@ def notify_thread_owner_of_new_post(sender, instance, created, **kwargs):
         if instance.user is not instance.thread.user:
             notification = Notification(
                 user=instance.thread.user,
-                text='{} commented on your thread'.format(
+                text="{} commented on your thread".format(
                     instance.user.username
                 ),
                 link=instance.get_absolute_url(),
@@ -706,7 +706,7 @@ def thread_notifications(sender, instance, created, **kwargs):
     if created:
         # Award ranks if applicable
         awardable_ranks = UserRank.objects.filter(
-            is_award=True, award_type='post_count'
+            is_award=True, award_type="post_count"
         )
         for rank in awardable_ranks:
             if instance.user.profile.post_count >= rank.award_count:
@@ -723,7 +723,7 @@ def thread_notifications(sender, instance, created, **kwargs):
             if user_obj:
                 notification = Notification(
                     user=user_obj,
-                    text='{} tagged you in a post.'.format(
+                    text="{} tagged you in a post.".format(
                         instance.user.username
                     ),
                     link=instance.get_absolute_url(),
@@ -743,7 +743,7 @@ def unread_messages(sender, instance, created, **kwargs):
             if user != instance.user:
                 notification = Notification(
                     user=user,
-                    text='{} sent you a message'.format(
+                    text="{} sent you a message".format(
                         instance.user.username
                     ),
                     link=instance.get_absolute_url(),

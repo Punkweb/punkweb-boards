@@ -11,7 +11,7 @@ class ProfileTestCase(TestCase):
 
     def setUp(self):
         self.new_user = get_user_model().objects.create_user(
-            username='NewUser', email='test@punkweb.net', password='testyboi'
+            username="NewUser", email="test@punkweb.net", password="testyboi"
         )
 
     def test_profile_created(self):
@@ -24,50 +24,50 @@ class ProfileTestCase(TestCase):
 class RankTestCase(TestCase):
 
     def setUp(self):
-        self.category_1 = Category.objects.create(name='Category 1', order=1)
+        self.category_1 = Category.objects.create(name="Category 1", order=1)
         self.subcategory_1 = Subcategory.objects.create(
-            parent=self.category_1, name='Subcategory 1', order=1
+            parent=self.category_1, name="Subcategory 1", order=1
         )
         self.admin_rank = UserRank.objects.create(
-            title='Administrator',
+            title="Administrator",
             order=1,
-            username_modifier='[color=green]{USER}[/color]',
+            username_modifier="[color=green]{USER}[/color]",
         )
         self.post_count_rank_1 = UserRank.objects.create(
-            title='1 Post Man',
+            title="1 Post Man",
             order=29,
             is_award=True,
-            award_type='post_count',
+            award_type="post_count",
             award_count=1,
         )
         self.post_count_rank_5 = UserRank.objects.create(
-            title='5 Post Man',
+            title="5 Post Man",
             order=28,
             is_award=True,
-            award_type='post_count',
+            award_type="post_count",
             award_count=5,
         )
         self.admin_user = get_user_model().objects.create_superuser(
-            username='AdminUser',
-            email='admin@punkweb.net',
-            password='adminboi',
+            username="AdminUser",
+            email="admin@punkweb.net",
+            password="adminboi",
         )
         self.admin_user.profile.ranks.add(self.admin_rank)
         self.admin_thread = Thread.objects.create(
             user=self.admin_user,
             category=self.subcategory_1,
-            title='Test Thread',
-            content='[b]test[/b]',
+            title="Test Thread",
+            content="[b]test[/b]",
         )
         self.new_user = get_user_model().objects.create_user(
-            username='NewUser', email='test@punkweb.net', password='testyboi'
+            username="NewUser", email="test@punkweb.net", password="testyboi"
         )
         for i in range(10):
             Thread.objects.create(
                 user=self.new_user,
                 category=self.subcategory_1,
-                title='Test Thread {}'.format(i),
-                content='[b]test[/b]',
+                title="Test Thread {}".format(i),
+                content="[b]test[/b]",
             )
 
     def test_post_count_rank_awarded(self):
@@ -108,18 +108,18 @@ class CategoryTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.banned_user = get_user_model().objects.create_user(
-            username='BannedUser',
-            email='banned@punkweb.net',
-            password='bannedboi',
+            username="BannedUser",
+            email="banned@punkweb.net",
+            password="bannedboi",
         )
         self.banned_user.profile.is_banned = True
         self.banned_user.save()
         self.user = get_user_model().objects.create_user(
-            username='TestUser', email='test@punkweb.net', password='testyboi'
+            username="TestUser", email="test@punkweb.net", password="testyboi"
         )
-        self.category_1 = Category.objects.create(name='Category 1', order=1)
+        self.category_1 = Category.objects.create(name="Category 1", order=1)
         self.category_2 = Category.objects.create(
-            name='Category 2', order=2, auth_req=True
+            name="Category 2", order=2, auth_req=True
         )
 
     def test_can_view(self):
@@ -134,10 +134,14 @@ class CategoryTestCase(TestCase):
         # Banned user requests
         banned_request_1 = self.factory.get(self.category_1.get_absolute_url())
         banned_request_1.user = self.banned_user
-        banned_response_1 = category_detail(banned_request_1, self.category_1.id)
+        banned_response_1 = category_detail(
+            banned_request_1, self.category_1.id
+        )
         banned_request_2 = self.factory.get(self.category_2.get_absolute_url())
         banned_request_2.user = self.banned_user
-        banned_response_2 = category_detail(banned_request_2, self.category_2.id)
+        banned_response_2 = category_detail(
+            banned_request_2, self.category_2.id
+        )
 
         # Authenticated user requests
         auth_request_1 = self.factory.get(self.category_1.get_absolute_url())
@@ -160,64 +164,64 @@ class SubcategoryTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.banned_user = get_user_model().objects.create_user(
-            username='BannedUser',
-            email='banned@punkweb.net',
-            password='bannedboi',
+            username="BannedUser",
+            email="banned@punkweb.net",
+            password="bannedboi",
         )
         self.banned_user.profile.is_banned = True
         self.banned_user.save()
         self.regular_user = get_user_model().objects.create_user(
-            username='TestUser', email='test@punkweb.net', password='testyboi'
+            username="TestUser", email="test@punkweb.net", password="testyboi"
         )
         self.admin_user = get_user_model().objects.create_superuser(
-            username='AdminUser',
-            email='admin@punkweb.net',
-            password='adminboi',
+            username="AdminUser",
+            email="admin@punkweb.net",
+            password="adminboi",
         )
-        self.category_1 = Category.objects.create(name='Category 1', order=1)
+        self.category_1 = Category.objects.create(name="Category 1", order=1)
         self.category_2 = Category.objects.create(
-            name='Category 2', order=2, auth_req=True
+            name="Category 2", order=2, auth_req=True
         )
         self.cat_1_sub_1 = Subcategory.objects.create(
-            parent=self.category_1, name='Subcategory 1', order=1
+            parent=self.category_1, name="Subcategory 1", order=1
         )
         self.cat_1_sub_2 = Subcategory.objects.create(
             parent=self.category_1,
-            name='Subcategory 2',
+            name="Subcategory 2",
             order=2,
             staff_req=True,
         )
         self.cat_1_sub_3 = Subcategory.objects.create(
             parent=self.category_1,
-            name='Subcategory 3',
+            name="Subcategory 3",
             order=3,
             auth_req=True,
         )
         self.cat_1_sub_4 = Subcategory.objects.create(
             parent=self.category_1,
-            name='Subcategory 4',
+            name="Subcategory 4",
             order=4,
             staff_req=True,
             auth_req=True,
         )
         self.cat_2_sub_1 = Subcategory.objects.create(
-            parent=self.category_2, name='Subcategory 1', order=1
+            parent=self.category_2, name="Subcategory 1", order=1
         )
         self.cat_2_sub_2 = Subcategory.objects.create(
             parent=self.category_2,
-            name='Subcategory 2',
+            name="Subcategory 2",
             order=2,
             staff_req=True,
         )
         self.cat_2_sub_3 = Subcategory.objects.create(
             parent=self.category_2,
-            name='Subcategory 3',
+            name="Subcategory 3",
             order=3,
             auth_req=True,
         )
         self.cat_2_sub_4 = Subcategory.objects.create(
             parent=self.category_2,
-            name='Subcategory 4',
+            name="Subcategory 4",
             order=4,
             staff_req=True,
             auth_req=True,

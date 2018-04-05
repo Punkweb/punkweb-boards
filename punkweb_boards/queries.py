@@ -15,7 +15,7 @@ def new_posts_this_week():
     with connection.cursor() as cursor:
         cursor.execute(QUERY, {})
         return [
-            {'chunk': chunk, 'count_posts': count_posts}
+            {"chunk": chunk, "count_posts": count_posts}
             for chunk, count_posts in cursor
         ]
 
@@ -33,7 +33,7 @@ def new_threads_this_week():
     with connection.cursor() as cursor:
         cursor.execute(QUERY, {})
         return [
-            {'chunk': chunk, 'count_threads': count_threads}
+            {"chunk": chunk, "count_threads": count_threads}
             for chunk, count_threads in cursor
         ]
 
@@ -51,7 +51,7 @@ def new_members_this_week():
     with connection.cursor() as cursor:
         cursor.execute(QUERY, {})
         return [
-            {'chunk': chunk, 'count_members': count_members}
+            {"chunk": chunk, "count_members": count_members}
             for chunk, count_members in cursor
         ]
 
@@ -71,6 +71,6 @@ def threads_in_subcategories():
     with connection.cursor() as cursor:
         cursor.execute(QUERY, {})
         return [
-            {'chunk': chunk, 'name': name, 'count_threads': count_threads}
+            {"chunk": chunk, "name": name, "count_threads": count_threads}
             for chunk, name, count_threads in cursor
         ]

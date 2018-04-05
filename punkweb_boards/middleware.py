@@ -10,7 +10,7 @@ class ActiveUserMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if request.user.is_authenticated:
             now = datetime.datetime.now()
-            name = request.user.username.replace(' ', '_')
+            name = request.user.username.replace(" ", "_")
             cache.set(
-                'seen_%s' % (name), now, BOARD_SETTINGS.USER_LASTSEEN_TIMEOUT
+                "seen_%s" % (name), now, BOARD_SETTINGS.USER_LASTSEEN_TIMEOUT
             )

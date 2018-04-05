@@ -16,12 +16,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='BoardProfile',
+            name="BoardProfile",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    'image',
+                    "image",
                     easy_thumbnails.fields.ThumbnailerImageField(
                         blank=True,
                         null=True,
@@ -38,11 +38,11 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    '_signature_rendered',
+                    "_signature_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'signature',
+                    "signature",
                     precise_bbcode.fields.BBCodeTextField(
                         blank=True,
                         max_length=1024,
@@ -51,47 +51,47 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    'gender',
+                    "gender",
                     models.CharField(
                         blank=True,
-                        choices=[('f', 'Female'), ('m', 'Male')],
+                        choices=[("f", "Female"), ("m", "Male")],
                         default=None,
                         max_length=1,
                         null=True,
                     ),
                 ),
                 (
-                    'birthday',
+                    "birthday",
                     models.DateField(
-                        blank=True, null=True, verbose_name='Birth date'
+                        blank=True, null=True, verbose_name="Birth date"
                     ),
                 ),
-                ('is_banned', models.BooleanField(default=False)),
+                ("is_banned", models.BooleanField(default=False)),
                 (
-                    'username_modifier',
+                    "username_modifier",
                     models.TextField(
                         blank=True,
-                        help_text='BBCode. Just add {USER} where you want the username to be placed at. Setting this will override the UserRank modification',
+                        help_text="BBCode. Just add {USER} where you want the username to be placed at. Setting this will override the UserRank modification",
                         max_length=250,
                         null=True,
                     ),
                 ),
                 (
-                    'downvoted_by',
+                    "downvoted_by",
                     models.ManyToManyField(
                         blank=True,
-                        related_name='punkweb_boards_boardprofile_downvoted',
+                        related_name="punkweb_boards_boardprofile_downvoted",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={'abstract': False},
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -99,13 +99,13 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ('name', models.CharField(max_length=96, unique=True)),
+                ("name", models.CharField(max_length=96, unique=True)),
                 (
-                    '_description_rendered',
+                    "_description_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'description',
+                    "description",
                     precise_bbcode.fields.BBCodeTextField(
                         blank=True,
                         max_length=256,
@@ -113,28 +113,28 @@ class Migration(migrations.Migration):
                         null=True,
                     ),
                 ),
-                ('order', models.IntegerField()),
+                ("order", models.IntegerField()),
                 (
-                    'auth_req',
+                    "auth_req",
                     models.BooleanField(
                         default=False,
-                        help_text='Can only logged in users view this category?',
+                        help_text="Can only logged in users view this category?",
                     ),
                 ),
             ],
             options={
-                'verbose_name_plural': 'categories',
-                'ordering': ('order',),
-                'verbose_name': 'category',
+                "verbose_name_plural": "categories",
+                "ordering": ("order",),
+                "verbose_name": "category",
             },
         ),
         migrations.CreateModel(
-            name='Conversation',
+            name="Conversation",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -143,39 +143,39 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    'subject',
+                    "subject",
                     models.TextField(
                         blank=True,
-                        default='No subject',
+                        default="No subject",
                         max_length=140,
                         null=True,
                     ),
                 ),
                 (
-                    'unread_by',
+                    "unread_by",
                     models.ManyToManyField(
                         blank=True,
-                        related_name='unread_conversations',
+                        related_name="unread_conversations",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
-                    'users',
+                    "users",
                     models.ManyToManyField(
-                        related_name='conversations',
+                        related_name="conversations",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={'ordering': ('-modified',)},
+            options={"ordering": ("-modified",)},
         ),
         migrations.CreateModel(
-            name='Message',
+            name="Message",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -184,41 +184,41 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    '_content_rendered',
+                    "_content_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'content',
+                    "content",
                     precise_bbcode.fields.BBCodeTextField(
                         max_length=10000, no_rendered_field=True
                     ),
                 ),
                 (
-                    'conversation',
+                    "conversation",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='messages',
-                        to='punkweb_boards.Conversation',
+                        related_name="messages",
+                        to="punkweb_boards.Conversation",
                     ),
                 ),
                 (
-                    'user',
+                    "user",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='sent_messages',
+                        related_name="sent_messages",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={'ordering': ('created',)},
+            options={"ordering": ("created",)},
         ),
         migrations.CreateModel(
-            name='Notification',
+            name="Notification",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -226,27 +226,27 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ('text', models.CharField(max_length=140)),
-                ('link', models.CharField(max_length=140)),
-                ('read', models.BooleanField(default=False)),
+                ("text", models.CharField(max_length=140)),
+                ("link", models.CharField(max_length=140)),
+                ("read", models.BooleanField(default=False)),
                 (
-                    'user',
+                    "user",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='notifications',
+                        related_name="notifications",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={'ordering': ('-created',)},
+            options={"ordering": ("-created",)},
         ),
         migrations.CreateModel(
-            name='Page',
+            name="Page",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -254,21 +254,21 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ('title', models.CharField(max_length=256)),
+                ("title", models.CharField(max_length=256)),
                 (
-                    'slug',
+                    "slug",
                     models.SlugField(
-                        help_text='The url that this page will be at: /board/pages/{{slug}}',
+                        help_text="The url that this page will be at: /board/pages/{{slug}}",
                         max_length=140,
                         unique=True,
                     ),
                 ),
                 (
-                    '_content_rendered',
+                    "_content_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'content',
+                    "content",
                     precise_bbcode.fields.BBCodeTextField(
                         blank=True,
                         max_length=50000,
@@ -277,15 +277,15 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={'abstract': False},
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -294,33 +294,33 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    '_content_rendered',
+                    "_content_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'content',
+                    "content",
                     precise_bbcode.fields.BBCodeTextField(
                         max_length=10000, no_rendered_field=True
                     ),
                 ),
                 (
-                    'downvoted_by',
+                    "downvoted_by",
                     models.ManyToManyField(
                         blank=True,
-                        related_name='punkweb_boards_post_downvoted',
+                        related_name="punkweb_boards_post_downvoted",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={'ordering': ('-created',)},
+            options={"ordering": ("-created",)},
         ),
         migrations.CreateModel(
-            name='Report',
+            name="Report",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -328,47 +328,47 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ('reason', models.TextField(max_length=1024)),
-                ('resolved', models.BooleanField(default=False)),
-                ('date_resolved', models.DateTimeField(blank=True, null=True)),
+                ("reason", models.TextField(max_length=1024)),
+                ("resolved", models.BooleanField(default=False)),
+                ("date_resolved", models.DateTimeField(blank=True, null=True)),
                 (
-                    'post',
+                    "post",
                     models.ForeignKey(
                         blank=True,
                         default=None,
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        to='punkweb_boards.Post',
+                        to="punkweb_boards.Post",
                     ),
                 ),
                 (
-                    'reporting_user',
+                    "reporting_user",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='reports_created',
+                        related_name="reports_created",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
-                    'resolved_by',
+                    "resolved_by",
                     models.ForeignKey(
                         blank=True,
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='reports_resolved',
+                        related_name="reports_resolved",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={'ordering': ('-created',)},
+            options={"ordering": ("-created",)},
         ),
         migrations.CreateModel(
-            name='Shout',
+            name="Shout",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -377,17 +377,17 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    '_content_rendered',
+                    "_content_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'content',
+                    "content",
                     precise_bbcode.fields.BBCodeTextField(
                         max_length=280, no_rendered_field=True
                     ),
                 ),
                 (
-                    'user',
+                    "user",
                     models.ForeignKey(
                         blank=True,
                         null=True,
@@ -396,13 +396,13 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={'ordering': ('-created',)},
+            options={"ordering": ("-created",)},
         ),
         migrations.CreateModel(
-            name='Subcategory',
+            name="Subcategory",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -410,13 +410,13 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ('name', models.CharField(max_length=96)),
+                ("name", models.CharField(max_length=96)),
                 (
-                    '_description_rendered',
+                    "_description_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'description',
+                    "description",
                     precise_bbcode.fields.BBCodeTextField(
                         blank=True,
                         max_length=256,
@@ -424,45 +424,45 @@ class Migration(migrations.Migration):
                         null=True,
                     ),
                 ),
-                ('order', models.IntegerField()),
+                ("order", models.IntegerField()),
                 (
-                    'staff_req',
+                    "staff_req",
                     models.BooleanField(
                         default=False,
-                        help_text='Can only staff members can create threads in this subcategory?',
+                        help_text="Can only staff members can create threads in this subcategory?",
                     ),
                 ),
                 (
-                    'auth_req',
+                    "auth_req",
                     models.BooleanField(
                         default=False,
-                        help_text='Can only logged in users view this subcategory?',
+                        help_text="Can only logged in users view this subcategory?",
                     ),
                 ),
                 (
-                    'parent',
+                    "parent",
                     models.ForeignKey(
                         blank=True,
                         default=None,
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        to='punkweb_boards.Category',
+                        to="punkweb_boards.Category",
                     ),
                 ),
             ],
             options={
-                'verbose_name_plural': 'subcategories',
-                'ordering': ('parent__order', 'order'),
-                'verbose_name': 'subcategory',
+                "verbose_name_plural": "subcategories",
+                "ordering": ("parent__order", "order"),
+                "verbose_name": "subcategory",
             },
         ),
         migrations.CreateModel(
-            name='Thread',
+            name="Thread",
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'id',
+                    "id",
                     models.UUIDField(
                         default=uuid.uuid4,
                         editable=False,
@@ -470,178 +470,178 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ('title', models.CharField(max_length=120)),
+                ("title", models.CharField(max_length=120)),
                 (
-                    '_content_rendered',
+                    "_content_rendered",
                     models.TextField(blank=True, editable=False, null=True),
                 ),
                 (
-                    'content',
+                    "content",
                     precise_bbcode.fields.BBCodeTextField(
                         max_length=30000, no_rendered_field=True
                     ),
                 ),
-                ('pinned', models.BooleanField(default=False)),
+                ("pinned", models.BooleanField(default=False)),
                 (
-                    'closed',
+                    "closed",
                     models.BooleanField(
                         default=False,
-                        help_text='Check to stop users from being able to comment on this thread.',
+                        help_text="Check to stop users from being able to comment on this thread.",
                     ),
                 ),
                 (
-                    'tags',
+                    "tags",
                     models.CharField(
                         blank=True,
-                        help_text='Optional. Improves keywoard searching. Separate tags with a comma and space. (eg. news, important, update)',
+                        help_text="Optional. Improves keywoard searching. Separate tags with a comma and space. (eg. news, important, update)",
                         max_length=1024,
                         null=True,
                     ),
                 ),
                 (
-                    'category',
+                    "category",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to='punkweb_boards.Subcategory',
+                        to="punkweb_boards.Subcategory",
                     ),
                 ),
                 (
-                    'downvoted_by',
+                    "downvoted_by",
                     models.ManyToManyField(
                         blank=True,
-                        related_name='punkweb_boards_thread_downvoted',
+                        related_name="punkweb_boards_thread_downvoted",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
-                    'upvoted_by',
+                    "upvoted_by",
                     models.ManyToManyField(
                         blank=True,
-                        related_name='punkweb_boards_thread_upvoted',
+                        related_name="punkweb_boards_thread_upvoted",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
-                    'user',
+                    "user",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='threads',
+                        related_name="threads",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
-            options={'ordering': ('-created',)},
+            options={"ordering": ("-created",)},
         ),
         migrations.CreateModel(
-            name='UserRank',
+            name="UserRank",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('title', models.CharField(max_length=96, unique=True)),
+                ("title", models.CharField(max_length=96, unique=True)),
                 (
-                    'description',
+                    "description",
                     models.TextField(blank=True, max_length=256, null=True),
                 ),
                 (
-                    'order',
+                    "order",
                     models.IntegerField(
-                        help_text='Where this rank ranks among the other ranks'
+                        help_text="Where this rank ranks among the other ranks"
                     ),
                 ),
-                ('is_award', models.BooleanField(default=False)),
+                ("is_award", models.BooleanField(default=False)),
                 (
-                    'award_type',
+                    "award_type",
                     models.CharField(
                         blank=True,
-                        choices=[('post_count', 'Post Count')],
+                        choices=[("post_count", "Post Count")],
                         default=None,
                         max_length=50,
                         null=True,
                     ),
                 ),
                 (
-                    'award_count',
+                    "award_count",
                     models.IntegerField(blank=True, default=0, null=True),
                 ),
                 (
-                    'username_modifier',
+                    "username_modifier",
                     models.TextField(
                         blank=True,
-                        help_text='BBCode. Just add {USER} where you want the username to be placed at.',
+                        help_text="BBCode. Just add {USER} where you want the username to be placed at.",
                         max_length=250,
                         null=True,
                     ),
                 ),
             ],
-            options={'ordering': ('order',)},
+            options={"ordering": ("order",)},
         ),
         migrations.AddField(
-            model_name='report',
-            name='thread',
+            model_name="report",
+            name="thread",
             field=models.ForeignKey(
                 blank=True,
                 default=None,
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
-                to='punkweb_boards.Thread',
+                to="punkweb_boards.Thread",
             ),
         ),
         migrations.AddField(
-            model_name='post',
-            name='thread',
+            model_name="post",
+            name="thread",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='posts',
-                to='punkweb_boards.Thread',
+                related_name="posts",
+                to="punkweb_boards.Thread",
             ),
         ),
         migrations.AddField(
-            model_name='post',
-            name='upvoted_by',
+            model_name="post",
+            name="upvoted_by",
             field=models.ManyToManyField(
                 blank=True,
-                related_name='punkweb_boards_post_upvoted',
+                related_name="punkweb_boards_post_upvoted",
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
         migrations.AddField(
-            model_name='post',
-            name='user',
+            model_name="post",
+            name="user",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='posts',
+                related_name="posts",
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
         migrations.AddField(
-            model_name='boardprofile',
-            name='ranks',
+            model_name="boardprofile",
+            name="ranks",
             field=models.ManyToManyField(
-                blank=True, to='punkweb_boards.UserRank'
+                blank=True, to="punkweb_boards.UserRank"
             ),
         ),
         migrations.AddField(
-            model_name='boardprofile',
-            name='upvoted_by',
+            model_name="boardprofile",
+            name="upvoted_by",
             field=models.ManyToManyField(
                 blank=True,
-                related_name='punkweb_boards_boardprofile_upvoted',
+                related_name="punkweb_boards_boardprofile_upvoted",
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
         migrations.AddField(
-            model_name='boardprofile',
-            name='user',
+            model_name="boardprofile",
+            name="user",
             field=models.OneToOneField(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='profile',
+                related_name="profile",
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
