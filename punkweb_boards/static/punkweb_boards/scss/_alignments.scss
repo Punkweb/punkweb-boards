@@ -37,11 +37,17 @@
 .padding-right {
   padding-right: 1rem;
 }
+.padding-horiz {
+  padding: 0 1rem;
+}
 .padding-top {
   padding-top: 1rem;
 }
 .padding-bottom {
   padding-bottom: 1rem;
+}
+.padding-vert {
+  padding: 1rem 0;
 }
 /* Margin classes
 *******************************************************************************/
@@ -57,9 +63,15 @@
 .margin-right {
   margin-right: 1rem;
 }
+.margin-horiz {
+  margin: 0 1rem;
+}
 .margin-top {
   margin-top: 1rem;
 }
 .margin-bottom {
   margin-bottom: 1rem;
+}
+.margin-horiz {
+  margin: 1rem 0;
 }

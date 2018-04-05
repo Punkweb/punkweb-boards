@@ -256,7 +256,7 @@ class Category(UUIDPrimaryKey):
         return Subcategory.objects.filter(parent__id=self.id)
 
     def get_absolute_url(self):
-        return reverse('board:category', kwargs={'pk': self.id})
+        return reverse('board:category-detail', kwargs={'pk': self.id})
 
 
 class Subcategory(UUIDPrimaryKey):
@@ -328,7 +328,7 @@ class Subcategory(UUIDPrimaryKey):
         return self.threads.order_by('-created').first()
 
     def get_absolute_url(self):
-        return reverse('board:subcategory', kwargs={'pk': self.id})
+        return reverse('board:subcategory-detail', kwargs={'pk': self.id})
 
 
 class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
@@ -683,6 +683,21 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=get_user_model())
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+@receiver(post_save, sender=Post)
+def notify_thread_owner_of_new_post(sender, instance, created, **kwargs):
+    if created:
+        if instance.user is not instance.thread.user:
+            notification = Notification(
+                user=instance.thread.user,
+                text='{} commented on your thread'.format(
+                    instance.user.username
+                ),
+                link=instance.get_absolute_url(),
+                read=False,
+            )
+            notification.save()
 
 
 @receiver(post_save, sender=Thread)

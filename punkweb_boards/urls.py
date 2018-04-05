@@ -30,16 +30,46 @@ urlpatterns = [
     url(r'^settings/$', views.settings_view, name='settings'),
     url(r'^profile/(?P<username>[^/]+)/$', views.profile_view, name='profile'),
     url(r'^search/$', views.keyword_search_view, name='search'),
-    url(r'^category/(?P<pk>[^/]+)/$', views.category_view, name='category'),
+    url(r'^category/(?P<pk>[^/]+)/$', views.category_detail, name='category-detail'),
+    url(
+        r'^create_category/$',
+        views.category_create,
+        name='category-create',
+    ),
+    url(
+        r'^update_category/(?P<pk>[^/]+)/$',
+        views.category_update,
+        name='category-update',
+    ),
+    url(
+        r'^delete_category/(?P<pk>[^/]+)/$',
+        views.category_delete,
+        name='category-delete',
+    ),
     url(
         r'^subcategory/(?P<pk>[^/]+)/$',
-        views.subcategory_view,
-        name='subcategory',
+        views.subcategory_detail,
+        name='subcategory-detail',
     ),
-    url(r'^inbox/$', views.conversations_list, name='inbox'),
+    url(
+        r'^create_category/$',
+        views.category_create,
+        name='category-create',
+    ),
+    url(
+        r'^update_category/(?P<pk>[^/]+)/$',
+        views.category_update,
+        name='category-update',
+    ),
+    url(
+        r'^delete_category/(?P<pk>[^/]+)/$',
+        views.category_delete,
+        name='category-delete',
+    ),
+    url(r'^inbox/$', views.conversation_list, name='conversation-list'),
     url(
         r'^conversation/(?P<pk>[^/]+)/$',
-        views.conversation_view,
+        views.conversation_detail,
         name='conversation',
     ),
     url(
@@ -53,7 +83,7 @@ urlpatterns = [
         name='message-update',
     ),
     url(
-        r'^delete_mesage/(?P<pk>[^/]+)/$',
+        r'^delete_message/(?P<pk>[^/]+)/$',
         views.message_delete,
         name='message-delete',
     ),

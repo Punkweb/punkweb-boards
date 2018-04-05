@@ -24,7 +24,7 @@
               <thead data-role="collapsible-toggle" data-key="index-category-{{category.parent.id}}">
                 <tr>
                   <th class="align-left" width="40%">
-                    <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
+                    <a href="{% url 'board:category-detail' category.parent.id %}">{{category.parent.name}}</a>
                   </th>
                   <th class="align-center" width="10%">
                     Threads
@@ -41,7 +41,7 @@
                 {% for child in category.children %}
                 <tr>
                   <td class="align-left">
-                    <div><a href="{% url 'board:subcategory' child.id %}">{{child.name}}</a></div>
+                    <div><a href="{% url 'board:subcategory-detail' child.id %}">{{child.name}}</a></div>
                     <div>{{child.description.rendered}}</div>
                   </td>
                   <td class="align-center">
@@ -77,10 +77,6 @@
             </table>
           </div>
         </div>
-        {% if user.profile.viewing_admin_mode %}
-        <button class="button" data-role="modal-open" data-modal-id="add-category"><i class="fa fa-plus fa-fw"></i> Create Category</button>
-        <button class="button" data-role="modal-open" data-modal-id="add-subcategory"><i class="fa fa-plus fa-fw"></i> Create Subcategory</button>
-        {% endif %}
         {% empty %}
         <p>This board doesn't have any categories yet</p>
         {% endfor %}
@@ -202,28 +198,6 @@
     </div>
   </div>
 </div>
-{% if user.profile.viewing_admin_mode %}
-<div class="modal" data-role="modal" data-modal-id="add-category">
-  <div class="modal__content">
-    <h2>Create New Category</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ category_form.as_p }}
-      <button class="button-green" type="submit"><i class="fa fa-plus fa-fw"></i> Create Subcategory</button>
-    </form>
-  </div>
-</div>
-<div class="modal" data-role="modal" data-modal-id="add-subcategory">
-  <div class="modal__content">
-    <h2>Create New Subcategory</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ subcategory_form.as_p }}
-      <button class="button-green" type="submit"><i class="fa fa-plus fa-fw"></i> Create Subcategory</button>
-    </form>
-  </div>
-</div>
-{% endif %}
 {% endblock %}
 
 {% block extrascript %}

@@ -96,23 +96,7 @@ def index_view(request):
         'newest_member': newest_member,
         'member_count': member_count,
     }
-    if request.method == 'POST':
-        subcategory_form = SubcategoryForm(request.POST)
-        category_form = CategoryForm(request.POST)
-        if subcategory_form.is_valid():
-            subcategory = subcategory_form.save()
-            return redirect('board:index')
 
-        if category_form.is_valid():
-            category = category_form.save()
-            return redirect('board:index')
-
-    else:
-        subcategory_form = SubcategoryForm()
-        category_form = CategoryForm()
-    context.update(
-        {'subcategory_form': subcategory_form, 'category_form': category_form}
-    )
     return render(
         request,
         'punkweb_boards/themes/{}/index.html'.format(BOARD_THEME),
@@ -257,7 +241,10 @@ def settings_view(request):
 
 
 def profile_view(request, username):
-    user = get_user_model().objects.get(username=username)
+    try:
+        user = get_user_model().objects.get(username=username)
+    except get_user_model().DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
@@ -277,8 +264,11 @@ def profile_view(request, username):
     )
 
 
-def category_view(request, pk):
-    category = Category.objects.get(id=pk)
+def category_detail(request, pk):
+    try:
+        category = Category.objects.get(id=pk)
+    except Category.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have view
     # permissions on this category.
     if not category.can_view(request.user):
@@ -306,13 +296,85 @@ def category_view(request, pk):
     context.update({'subcategory_form': subcategory_form})
     return render(
         request,
-        'punkweb_boards/themes/{}/category_view.html'.format(BOARD_THEME),
+        'punkweb_boards/themes/{}/category_detail.html'.format(BOARD_THEME),
         context,
     )
 
 
-def subcategory_view(request, pk):
-    category = Subcategory.objects.get(id=pk)
+def category_create(request):
+    if not request.user.has_perm('punkweb_boards.add_category'):
+        return redirect('board:unpermitted')
+
+    if request.method == 'POST':
+        category_form = CategoryForm(request.POST)
+
+        if category_form.is_valid():
+            category = category_form.save()
+            return redirect(category.get_absolute_url())
+    else:
+        category_form = CategoryForm()
+
+    context = {
+        'category_form': category_form,
+    }
+    return render(
+        request,
+        'punkweb_boards/themes/{}/category_create_form.html'.format(BOARD_THEME),
+        context,
+    )
+
+
+def category_update(request, pk):
+    try:
+        instance = Category.objects.get(id=pk)
+    except Category.DoesNotExist:
+        return redirect('pages:not-found')
+
+    if not request.user.has_perm('punkweb_boards.change_category'):
+        return redirect('board:unpermitted')
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=instance)
+        if form.is_valid():
+            category = form.save()
+            return redirect(category.get_absolute_url())
+
+    else:
+        form = CategoryForm(instance=instance)
+    context = {'form': form, 'object': instance}
+    return render(
+        request,
+        'punkweb_boards/themes/{}/category_update_form.html'.format(BOARD_THEME),
+        context,
+    )
+
+
+def category_delete(request, pk):
+    try:
+        instance = Category.objects.get(id=pk)
+    except Category.DoesNotExist:
+        return redirect('pages:not-found')
+
+    if not request.user.has_perm('punkweb_boards.delete_category'):
+        return redirect('board:unpermitted')
+
+    if request.method == 'POST':
+        instance.delete()
+        return redirect('board:index')
+
+    context = {'object': instance}
+    return render(
+        request,
+        'punkweb_boards/themes/{}/category_delete_form.html'.format(BOARD_THEME),
+        context,
+    )
+
+
+def subcategory_detail(request, pk):
+    try:
+        category = Subcategory.objects.get(id=pk)
+    except Subcategory.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have view
     # permissions on this subcategory.
     if not category.can_view(request.user):
@@ -337,20 +399,23 @@ def subcategory_view(request, pk):
     }
     return render(
         request,
-        'punkweb_boards/themes/{}/subcategory_view.html'.format(BOARD_THEME),
+        'punkweb_boards/themes/{}/subcategory_detail.html'.format(BOARD_THEME),
         context,
     )
 
 
 def thread_view(request, pk):
-    page_size = 10
-    thread = Thread.objects.get(id=pk)
+    try:
+        thread = Thread.objects.get(id=pk)
+    except Thread.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have view
     # permissions on this thread.
     if not thread.can_view(request.user):
         return redirect('board:unpermitted')
 
     # Paginate posts
+    page_size = 10
     paginator = Paginator(thread.posts.order_by('created'), page_size)
     page = request.GET.get('page')
     try:
@@ -405,7 +470,10 @@ def thread_create(request, category_id):
 
 
 def thread_update(request, pk):
-    instance = Thread.objects.get(id=pk)
+    try:
+        instance = Thread.objects.get(id=pk)
+    except Thread.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this thread.
     if not instance.can_edit(request.user):
@@ -428,7 +496,10 @@ def thread_update(request, pk):
 
 
 def thread_delete(request, pk):
-    instance = Thread.objects.get(id=pk)
+    try:
+        instance = Thread.objects.get(id=pk)
+    except Thread.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this thread.
     if not instance.can_edit(request.user):
@@ -437,7 +508,7 @@ def thread_delete(request, pk):
     if request.method == 'POST':
         redirect_to = instance.category.id
         instance.delete()
-        return redirect('board:subcategory', redirect_to)
+        return redirect('board:subcategory-detail', redirect_to)
 
     context = {'object': instance}
     return render(
@@ -448,7 +519,10 @@ def thread_delete(request, pk):
 
 
 def post_update(request, pk):
-    instance = Post.objects.get(id=pk)
+    try:
+        instance = Post.objects.get(id=pk)
+    except Post.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this post.
     if not instance.can_edit(request.user):
@@ -471,7 +545,10 @@ def post_update(request, pk):
 
 
 def post_delete(request, pk):
-    instance = Post.objects.get(id=pk)
+    try:
+        instance = Post.objects.get(id=pk)
+    except Post.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this post.
     if not instance.can_edit(request.user):
@@ -490,7 +567,7 @@ def post_delete(request, pk):
     )
 
 
-def conversations_list(request):
+def conversation_list(request):
     # Redirect to unpermitted page if not authenticated or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return unpermitted_view(request)
@@ -499,7 +576,7 @@ def conversations_list(request):
     context = {'conversations': conversations}
     return render(
         request,
-        'punkweb_boards/themes/{}/inbox.html'.format(BOARD_THEME),
+        'punkweb_boards/themes/{}/conversation_list.html'.format(BOARD_THEME),
         context,
     )
 
@@ -536,13 +613,15 @@ def conversation_create(request):
     )
 
 
-def conversation_view(request, pk):
+def conversation_detail(request, pk):
+    try:
+        conversation = request.user.conversations.get(id=pk)
+        messages = conversation.messages.all()
+    except Conversation.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if not authenticated or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect('board:unpermitted')
-
-    conversation = request.user.conversations.get(id=pk)
-    messages = conversation.messages.all()
 
     # Mark this conversation read by the requesting user
     if request.user in conversation.unread_by.all():
@@ -568,13 +647,16 @@ def conversation_view(request, pk):
     }
     return render(
         request,
-        'punkweb_boards/themes/{}/conversation_view.html'.format(BOARD_THEME),
+        'punkweb_boards/themes/{}/conversation_detail.html'.format(BOARD_THEME),
         context,
     )
 
 
 def message_update(request, pk):
-    instance = Message.objects.get(id=pk)
+    try:
+        instance = Message.objects.get(id=pk)
+    except Message.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this message.
     if not instance.can_edit(request.user):
@@ -599,7 +681,10 @@ def message_update(request, pk):
 
 
 def message_delete(request, pk):
-    instance = Message.objects.get(id=pk)
+    try:
+        instance = Message.objects.get(id=pk)
+    except Message.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if the requesting user does not have edit
     # permissions on this message.
     if not instance.can_edit(request.user):
@@ -634,12 +719,15 @@ def reports_list(request):
 
 
 def report_view(request, pk):
+    try:
+        instance = Report.objects.get(id=pk)
+    except Report.DoesNotExist:
+        return redirect('pages:not-found')
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned or is not an admin
     if not request.user.is_authenticated or not request.user.is_staff or request.user.profile.is_banned:
         return redirect('board:unpermitted')
 
-    instance = Report.objects.get(id=pk)
     if request.method == 'POST':
         instance.resolved = True
         instance.resolved_by = request.user
@@ -692,12 +780,13 @@ def report_create(request, thread=None, post=None):
 
 
 def notification_redirect(request, pk):
-    notification = Notification.objects.filter(user=request.user, pk=pk)
-    if notification:
-        notification = notification[0]
+    try:
+        notification = Notification.objects.get(id=pk)
         notification.read = True
         notification.save()
         return redirect(notification.link)
+    except Notification.DoesNotExist:
+        return redirect('pages:not-found')
 
 
 def members_list(request):
@@ -730,13 +819,13 @@ def page_view(request, slug):
     if not slug:
         return redirect('board:index')
 
-    if request.user.is_authenticated and request.user.profile.is_banned:
-        return redirect('board:unpermitted')
-
     try:
         page = Page.objects.get(slug=slug)
     except Page.DoesNotExist:
         return redirect('pages:not-found')
+
+    if request.user.is_authenticated and request.user.profile.is_banned:
+        return redirect('board:unpermitted')
 
     context = {'page': page}
     return render(

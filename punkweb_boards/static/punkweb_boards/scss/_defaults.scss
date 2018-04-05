@@ -1,7 +1,7 @@
 $rem-base: 16px;
 
 @mixin link($color, $hover: null, $bold: true, $underline: true) {
-  a:link, a:visited {
+  a, a:link, a:visited {
     @if bold {
       @include bold;
     }
@@ -20,7 +20,6 @@ $rem-base: 16px;
 }
 
 @mixin button($background, $color) {
-  @include medium;
   @include link($color, null, false, false);
   @include font-range(11, 13);
   appearance: none;
@@ -32,6 +31,7 @@ $rem-base: 16px;
   cursor: pointer;
   display: inline-block;
   font-family: 'Open-Sans';
+  font-weight: 500 !important;
   letter-spacing: 1px;
   outline: none;
   padding: .5rem .75rem;
@@ -255,4 +255,17 @@ ul, ol {
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.no-disc {
+  @include no-disc;
+}
+
+.alternate-list {
+  li {
+    padding: .5rem;
+  }
+  li:nth-child(even) {
+    background-color: $hr;
+  }
 }

@@ -4,7 +4,7 @@ from django.test import TestCase, RequestFactory
 from punkweb_boards.models import (
     BoardProfile, UserRank, Category, Subcategory, Thread
 )
-from punkweb_boards.views import category_view
+from punkweb_boards.views import category_detail
 
 
 class ProfileTestCase(TestCase):
@@ -126,26 +126,26 @@ class CategoryTestCase(TestCase):
         # Anonymous user requests
         anon_request_1 = self.factory.get(self.category_1.get_absolute_url())
         anon_request_1.user = AnonymousUser()
-        anon_response_1 = category_view(anon_request_1, self.category_1.id)
+        anon_response_1 = category_detail(anon_request_1, self.category_1.id)
         anon_request_2 = self.factory.get(self.category_2.get_absolute_url())
         anon_request_2.user = AnonymousUser()
-        anon_response_2 = category_view(anon_request_2, self.category_2.id)
+        anon_response_2 = category_detail(anon_request_2, self.category_2.id)
 
         # Banned user requests
         banned_request_1 = self.factory.get(self.category_1.get_absolute_url())
         banned_request_1.user = self.banned_user
-        banned_response_1 = category_view(banned_request_1, self.category_1.id)
+        banned_response_1 = category_detail(banned_request_1, self.category_1.id)
         banned_request_2 = self.factory.get(self.category_2.get_absolute_url())
         banned_request_2.user = self.banned_user
-        banned_response_2 = category_view(banned_request_2, self.category_2.id)
+        banned_response_2 = category_detail(banned_request_2, self.category_2.id)
 
         # Authenticated user requests
         auth_request_1 = self.factory.get(self.category_1.get_absolute_url())
         auth_request_1.user = self.user
-        auth_response_1 = category_view(auth_request_1, self.category_1.id)
+        auth_response_1 = category_detail(auth_request_1, self.category_1.id)
         auth_request_2 = self.factory.get(self.category_2.get_absolute_url())
         auth_request_2.user = self.user
-        auth_response_2 = category_view(auth_request_2, self.category_2.id)
+        auth_response_2 = category_detail(auth_request_2, self.category_2.id)
 
         self.assertEqual(anon_response_1.status_code, 200)
         self.assertNotEqual(anon_response_2.status_code, 200)

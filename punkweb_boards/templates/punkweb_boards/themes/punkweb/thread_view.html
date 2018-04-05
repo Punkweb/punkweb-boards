@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}{{thread.title}}{% endblock %}
-{% block meta_description %}{{thread.content.rendered|striptags|truncatewords:160}}{% endblock %}
+{% block meta_description %}{{thread.content.rendered|striptags|truncatechars:160}}{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
@@ -14,8 +14,8 @@
       <div class="pageHeader__right">
         <ul class="breadcrumb">
           <li><a href="{% url 'board:index' %}">Board</a></li>
-          <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
-          <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
+          <li><a href="{% url 'board:category-detail' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory-detail' thread.category.id %}">{{thread.category.name}}</a></li>
           <li>Thread</li>
         </ul>
       </div>

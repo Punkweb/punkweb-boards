@@ -12,8 +12,8 @@
       <div class="pageHeader__right">
         <ul class="breadcrumb">
           <li><a href="{% url 'board:index' %}">Board</a></li>
-          <li><a href="{% url 'board:category' object.category.parent.id %}">{{object.category.parent.name}}</a></li>
-          <li><a href="{% url 'board:subcategory' object.category.id %}">{{object.category.name}}</a></li>
+          <li><a href="{% url 'board:category-detail' object.category.parent.id %}">{{object.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory-detail' object.category.id %}">{{object.category.name}}</a></li>
           <li><a href="{% url 'board:thread' object.id %}">Thread</a></li>
           <li>Update</li>
         </ul>
