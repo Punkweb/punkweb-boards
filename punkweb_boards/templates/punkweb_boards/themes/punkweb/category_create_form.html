@@ -21,12 +21,19 @@
 </div>
 <div class="main">
   <div class="djcontainer">
-    <h2>Create New Category</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ category_form.as_p }}
-      <button class="button-green" type="submit"><i class="fa fa-plus fa-fw"></i> Create Category</button>
-    </form>
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Create New Category</div>
+      </div>
+      <div class="panel__body padding">
+        <h2>Create New Category</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ category_form.as_p }}
+          <button class="button-green" type="submit"><i class="fa fa-plus fa-fw"></i> Create Category</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
