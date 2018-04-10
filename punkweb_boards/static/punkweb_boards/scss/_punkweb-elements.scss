@@ -1,0 +1,539 @@
+// TODO: Checkboxes
+// TODO: Radio Buttons
+// TODO: Indeterminate Progress
+// TODO: Meters
+
+$primary-hover: lighten($primary, 5%);
+$primary-active: darken($primary, 10%);
+
+* { box-sizing: border-box; }
+
+@include link($primary-link, null, true, true);
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.breadcrumb {
+  @include no-disc;
+  @include font-range(11, 13);
+
+  li {
+    color: $breadcrumb-active;
+    display: inline;
+
+    a {
+      color: $breadcrumb-link;
+    }
+  }
+
+  li+li:before {
+    color: $breadcrumb-separator;
+    content: "/\00a0";
+    margin: 0 0.5rem;
+  }
+}
+
+.pagination {
+  @include font-range(14, 16);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+  list-style: none;
+
+  li {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+hr {
+  background-color: $hr;
+  border: 0;
+  border-radius: 2px;
+  color: $hr;
+  height: 2px;
+  width: 100%;
+}
+
+img, iframe {
+  max-width: 100%;
+}
+
+blockquote {
+  background: $oc-yellow-1;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  margin: 0;
+  margin-bottom: 1rem;
+  padding: .5rem .75rem;
+  position: relative;
+}
+
+blockquote cite {
+  @include link($primary-link, null, true, true);
+  font-weight: bold;
+  display: block;
+  font-size: 1em;
+  border-bottom: 2px solid $hr;
+  margin-bottom: .5rem;
+}
+
+figure {
+  margin: 2rem 1rem;
+}
+
+figcaption {
+  font-weight: 300;
+}
+
+details, summary {
+  outline: none;
+}
+
+mark {
+  background-color: $oc-yellow-0;
+}
+
+pre {
+  background: #eee;
+  border: 1px solid $hr;
+  white-space: pre-wrap;
+}
+
+pre code {
+  font-family: 'Inconsolata';
+}
+
+.panel {
+  background-color: $panel-body;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
+  color: $panel-text;
+  margin-bottom: 1rem;
+  opacity: $panel-opacity;
+
+  &__header {
+    @include medium;
+    @include font-range(12, 14);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: $panel-header;
+    padding: 1rem 0.75rem;
+  }
+  &__title {
+    @include bold;
+    @include font-range(12, 14);
+    color: $panel-title;
+    a {
+      color: $panel-title;
+    }
+  }
+  &__body {
+    @include font-range(12, 14);
+    background-color: $panel-body;
+    color: $panel-text;
+    a {
+      color: $primary-link;
+    }
+  }
+  &__footer {
+    @include font-range(12, 14);
+    background-color: $panel-footer;
+    color: white;
+    padding: 0.75rem;
+  }
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+
+  thead {
+    background-color: $table-header;
+    color: $table-header-text;
+    tr {
+      th {
+        @include medium;
+        @include font-range(12, 14);
+        padding: 1rem;
+        a {
+          color: $table-header-link;
+        }
+      }
+      td {
+        @include font-range(12, 14);
+      }
+    }
+  }
+  tbody {
+    background-color: $table-body;
+    color: $table-body-text;
+    tr {
+      th {
+        @include font-range(12, 14);
+      }
+      td {
+        @include font-range(12, 14);
+        padding: 1rem;
+        vertical-align: top;
+        a {
+          color: $table-body-link;
+        }
+      }
+      &:not(:last-of-type) {
+        border-bottom: 2px solid $hr;
+      }
+    }
+    .vertically-centered {
+      vertical-align: middle;
+    }
+  }
+}
+
+fieldset {
+  border-radius: 4px;
+  border: 2px solid $oc-gray-4;
+}
+
+label {
+  font-weight: 300;
+  font-size: 14px;
+  display: block;
+}
+
+legend {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+input, select, textarea {
+  background: transparent;
+  border: 1px solid $oc-gray-4;
+  border-radius: 2px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+  font-family: 'Montserrat';
+  font-size: 16px;
+  outline: none;
+  padding: 0.25rem 0.5rem;
+  transition: box-shadow 0.25s ease-in-out;
+}
+
+input[type="color"] {
+  padding: 0;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="range"]:focus {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: $oc-gray-2;
+  border: none;
+  border-radius: 100px;
+  box-shadow: none;
+  cursor: pointer;
+  height: 7px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0px 1px 4px 0px rgba(152, 152, 152, .75);
+  cursor: pointer;
+  height: 22px;
+  margin-top: -8px;
+  width: 22px;
+}
+
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: $oc-gray-2;
+}
+
+input[type="range"]::-moz-range-track {
+  background: $oc-gray-2;
+  border: none;
+  border-radius: 100px;
+  box-shadow: none;
+  cursor: pointer;
+  height: 7px;
+}
+
+input[type=range]::-moz-range-thumb {
+  background: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0px 1px 4px 0px rgba(152, 152, 152, .75);
+  cursor: pointer;
+  height: 22px;
+  margin-top: -8px;
+  width: 22px;
+}
+
+input[type="range"]::-ms-track {
+  background: transparent;
+  border-color: transparent;
+  border-radius: 100px;
+  border-width: 22px 0;
+  box-shadow: none;
+  color: transparent;
+  cursor: pointer;
+  height: 7px;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: $primary;
+  border: none;
+  border-radius: 100px;
+  box-shadow: none;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background: $oc-gray-2;
+  border: none;
+  border-radius: 100px;
+  box-shadow: none;
+}
+
+input[type="range"]::-ms-thumb {
+  background: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0px 1px 4px 0px rgba(152, 152, 152, .75);
+  cursor: pointer;
+  height: 22px;
+  margin-top: -3px;
+  width: 22px;
+}
+
+input[type="range"]:focus::-ms-fill-lower {
+  background: $primary-hover;
+}
+
+input[type="range"]:focus::-ms-fill-upper {
+  background: $oc-gray-2;
+}
+
+input:focus, select:focus, textarea:focus {
+  box-shadow: none;
+  outline: none !important;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1), 0px 0px 6px $primary;
+  border-color: $primary;
+}
+
+progress, progress[value] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: 1px solid $oc-gray-4;
+  border-radius: 2px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+  color: $primary;
+  height: 2rem;
+}
+
+progress::-ms-fill {
+  background-color: $primary;
+  border: none;
+  border-radius: 1px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+  color: $primary;
+}
+
+progress::-moz-progress-bar {
+  background-color: $primary;
+  border-radius: 1px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+}
+
+progress::-webkit-progress-bar {
+  background-color: transparent;
+}
+
+progress::-webkit-progress-value {
+  background-color: $primary;
+  border-radius: 1px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+}
+
+@mixin button($background, $color) {
+  appearance: none;
+  background-color: $background;
+  border: 1px solid mix(black, $background, 20%);
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+  color: $color !important;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Open Sans';
+  font-size: 13px;
+  letter-spacing: 1px;
+  outline: none;
+  padding: .5rem .75rem;
+  min-width: 100px;
+  text-align: center;
+  text-decoration: none !important;
+  transition: all .25s ease-in-out;
+  &:hover {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .2), 0px 0px 6px mix(white, $background, 10%);
+    background-color: mix(black, $background, 10%);
+  }
+  &:disabled {
+    background-color: $oc-gray-5;
+    border: 1px solid $oc-gray-6;
+    cursor: not-allowed;
+    &:hover {
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    }
+  }
+}
+
+@mixin button-hollow($background, $color) {
+  @include button($background, $color);
+  background: transparent;
+  border: 1px solid darken($background, 10%);
+  color: $background !important;
+  &:hover {
+    background-color: darken($background, 5%);
+    color: $color !important;
+  }
+  &:active {
+    background-color: darken($background, 10%);
+    color: $color !important;
+  }
+  &:disabled {
+    background-color: transparent;
+    border: 1px solid $oc-gray-5;
+    color: $oc-gray-7 !important;
+  }
+}
+
+.button {
+  @include button($oc-gray-7, white);
+  &-primary {
+    @include button($primary, white);
+  }
+  &-violet {
+    @include button($oc-violet-7, white);
+  }
+  &-indigo {
+    @include button($oc-indigo-7, white);
+  }
+  &-blue {
+    @include button($oc-blue-7, white);
+  }
+  &-green {
+    @include button($oc-green-7, white);
+  }
+  &-yellow {
+    @include button($oc-yellow-6, black);
+  }
+  &-orange {
+    @include button($oc-orange-7, white);
+  }
+  &-red {
+    @include button($oc-red-9, white);
+  }
+}
+
+.button-hollow {
+  @include button-hollow($oc-gray-7, white);
+  &-primary {
+    @include button-hollow($primary, white);
+  }
+  &-violet {
+    @include button-hollow($oc-violet-7, white);
+  }
+  &-indigo {
+    @include button-hollow($oc-indigo-7, white);
+  }
+  &-blue {
+    @include button-hollow($oc-blue-7, white);
+  }
+  &-green {
+    @include button-hollow($oc-green-7, white);
+  }
+  &-yellow {
+    @include button-hollow($oc-yellow-6, black);
+  }
+  &-orange {
+    @include button-hollow($oc-orange-7, white);
+  }
+  &-red {
+    @include button-hollow($oc-red-9, white);
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3rem;
+  overflow: auto;
+  background-color: rgb(15, 33, 43);
+  background-color: rgba(15, 33, 43, 0.7);
+
+  &__content {
+    margin: 0 auto;
+    z-index: 60;
+    overflow: auto;
+    padding: 1rem;
+    max-width: 1440px;
+    min-width: 280px;
+    max-height: 100%;
+    min-height: 50px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.5);
+
+    & > .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+      &:hover, &:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+/*
+How to style meters cross browser
+https://css-tricks.com/html5-meter-element/
+*/

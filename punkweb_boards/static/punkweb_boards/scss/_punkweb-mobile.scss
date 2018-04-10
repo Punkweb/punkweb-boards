@@ -1,5 +1,5 @@
 @media only screen and (max-width: 840px) {
-  .djcontainer {
+  .container {
     padding: 0 0.5rem;
   }
   .flexrow {
@@ -95,6 +95,9 @@
       padding: 0.5rem;
     }
   }
+  .modal {
+    padding: 2rem;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -106,5 +109,22 @@
 @media only screen and (max-width: 425px) {
   .hide-on-xsmall {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .adminModeWarning {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .modal {
+    padding: 1rem 0;
+  }
+
+  .modal__content {
+    margin: 0 1rem;
+    width: auto !important;
   }
 }

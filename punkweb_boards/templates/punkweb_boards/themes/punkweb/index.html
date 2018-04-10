@@ -7,12 +7,12 @@
 
 {% block content %}
 <div class="main">
-  <div class="djcontainer">
+  <div class="container">
     {% if BOARD_SETTINGS.USER_BIRTHDAY_MESSAGE %}
     {% include 'punkweb_boards/themes/punkweb/components/birthday/birthday.html' %}
     {% endif %}
     <div class="flexrow">
-      <div class="flexcol" style="flex: 3;">
+      <div class="flexcol flex__3">
         {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
         {% include 'punkweb_boards/themes/punkweb/components/shoutbox/shoutbox.html' %}
         {% endif %}
@@ -81,7 +81,7 @@
         <p>This board doesn't have any categories yet</p>
         {% endfor %}
       </div>
-      <div class="flexcol sidebar" style="flex: 1;">
+      <div class="flexcol flex__1 sidebar">
         <div class="panel">
           <div class="panel__header" data-role="collapsible-toggle" data-key="index-recent-threads">
             <div class="panel__title">Recent Threads</div>
@@ -148,9 +148,11 @@
                 <td>
                   <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
                 </td>
-              </tr>
               {% empty %}
-              <span>No staff members are online</span>
+                <td>
+                  <span>No staff members are online</span>
+                </td>
+              </tr>
               {% endfor %}
             </table>
           </div>

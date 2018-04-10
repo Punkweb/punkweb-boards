@@ -9,6 +9,8 @@ from punkweb_boards.views import category_detail
 
 class ProfileTestCase(TestCase):
 
+    # Test can_shout
+
     def setUp(self):
         self.new_user = get_user_model().objects.create_user(
             username="NewUser", email="test@punkweb.net", password="testyboi"

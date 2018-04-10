@@ -1,5 +1,5 @@
 html, body {
-  font-family: 'Open-Sans', 'Calibri', 'sans-serif';
+  font-family: 'Open Sans', 'Calibri', 'sans-serif';
   font-size: 16px;
   color: $default-text;
   @include normal;
@@ -25,11 +25,28 @@ h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  letter-spacing: 1px;
   margin: 0;
 }
 
 @font-face {
-  font-family: 'Open-Sans';
+  font-family: 'Inconsolata';
+  src: url('../fonts/Inconsolata-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../fonts/Montserrat-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
   src: url('../fonts/OpenSans-Regular.ttf');
   font-weight: normal;
   font-style: normal;
