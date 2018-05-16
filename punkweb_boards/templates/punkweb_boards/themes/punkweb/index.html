@@ -80,6 +80,18 @@
         {% empty %}
         <p>This board doesn't have any categories yet</p>
         {% endfor %}
+        <div class="panel">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-users-online">
+            <div class="panel__title">Users Online</div>
+          </div>
+          <div class="panel__body padding" data-role="collapsible" data-key="index-users-online">
+            {% for user in users_online %}
+            <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
+            {% empty %}
+            <span>No users are online</span>
+            {% endfor %}
+          </div>
+        </div>
       </div>
       <div class="flexcol flex__1 sidebar">
         <div class="panel">
@@ -157,43 +169,43 @@
             </table>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="flexrow">
-      <div class="flexcol" style="flex: 1;">
-        <div class="panel">
-          <div class="panel__header" data-role="collapsible-toggle" data-key="index-users-online">
-            <div class="panel__title">Users Online</div>
-          </div>
-          <div class="panel__body padding" data-role="collapsible" data-key="index-users-online">
-            {% for user in users_online %}
-            <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
-            {% empty %}
-            <span>No users are online</span>
-            {% endfor %}
-          </div>
-        </div>
         <a name="statistics"></a>
         <div class="panel statisticsPanel">
           <div class="panel__header" data-role="collapsible-toggle" data-key="index-statistics">
-            <div class="panel__title"><a href="{% url 'board:statistics' %}">Statistics</a></div>
+            <div class="panel__title">Statistics</div>
           </div>
           <div class="panel__body padding" data-role="collapsible" data-key="index-statistics">
-            <ul class="statisticsPanel__list">
-              <li style="display: inline">Total posts {{total_posts}} •</li>
-              <li style="display: inline">Total threads {{total_threads}} •</li>
-              <li style="display: inline">Total members {{member_count}} •</li>
+            <div class="statisticsPanel__list">
+              <div class="statisticsPanel__listItem">
+                <div class="label">Total posts</div>
+                <div class="value">{{total_posts}}</div>
+              </div>
+              <div class="statisticsPanel__listItem">
+                <div class="label">Total threads</div>
+                <div class="value">{{total_threads}}</div>
+              </div>
+              <div class="statisticsPanel__listItem">
+                <div class="label">Total members</div>
+                <div class="value">{{member_count}}</div>
+              </div>
               {% if newest_member %}
-              <li style="display: inline">
-                Newest member
-                <a href="{% url 'board:profile' newest_member.username %}">
-                  {{newest_member.profile.rendered_username}}
-                </a>
-              </li>
+              <div class="statisticsPanel__listItem">
+                <div class="label">Newest member</div>
+                <div class="value">
+                  <a href="{% url 'board:profile' newest_member.username %}">
+                    {{newest_member.profile.rendered_username}}
+                  </a>
+                </div>
+              </div>
               {% else %}
-              <li style="display: inline">No members</li>
+              <div>No members</div>
               {% endif %}
-            </ul>
+              <div class="statisticsPanel__listItem">
+                <div class="label">
+                  <a href="{% url 'board:statistics' %}">More&hellip;</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

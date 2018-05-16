@@ -85,7 +85,6 @@ $(function() {
       $.get('/board/api/shouts/', function(data) {
         clearShoutList();
         shoutList = data.results;
-
         if (shoutList.length === 0) {
           $('#shoutBox').append(shoutLineEmpty());
         } else {
@@ -93,7 +92,6 @@ $(function() {
             $('#shoutBox').append(shoutLine(shout));
           });
         }
-
       });
     }
 
@@ -120,5 +118,8 @@ $(function() {
     }
 
     getShouts();
+    setInterval(function() {
+      getShouts();
+    }, 1000 * 30);
   });
 });

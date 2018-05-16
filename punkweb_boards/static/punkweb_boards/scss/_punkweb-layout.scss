@@ -352,7 +352,15 @@ html, body {
 
 .statisticsPanel {
   &__list {
-    @include no-disc;
+    &Item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      line-height: 2rem;
+      &:not(:last-of-type) {
+        border-bottom: 1px solid $hr;
+      }
+    }
   }
 }
 
