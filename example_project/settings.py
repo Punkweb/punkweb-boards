@@ -190,3 +190,5 @@ THUMBNAIL_ALIASES = {
 PUNKWEB_BOARDS = {
     "BOARD_NAME": "Example", "SHOUTBOX_ENABLED": True, "CAPTCHAS_ENABLED": True
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
