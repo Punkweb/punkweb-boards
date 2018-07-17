@@ -16,6 +16,17 @@ from punkweb_boards.models import (
     Page,
 )
 
+JAVASCRIPT_FILES = (
+    'punkweb_boards/js/deps/jquery-3.1.1.min.js',
+    'punkweb_boards/js/run-prettify.js',
+    'punkweb_boards/sceditor/minified/jquery.sceditor.bbcode.min.js',
+    'punkweb_boards/js/editor-config.js',
+)
+
+CSS_FILES = (
+    'punkweb_boards/sceditor/minified/themes/square.min.css',
+)
+
 
 # Forms
 
@@ -129,6 +140,12 @@ class BoardProfileAdmin(admin.ModelAdmin):
     get_email.short_description = "Email"
     get_email.admin_order_field = "user__email"
 
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
+
 
 class UserRankAdmin(admin.ModelAdmin):
     form = UserRankForm
@@ -152,6 +169,12 @@ class SubcategoryInline(admin.TabularInline):
     model = Subcategory
     ordering = ("order",)
 
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
+
 
 class CategoryAdmin(admin.ModelAdmin):
     form = CategoryForm
@@ -159,12 +182,24 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "order")
     ordering = ("order",)
 
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
+
 
 class PostInline(admin.TabularInline):
     form = PostForm
     model = Post
     ordering = ("created",)
     fields = ("user", "content", "upvoted_by", "downvoted_by")
+
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
 
 
 class ThreadAdmin(admin.ModelAdmin):
@@ -187,6 +222,12 @@ class ThreadAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("modified", "created")
 
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
+
 
 class MessageInline(admin.TabularInline):
     form = MessageForm
@@ -194,11 +235,23 @@ class MessageInline(admin.TabularInline):
     fields = ("user", "content")
     ordering = ("created",)
 
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
+
 
 class ConversationAdmin(admin.ModelAdmin):
     inlines = [MessageInline]
     list_display = ("subject",)
     ordering = ("created",)
+
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
 
 
 class ReportAdmin(admin.ModelAdmin):
@@ -235,6 +288,12 @@ class PageAdmin(admin.ModelAdmin):
     form = PageForm
     list_display = ("title", "slug")
     prepopulated_fields = {"slug": ("title",)}
+
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {
+            'all': CSS_FILES,
+        }
 
 
 admin.site.register(BoardProfile, BoardProfileAdmin)
