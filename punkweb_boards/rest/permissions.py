@@ -2,7 +2,6 @@ from rest_framework import permissions
 
 
 class IsTargetUser(permissions.BasePermission):
-
     def has_object_permission(self, request, view, obj):
         if request.user.profile.is_banned:
             return False
@@ -14,7 +13,6 @@ class IsTargetUser(permissions.BasePermission):
 
 
 class BelongsToUser(permissions.BasePermission):
-
     def has_permission(self, request, view):
         if request.user.is_authenticated and request.user.profile.is_banned:
             return False

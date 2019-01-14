@@ -120,7 +120,10 @@ class BoardProfile(
             return False
 
         today = datetime.date.today()
-        match = self.birthday.day == today.day and self.birthday.month == today.month
+        match = (
+            self.birthday.day == today.day
+            and self.birthday.month == today.month
+        )
         if match:
             return True
 
@@ -132,7 +135,9 @@ class BoardProfile(
             return False
 
         if BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS:
-            has_post_req = self.post_count >= BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS_REQ
+            has_post_req = (
+                self.post_count >= BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS_REQ
+            )
             if not has_post_req:
                 return False
 

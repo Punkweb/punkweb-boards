@@ -17,22 +17,19 @@ from punkweb_boards.models import (
 )
 
 JAVASCRIPT_FILES = (
-    'punkweb_boards/js/deps/jquery-3.1.1.min.js',
-    'punkweb_boards/js/run-prettify.js',
-    'punkweb_boards/sceditor/minified/jquery.sceditor.bbcode.min.js',
-    'punkweb_boards/js/editor-config.js',
+    "punkweb_boards/js/deps/jquery-3.1.1.min.js",
+    "punkweb_boards/js/run-prettify.js",
+    "punkweb_boards/sceditor/minified/jquery.sceditor.bbcode.min.js",
+    "punkweb_boards/js/editor-config.js",
 )
 
-CSS_FILES = (
-    'punkweb_boards/sceditor/minified/themes/square.min.css',
-)
+CSS_FILES = ("punkweb_boards/sceditor/minified/themes/square.min.css",)
 
 
 # Forms
 
 
 class BoardProfileForm(forms.ModelForm):
-
     class Meta:
         model = BoardProfile
         widgets = {
@@ -41,61 +38,55 @@ class BoardProfileForm(forms.ModelForm):
                 attrs={"class": "post-editor"}
             ),
         }
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class UserRankForm(forms.ModelForm):
-
     class Meta:
         model = UserRank
         widgets = {
             "username_modifier": forms.Textarea(attrs={"class": "post-editor"})
         }
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class CategoryForm(forms.ModelForm):
-
     class Meta:
         model = Category
         widgets = {
             "description": forms.Textarea(attrs={"class": "post-editor"})
         }
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class SubcategoryForm(forms.ModelForm):
-
     class Meta:
         model = Subcategory
         widgets = {
             "description": forms.Textarea(attrs={"class": "post-editor"})
         }
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class ThreadForm(forms.ModelForm):
-
     class Meta:
         model = Thread
         widgets = {"content": forms.Textarea(attrs={"class": "post-editor"})}
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class PostForm(forms.ModelForm):
-
     class Meta:
         model = Post
         widgets = {"content": forms.Textarea(attrs={"class": "post-editor"})}
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class MessageForm(forms.ModelForm):
-
     class Meta:
         model = Message
         widgets = {"content": forms.Textarea(attrs={"class": "post-editor"})}
-        fields = ("__all__")
+        fields = "__all__"
 
 
 # ModelAdmin
@@ -142,9 +133,7 @@ class BoardProfileAdmin(admin.ModelAdmin):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 class UserRankAdmin(admin.ModelAdmin):
@@ -171,9 +160,7 @@ class SubcategoryInline(admin.TabularInline):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -184,9 +171,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 class PostInline(admin.TabularInline):
@@ -197,9 +182,7 @@ class PostInline(admin.TabularInline):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 class ThreadAdmin(admin.ModelAdmin):
@@ -224,9 +207,7 @@ class ThreadAdmin(admin.ModelAdmin):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 class MessageInline(admin.TabularInline):
@@ -237,9 +218,7 @@ class MessageInline(admin.TabularInline):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 class ConversationAdmin(admin.ModelAdmin):
@@ -249,9 +228,7 @@ class ConversationAdmin(admin.ModelAdmin):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 class ReportAdmin(admin.ModelAdmin):
@@ -277,11 +254,10 @@ class NotificationAdmin(admin.ModelAdmin):
 
 
 class PageForm(forms.ModelForm):
-
     class Meta:
         model = Page
         widgets = {"content": forms.Textarea(attrs={"class": "post-editor"})}
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class PageAdmin(admin.ModelAdmin):
@@ -291,9 +267,7 @@ class PageAdmin(admin.ModelAdmin):
 
     class Media:
         js = JAVASCRIPT_FILES
-        css = {
-            'all': CSS_FILES,
-        }
+        css = {"all": CSS_FILES}
 
 
 admin.site.register(BoardProfile, BoardProfileAdmin)

@@ -45,7 +45,6 @@ class UpvoteDownvoteMixin(models.Model):
 
 
 class AvatarImagesMixin(models.Model):
-
     @property
     def avatar(self):
         if not self.image:

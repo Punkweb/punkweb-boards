@@ -1,6 +1,9 @@
 import logging
 from django.contrib.postgres.search import (
-    SearchQuery, SearchRank, SearchVector, TrigramSimilarity
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+    TrigramSimilarity,
 )
 from django.db.models import Q
 from django.conf import settings
@@ -60,9 +63,7 @@ def index_view(request):
             # Filter out categories with auth_req = True
             children = children.filter(
                 auth_req=False, parent__auth_req=False
-            ).order_by(
-                "order"
-            )
+            ).order_by("order")
         category_groups.append(
             {"parent": parent_category, "children": children}
         )
@@ -119,47 +120,43 @@ def keyword_search_view(request):
     user_trigram = TrigramSimilarity("username", keyword) + TrigramSimilarity(
         "email", keyword
     )
-    matched_users = get_user_model().objects.annotate(
-        similarity=user_trigram
-    ).filter(
-        similarity__gt=0.3
-    ).order_by(
-        "-similarity"
+    matched_users = (
+        get_user_model()
+        .objects.annotate(similarity=user_trigram)
+        .filter(similarity__gt=0.3)
+        .order_by("-similarity")
     )
 
     # Threads
-    thread_vector = SearchVector("tags", weight="A") + SearchVector(
-        "title", weight="A"
-    ) + SearchVector(
-        "content", weight="B"
-    ) + SearchVector(
-        "user__username", weight="C"
+    thread_vector = (
+        SearchVector("tags", weight="A")
+        + SearchVector("title", weight="A")
+        + SearchVector("content", weight="B")
+        + SearchVector("user__username", weight="C")
     )
-    thread_trigram = TrigramSimilarity("title", keyword) + TrigramSimilarity(
-        "user__username", keyword
-    ) + TrigramSimilarity(
-        "tags", keyword
+    thread_trigram = (
+        TrigramSimilarity("title", keyword)
+        + TrigramSimilarity("user__username", keyword)
+        + TrigramSimilarity("tags", keyword)
     )
-    matched_threads = Thread.objects.annotate(
-        search=thread_vector, similarity=thread_trigram
-    ).annotate(
-        rank=SearchRank(thread_vector, query)
-    ).filter(
-        Q(search=query) | Q(similarity__gt=0.15)
-    ).order_by(
-        "-rank"
+    matched_threads = (
+        Thread.objects.annotate(
+            search=thread_vector, similarity=thread_trigram
+        )
+        .annotate(rank=SearchRank(thread_vector, query))
+        .filter(Q(search=query) | Q(similarity__gt=0.15))
+        .order_by("-rank")
     )
 
     # Posts
     post_vector = SearchVector("content", weight="A") + SearchVector(
         "user__username", weight="B"
     )
-    matched_posts = Post.objects.annotate(search=post_vector).annotate(
-        rank=SearchRank(post_vector, query)
-    ).filter(
-        search=query
-    ).order_by(
-        "-rank"
+    matched_posts = (
+        Post.objects.annotate(search=post_vector)
+        .annotate(rank=SearchRank(post_vector, query))
+        .filter(search=query)
+        .order_by("-rank")
     )
 
     context = {
@@ -725,7 +722,11 @@ def message_delete(request, pk):
 def reports_list(request):
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned or is not an admin
-    if not request.user.is_authenticated or not request.user.is_staff or request.user.profile.is_banned:
+    if (
+        not request.user.is_authenticated
+        or not request.user.is_staff
+        or request.user.profile.is_banned
+    ):
         return redirect("board:unpermitted")
 
     context = {"reports": Report.objects.all()}
@@ -744,7 +745,11 @@ def report_view(request, pk):
 
     # Redirect to unpermitted page if requesting user
     # is not logged in or is banned or is not an admin
-    if not request.user.is_authenticated or not request.user.is_staff or request.user.profile.is_banned:
+    if (
+        not request.user.is_authenticated
+        or not request.user.is_staff
+        or request.user.profile.is_banned
+    ):
         return redirect("board:unpermitted")
 
     if request.method == "POST":
@@ -815,8 +820,10 @@ def members_list(request):
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect("board:unpermitted")
 
-    users = get_user_model().objects.filter(profile__is_banned=False).order_by(
-        "username"
+    users = (
+        get_user_model()
+        .objects.filter(profile__is_banned=False)
+        .order_by("username")
     )
     context = {"users": users}
     return render(

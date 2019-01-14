@@ -5,10 +5,19 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.widgets import ImageClearableFileInput
 from punkweb_boards.conf.settings import (
-    BOARD_THEME, CAPTCHAS_ENABLED, SIGNATURES_ENABLED
+    BOARD_THEME,
+    CAPTCHAS_ENABLED,
+    SIGNATURES_ENABLED,
 )
 from punkweb_boards.models import (
-    Thread, Post, Shout, Report, Conversation, Message, Subcategory, Category
+    Thread,
+    Post,
+    Shout,
+    Report,
+    Conversation,
+    Message,
+    Subcategory,
+    Category,
 )
 
 
@@ -62,10 +71,14 @@ class RegistrationForm(forms.Form):
         )
 
     def clean(self):
-        if "password1" in self.cleaned_data and "password2" in self.cleaned_data:
-            if self.cleaned_data["password1"] != self.cleaned_data[
-                "password2"
-            ]:
+        if (
+            "password1" in self.cleaned_data
+            and "password2" in self.cleaned_data
+        ):
+            if (
+                self.cleaned_data["password1"]
+                != self.cleaned_data["password2"]
+            ):
                 raise forms.ValidationError(
                     _("The two password fields did not match.")
                 )
@@ -74,7 +87,6 @@ class RegistrationForm(forms.Form):
 
 
 class SettingsForm(forms.Form):
-
     def __init__(self, request, *args, **kwargs):
         super(SettingsForm, self).__init__(*args, **kwargs)
         self.fields["gender"].initial = request.user.profile.gender
@@ -99,7 +111,6 @@ class SettingsForm(forms.Form):
 
 
 class ThreadForm(forms.ModelForm):
-
     def __init__(self, request, *args, **kwargs):
         super(ThreadForm, self).__init__(*args, **kwargs)
         self.request = request
@@ -122,7 +133,6 @@ class ThreadForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-
     def __init__(self, request, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
         self.request = request
@@ -147,7 +157,6 @@ class PostForm(forms.ModelForm):
 
 
 class ConversationForm(forms.Form):
-
     def __init__(self, request, *args, **kwargs):
         super(ConversationForm, self).__init__(*args, **kwargs)
 
@@ -167,7 +176,6 @@ class ConversationForm(forms.Form):
 
 
 class MessageForm(forms.ModelForm):
-
     def __init__(self, request, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
         self.fields["content"].label = ""
@@ -189,7 +197,6 @@ class MessageForm(forms.ModelForm):
 
 
 class ShoutForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super(ShoutForm, self).__init__(*args, **kwargs)
         self.fields["content"].label = ""
@@ -201,7 +208,6 @@ class ShoutForm(forms.ModelForm):
 
 
 class ReportForm(forms.ModelForm):
-
     def __init__(self, request, *args, **kwargs):
         super(ReportForm, self).__init__(*args, **kwargs)
         self.request = request
@@ -227,7 +233,6 @@ class ReportForm(forms.ModelForm):
 
 
 class SubcategoryForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super(SubcategoryForm, self).__init__(*args, **kwargs)
         self.fields["parent"].label = "Category"
@@ -239,7 +244,6 @@ class SubcategoryForm(forms.ModelForm):
 
 
 class CategoryForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)
         self.fields["description"].widget.attrs["class"] = "post-editor"

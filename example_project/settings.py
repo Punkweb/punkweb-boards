@@ -26,7 +26,7 @@ SECRET_KEY = "tpye0s&&$uyc)hf_3rv@!a95ne*3e-dxt^9k^7!f+$jxkk+$k-"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -163,7 +163,7 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 # Non default app configuration
 
-admin.site.site_header = "Example Forum"
+# admin.site.site_header = "Example Forum"
 
 LOGIN_REDIRECT_URL = "/board/"
 
@@ -188,7 +188,9 @@ THUMBNAIL_ALIASES = {
 }
 
 PUNKWEB_BOARDS = {
-    "BOARD_NAME": "Example", "SHOUTBOX_ENABLED": True, "CAPTCHAS_ENABLED": True
+    "BOARD_NAME": "Example",
+    "SHOUTBOX_ENABLED": True,
+    "CAPTCHAS_ENABLED": True,
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

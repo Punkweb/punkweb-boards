@@ -12,17 +12,16 @@ urlpatterns = [
     url(r"^register/$", views.registration_view, name="register"),
     url(
         r"^login/$",
-        auth_views.login,
-        {
-            "template_name": "punkweb_boards/themes/{}/login.html".format(
+        auth_views.LoginView.as_view(
+            template_name="punkweb_boards/themes/{}/login.html".format(
                 BOARD_THEME
             )
-        },
+        ),
         name="login",
     ),
     url(
         r"^logout/$",
-        auth_views.logout,
+        auth_views.LogoutView,
         {"next_page": "/board/login/"},
         name="logout",
     ),

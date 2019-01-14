@@ -6,7 +6,6 @@ from punkweb_boards.conf import settings as BOARD_SETTINGS
 
 
 class ActiveUserMiddleware(MiddlewareMixin):
-
     def process_request(self, request):
         if request.user.is_authenticated:
             now = datetime.datetime.now()

@@ -2,7 +2,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase, RequestFactory
 from punkweb_boards.models import (
-    BoardProfile, UserRank, Category, Subcategory, Thread
+    BoardProfile,
+    UserRank,
+    Category,
+    Subcategory,
+    Thread,
 )
 from punkweb_boards.views import category_detail
 
@@ -24,7 +28,6 @@ class ProfileTestCase(TestCase):
 
 
 class RankTestCase(TestCase):
-
     def setUp(self):
         self.category_1 = Category.objects.create(name="Category 1", order=1)
         self.subcategory_1 = Subcategory.objects.create(
@@ -79,7 +82,8 @@ class RankTestCase(TestCase):
         # Test admin_user only has post_count_rank_1
         self.assertTrue(
             self.post_count_rank_1 in self.admin_user.profile.ranks.all()
-            and self.post_count_rank_5 not in self.admin_user.profile.ranks.all()
+            and self.post_count_rank_5
+            not in self.admin_user.profile.ranks.all()
         )
         # Test new_user has both ranks
         self.assertTrue(
@@ -106,7 +110,6 @@ class RankTestCase(TestCase):
 
 
 class CategoryTestCase(TestCase):
-
     def setUp(self):
         self.factory = RequestFactory()
         self.banned_user = get_user_model().objects.create_user(
@@ -162,7 +165,6 @@ class CategoryTestCase(TestCase):
 
 
 class SubcategoryTestCase(TestCase):
-
     def setUp(self):
         self.factory = RequestFactory()
         self.banned_user = get_user_model().objects.create_user(

@@ -1,4 +1,12 @@
-django>=1.8
+django>=2.0
 django-precise-bbcode
 easy-thumbnails
 pillow
+
+django-simple-captcha
+djangorestframework
+django-cors-headers
+django-compressor
+django-libsass
+python-memcached
+psycopg2

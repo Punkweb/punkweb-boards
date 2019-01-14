@@ -2,7 +2,14 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from punkweb_boards.conf.settings import SHOUTBOX_DISABLED_TAGS
 from punkweb_boards.models import (
-    Category, Subcategory, Thread, Post, Conversation, Message, Report, Shout
+    Category,
+    Subcategory,
+    Thread,
+    Post,
+    Conversation,
+    Message,
+    Report,
+    Shout,
 )
 
 
@@ -26,7 +33,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Category
         exclude = ("auth_req",)
@@ -83,7 +89,11 @@ class ThreadSerializer(serializers.ModelSerializer):
         model = Thread
         fields = "__all__"
         read_only_fields = (
-            "pinned", "closed", "user", "upvoted_by", "downvoted_by"
+            "pinned",
+            "closed",
+            "user",
+            "upvoted_by",
+            "downvoted_by",
         )
 
 
@@ -118,7 +128,6 @@ class ConversationSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Message
         fields = "__all__"
@@ -148,9 +157,10 @@ class ShoutSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         for key in SHOUTBOX_DISABLED_TAGS:
             key_tag = "[{}]".format(key).lower()
-            if key_tag[:len(key_tag) - 1] in validated_data.get(
-                "content"
-            ).lower():
+            if (
+                key_tag[: len(key_tag) - 1]
+                in validated_data.get("content").lower()
+            ):
                 raise serializers.ValidationError(
                     {
                         "notAllowed": "{} is not allowed in the shoutbox".format(
