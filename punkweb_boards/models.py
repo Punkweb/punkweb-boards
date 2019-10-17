@@ -676,7 +676,7 @@ class Page(UUIDPrimaryKey, CreatedModifiedMixin):
         )
 
     def get_absolute_url(self):
-        return reverse("pages:page", kwargs={"slug": self.slug})
+        return reverse("board:page", kwargs={"slug": self.slug})
 
 
 @receiver(post_save, sender=get_user_model())

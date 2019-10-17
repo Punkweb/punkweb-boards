@@ -44,10 +44,8 @@ INSTALLED_APPS = [
     "compressor",
     "easy_thumbnails",
     "rest_framework",
-    "rest_framework.authtoken",
     "corsheaders",
     "precise_bbcode",
-    "captcha",
     "punkweb_boards",
 ]
 
@@ -172,7 +170,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
-        "punkweb_boards.rest.authentication.NoCSRFSessionAuthentication",
+        "example_project.rest.authentication.NoCSRFSessionAuthentication",
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 25,
@@ -189,8 +187,6 @@ THUMBNAIL_ALIASES = {
 
 PUNKWEB_BOARDS = {
     "BOARD_NAME": "Example",
-    "SHOUTBOX_ENABLED": True,
-    "CAPTCHAS_ENABLED": True,
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

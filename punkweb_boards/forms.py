@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.widgets import ImageClearableFileInput
 from punkweb_boards.conf.settings import (
     BOARD_THEME,
-    CAPTCHAS_ENABLED,
     SIGNATURES_ENABLED,
 )
 from punkweb_boards.models import (
@@ -37,10 +36,6 @@ class RegistrationForm(forms.Form):
             )
         },
     )
-    email = forms.EmailField(
-        widget=forms.TextInput(attrs=dict(required=True, max_length=30)),
-        label=_("Email address"),
-    )
     password1 = forms.CharField(
         widget=forms.PasswordInput(
             attrs=dict(required=True, max_length=30, render_value=False)
@@ -53,10 +48,6 @@ class RegistrationForm(forms.Form):
         ),
         label=_("Password (again)"),
     )
-    if CAPTCHAS_ENABLED:
-        from captcha.fields import CaptchaField
-
-        captcha = CaptchaField()
 
     def clean_username(self):
         try:

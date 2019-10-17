@@ -48,7 +48,7 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=200)
 
             return get_thumbnailer(utils.get_placeholder_url())["avatar"].url
@@ -59,7 +59,7 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar_small(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=100)
 
             return get_thumbnailer(utils.get_placeholder_url())[
@@ -72,7 +72,7 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar_smaller(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=50)
 
             return get_thumbnailer(utils.get_placeholder_url())[
@@ -85,7 +85,7 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar_smallest(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=25)
 
             return get_thumbnailer(utils.get_placeholder_url())[

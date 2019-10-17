@@ -13,9 +13,6 @@
     {% endif %}
     <div class="flexrow">
       <div class="flexcol flex__3">
-        {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
-        {% include 'punkweb_boards/themes/punkweb/components/shoutbox/shoutbox.html' %}
-        {% endif %}
         {% for category in categories %}
         <a name="{{category.parent.name}}"></a>
         <div class="panel">
@@ -217,7 +214,4 @@
 {% block extrascript %}
 {{ block.super }}
 <script src="{% static 'punkweb_boards/js/ui/modal.js' %}"></script>
-{% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
-<script src="{% static 'punkweb_boards/js/shoutbox.js' %}"></script>
-{% endif %}
 {% endblock %}

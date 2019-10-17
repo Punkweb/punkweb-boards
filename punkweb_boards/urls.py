@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 import django.contrib.auth.views as auth_views
 
 from punkweb_boards.conf.settings import BOARD_THEME
@@ -8,6 +8,7 @@ app_name = "board"
 
 urlpatterns = [
     url(r"^$", views.index_view, name="index"),
+    url(r"^page/", include('punkweb_boards.page_urls')),
     url(r"^unpermitted/$", views.unpermitted_view, name="unpermitted"),
     url(r"^register/$", views.registration_view, name="register"),
     url(
@@ -60,27 +61,6 @@ urlpatterns = [
         r"^delete_category/(?P<pk>[^/]+)/$",
         views.category_delete,
         name="category-delete",
-    ),
-    url(r"^inbox/$", views.conversation_list, name="conversation-list"),
-    url(
-        r"^conversation/(?P<pk>[^/]+)/$",
-        views.conversation_detail,
-        name="conversation",
-    ),
-    url(
-        r"^create_conversation",
-        views.conversation_create,
-        name="conversation-create",
-    ),
-    url(
-        r"^update_message/(?P<pk>[^/]+)/$",
-        views.message_update,
-        name="message-update",
-    ),
-    url(
-        r"^delete_message/(?P<pk>[^/]+)/$",
-        views.message_delete,
-        name="message-delete",
     ),
     url(r"^thread/(?P<pk>[^/]+)/?$", views.thread_view, name="thread"),
     url(

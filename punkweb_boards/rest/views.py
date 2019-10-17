@@ -1,69 +1,50 @@
 import datetime
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, mixins, views
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken as OriginalObtain
-from rest_framework.decorators import list_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from punkweb_boards.models import (
+    BoardProfile,
     Category,
     Subcategory,
     Thread,
     Post,
     Conversation,
     Message,
-    Report,
     Shout,
 )
 from punkweb_boards.rest.serializers import (
+    BoardProfileSerializer,
     CategorySerializer,
     SubcategorySerializer,
     ThreadSerializer,
     PostSerializer,
+    ConversationSerializer,
     MessageSerializer,
     ShoutSerializer,
-    ConversationSerializer,
-    UserSerializer,
 )
 from punkweb_boards.rest.permissions import IsTargetUser, BelongsToUser
 from punkweb_boards import queries
 
 
-class UserViewSet(
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.ListModelMixin,
-    viewsets.GenericViewSet,
+class BoardProfileViewSet(
+    mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 ):
-    queryset = get_user_model().objects.order_by("username")
-    serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated, IsTargetUser)
+    queryset = BoardProfile.objects.all()
+    serializer_class = BoardProfileSerializer
 
-    @list_route()
-    def from_token(self, request, *args, **kwargs):
-        token_string = request.query_params.get("token")
-        if not token_string:
-            return Response("Token query param required", status=400)
+    def get_queryset(self):
+        qs = self.queryset
+        return qs.all()
 
-        token = get_object_or_404(Token, key=token_string)
-        self.kwargs["pk"] = token.user_id
-        user = self.get_object()
-        return Response(self.get_serializer(user).data)
-
-
-class ObtainAuthToken(OriginalObtain):
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key, "id": user.id})
-
-
-obtain_auth_token = ObtainAuthToken.as_view()
+    @action(detail=False, methods=['get'])
+    def online(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        profiles = qs.all()
+        online = [profile for profile in profiles if profile.online()]
+        serializer = self.get_serializer(online, many=True)
+        return Response(serializer.data, status=200)
 
 
 class CategoryViewSet(
@@ -134,6 +115,11 @@ class ThreadViewSet(
         if subcategory_id:
             qs = qs.filter(category__id=subcategory_id)
         return qs.all()
+
+    @action(detail=False, methods=['get'])
+    def recent_threads(self, request, *args, **kwargs):
+        recent_threads = self.get_queryset().all().order_by("-created")
+        return Response(self.get_serializer(recent_threads[:5], many=True).data)
 
     def perform_create(self, serializer):
         if (

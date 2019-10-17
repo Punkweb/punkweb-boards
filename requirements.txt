@@ -3,7 +3,6 @@ django-precise-bbcode
 easy-thumbnails
 pillow
 
-django-simple-captcha
 djangorestframework
 django-cors-headers
 django-compressor

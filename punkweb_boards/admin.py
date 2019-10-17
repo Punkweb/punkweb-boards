@@ -94,11 +94,10 @@ class MessageForm(forms.ModelForm):
 
 class BoardProfileAdmin(admin.ModelAdmin):
     form = BoardProfileForm
-    list_display = ("get_username", "get_email")
+    list_display = ("get_username",)
     ordering = ("user__username",)
     fields = (
         "get_username",
-        "get_email",
         "gender",
         "birthday",
         "ranks",
@@ -113,7 +112,6 @@ class BoardProfileAdmin(admin.ModelAdmin):
     )
     readonly_fields = (
         "get_username",
-        "get_email",
         "avatar_thumbnail",
         "rendered_signature",
         "rendered_username",
@@ -124,12 +122,6 @@ class BoardProfileAdmin(admin.ModelAdmin):
 
     get_username.short_description = "Username"
     get_username.admin_order_field = "user__username"
-
-    def get_email(self, obj):
-        return obj.user.email
-
-    get_email.short_description = "Email"
-    get_email.admin_order_field = "user__email"
 
     class Media:
         js = JAVASCRIPT_FILES

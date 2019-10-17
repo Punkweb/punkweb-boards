@@ -29,11 +29,6 @@
         <div class="thread__user__lastseen">Last Seen: {% if user.profile.last_seen %}{{ user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
         <br>
 
-        <h4>Email</h4>
-        <div>{{user.email}}</div>
-
-        <br>
-
         <h4>Gender</h4>
         <div>
           {% if user.profile.gender %}

@@ -57,9 +57,6 @@ USER_LASTSEEN_TIMEOUT = SETTINGS_OVERRIDES.get(
     "USER_LASTSEEN_TIMEOUT", 60 * 60 * 24 * 7
 )
 
-# Require captcha on registration
-CAPTCHAS_ENABLED = SETTINGS_OVERRIDES.get("CAPTCHAS_ENABLED", False)
-
 # TODO: FUTURE ----------------------------------------------------------------
 
 GLOBAL_BIRTHDAYS = SETTINGS_OVERRIDES.get("GLOBAL_BIRTHDAYS", True)

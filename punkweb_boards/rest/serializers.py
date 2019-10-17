@@ -1,7 +1,7 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from punkweb_boards.conf.settings import SHOUTBOX_DISABLED_TAGS
 from punkweb_boards.models import (
+    BoardProfile,
     Category,
     Subcategory,
     Thread,
@@ -13,23 +13,15 @@ from punkweb_boards.models import (
 )
 
 
-class UserSerializer(serializers.ModelSerializer):
-    rendered_username = serializers.ReadOnlyField()
-    rendered_rank = serializers.ReadOnlyField()
+class BoardProfileSerializer(serializers.ModelSerializer):
     post_count = serializers.ReadOnlyField()
     can_shout = serializers.ReadOnlyField()
+    rendered_username = serializers.ReadOnlyField()
+    rendered_rank = serializers.ReadOnlyField()
 
     class Meta:
-        model = get_user_model()
-        exclude = ("password", "groups", "user_permissions")
-        read_only_fields = (
-            "last_login",
-            "date_joined",
-            "is_staff",
-            "is_superuser",
-            "email",
-            "username",
-        )
+        model = BoardProfile
+        fields = "__all__"
 
 
 class CategorySerializer(serializers.ModelSerializer):

@@ -8,14 +8,14 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name="punkweb_boards",
-    version="0.0.8",
+    version="0.0.9",
     packages=find_packages(),
     include_package_data=True,
     description="Django forum boards with bbcode support.",
     long_description=README,
     url="https://punkweb.net/",
     author="Punkweb",
-    author_email="Punkweb <djangoboards@gmail.com>",
+    author_email="Punkweb <punkwebnet@gmail.com>",
     classifiers=[
         "Environment :: Web Environment",
         "Framework :: Django",
