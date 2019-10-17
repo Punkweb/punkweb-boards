@@ -193,8 +193,6 @@ def registration_view(request):
 
 
 def my_profile(request):
-    # Redirect to unpermitted page if requesting user
-    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect("board:unpermitted")
 
@@ -207,8 +205,6 @@ def my_profile(request):
 
 
 def settings_view(request):
-    # Redirect to unpermitted page if requesting user
-    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect("board:unpermitted")
 
@@ -242,8 +238,6 @@ def profile_view(request, username):
     except get_user_model().DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if requesting user
-    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect("board:unpermitted")
 
@@ -267,8 +261,6 @@ def category_detail(request, pk):
     except Category.DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if the requesting user does not have view
-    # permissions on this category.
     if not category.can_view(request.user):
         return redirect("board:unpermitted")
 
@@ -379,8 +371,6 @@ def subcategory_detail(request, pk):
     except Subcategory.DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if the requesting user does not have view
-    # permissions on this subcategory.
     if not category.can_view(request.user):
         return redirect("board:unpermitted")
 
@@ -453,8 +443,6 @@ def thread_view(request, pk):
 
 def thread_create(request, category_id):
     subcategory = Subcategory.objects.get(id=category_id)
-    # Redirect to unpermitted page if the requesting user does not have post
-    # permission in this category.
     if not subcategory.can_post(request.user):
         return redirect("board:unpermitted")
 
@@ -480,8 +468,6 @@ def thread_update(request, pk):
     except Thread.DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if the requesting user does not have edit
-    # permissions on this thread.
     if not instance.can_edit(request.user):
         return redirect("board:unpermitted")
 
@@ -507,8 +493,6 @@ def thread_delete(request, pk):
     except Thread.DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if the requesting user does not have edit
-    # permissions on this thread.
     if not instance.can_edit(request.user):
         return redirect("board:unpermitted")
 
@@ -531,8 +515,6 @@ def post_update(request, pk):
     except Post.DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if the requesting user does not have edit
-    # permissions on this post.
     if not instance.can_edit(request.user):
         return redirect("board:unpermitted")
 
@@ -558,8 +540,6 @@ def post_delete(request, pk):
     except Post.DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if the requesting user does not have edit
-    # permissions on this post.
     if not instance.can_edit(request.user):
         return redirect("board:unpermitted")
 
@@ -577,8 +557,6 @@ def post_delete(request, pk):
 
 
 def reports_list(request):
-    # Redirect to unpermitted page if requesting user
-    # is not logged in or is banned or is not an admin
     if (
         not request.user.is_authenticated
         or not request.user.is_staff
@@ -600,8 +578,6 @@ def report_view(request, pk):
     except Report.DoesNotExist:
         return redirect("board:not-found")
 
-    # Redirect to unpermitted page if requesting user
-    # is not logged in or is banned or is not an admin
     if (
         not request.user.is_authenticated
         or not request.user.is_staff
@@ -632,8 +608,6 @@ def report_create(request, thread=None, post=None):
     if post:
         post_obj = Post.objects.get(id=post)
         context.update({"post": post_obj})
-    # Redirect to unpermitted page if requesting user
-    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect("board:unpermitted")
 
@@ -672,8 +646,6 @@ def notification_redirect(request, pk):
 
 
 def members_list(request):
-    # Redirect to unpermitted page if requesting user
-    # is not logged in or is banned
     if not request.user.is_authenticated or request.user.profile.is_banned:
         return redirect("board:unpermitted")
 
@@ -686,15 +658,6 @@ def members_list(request):
     return render(
         request,
         "punkweb_boards/themes/{}/members_list.html".format(BOARD_THEME),
-        context,
-    )
-
-
-def statistics_view(request):
-    context = {}
-    return render(
-        request,
-        "punkweb_boards/themes/{}/statistics.html".format(BOARD_THEME),
         context,
     )
 

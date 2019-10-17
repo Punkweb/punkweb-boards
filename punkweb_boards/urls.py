@@ -97,7 +97,6 @@ urlpatterns = [
         name="report-post",
     ),
     url(r"^members/$", views.members_list, name="members-list"),
-    url(r"^statistics/$", views.statistics_view, name="statistics"),
     url(
         r"^notification_redirect/(?P<pk>[^/]+)/$",
         views.notification_redirect,

@@ -28,7 +28,6 @@ from punkweb_boards.rest.views import (
     ConversationViewSet,
     MessageViewSet,
     ShoutViewSet,
-    StatisticsView,
 )
 
 from example_project.rest.views import obtain_auth_token, UserViewSet, UserCreateView
