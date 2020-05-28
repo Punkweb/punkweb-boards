@@ -20,15 +20,15 @@ from example_project.rest.views import (
 
 router = routers.DefaultRouter()
 
-router.register(r"board/categories", CategoryViewSet, base_name="categories")
-router.register(r"board/subcategories", SubcategoryViewSet, base_name="subcategories")
-router.register(r"board/threads", ThreadViewSet, base_name="threads")
-router.register(r"board/posts", PostViewSet, base_name="posts")
-router.register(r"board/conversations", ConversationViewSet, base_name="conversations")
-router.register(r"board/messages", MessageViewSet, base_name="messages")
-router.register(r"board/shouts", ShoutViewSet, base_name="shouts")
-router.register(r"board/profiles", BoardProfileViewSet, base_name="profiles")
-router.register(r"users", UserViewSet, base_name="users")
+router.register(r"board/categories", CategoryViewSet, "categories")
+router.register(r"board/subcategories", SubcategoryViewSet, "subcategories")
+router.register(r"board/threads", ThreadViewSet, "threads")
+router.register(r"board/posts", PostViewSet, "posts")
+router.register(r"board/conversations", ConversationViewSet, "conversations")
+router.register(r"board/messages", MessageViewSet, "messages")
+router.register(r"board/shouts", ShoutViewSet, "shouts")
+router.register(r"board/profiles", BoardProfileViewSet, "profiles")
+router.register(r"users", UserViewSet, "users")
 
 urlpatterns = [
     url(r"^", include(router.urls)),
