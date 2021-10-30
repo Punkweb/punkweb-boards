@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="pageHeader">
-  <div class="djcontainer">
+  <div class="container">
     <div class="pageHeader__flex">
       <div class="pageHeader__left">
         <div class="pageHeader__title">{{this_user.username}}</div>
@@ -22,19 +22,12 @@
   </div>
 </div>
 <div class="main">
-  <div class="djcontainer">
+  <div class="container">
     <div class="panel">
       <div class="panel__body padding">
-        <center>
-          <img src="{{this_user.profile.avatar}}">
-          <h2>{{this_user.profile.rendered_username}}</h2>
-          <div class="thread__user__lastseen">Last Seen: {% if this_user.profile.last_seen %}{{ this_user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
-        </center>
-        <br>
-
-        <h4>Email</h4>
-        <div>{{this_user.email}}</div>
-
+        <img src="{{this_user.profile.avatar}}">
+        <h2>{{this_user.profile.rendered_username}}</h2>
+        <div class="thread__user__lastseen">Last Seen: {% if this_user.profile.last_seen %}{{ this_user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
         <br>
 
         <h4>Gender</h4>
@@ -69,7 +62,7 @@
         <h4>Signature</h4>
         <div>
           {% if this_user.profile.signature %}
-          {{profile.signature.rendered}}
+          {{this_user.profile.signature.rendered}}
           {% else %}
           Not set
           {% endif %}
@@ -95,7 +88,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for thread in profile.threads.all %}
+              {% for thread in this_user.threads.all %}
               <tr>
                 <td class="align-left">
                   <div>
@@ -112,7 +105,7 @@
                 </td>
                 <td class="align-right hidden-xs">
                   {% if thread.last_post %}
-                  <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.rendered_username}}</a></div>
+                  <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.profile.rendered_username}}</a></div>
                   <div>{{thread.last_post.created|date:"d M Y, g:i A"}}</div>
                   {% else %}
                   <div>No Posts</div>
@@ -143,7 +136,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for post in profile.posts.all %}
+              {% for post in this_user.posts.all %}
               <tr>
                 <td class="align-left">
                   <a href="{{post.get_absolute_url}}">

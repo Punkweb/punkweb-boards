@@ -1,0 +1,44 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}Create Category{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="container">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">{{category.name}}</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li>Create Category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="container">
+    <div class="panel">
+      <div class="panel__header">
+        <div class="panel__title">Create New Category</div>
+      </div>
+      <div class="panel__body padding">
+        <h2>Create New Category</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ category_form.as_p }}
+          <button class="button-green" type="submit"><i class="fa fa-plus fa-fw"></i> Create Category</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrascript %}
+{{ block.super }}
+<script src="{% static 'punkweb_boards/js/ui/modal.js' %}"></script>
+{% endblock %}

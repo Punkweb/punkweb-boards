@@ -2,7 +2,7 @@
 html, body, p, code:before, table {
   margin: 0;
   padding: 0;
-  font-family: 'Open-Sans';
+  font-family: 'Open Sans';
   font-size: calc(.875rem + (16 - 14) * (100vw - 20rem) / (1440 - 320));;
   color: black;
 }
@@ -38,25 +38,25 @@ ul, ol {
 }
 
 table, td {
-  border: 1px solid #white;
+  border: 1px solid white;
   empty-cells: show;
 }
 
 code:before {
-  position: absolute;
   content: 'Code:';
+  position: absolute;
   top: -1.35em;
   left: 0;
 }
 
 code {
-  margin-top: 1.5em;
-  position: relative;
   background: #eee;
   border: 1px solid #aaa;
-  white-space: pre;
-  padding: .25em;
   display: block;
+  margin-top: 1.5em;
+  padding: .25em;
+  position: relative;
+  white-space: pre;
 }
 
 .ie6 code, .ie7 code {
@@ -71,21 +71,21 @@ code:before, code {
 blockquote {
   background: #eee;
   border: 1px solid #aaa;
-  position: relative;
   margin: .25em 0;
   padding: .25em;
+  position: relative;
 }
 
 blockquote cite {
-  font-weight: bold;
+  border-bottom: 2px solid $hr;
   display: block;
   font-size: 1em;
-  border-bottom: 2px solid $hr;
+  font-weight: bold;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 /* Prevent empty paragraphs from collapsing */
@@ -94,7 +94,7 @@ div, p {
 }
 
 @font-face {
-  font-family: 'Open-Sans';
+  font-family: 'Open Sans';
   src: url('../fonts/OpenSans-Regular.ttf');
   font-weight: normal;
   font-style: normal;

@@ -2,13 +2,13 @@ html, body {
   background: $body-background;
 }
 
-hr {
-  border: 0;
-  height: 2px;
-  background: $hr;
+.page-wrap {
+  min-height: 100vh;
 }
 
-@include link($primary-link, null, true, true);
+.main {
+  margin: 1rem 0;
+}
 
 .errorlist {
   li {
@@ -17,7 +17,9 @@ hr {
 }
 
 .helptext {
+  color: lighten($default-text, 25%);
   display: block;
+  font-size: .8em;
   padding-top: .5rem;
 }
 
@@ -46,38 +48,6 @@ hr {
   width: 8px;
 }
 
-
-.button {
-  @include button($oc-gray-7, white);
-  &-primary {
-    @include button($primary, white);
-  }
-  &-green {
-    @include button($oc-green-8, white);
-  }
-  &-red {
-    @include button($oc-red-9, white);
-  }
-  &-orange {
-    @include button($oc-orange-9, white);
-  }
-}
-
-.button-hollow {
-  @include button-hollow($oc-gray-7, white);
-  &-primary {
-    @include button-hollow($primary, white);
-  }
-  &-green {
-    @include button-hollow($oc-green-7, white);
-  }
-  &-red {
-    @include button-hollow($oc-red-9, white);
-  }
-  &-orange {
-    @include button-hollow($oc-orange-7, white);
-  }
-}
 
 .nav {
   width: 100%;
@@ -128,6 +98,7 @@ hr {
     @include noselect;
     @include bold;
     @include font-range(20, 24);
+    // @include sans;
     color: $main-nav-title !important;
     padding: 1.5rem 0;
     margin: 0 0.5rem;
@@ -169,6 +140,7 @@ hr {
   &__flex {
     display: flex;
     flex-direction: row;
+    padding: 0 .5rem;
   }
 
   &__left {
@@ -187,63 +159,12 @@ hr {
   }
 }
 
-.breadcrumb {
-  @include no-disc;
-  @include font-range(11, 13);
-
-  li {
-    color: $breadcrumb-active;
-    display: inline;
-
-    a {
-      color: $breadcrumb-link;
-    }
-  }
-
-  li+li:before {
-    color: $breadcrumb-separator;
-    content: "/\00a0";
-    margin: 0 0.5rem;
-  }
-}
-
-.page-wrap {
-  min-height: 100vh;
-}
-
-.main {
-  margin: 1rem 0;
-}
-
-.djcontainer {
-  box-sizing: border-box;
-  padding: 0 0.5rem;
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-}
-
 .post-editor, .shout-editor {
   min-width: 240px;
   max-width: 800px;
   width: 100%;
   min-height: 300px;
   max-height: 600px;
-}
-
-.pagination {
-  @include font-range(14, 16);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding-left: 0;
-  list-style: none;
-
-  li {
-    padding: 0.5rem;
-    cursor: pointer;
-  }
 }
 
 .badge {
@@ -258,91 +179,6 @@ hr {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25rem;
-}
-
-
-.panel {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
-  color: $panel-text;
-  margin-bottom: 1rem;
-  opacity: $panel-opacity;
-
-  &__header {
-    @include medium;
-    @include font-range(12, 14);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: $panel-header;
-    padding: 1rem 0.75rem;
-  }
-  &__title {
-    @include bold;
-    @include font-range(12, 14);
-    color: $panel-title;
-    a {
-      color: $panel-title;
-    }
-  }
-  &__body {
-    @include font-range(12, 14);
-    background-color: $panel-body;
-    color: $panel-text;
-    a {
-      color: $primary-link;
-    }
-  }
-  &__footer {
-    @include font-range(12, 14);
-    background-color: $panel-footer;
-    color: white;
-    padding: 0.75rem;
-  }
-}
-
-.table {
-  border-collapse: collapse;
-
-  thead {
-    background-color: $table-header;
-    color: $table-header-text;
-    tr {
-      th {
-        @include medium;
-        @include font-range(12, 14);
-        padding: 1rem;
-        a {
-          color: $table-header-link;
-        }
-      }
-      td {
-        @include font-range(12, 14);
-      }
-    }
-  }
-  tbody {
-    background-color: $table-body;
-    color: $table-body-text;
-    tr {
-      th {
-        @include font-range(12, 14);
-      }
-      td {
-        @include font-range(12, 14);
-        padding: 1rem;
-        vertical-align: top;
-        a {
-          color: $table-body-link;
-        }
-      }
-      &:not(:last-of-type) {
-        border-bottom: 2px solid $hr;
-      }
-    }
-    .vertically-centered {
-      vertical-align: middle;
-    }
-  }
 }
 
 .footer {
@@ -393,70 +229,14 @@ hr {
   }
 }
 
-label {
-  display: block;
-}
-
-input, select, textarea {
-  background-color: transparent;
-  color: inherit;
-  border: 1px solid $hr;
-  border-radius: 2px;
-  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
-  display: inline-block;
-  margin: 0;
-  font-family: sans-serif;
-  font-size: 16px;
-  outline: none;
-  padding: 0.25em 0.5rem;
-  transition: 0.25s ease-in-out;
-  width: auto;
-  @include placeholder {
-    color: $input-placeholder;
-  }
-  &:focus {
-    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1), 0px 0px 6px $primary;
-    border-color: $primary;
-    outline: none;
-  }
-}
-
-input[type=button], input[type=submit] {
-  display: inline-block;
-}
-
 .sidebar {
   margin-left: 1rem;
-}
+  min-width: 200px;
 
-.flex {
-  display: flex;
-  &__row {
-    flex-direction: row;
+  &--left {
+    margin-left: 0;
+    margin-right: 1rem;
   }
-  &__column {
-    flex-direction: column;
-  }
-  &__align-center {
-    align-items: center;
-  }
-  &__justify-center {
-    justify-content: center;
-  }
-}
-
-.flexrow {
-  display: flex;
-  flex-direction: row;
-}
-
-.flexcol {
-  display: flex;
-  flex-direction: column;
-}
-
-.full-width {
-  width: 100%;
 }
 
 .search {
@@ -484,7 +264,6 @@ input[type=button], input[type=submit] {
   }
 }
 
-
 .thread {
   display: flex;
   flex-direction: row;
@@ -507,9 +286,9 @@ input[type=button], input[type=submit] {
     }
     &__rank {
       @include font-range(11, 13);
-      background: $primary;
+      background: mix(black, $primary, 30%);
       border-radius: 4px;
-      color: white;
+      color: $oc-gray-2;
       padding: .75em .125em;
       margin: .75em 0 0;
       text-align: center;
@@ -553,14 +332,9 @@ input[type=button], input[type=submit] {
   overflow-wrap: break-word;
   padding: .5rem .5rem 0 .5rem;
   .shout {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     padding: .5rem;
     margin: 0;
     max-width: 100%;
-    overflow-wrap: break-word;
-    white-space: pre;
   }
   .shout:not(:last-of-type) {
     border-bottom: 1px solid $hr;
@@ -573,6 +347,35 @@ input[type=button], input[type=submit] {
 
 .statisticsPanel {
   &__list {
-    @include no-disc;
+    &Item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      line-height: 2rem;
+      &:not(:last-of-type) {
+        border-bottom: 1px solid $hr;
+      }
+    }
+  }
+}
+
+.adminModeWarning {
+  display: block;
+  background-color: $oc-gray-9;
+  color: $default-text-on-dark;
+  border-radius: 4px;
+  opacity: .85;
+  width: 320px;
+  padding: .5rem .75rem;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  h1 {
+    font-size: 12px;
+  }
+  p {
+    font-size: 10px;
+    margin: .25rem 0;
   }
 }

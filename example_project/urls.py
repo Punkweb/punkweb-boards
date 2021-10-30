@@ -17,11 +17,27 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework import routers
+
+from punkweb_boards.rest.views import (
+    BoardProfileViewSet,
+    CategoryViewSet,
+    SubcategoryViewSet,
+    ThreadViewSet,
+    PostViewSet,
+    ConversationViewSet,
+    MessageViewSet,
+    ShoutViewSet,
+)
+
+from example_project.rest.views import (
+    obtain_auth_token,
+    UserViewSet,
+    UserCreateView,
+)
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^board/', include('punkweb_boards.urls')),
-    url(r'^board/page/', include('punkweb_boards.page_urls')),
-    url(r'^board/api/', include('punkweb_boards.rest.urls')),
-    url(r'^captcha/', include('captcha.urls')),
+    url(r"^admin/", admin.site.urls),
+    url(r"^board/", include("punkweb_boards.urls")),
+    url(r"^api/", include("example_project.rest.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

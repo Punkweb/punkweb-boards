@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="pageHeader">
-  <div class="djcontainer">
+  <div class="container">
     <div class="pageHeader__flex">
       <div class="pageHeader__left">
         <div class="pageHeader__title">{{user.username}}</div>
@@ -21,19 +21,12 @@
   </div>
 </div>
 <div class="main">
-  <div class="djcontainer">
+  <div class="container">
     <div class="panel">
       <div class="panel__body padding">
-        <center>
-          <img src="{{user.profile.avatar}}">
-          <div></div><h2>{{user.profile.rendered_username}}</h2>
-          <div class="thread__user__lastseen">Last Seen: {% if user.profile.last_seen %}{{ user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
-        </center>
-        <br>
-
-        <h4>Email</h4>
-        <div>{{user.email}}</div>
-
+        <img src="{{user.profile.avatar}}">
+        <div></div><h2>{{user.profile.rendered_username}}</h2>
+        <div class="thread__user__lastseen">Last Seen: {% if user.profile.last_seen %}{{ user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
         <br>
 
         <h4>Gender</h4>

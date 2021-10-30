@@ -37,11 +37,17 @@
 .padding-right {
   padding-right: 1rem;
 }
+.padding-horiz {
+  padding: 0 1rem;
+}
 .padding-top {
   padding-top: 1rem;
 }
 .padding-bottom {
   padding-bottom: 1rem;
+}
+.padding-vert {
+  padding: 1rem 0;
 }
 /* Margin classes
 *******************************************************************************/
@@ -57,9 +63,50 @@
 .margin-right {
   margin-right: 1rem;
 }
+.margin-horiz {
+  margin: 0 1rem;
+}
 .margin-top {
   margin-top: 1rem;
 }
 .margin-bottom {
   margin-bottom: 1rem;
+}
+.margin-vert {
+  margin: 1rem 0;
+}
+/* Flex classes
+*******************************************************************************/
+.flex {
+  &row {
+    display: flex;
+    flex-direction: row;
+  }
+  &col {
+    display: flex;
+    flex-direction: column;
+  }
+  &__align-center {
+    align-items: center;
+  }
+  &__justify-center {
+    justify-content: center;
+  }
+  &__1 { flex: 1; }
+  &__2 { flex: 2; }
+  &__3 { flex: 3; }
+  &__4 { flex: 4; }
+  &__5 { flex: 5; }
+  &__6 { flex: 6; }
+  &__7 { flex: 7; }
+  &__8 { flex: 8; }
+  &__9 { flex: 9; }
+  &__10 { flex: 10; }
+  &__11 { flex: 11; }
+  &__12 { flex: 12; }
+}
+
+
+.full-width {
+  width: 100%;
 }

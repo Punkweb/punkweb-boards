@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block title %}{{thread.title}}{% endblock %}
-{% block meta_description %}{{thread.content.rendered|striptags|truncatewords:160}}{% endblock %}
+{% block meta_description %}{{thread.content.rendered|striptags|truncatechars:160}}{% endblock %}
 
 {% block content %}
 <div class="pageHeader">
-  <div class="djcontainer">
+  <div class="container">
     <div class="pageHeader__flex">
       <div class="pageHeader__left">
         <div class="pageHeader__title">{{thread.title}}</div>
@@ -14,8 +14,8 @@
       <div class="pageHeader__right">
         <ul class="breadcrumb">
           <li><a href="{% url 'board:index' %}">Board</a></li>
-          <li><a href="{% url 'board:category' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
-          <li><a href="{% url 'board:subcategory' thread.category.id %}">{{thread.category.name}}</a></li>
+          <li><a href="{% url 'board:category-detail' thread.category.parent.id %}">{{thread.category.parent.name}}</a></li>
+          <li><a href="{% url 'board:subcategory-detail' thread.category.id %}">{{thread.category.name}}</a></li>
           <li>Thread</li>
         </ul>
       </div>
@@ -23,7 +23,7 @@
   </div>
 </div>
 <div class="main">
-  <div class="djcontainer">
+  <div class="container">
     {% if posts.num_pages %}
     <center>
       <nav class="margin">
@@ -69,7 +69,7 @@
             </div>
             <div class="thread__user__posts">Posts: {{thread.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date: <br/> {{thread.user.profile.created|date:'m/d/y'}}
+              Join date:<br/>{{thread.user.profile.created|date:'m/d/y'}}
             </div>
             {% for rank in thread.user.profile.ranks.all %}
             <div class="thread__user__rank">
@@ -126,13 +126,15 @@
             <div class="thread__user__name">
               {% if post.user.profile.online %}<div class="onlineDot"></div>{% endif %} <a href="{% url 'board:profile' post.user.username %}">{{post.user.profile.rendered_username}}</a>
             </div>
-            <div class="thread__user__rank">
-              {{post.user.profile.rank|default_if_none:'Rookie'}}
-            </div>
             <div class="thread__user__posts">Posts: {{post.user.profile.post_count}}</div>
             <div class="thread__user__membersince">
-              Join date: {{post.user.profile.created|date:'m/d/y'}}
+              Join date:<br>{{post.user.profile.created|date:'m/d/y'}}
             </div>
+            {% for rank in post.user.profile.ranks.all %}
+            <div class="thread__user__rank">
+              {{rank.title}}
+            </div>
+            {% endfor %}
           </div>
           <div class="thread__body">
             <div class="thread__content">

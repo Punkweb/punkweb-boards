@@ -30,11 +30,15 @@ class UUIDPrimaryKey(models.Model):
 
 class UpvoteDownvoteMixin(models.Model):
     upvoted_by = models.ManyToManyField(
-        get_user_model(), related_name='%(app_label)s_%(class)s_upvoted',
-        blank=True)
+        get_user_model(),
+        related_name="%(app_label)s_%(class)s_upvoted",
+        blank=True,
+    )
     downvoted_by = models.ManyToManyField(
-        get_user_model(), related_name='%(app_label)s_%(class)s_downvoted',
-        blank=True)
+        get_user_model(),
+        related_name="%(app_label)s_%(class)s_downvoted",
+        blank=True,
+    )
 
     class Meta:
         abstract = True
@@ -44,38 +48,52 @@ class AvatarImagesMixin(models.Model):
     @property
     def avatar(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=200)
-            return get_thumbnailer(utils.get_placeholder_url())['avatar'].url
+
+            return get_thumbnailer(utils.get_placeholder_url())["avatar"].url
+
         else:
-            return self.image['avatar'].url
+            return self.image["avatar"].url
 
     @property
     def avatar_small(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=100)
-            return get_thumbnailer(utils.get_placeholder_url())['avatar_small'].url
+
+            return get_thumbnailer(utils.get_placeholder_url())[
+                "avatar_small"
+            ].url
+
         else:
-            return self.image['avatar_small'].url
+            return self.image["avatar_small"].url
 
     @property
     def avatar_smaller(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=50)
-            return get_thumbnailer(utils.get_placeholder_url())['avatar_smaller'].url
+
+            return get_thumbnailer(utils.get_placeholder_url())[
+                "avatar_smaller"
+            ].url
+
         else:
-            return self.image['avatar_smaller'].url
+            return self.image["avatar_smaller"].url
 
     @property
     def avatar_smallest(self):
         if not self.image:
-            if utils.has_gravatar(self.user.email):
+            if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=25)
-            return get_thumbnailer(utils.get_placeholder_url())['avatar_smallest'].url
+
+            return get_thumbnailer(utils.get_placeholder_url())[
+                "avatar_smallest"
+            ].url
+
         else:
-            return self.image['avatar_smallest'].url
+            return self.image["avatar_smallest"].url
 
     class Meta:
         abstract = True

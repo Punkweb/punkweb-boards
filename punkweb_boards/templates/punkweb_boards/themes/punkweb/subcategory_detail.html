@@ -1,0 +1,146 @@
+{% extends 'punkweb_boards/themes/punkweb/base.html' %}
+{% load static %}
+
+{% block title %}{{category.name}}{% endblock %}
+{% block meta_description %}{{category.description.rendered|striptags|truncatechars:160}}{% endblock %}
+
+{% block content %}
+<div class="pageHeader">
+  <div class="container">
+    <div class="pageHeader__flex">
+      <div class="pageHeader__left">
+        <div class="pageHeader__title">{{category.name}}</div>
+      </div>
+      <div class="pageHeader__right">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'board:index' %}">Board</a></li>
+          <li><a href="{% url 'board:category-detail' category.parent.id %}">{{category.parent.name}}</a></li>
+          <li>{{category.name}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="container">
+    {% if can_post %}
+    <div class="margin-bottom">
+      <a class="button" href="{% url 'board:thread-create' category.id %}">
+        <i class="fa fa-pencil-alt fa-fw" aria-hidden="true"></i> Post thread
+      </a>
+    </div>
+    {% else %}
+    <p>You do not have permission to create threads in this category.</p>
+    {% endif %}
+    <div class="panel">
+      <div class="panel__body">
+        <table class="table full-width">
+          <thead>
+            <tr>
+              {% if user.profile.viewing_admin_mode %}
+              <th class="align-center" width="2rem">
+                <input type="checkbox" />
+              </th>
+              {% endif %}
+              <th class="align-left" width="60%">
+                Title/Author
+              </th>
+              <th class="align-center" widht="10%">
+                Replies
+              </th>
+              <th class="align-right hidden-xs" width="30%">
+                Last Post
+              </th>
+            </tr>
+          </thead>
+          <tbody class="striped">
+            {% for thread in threads %}
+            <tr>
+              {% if user.profile.viewing_admin_mode %}
+              <td class="align-center">
+                <input type="checkbox" />
+              </td>
+              {% endif %}
+              <td class="align-left">
+                <div>
+                  {% if thread.pinned %}
+                  <i class="fa fa-thumbtack" aria-hidden="true"></i>
+                  {% endif %}
+                  <a href="{% url 'board:thread' thread.id %}">
+                    {{thread.title}}
+                  </a>
+                  <br />
+                  {{thread.created|date:"d M Y, g:i A"}}
+                </div>
+                <div>by <a href="{% url 'board:profile' thread.user.username %}">{{thread.user.profile.rendered_username}}</a></div>
+              </td>
+              <td class="align-center">
+                <div>{{thread.posts_count}}</div>
+              </td>
+              <td class="align-right hidden-xs">
+                {% if thread.last_post %}
+                <div><a href="{% url 'board:profile' thread.last_post.user.username %}">{{thread.last_post.user.profile.rendered_username}}</a></div>
+                <div>{{thread.last_post.created|date:"d M Y, g:i A"}}</div>
+                {% else %}
+                <div>No Posts</div>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              {% if user.profile.viewing_admin_mode %}
+              <td></td>
+              {% endif %}
+              <td>No threads have been created in this category yet</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <ul class="pagination">
+          {% if threads.has_previous %}
+          <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+          <li><a href="?page={{threads.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+          {% else %}
+          <li class="disabled"><i class="fa fa-angle-double-left"></i></li>
+          <li class="disabled"><i class="fa fa-angle-left"></i></li>
+          {% endif %}
+          {% for page in threads.paginator.page_range %}
+          {% if page == threads.number %}
+          <li class="active"><a>{{page}}</a></li>
+          {% else %}
+          <li><a href="?page={{page}}">{{page}}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if threads.has_next %}
+          <li><a href="?page={{threads.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+          <li><a href="?page={{threads.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+          {% else %}
+          <li class="disabled"><i class="fa fa-angle-right"></i></li>
+          <li class="disabled"><i class="fa fa-angle-double-right"></i></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    {% if user.profile.viewing_admin_mode %}
+    <div class="align-right padding-top padding-bottom">
+      <label for="threadActions">Thread actions:</label>
+      <select name="threadActions" id="">
+        <option disabled selected value> -- select an action -- </option>
+        <option value="">Close</option>
+        <option value="">Open</option>
+        <option value="">Pin</option>
+        <option value="">Delete</option>
+      </select>
+      <label for="threadMove">Move To:</label>
+      <select name="" id="">
+        <option disabled selected value> -- select a subcategory -- </option>
+        {% for sub in category.parent.subcategories %}
+        <option value="">{{sub.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

@@ -4,7 +4,7 @@ $(function() {
       format: 'bbcode',
       toolbar: 'bold,italic,underline,strike|bulletlist,orderedlist,center,horizontalrule|font,size,color,quote,code,link,image,emoticon|date,time|source,maximize,removeformat',
       style: '/static/punkweb_boards/scss/editor.css',
-      fonts: 'Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Open-Sans,Sans-serif,Serif,Storybook,Times New Roman,Trebuchet MS,Verdana,Winterland',
+      fonts: 'Inconsolata,Courier New,Open Sans,Montserrat,Sans-serif,Serif,Storybook,Times New Roman,Winterland',
       autoExpand: true,
       emoticonsEnabled: false,
       emoticonsCompat: true,

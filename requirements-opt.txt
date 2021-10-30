@@ -1,7 +1,0 @@
-django-simple-captcha
-djangorestframework
-django-cors-headers
-django-compressor
-django-libsass
-python-memcached
-psycopg2

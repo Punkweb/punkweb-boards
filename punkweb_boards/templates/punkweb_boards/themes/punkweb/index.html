@@ -7,15 +7,12 @@
 
 {% block content %}
 <div class="main">
-  <div class="djcontainer">
+  <div class="container">
     {% if BOARD_SETTINGS.USER_BIRTHDAY_MESSAGE %}
     {% include 'punkweb_boards/themes/punkweb/components/birthday/birthday.html' %}
     {% endif %}
     <div class="flexrow">
-      <div class="flexcol" style="flex: 3;">
-        {% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
-        {% include 'punkweb_boards/themes/punkweb/components/shoutbox/shoutbox.html' %}
-        {% endif %}
+      <div class="flexcol flex__3">
         {% for category in categories %}
         <a name="{{category.parent.name}}"></a>
         <div class="panel">
@@ -24,7 +21,7 @@
               <thead data-role="collapsible-toggle" data-key="index-category-{{category.parent.id}}">
                 <tr>
                   <th class="align-left" width="40%">
-                    <a href="{% url 'board:category' category.parent.id %}">{{category.parent.name}}</a>
+                    <a href="{% url 'board:category-detail' category.parent.id %}">{{category.parent.name}}</a>
                   </th>
                   <th class="align-center" width="10%">
                     Threads
@@ -41,7 +38,7 @@
                 {% for child in category.children %}
                 <tr>
                   <td class="align-left">
-                    <div><a href="{% url 'board:subcategory' child.id %}">{{child.name}}</a></div>
+                    <div><a href="{% url 'board:subcategory-detail' child.id %}">{{child.name}}</a></div>
                     <div>{{child.description.rendered}}</div>
                   </td>
                   <td class="align-center">
@@ -80,8 +77,20 @@
         {% empty %}
         <p>This board doesn't have any categories yet</p>
         {% endfor %}
+        <div class="panel">
+          <div class="panel__header" data-role="collapsible-toggle" data-key="index-users-online">
+            <div class="panel__title">Users Online</div>
+          </div>
+          <div class="panel__body padding" data-role="collapsible" data-key="index-users-online">
+            {% for user in users_online %}
+            <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
+            {% empty %}
+            <span>No users are online</span>
+            {% endfor %}
+          </div>
+        </div>
       </div>
-      <div class="flexcol sidebar" style="flex: 1;">
+      <div class="flexcol flex__1 sidebar">
         <div class="panel">
           <div class="panel__header" data-role="collapsible-toggle" data-key="index-recent-threads">
             <div class="panel__title">Recent Threads</div>
@@ -148,50 +157,47 @@
                 <td>
                   <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
                 </td>
-              </tr>
               {% empty %}
-              <span>No staff members are online</span>
+                <td>
+                  <span>No staff members are online</span>
+                </td>
+              </tr>
               {% endfor %}
             </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="flexrow">
-      <div class="flexcol" style="flex: 1;">
-        <div class="panel">
-          <div class="panel__header" data-role="collapsible-toggle" data-key="index-users-online">
-            <div class="panel__title">Users Online</div>
-          </div>
-          <div class="panel__body padding" data-role="collapsible" data-key="index-users-online">
-            {% for user in users_online %}
-            <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
-            {% empty %}
-            <span>No users are online</span>
-            {% endfor %}
           </div>
         </div>
         <a name="statistics"></a>
         <div class="panel statisticsPanel">
           <div class="panel__header" data-role="collapsible-toggle" data-key="index-statistics">
-            <div class="panel__title"><a href="{% url 'board:statistics' %}">Statistics</a></div>
+            <div class="panel__title">Statistics</div>
           </div>
           <div class="panel__body padding" data-role="collapsible" data-key="index-statistics">
-            <ul class="statisticsPanel__list">
-              <li style="display: inline">Total posts {{total_posts}} •</li>
-              <li style="display: inline">Total threads {{total_threads}} •</li>
-              <li style="display: inline">Total members {{member_count}} •</li>
+            <div class="statisticsPanel__list">
+              <div class="statisticsPanel__listItem">
+                <div class="label">Total posts</div>
+                <div class="value">{{total_posts}}</div>
+              </div>
+              <div class="statisticsPanel__listItem">
+                <div class="label">Total threads</div>
+                <div class="value">{{total_threads}}</div>
+              </div>
+              <div class="statisticsPanel__listItem">
+                <div class="label">Total members</div>
+                <div class="value">{{member_count}}</div>
+              </div>
               {% if newest_member %}
-              <li style="display: inline">
-                Newest member
-                <a href="{% url 'board:profile' newest_member.username %}">
-                  {{newest_member.profile.rendered_username}}
-                </a>
-              </li>
+              <div class="statisticsPanel__listItem">
+                <div class="label">Newest member</div>
+                <div class="value">
+                  <a href="{% url 'board:profile' newest_member.username %}">
+                    {{newest_member.profile.rendered_username}}
+                  </a>
+                </div>
+              </div>
               {% else %}
-              <li style="display: inline">No members</li>
+              <div>No members</div>
               {% endif %}
-            </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -202,7 +208,5 @@
 
 {% block extrascript %}
 {{ block.super }}
-{% if BOARD_SETTINGS.SHOUTBOX_ENABLED %}
-<script src="{% static 'punkweb_boards/js/shoutbox.js' %}"></script>
-{% endif %}
+<script src="{% static 'punkweb_boards/js/ui/modal.js' %}"></script>
 {% endblock %}

@@ -15,8 +15,7 @@
       {% if user.is_staff %}
       <a class="nav--upper__link" href="{% url 'board:reports-list' %}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i> Reports {% if unresolved_reports > 0%}<span class="badge">{{unresolved_reports}}</span>{% endif %}</a>
       {% endif %}
-      <!-- <a class="nav--upper__link" href="{% url 'board:inbox' %}"><i class="fa fa-inbox fa-fw" aria-hidden="true"></i> Inbox {% if unread_conversations > 0%}<span class="badge">{{unread_conversations}}</span>{% endif %}</a> -->
-      <div class="nav--upper__link dropdown">
+      <!-- <div class="nav--upper__link dropdown">
         <i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications {% if unread_notifications > 0%}<span class="badge">{{unread_notifications}}</span>{% endif %}
         <div class="dropdown__content">
           {% for notification in notifications %}
@@ -51,7 +50,7 @@
           </div>
           {% endfor %}
         </div>
-      </div>
+      </div> -->
       <a class="nav--upper__link" href="{% url 'board:me' %}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Account</a>
       <a class="nav--upper__link" href="{% url 'board:settings' %}"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
       {% block upper_right_links %}
