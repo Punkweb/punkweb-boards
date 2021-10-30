@@ -34,5 +34,5 @@ urlpatterns = [
     url(r"^", include(router.urls)),
     url(r"^auth/", include("rest_framework.urls", namespace="rest_framework")),
     url(r"^token-auth/", obtain_auth_token),
-    url(r"^register/", UserCreateView.as_view(), name='create-account'),
+    url(r"^register/", UserCreateView.as_view(), name="create-account"),
 ]

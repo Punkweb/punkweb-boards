@@ -30,7 +30,11 @@ from punkweb_boards.rest.views import (
     ShoutViewSet,
 )
 
-from example_project.rest.views import obtain_auth_token, UserViewSet, UserCreateView
+from example_project.rest.views import (
+    obtain_auth_token,
+    UserViewSet,
+    UserCreateView,
+)
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),

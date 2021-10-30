@@ -38,7 +38,7 @@ class BoardProfileViewSet(
         qs = self.queryset
         return qs.all()
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def online(self, request, *args, **kwargs):
         qs = self.get_queryset()
         profiles = qs.all()
@@ -116,10 +116,12 @@ class ThreadViewSet(
             qs = qs.filter(category__id=subcategory_id)
         return qs.all()
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def recent_threads(self, request, *args, **kwargs):
         recent_threads = self.get_queryset().all().order_by("-created")
-        return Response(self.get_serializer(recent_threads[:5], many=True).data)
+        return Response(
+            self.get_serializer(recent_threads[:5], many=True).data
+        )
 
     def perform_create(self, serializer):
         if (

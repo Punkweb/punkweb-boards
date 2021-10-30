@@ -7,7 +7,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from example_project.rest.permissions import IsTargetUser
-from example_project.rest.serializers import UserCreateSerializer, UserSerializer
+from example_project.rest.serializers import (
+    UserCreateSerializer,
+    UserSerializer,
+)
 
 
 class UserCreateView(views.APIView):
@@ -30,7 +33,7 @@ class UserViewSet(
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated, IsTargetUser)
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def from_token(self, request, *args, **kwargs):
         token_string = request.query_params.get("token")
         if not token_string:

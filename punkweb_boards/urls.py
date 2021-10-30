@@ -8,7 +8,7 @@ app_name = "board"
 
 urlpatterns = [
     url(r"^$", views.index_view, name="index"),
-    url(r"^page/", include('punkweb_boards.page_urls')),
+    url(r"^page/", include("punkweb_boards.page_urls")),
     url(r"^unpermitted/$", views.unpermitted_view, name="unpermitted"),
     url(r"^register/$", views.registration_view, name="register"),
     url(

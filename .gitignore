@@ -121,3 +121,4 @@ $RECYCLE.BIN/
 
 # KDE directory preferences
 .directory
+.python-version
