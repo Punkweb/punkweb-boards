@@ -1,9 +1,3 @@
-sceditor/
-
-checklist.txt
-digitialocean.txt
-
-
 ### Sqlite database
 *.sqlite3
 *.pyc
