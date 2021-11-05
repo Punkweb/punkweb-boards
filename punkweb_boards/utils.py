@@ -30,9 +30,7 @@ def render_example_username(rank, username):
     if not rank:
         return username
 
-    return mark_safe(
-        parser.render(rank.username_modifier.replace("{USER}", username))
-    )
+    return mark_safe(parser.render(rank.username_modifier.replace("{USER}", username)))
 
 
 def render_username(profile):
@@ -80,5 +78,4 @@ def has_gravatar(email):
 
 def get_placeholder_url():
     url = "/".join(["placeholder_profile.png"])
-    # url = '{}placeholder_profile.png'.format(settings.MEDIA_ROOT)
     return url

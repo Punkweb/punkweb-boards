@@ -10,7 +10,6 @@ def settings(request):
             "SHOUTBOX_ENABLED": BOARD_SETTINGS.SHOUTBOX_ENABLED,
             "SIGNATURES_ENABLED": BOARD_SETTINGS.SIGNATURES_ENABLED,
             "USER_BIRTHDAY_MESSAGE": BOARD_SETTINGS.USER_BIRTHDAY_MESSAGE,
-            "GLOBAL_BIRTHDAYS": BOARD_SETTINGS.GLOBAL_BIRTHDAYS,
         }
     }
 
@@ -19,9 +18,7 @@ def base_context(request):
     ctx = {}
     if request.user.is_authenticated and not request.user.profile.is_banned:
         ctx.update({"notifications": request.user.notifications.all()[:5]})
-        ctx.update(
-            {"unread_conversations": request.user.unread_conversations.count()}
-        )
+        ctx.update({"unread_conversations": request.user.unread_conversations.count()})
         ctx.update(
             {
                 "unread_notifications": request.user.notifications.filter(

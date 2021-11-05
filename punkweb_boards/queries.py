@@ -1,4 +1,3 @@
-import datetime
 from django.db import connection
 
 

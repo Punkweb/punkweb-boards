@@ -19,12 +19,6 @@
     <div class="page-wrap">
       {% include 'punkweb_boards/themes/punkweb/includes/nav.html' %}
       {% block content %}{% endblock %}
-      {% if user.profile.viewing_admin_mode %}
-      <div class="adminModeWarning">
-        <h1>Admin mode is currently under development.</h1>
-        <p>You're currently using the admin mode, which is in an experimental phase.  Please report any bugs you run into.</p>
-      </div>
-      {% endif %}
     </div>
     {% include 'punkweb_boards/themes/punkweb/includes/footer.html' %}
   </body>

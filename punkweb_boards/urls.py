@@ -14,9 +14,7 @@ urlpatterns = [
     url(
         r"^login/$",
         auth_views.LoginView.as_view(
-            template_name="punkweb_boards/themes/{}/login.html".format(
-                BOARD_THEME
-            )
+            template_name="punkweb_boards/themes/{}/login.html".format(BOARD_THEME)
         ),
         name="login",
     ),
@@ -35,32 +33,10 @@ urlpatterns = [
         views.category_detail,
         name="category-detail",
     ),
-    url(r"^create_category/$", views.category_create, name="category-create"),
-    url(
-        r"^update_category/(?P<pk>[^/]+)/$",
-        views.category_update,
-        name="category-update",
-    ),
-    url(
-        r"^delete_category/(?P<pk>[^/]+)/$",
-        views.category_delete,
-        name="category-delete",
-    ),
     url(
         r"^subcategory/(?P<pk>[^/]+)/$",
         views.subcategory_detail,
         name="subcategory-detail",
-    ),
-    url(r"^create_category/$", views.category_create, name="category-create"),
-    url(
-        r"^update_category/(?P<pk>[^/]+)/$",
-        views.category_update,
-        name="category-update",
-    ),
-    url(
-        r"^delete_category/(?P<pk>[^/]+)/$",
-        views.category_delete,
-        name="category-delete",
     ),
     url(r"^thread/(?P<pk>[^/]+)/?$", views.thread_view, name="thread"),
     url(
@@ -78,12 +54,8 @@ urlpatterns = [
         views.thread_delete,
         name="thread-delete",
     ),
-    url(
-        r"^update_post/(?P<pk>[^/]+)/$", views.post_update, name="post-update"
-    ),
-    url(
-        r"^delete_post/(?P<pk>[^/]+)/$", views.post_delete, name="post-delete"
-    ),
+    url(r"^update_post/(?P<pk>[^/]+)/$", views.post_update, name="post-update"),
+    url(r"^delete_post/(?P<pk>[^/]+)/$", views.post_delete, name="post-delete"),
     url(r"^reports/$", views.reports_list, name="reports-list"),
     url(r"^report/(?P<pk>[^/]+)/", views.report_view, name="report"),
     url(

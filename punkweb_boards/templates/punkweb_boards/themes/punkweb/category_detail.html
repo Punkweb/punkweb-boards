@@ -22,27 +22,12 @@
 </div>
 <div class="main">
   <div class="container">
-    {% if user.profile.viewing_admin_mode %}
-    <div class="margin-bottom">
-      <a class="button" href="{% url 'board:category-update' category.id %}">
-        <i class="fa fa-edit fa-fw" aria-hidden="true"></i> Update Category
-      </a>
-      <a class="button" data-role="modal-open" data-modal-id="add-subcategory">
-        <i class="fa fa-pencil-alt fa-fw" aria-hidden="true"></i> Create Subcategory
-      </a>
-    </div>
-    {% endif %}
     <div class="category__description">{{category.description.rendered}}</div>
     <div class="panel">
       <div class="panel__body">
         <table class="table full-width">
           <thead>
             <tr>
-              {% if user.profile.viewing_admin_mode %}
-              <th class="align-center" width="2rem">
-                <input type="checkbox" />
-              </th>
-              {% endif %}
               <th class="align-left" width="40%">
                 Subcategory
               </th>
@@ -60,11 +45,6 @@
           <tbody>
             {% for sub in subcategories %}
             <tr>
-              {% if user.profile.viewing_admin_mode %}
-              <td class="align-center">
-                <input type="checkbox" />
-              </td>
-              {% endif %}
               <td class="align-left">
                 <div>
                   <a href="{% url 'board:subcategory-detail' sub.obj.id %}">{{sub.obj.name}}</a>
@@ -110,21 +90,4 @@
     </div>
   </div>
 </div>
-{% if user.profile.viewing_admin_mode %}
-<div class="modal" data-role="modal" data-modal-id="add-subcategory">
-  <div class="modal__content">
-    <h2>Create New Subcategory</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ subcategory_form.as_p }}
-      <button class="button-green" type="submit"><i class="fa fa-plus fa-fw"></i> Create Subcategory</button>
-    </form>
-  </div>
-</div>
-{% endif %}
-{% endblock %}
-
-{% block extrascript %}
-{{ block.super }}
-<script src="{% static 'punkweb_boards/js/ui/modal.js' %}"></script>
 {% endblock %}
