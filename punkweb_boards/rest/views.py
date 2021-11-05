@@ -119,9 +119,7 @@ class ThreadViewSet(
     @action(detail=False, methods=["get"])
     def recent_threads(self, request, *args, **kwargs):
         recent_threads = self.get_queryset().all().order_by("-created")
-        return Response(
-            self.get_serializer(recent_threads[:5], many=True).data
-        )
+        return Response(self.get_serializer(recent_threads[:5], many=True).data)
 
     def perform_create(self, serializer):
         if (

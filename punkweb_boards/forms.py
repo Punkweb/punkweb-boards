@@ -27,7 +27,8 @@ class RegistrationForm(forms.Form):
         label=_("Username"),
         error_messages={
             "invalid": _(
-                "This value must contain only letters, " "numbers and underscores."
+                "This value must contain only letters, "
+                "numbers and underscores."
             )
         },
     )
@@ -57,9 +58,14 @@ class RegistrationForm(forms.Form):
         )
 
     def clean(self):
-        if "password1" in self.cleaned_data and "password2" in self.cleaned_data:
+        if (
+            "password1" in self.cleaned_data
+            and "password2" in self.cleaned_data
+        ):
             if self.cleaned_data["password1"] != self.cleaned_data["password2"]:
-                raise forms.ValidationError(_("The two password fields did not match."))
+                raise forms.ValidationError(
+                    _("The two password fields did not match.")
+                )
 
         return self.cleaned_data
 

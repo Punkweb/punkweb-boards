@@ -55,7 +55,9 @@ class BoardProfile(
         choices=GENDER_CHOICES,
         default=None,
     )
-    birthday = models.DateField(null=True, blank=True, verbose_name="Birth date")
+    birthday = models.DateField(
+        null=True, blank=True, verbose_name="Birth date"
+    )
     is_banned = models.BooleanField(default=False)
     ranks = models.ManyToManyField("UserRank", blank=True)
     username_modifier = models.TextField(
@@ -98,7 +100,10 @@ class BoardProfile(
         return (
             today.year
             - self.birthday.year
-            - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
+            - (
+                (today.month, today.day)
+                < (self.birthday.month, self.birthday.day)
+            )
         )
 
     @property
@@ -107,7 +112,10 @@ class BoardProfile(
             return False
 
         today = datetime.date.today()
-        match = self.birthday.day == today.day and self.birthday.month == today.month
+        match = (
+            self.birthday.day == today.day
+            and self.birthday.month == today.month
+        )
         if match:
             return True
 
@@ -119,7 +127,9 @@ class BoardProfile(
             return False
 
         if BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS:
-            has_post_req = self.post_count >= BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS_REQ
+            has_post_req = (
+                self.post_count >= BOARD_SETTINGS.SHOUTBOX_MINIMUM_POSTS_REQ
+            )
             if not has_post_req:
                 return False
 
@@ -168,9 +178,13 @@ class BoardProfile(
 
 class UserRank(models.Model):
     AWARD_TYPE_CHOICES = (("post_count", "Post Count"),)
-    title = models.CharField(max_length=96, blank=False, null=False, unique=True)
+    title = models.CharField(
+        max_length=96, blank=False, null=False, unique=True
+    )
     description = models.TextField(max_length=256, blank=True, null=True)
-    order = models.IntegerField(help_text="Where this rank ranks among the other ranks")
+    order = models.IntegerField(
+        help_text="Where this rank ranks among the other ranks"
+    )
     is_award = models.BooleanField(default=False)
     award_type = models.CharField(
         max_length=50,
@@ -320,7 +334,8 @@ class Thread(CreatedModifiedMixin, UUIDPrimaryKey, UpvoteDownvoteMixin):
     pinned = models.BooleanField(default=False)
     closed = models.BooleanField(
         default=False,
-        help_text="Check to stop users from being able " "to comment on this thread.",
+        help_text="Check to stop users from being able "
+        "to comment on this thread.",
     )
     # TODO: Better tagging in the future.
     tags = models.CharField(
@@ -524,7 +539,9 @@ class Message(UUIDPrimaryKey, CreatedModifiedMixin):
         return False
 
     def get_absolute_url(self):
-        return reverse("board:conversation", kwargs={"pk": self.conversation.id})
+        return reverse(
+            "board:conversation", kwargs={"pk": self.conversation.id}
+        )
 
 
 class Report(CreatedModifiedMixin, UUIDPrimaryKey):
@@ -560,7 +577,9 @@ class Report(CreatedModifiedMixin, UUIDPrimaryKey):
             in_question = self.thread
         if self.post:
             in_question = self.post
-        return "{}'s report on {}".format(self.reporting_user.username, in_question)
+        return "{}'s report on {}".format(
+            self.reporting_user.username, in_question
+        )
 
     def get_absolute_url(self):
         return reverse("board:report", self.id)
@@ -658,7 +677,9 @@ def notify_thread_owner_of_new_post(sender, instance, created, **kwargs):
         if instance.user is not instance.thread.user:
             notification = Notification(
                 user=instance.thread.user,
-                text="{} commented on your thread".format(instance.user.username),
+                text="{} commented on your thread".format(
+                    instance.user.username
+                ),
                 link=instance.get_absolute_url(),
                 read=False,
             )
@@ -688,7 +709,9 @@ def thread_notifications(sender, instance, created, **kwargs):
             if user_obj:
                 notification = Notification(
                     user=user_obj,
-                    text="{} tagged you in a post.".format(instance.user.username),
+                    text="{} tagged you in a post.".format(
+                        instance.user.username
+                    ),
                     link=instance.get_absolute_url(),
                     read=False,
                 )
