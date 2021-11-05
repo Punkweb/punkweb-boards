@@ -73,9 +73,7 @@ class HrTag(BBCodeTag):
 class ShadowTag(BBCodeTag):
     name = "shadow"
     definition_string = "[shadow={TEXT1}]{TEXT2}[/shadow]"
-    format_string = (
-        """<span style="text-shadow: 0px 0px 1em {TEXT1}">{TEXT2}</span>"""
-    )
+    format_string = """<span style="text-shadow: 0px 0px 1em {TEXT1}">{TEXT2}</span>"""
 
 
 class AnchorTag(BBCodeTag):

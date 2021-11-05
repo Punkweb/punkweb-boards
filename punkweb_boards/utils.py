@@ -30,9 +30,7 @@ def render_example_username(rank, username):
     if not rank:
         return username
 
-    return mark_safe(
-        parser.render(rank.username_modifier.replace("{USER}", username))
-    )
+    return mark_safe(parser.render(rank.username_modifier.replace("{USER}", username)))
 
 
 def render_username(profile):

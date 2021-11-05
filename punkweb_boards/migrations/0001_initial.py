@@ -62,9 +62,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "birthday",
-                    models.DateField(
-                        blank=True, null=True, verbose_name="Birth date"
-                    ),
+                    models.DateField(blank=True, null=True, verbose_name="Birth date"),
                 ),
                 ("is_banned", models.BooleanField(default=False)),
                 (
@@ -623,9 +621,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="boardprofile",
             name="ranks",
-            field=models.ManyToManyField(
-                blank=True, to="punkweb_boards.UserRank"
-            ),
+            field=models.ManyToManyField(blank=True, to="punkweb_boards.UserRank"),
         ),
         migrations.AddField(
             model_name="boardprofile",

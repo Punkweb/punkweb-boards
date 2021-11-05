@@ -51,12 +51,10 @@ def index_view(request):
         children = parent_category.subcategories
         if not request.user.is_authenticated:
             # Filter out categories with auth_req = True
-            children = children.filter(
-                auth_req=False, parent__auth_req=False
-            ).order_by("order")
-        category_groups.append(
-            {"parent": parent_category, "children": children}
-        )
+            children = children.filter(auth_req=False, parent__auth_req=False).order_by(
+                "order"
+            )
+        category_groups.append({"parent": parent_category, "children": children})
     recent_threads = Thread.objects.all().order_by("-created")
     recent_activity = Thread.objects.all().order_by("-modified")
     if not request.user.is_authenticated:
@@ -70,9 +68,7 @@ def index_view(request):
 
     users = get_user_model().objects.select_related("profile").all()
     online = [user for user in users if user.profile.online()]
-    online_staff = [
-        user for user in users if user.profile.online() and user.is_staff
-    ]
+    online_staff = [user for user in users if user.profile.online() and user.is_staff]
     newest_member = users.order_by("-date_joined").first()
     member_count = users.count()
     context = {
@@ -259,9 +255,7 @@ def category_detail(request, pk):
         subs = subs.filter(auth_req=False, parent__auth_req=False)
     for sub in category.subcategories:
         if sub.can_view(request.user):
-            subcategories.append(
-                {"obj": sub, "can_post": sub.can_post(request.user)}
-            )
+            subcategories.append({"obj": sub, "can_post": sub.can_post(request.user)})
     context = {"category": category, "subcategories": subcategories}
     return render(
         request,
@@ -553,9 +547,7 @@ def members_list(request):
         return redirect("board:unpermitted")
 
     users = (
-        get_user_model()
-        .objects.filter(profile__is_banned=False)
-        .order_by("username")
+        get_user_model().objects.filter(profile__is_banned=False).order_by("username")
     )
     context = {"users": users}
     return render(

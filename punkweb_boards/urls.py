@@ -14,9 +14,7 @@ urlpatterns = [
     url(
         r"^login/$",
         auth_views.LoginView.as_view(
-            template_name="punkweb_boards/themes/{}/login.html".format(
-                BOARD_THEME
-            )
+            template_name="punkweb_boards/themes/{}/login.html".format(BOARD_THEME)
         ),
         name="login",
     ),

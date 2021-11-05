@@ -81,8 +81,7 @@ class RankTestCase(TestCase):
         # Test admin_user only has post_count_rank_1
         self.assertTrue(
             self.post_count_rank_1 in self.admin_user.profile.ranks.all()
-            and self.post_count_rank_5
-            not in self.admin_user.profile.ranks.all()
+            and self.post_count_rank_5 not in self.admin_user.profile.ranks.all()
         )
         # Test new_user has both ranks
         self.assertTrue(
@@ -138,14 +137,10 @@ class CategoryTestCase(TestCase):
         # Banned user requests
         banned_request_1 = self.factory.get(self.category_1.get_absolute_url())
         banned_request_1.user = self.banned_user
-        banned_response_1 = category_detail(
-            banned_request_1, self.category_1.id
-        )
+        banned_response_1 = category_detail(banned_request_1, self.category_1.id)
         banned_request_2 = self.factory.get(self.category_2.get_absolute_url())
         banned_request_2.user = self.banned_user
-        banned_response_2 = category_detail(
-            banned_request_2, self.category_2.id
-        )
+        banned_response_2 = category_detail(banned_request_2, self.category_2.id)
 
         # Authenticated user requests
         auth_request_1 = self.factory.get(self.category_1.get_absolute_url())
