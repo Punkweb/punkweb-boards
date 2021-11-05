@@ -94,22 +94,22 @@ div, p {
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  src: url('../fonts/OpenSans-Regular.ttf');
+  font-family: 'Inconsolata';
+  src: url('../fonts/Inconsolata-Regular.ttf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-	font-family: 'Storybook';
-	src: url('../fonts/Storybook.ttf');
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'Montserrat';
+  src: url('../fonts/Montserrat-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-	font-family: 'Winterland';
-	src: url('../fonts/WINTERLAND.ttf');
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSans-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
 }
