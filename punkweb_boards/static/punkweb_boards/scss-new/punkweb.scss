@@ -1,0 +1,108 @@
+@import 'punkweb_boards/scss-new/open-color';
+@import 'punkweb_boards/scss-new/theme';
+@import 'punkweb_boards/scss-new/mixins';
+@import 'punkweb_boards/scss-new/typography';
+@import 'punkweb_boards/scss-new/elements';
+
+* {
+  @include scrollbar;
+  box-sizing: border-box;
+}
+
+.nav {
+  &-upper {
+    background-color: $oc-gray-9;
+    font-size: 12px;
+    padding: 0.5rem 0;
+
+    &-content {
+      align-items: center;
+      display: flex;
+    }
+
+    &-link {
+      color: $default-text-on-dark;
+
+      &:link, &:visited {
+        color: $default-text-on-dark;
+      }
+
+      &:not(:last-of-type) {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  &-main {
+    background-color: $primary;
+    box-shadow: 0 2px 4px rgba($oc-gray-9, .5);
+
+    &-content {
+      align-items: center;
+      display: flex;
+      padding: 1rem 0;
+    }
+
+    &-title {
+      color: $default-text-on-dark;
+      font-size: 24px;
+      font-weight: bolder;
+      margin-right: 1.5rem;
+      text-transform: uppercase;
+
+      &:link, &:visited {
+        color: $default-text-on-dark;
+      }
+    }
+
+    &-link {
+      color: $default-text-on-dark;
+      font-weight: bold;
+
+      &:link, &:visited {
+        color: $default-text-on-dark;
+      }
+
+      &:not(:last-of-type) {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &-search {
+    position: relative;
+
+    .fa-search {
+      position: absolute;
+      top: 16px;
+      right: 0.5rem;
+    }
+
+    input {
+      padding: 0.5rem 2rem 0.5rem 0.5rem !important;
+    }
+  }
+
+  &-spacer {
+    flex: 1;
+  }
+}
+
+.footer {
+  background-color: $oc-gray-9;
+  color: $default-text-on-dark;
+  font-size: 12px;
+  padding: 0.5rem 0;
+
+  a {
+    color: $default-text-on-dark;
+
+    &:before {
+      color: $default-text-on-dark;
+    }
+
+    &:link, &:visited {
+      color: $default-text-on-dark;
+    }
+  }
+}

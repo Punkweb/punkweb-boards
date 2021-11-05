@@ -1,0 +1,36 @@
+{% load compress static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ BOARD_SETTINGS.BOARD_NAME }} | {% block title %}{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="{% block meta_description %}For the record, the music never stopped{% endblock %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" href="{% static 'punkweb_boards/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'punkweb_boards/sceditor/minified/themes/square.min.css' %}" />
+    {% compress css %}
+    <link href="{% static 'punkweb_boards/scss-new/punkweb.scss' %}" rel="stylesheet" type="text/x-scss" />
+    {% endcompress %}
+    {% block extrastyle %}
+    {% endblock %}
+  </head>
+  <body>
+    <div class="page-wrap">
+      {% include 'punkweb_boards/themes/punkweb-new/includes/nav.html' %}
+      {% block content %}{% endblock %}
+    </div>
+    {% include 'punkweb_boards/themes/punkweb-new/includes/footer.html' %}
+  </body>
+  <script src="{% static 'punkweb_boards/js/deps/jquery-3.1.1.min.js' %}"></script>
+  <script src="{% static 'punkweb_boards/js/deps/lodash.js' %}"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <script src="{% static 'punkweb_boards/js/run-prettify.js' %}"></script>
+  <script src="{% static 'punkweb_boards/sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
+  <script src="{% static 'punkweb_boards/js/ui/spoiler.js' %}"></script>
+  <script src="{% static 'punkweb_boards/js/editor-config.js' %}"></script>
+
+  {% block extrascript %}
+  <script src="{% static 'punkweb_boards/js/ui/collapse.js' %}"></script>
+  {% endblock %}
+</html>
