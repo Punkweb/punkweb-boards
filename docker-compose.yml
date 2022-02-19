@@ -1,23 +1,35 @@
- version: '3.3'
+version: '3.8'
 
- services:
-   # Postgres
-   db:
-     image: postgres
-     environment:
-       - DATABASE_NAME=punkweb_boards
-       - DATABASE_USER=punkweb_boards
-       - DATABASE_PASSWORD=punkweb_boards
-       - DATABASE_HOST=db
+services:
+  # Postgres
+  db:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: punkweb_boards
+      POSTGRES_PASSWORD: punkweb_boards
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
 
-   web:
-     build: .
-     command: ["/webapps/run_web.sh"]
-     volumes:
-       - .:/webapps
-     ports:
-       - "8000:8000"
-     links:
-       - db
-     depends_on:
-       - db
+  web:
+    build: .
+    command: ["/webapps/run_web.sh"]
+    environment:
+      DATABASE_NAME: punkweb_boards
+      DATABASE_USER: punkweb_boards
+      DATABASE_PASSWORD: punkweb_boards
+      DATABASE_HOST: db
+    volumes:
+      - .:/webapps
+    ports:
+      - "8000:8000"
+    links:
+      - db
+    depends_on:
+      - db
+
+volumes:
+  db:
+    driver: local

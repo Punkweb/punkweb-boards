@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.9
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /webapps
@@ -6,7 +6,7 @@ WORKDIR /webapps
 
 # Installing OS Dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-libsqlite3-dev
+  "postgresql-client=11+200+deb10u4"
 
 RUN pip install -U pip setuptools
 
