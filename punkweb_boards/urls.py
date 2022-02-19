@@ -33,32 +33,10 @@ urlpatterns = [
         views.category_detail,
         name="category-detail",
     ),
-    re_path(r"^create_category/$", views.category_create, name="category-create"),
-    re_path(
-        r"^update_category/(?P<pk>[^/]+)/$",
-        views.category_update,
-        name="category-update",
-    ),
-    re_path(
-        r"^delete_category/(?P<pk>[^/]+)/$",
-        views.category_delete,
-        name="category-delete",
-    ),
     re_path(
         r"^subcategory/(?P<pk>[^/]+)/$",
         views.subcategory_detail,
         name="subcategory-detail",
-    ),
-    re_path(r"^create_category/$", views.category_create, name="category-create"),
-    re_path(
-        r"^update_category/(?P<pk>[^/]+)/$",
-        views.category_update,
-        name="category-update",
-    ),
-    re_path(
-        r"^delete_category/(?P<pk>[^/]+)/$",
-        views.category_delete,
-        name="category-delete",
     ),
     re_path(r"^thread/(?P<pk>[^/]+)/?$", views.thread_view, name="thread"),
     re_path(

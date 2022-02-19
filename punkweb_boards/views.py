@@ -1,4 +1,3 @@
-import logging
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
@@ -9,8 +8,7 @@ from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from punkweb_boards.conf.settings import BOARD_THEME, SIGNATURES_ENABLED
 from punkweb_boards.forms import (
@@ -18,12 +16,7 @@ from punkweb_boards.forms import (
     ThreadForm,
     PostForm,
     ReportForm,
-    ConversationForm,
-    MessageForm,
     SettingsForm,
-    KeywordSearchForm,
-    SubcategoryForm,
-    CategoryForm,
 )
 from punkweb_boards.models import (
     Category,
@@ -31,13 +24,10 @@ from punkweb_boards.models import (
     Thread,
     Post,
     Report,
-    Conversation,
-    Message,
     Notification,
     Shout,
     Page,
 )
-from punkweb_boards.utils import username_comma_separated_qs
 
 
 def unpermitted_view(request):
@@ -61,12 +51,10 @@ def index_view(request):
         children = parent_category.subcategories
         if not request.user.is_authenticated:
             # Filter out categories with auth_req = True
-            children = children.filter(
-                auth_req=False, parent__auth_req=False
-            ).order_by("order")
-        category_groups.append(
-            {"parent": parent_category, "children": children}
-        )
+            children = children.filter(auth_req=False, parent__auth_req=False).order_by(
+                "order"
+            )
+        category_groups.append({"parent": parent_category, "children": children})
     recent_threads = Thread.objects.all().order_by("-created")
     recent_activity = Thread.objects.all().order_by("-modified")
     if not request.user.is_authenticated:
@@ -80,9 +68,7 @@ def index_view(request):
 
     users = get_user_model().objects.select_related("profile").all()
     online = [user for user in users if user.profile.online()]
-    online_staff = [
-        user for user in users if user.profile.online() and user.is_staff
-    ]
+    online_staff = [user for user in users if user.profile.online() and user.is_staff]
     newest_member = users.order_by("-date_joined").first()
     member_count = users.count()
     context = {
@@ -140,9 +126,7 @@ def keyword_search_view(request):
         + TrigramSimilarity("tags", keyword)
     )
     matched_threads = (
-        Thread.objects.annotate(
-            search=thread_vector, similarity=thread_trigram
-        )
+        Thread.objects.annotate(search=thread_vector, similarity=thread_trigram)
         .annotate(rank=SearchRank(thread_vector, query))
         .filter(Q(search=query) | Q(similarity__gt=0.15))
         .order_by("-rank")
@@ -271,96 +255,11 @@ def category_detail(request, pk):
         subs = subs.filter(auth_req=False, parent__auth_req=False)
     for sub in category.subcategories:
         if sub.can_view(request.user):
-            subcategories.append(
-                {"obj": sub, "can_post": sub.can_post(request.user)}
-            )
+            subcategories.append({"obj": sub, "can_post": sub.can_post(request.user)})
     context = {"category": category, "subcategories": subcategories}
-    if request.method == "POST":
-        subcategory_form = SubcategoryForm(request.POST)
-        if subcategory_form.is_valid():
-            subcategory_form.save()
-            return redirect(category.get_absolute_url)
-
-    else:
-        subcategory_form = SubcategoryForm()
-    context.update({"subcategory_form": subcategory_form})
     return render(
         request,
         "punkweb_boards/themes/{}/category_detail.html".format(BOARD_THEME),
-        context,
-    )
-
-
-def category_create(request):
-    if not request.user.has_perm("punkweb_boards.add_category"):
-        return redirect("board:unpermitted")
-
-    if request.method == "POST":
-        category_form = CategoryForm(request.POST)
-
-        if category_form.is_valid():
-            category = category_form.save()
-            return redirect(category.get_absolute_url())
-
-    else:
-        category_form = CategoryForm()
-
-    context = {"category_form": category_form}
-    return render(
-        request,
-        "punkweb_boards/themes/{}/category_create_form.html".format(
-            BOARD_THEME
-        ),
-        context,
-    )
-
-
-def category_update(request, pk):
-    try:
-        instance = Category.objects.get(id=pk)
-    except Category.DoesNotExist:
-        return redirect("board:not-found")
-
-    if not request.user.has_perm("punkweb_boards.change_category"):
-        return redirect("board:unpermitted")
-
-    if request.method == "POST":
-        form = CategoryForm(request.POST, instance=instance)
-        if form.is_valid():
-            category = form.save()
-            return redirect(category.get_absolute_url())
-
-    else:
-        form = CategoryForm(instance=instance)
-    context = {"form": form, "object": instance}
-    return render(
-        request,
-        "punkweb_boards/themes/{}/category_update_form.html".format(
-            BOARD_THEME
-        ),
-        context,
-    )
-
-
-def category_delete(request, pk):
-    try:
-        instance = Category.objects.get(id=pk)
-    except Category.DoesNotExist:
-        return redirect("board:not-found")
-
-    if not request.user.has_perm("punkweb_boards.delete_category"):
-        return redirect("board:unpermitted")
-
-    if request.method == "POST":
-        instance.delete()
-        return redirect("board:index")
-
-    context = {"object": instance}
-    return render(
-        request,
-        "punkweb_boards/themes/{}/category_delete_form.html".format(
-            BOARD_THEME
-        ),
         context,
     )
 
@@ -376,9 +275,7 @@ def subcategory_detail(request, pk):
 
     # Paginate threads
     # TODO: get correct ordering worked out
-    paginator = Paginator(
-        category.threads.order_by("-pinned", "-modified"), 20
-    )
+    paginator = Paginator(category.threads.order_by("-pinned", "-modified"), 20)
     page = request.GET.get("page")
     try:
         threads = paginator.page(page)
@@ -650,9 +547,7 @@ def members_list(request):
         return redirect("board:unpermitted")
 
     users = (
-        get_user_model()
-        .objects.filter(profile__is_banned=False)
-        .order_by("username")
+        get_user_model().objects.filter(profile__is_banned=False).order_by("username")
     )
     context = {"users": users}
     return render(

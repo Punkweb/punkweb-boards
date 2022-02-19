@@ -1,5 +1,4 @@
 import uuid
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from easy_thumbnails.files import get_thumbnailer
@@ -62,9 +61,7 @@ class AvatarImagesMixin(models.Model):
             if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=100)
 
-            return get_thumbnailer(utils.get_placeholder_url())[
-                "avatar_small"
-            ].url
+            return get_thumbnailer(utils.get_placeholder_url())["avatar_small"].url
 
         else:
             return self.image["avatar_small"].url
@@ -75,9 +72,7 @@ class AvatarImagesMixin(models.Model):
             if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=50)
 
-            return get_thumbnailer(utils.get_placeholder_url())[
-                "avatar_smaller"
-            ].url
+            return get_thumbnailer(utils.get_placeholder_url())["avatar_smaller"].url
 
         else:
             return self.image["avatar_smaller"].url
@@ -88,9 +83,7 @@ class AvatarImagesMixin(models.Model):
             if self.user.email and utils.has_gravatar(self.user.email):
                 return utils.get_gravatar_url(self.user.email, size=25)
 
-            return get_thumbnailer(utils.get_placeholder_url())[
-                "avatar_smallest"
-            ].url
+            return get_thumbnailer(utils.get_placeholder_url())["avatar_smallest"].url
 
         else:
             return self.image["avatar_smallest"].url

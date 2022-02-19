@@ -33,9 +33,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class SubcategorySerializer(serializers.ModelSerializer):
     last_thread = serializers.ReadOnlyField(source="last_thread.id")
     last_thread_title = serializers.ReadOnlyField(source="last_thread.title")
-    last_thread_created = serializers.ReadOnlyField(
-        source="last_thread.created"
-    )
+    last_thread_created = serializers.ReadOnlyField(source="last_thread.created")
     last_thread_user = serializers.ReadOnlyField(
         source="last_thread.user.profile.rendered_username"
     )
@@ -55,9 +53,7 @@ class SubcategorySerializer(serializers.ModelSerializer):
 class ThreadSerializer(serializers.ModelSerializer):
     last_post = serializers.ReadOnlyField(source="last_post.id")
     last_post_created = serializers.ReadOnlyField(source="last_post.created")
-    last_post_username = serializers.ReadOnlyField(
-        source="last_post.user.username"
-    )
+    last_post_username = serializers.ReadOnlyField(source="last_post.user.username")
     last_post_rendered_username = serializers.ReadOnlyField(
         source="last_post.user.profile.rendered_username"
     )
@@ -66,9 +62,7 @@ class ThreadSerializer(serializers.ModelSerializer):
         source="user.profile.rendered_username"
     )
     user_image = serializers.ReadOnlyField(source="user.profile.avatar")
-    user_post_count = serializers.ReadOnlyField(
-        source="user.profile.post_count"
-    )
+    user_post_count = serializers.ReadOnlyField(source="user.profile.post_count")
     user_join_date = serializers.ReadOnlyField(source="user.created")
     flagged = serializers.ReadOnlyField(source="reported")
     posts_count = serializers.ReadOnlyField()
@@ -105,9 +99,7 @@ class PostSerializer(serializers.ModelSerializer):
 class ConversationSerializer(serializers.ModelSerializer):
     last_message = serializers.ReadOnlyField(source="last_message.id")
     last_message_title = serializers.ReadOnlyField(source="last_message.title")
-    last_message_created = serializers.ReadOnlyField(
-        source="last_message.created"
-    )
+    last_message_created = serializers.ReadOnlyField(source="last_message.created")
     last_message_user = serializers.ReadOnlyField(
         source="last_message.user.profile.rendered_username"
     )
@@ -149,16 +141,9 @@ class ShoutSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         for key in SHOUTBOX_DISABLED_TAGS:
             key_tag = "[{}]".format(key).lower()
-            if (
-                key_tag[: len(key_tag) - 1]
-                in validated_data.get("content").lower()
-            ):
+            if key_tag[: len(key_tag) - 1] in validated_data.get("content").lower():
                 raise serializers.ValidationError(
-                    {
-                        "notAllowed": "{} is not allowed in the shoutbox".format(
-                            key_tag
-                        )
-                    }
+                    {"notAllowed": "{} is not allowed in the shoutbox".format(key_tag)}
                 )
 
         return Shout.objects.create(**validated_data)

@@ -5,17 +5,17 @@ from rest_framework import serializers
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'password')
-        read_only_fields = ('id', )
+        fields = ("id", "username", "password")
+        read_only_fields = ("id",)
         extra_kwargs = {
-            'password': {'write_only': True},
+            "password": {"write_only": True},
         }
 
     def create(self, validated_data):
         user = get_user_model().objects.create_user(
-            username=validated_data['username'],
+            username=validated_data["username"],
             email=None,
-            password=validated_data['password']
+            password=validated_data["password"],
         )
         return user
 

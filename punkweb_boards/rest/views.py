@@ -38,7 +38,7 @@ class BoardProfileViewSet(
         qs = self.queryset
         return qs.all()
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def online(self, request, *args, **kwargs):
         qs = self.get_queryset()
         profiles = qs.all()
@@ -54,10 +54,7 @@ class CategoryViewSet(
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Category.objects.none()
 
         qs = self.queryset
@@ -73,10 +70,7 @@ class SubcategoryViewSet(
     serializer_class = SubcategorySerializer
 
     def get_queryset(self):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Subcategory.objects.none()
 
         qs = self.queryset
@@ -100,32 +94,24 @@ class ThreadViewSet(
     permission_classes = (BelongsToUser,)
 
     def get_queryset(self):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Thread.objects.none()
 
         qs = self.queryset
         if not self.request.user.is_authenticated:
-            qs = qs.filter(
-                category__auth_req=False, category__parent__auth_req=False
-            )
+            qs = qs.filter(category__auth_req=False, category__parent__auth_req=False)
         subcategory_id = self.request.query_params.get("subcategory_id")
         if subcategory_id:
             qs = qs.filter(category__id=subcategory_id)
         return qs.all()
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def recent_threads(self, request, *args, **kwargs):
         recent_threads = self.get_queryset().all().order_by("-created")
         return Response(self.get_serializer(recent_threads[:5], many=True).data)
 
     def perform_create(self, serializer):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Thread.objects.none()
 
         serializer.save(user=self.request.user)
@@ -143,10 +129,7 @@ class PostViewSet(
     permission_classes = (BelongsToUser,)
 
     def get_queryset(self):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Post.objects.none()
 
         qs = self.queryset
@@ -181,10 +164,7 @@ class ConversationViewSet(
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Conversation.objects.none()
 
         qs = self.queryset
@@ -192,10 +172,7 @@ class ConversationViewSet(
         return qs.all()
 
     def perform_create(self, serializer):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Conversation.objects.none()
 
         serializer.save(user=self.request.user)
@@ -213,10 +190,7 @@ class MessageViewSet(
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Message.objects.none()
 
         qs = self.queryset
@@ -224,10 +198,7 @@ class MessageViewSet(
         return qs.all()
 
     def perform_create(self, serializer):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Message.objects.none()
 
         serializer.save(user=self.request.user)
@@ -247,10 +218,7 @@ class ShoutViewSet(
         return qs.all()
 
     def perform_create(self, serializer):
-        if (
-            self.request.user.is_authenticated
-            and self.request.user.profile.is_banned
-        ):
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Shout.objects.none()
 
         serializer.save(user=self.request.user)

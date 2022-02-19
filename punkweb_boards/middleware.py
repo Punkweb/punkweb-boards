@@ -11,6 +11,4 @@ class ActiveUserMiddleware(MiddlewareMixin):
         if request.user.is_authenticated:
             now = datetime.datetime.now()
             name = request.user.username.replace(" ", "_")
-            cache.set(
-                "seen_%s" % (name), now, BOARD_SETTINGS.USER_LASTSEEN_TIMEOUT
-            )
+            cache.set("seen_%s" % (name), now, BOARD_SETTINGS.USER_LASTSEEN_TIMEOUT)

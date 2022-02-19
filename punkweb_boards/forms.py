@@ -1,11 +1,8 @@
 from django import forms
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from easy_thumbnails.widgets import ImageClearableFileInput
 from punkweb_boards.conf.settings import (
-    BOARD_THEME,
     SIGNATURES_ENABLED,
 )
 from punkweb_boards.models import (
@@ -13,7 +10,6 @@ from punkweb_boards.models import (
     Post,
     Shout,
     Report,
-    Conversation,
     Message,
     Subcategory,
     Category,

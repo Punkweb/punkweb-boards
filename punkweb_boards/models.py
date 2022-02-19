@@ -162,9 +162,8 @@ class BoardProfile(
         """Returns html tag with user image. Used on admin page"""
         return mark_safe('<img src="{}" />'.format(self.avatar_small))
 
-    @property
-    def viewing_admin_mode(self):
-        return True
+    def get_absolute_url(self):
+        return reverse("board:profile", self.user.username)
 
 
 class UserRank(models.Model):
