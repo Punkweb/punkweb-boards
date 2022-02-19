@@ -1,8 +1,8 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from punkweb_boards import views
 
 urlpatterns = [
-    url(r"^not-found/$", views.page_not_found_view, name="not-found"),
-    url(r"^(?P<slug>[\w-]+)/$", views.page_view, name="page"),
+    re_path(r"^not-found/$", views.page_not_found_view, name="not-found"),
+    re_path(r"^(?P<slug>[\w-]+)/$", views.page_view, name="page"),
 ]

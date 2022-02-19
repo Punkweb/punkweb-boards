@@ -37,11 +37,6 @@
         <table class="table full-width">
           <thead>
             <tr>
-              {% if user.profile.viewing_admin_mode %}
-              <th class="align-center" width="2rem">
-                <input type="checkbox" />
-              </th>
-              {% endif %}
               <th class="align-left" width="60%">
                 Title/Author
               </th>
@@ -56,11 +51,6 @@
           <tbody class="striped">
             {% for thread in threads %}
             <tr>
-              {% if user.profile.viewing_admin_mode %}
-              <td class="align-center">
-                <input type="checkbox" />
-              </td>
-              {% endif %}
               <td class="align-left">
                 <div>
                   {% if thread.pinned %}
@@ -88,9 +78,6 @@
             </tr>
             {% empty %}
             <tr>
-              {% if user.profile.viewing_admin_mode %}
-              <td></td>
-              {% endif %}
               <td>No threads have been created in this category yet</td>
             </tr>
             {% endfor %}
@@ -121,25 +108,6 @@
         </ul>
       </div>
     </div>
-    {% if user.profile.viewing_admin_mode %}
-    <div class="align-right padding-top padding-bottom">
-      <label for="threadActions">Thread actions:</label>
-      <select name="threadActions" id="">
-        <option disabled selected value> -- select an action -- </option>
-        <option value="">Close</option>
-        <option value="">Open</option>
-        <option value="">Pin</option>
-        <option value="">Delete</option>
-      </select>
-      <label for="threadMove">Move To:</label>
-      <select name="" id="">
-        <option disabled selected value> -- select a subcategory -- </option>
-        {% for sub in category.parent.subcategories %}
-        <option value="">{{sub.name}}</option>
-        {% endfor %}
-      </select>
-    </div>
-    {% endif %}
   </div>
 </div>
 

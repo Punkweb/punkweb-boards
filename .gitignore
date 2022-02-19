@@ -1,8 +1,6 @@
 sceditor/
 
-checklist.txt
-digitialocean.txt
-
+venv
 
 ### Sqlite database
 *.sqlite3

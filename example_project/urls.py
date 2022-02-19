@@ -15,25 +15,11 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf.urls import url, include
+from django.urls import include, re_path
 from django.contrib import admin
-from rest_framework import routers
-
-from punkweb_boards.rest.views import (
-    BoardProfileViewSet,
-    CategoryViewSet,
-    SubcategoryViewSet,
-    ThreadViewSet,
-    PostViewSet,
-    ConversationViewSet,
-    MessageViewSet,
-    ShoutViewSet,
-)
-
-from example_project.rest.views import obtain_auth_token, UserViewSet, UserCreateView
 
 urlpatterns = [
-    url(r"^admin/", admin.site.urls),
-    url(r"^board/", include("punkweb_boards.urls")),
-    url(r"^api/", include("example_project.rest.urls")),
+    re_path(r"^admin/", admin.site.urls),
+    re_path(r"^board/", include("punkweb_boards.urls")),
+    re_path(r"^api/", include("example_project.rest.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

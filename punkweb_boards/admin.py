@@ -34,9 +34,7 @@ class BoardProfileForm(forms.ModelForm):
         model = BoardProfile
         widgets = {
             "signature": forms.Textarea(attrs={"class": "post-editor"}),
-            "username_modifier": forms.Textarea(
-                attrs={"class": "post-editor"}
-            ),
+            "username_modifier": forms.Textarea(attrs={"class": "post-editor"}),
         }
         fields = "__all__"
 
@@ -44,27 +42,21 @@ class BoardProfileForm(forms.ModelForm):
 class UserRankForm(forms.ModelForm):
     class Meta:
         model = UserRank
-        widgets = {
-            "username_modifier": forms.Textarea(attrs={"class": "post-editor"})
-        }
+        widgets = {"username_modifier": forms.Textarea(attrs={"class": "post-editor"})}
         fields = "__all__"
 
 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        widgets = {
-            "description": forms.Textarea(attrs={"class": "post-editor"})
-        }
+        widgets = {"description": forms.Textarea(attrs={"class": "post-editor"})}
         fields = "__all__"
 
 
 class SubcategoryForm(forms.ModelForm):
     class Meta:
         model = Subcategory
-        widgets = {
-            "description": forms.Textarea(attrs={"class": "post-editor"})
-        }
+        widgets = {"description": forms.Textarea(attrs={"class": "post-editor"})}
         fields = "__all__"
 
 
@@ -108,7 +100,6 @@ class BoardProfileAdmin(admin.ModelAdmin):
         "rendered_signature",
         "username_modifier",
         "rendered_username",
-        "metadata",
     )
     readonly_fields = (
         "get_username",
