@@ -120,7 +120,7 @@ pre code {
     tr {
       th {
         @include bold;
-        font-size: 14px;
+        font-size: 16px;
         padding: 1rem;
         a {
           color: $table-header-link;
@@ -133,7 +133,7 @@ pre code {
     color: $table-body-text;
     tr {
       td {
-        font-size: 12px;
+        font-size: 14px;
         padding: 1rem;
         vertical-align: top;
         a {

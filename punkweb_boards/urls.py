@@ -1,8 +1,9 @@
 from django.urls import include, re_path
-import django.contrib.auth.views as auth_views
+from django.contrib.auth import views as auth_views
 
 from punkweb_boards.conf.settings import BOARD_THEME
 from punkweb_boards import views
+from punkweb_boards.forms import LoginForm
 
 app_name = "board"
 
@@ -14,14 +15,14 @@ urlpatterns = [
     re_path(
         r"^login/$",
         auth_views.LoginView.as_view(
-            template_name="punkweb_boards/themes/{}/login.html".format(BOARD_THEME)
+            template_name="punkweb_boards/themes/{}/login.html".format(BOARD_THEME),
+            authentication_form=LoginForm,
         ),
         name="login",
     ),
     re_path(
         r"^logout/$",
         auth_views.LogoutView.as_view(),
-        {"next_page": "/board/login/"},
         name="logout",
     ),
     re_path(r"^me/$", views.my_profile, name="me"),

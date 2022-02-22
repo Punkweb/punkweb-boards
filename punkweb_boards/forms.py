@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from punkweb_boards.conf.settings import (
@@ -18,6 +19,32 @@ from punkweb_boards.models import (
 
 class KeywordSearchForm(forms.Form):
     keyword = forms.CharField(max_length=80, required=True, label="")
+
+
+class LoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+
+    username = UsernameField(
+        widget=forms.TextInput(attrs={"class": "pw-input", "autofocus": True})
+    )
+    password = forms.CharField(
+        label=_("Password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "pw-input",
+            }
+        ),
+    )
+
+    error_messages = {
+        "invalid_login": _(
+            "Please enter a correct %(username)s and password. Note that both "
+            "fields may be case-sensitive."
+        ),
+        "inactive": _("This account is inactive."),
+    }
 
 
 class RegistrationForm(forms.Form):

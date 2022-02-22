@@ -159,6 +159,7 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 # admin.site.site_header = "Example Forum"
 
 LOGIN_REDIRECT_URL = "/board/"
+LOGOUT_REDIRECT_URL = "/board/"
 
 CORS_ORIGIN_ALLOW_ALL = True
 

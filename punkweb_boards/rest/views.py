@@ -141,7 +141,7 @@ class PostViewSet(
         return qs.all()
 
     def perform_create(self, serializer):
-        if self.request.user.is_authenticated and self.request.user.is_banned:
+        if self.request.user.is_authenticated and self.request.user.profile.is_banned:
             return Post.objects.none()
 
         serializer.save(user=self.request.user)
