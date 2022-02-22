@@ -29,16 +29,16 @@
 <div class="main">
   <div class="container">
     <div class="flexrow flex__justify-center">
-      <div class="panel">
-        <div class="panel__header">
-          <div class="panel__title">Delete {{object}}</div>
+      <div class="pw-card">
+        <div class="pw-card-header">
+          <h4>Delete {{object}}</h4>
         </div>
-        <div class="panel__body padding">
+        <div class="pw-card-body">
           <form method="post">{% csrf_token %}
             <p>Are you sure you want to delete this post?</p>
             <div class="align-right">
-              <button class="pageBack button" type="button"><i class="fa fa-arrow-left fa-fw"></i> Back</button>
-              <button class="button-red" type="submit"><i class="fa fa-trash fa-fw"></i> Confirm</button>
+              <button class="pageBack pw-button-raised pw-icon-leading" type="button"><i class="icon-leading fa fa-arrow-left fa-fw"></i>Back</button>
+              <button class="pw-button-raised pw-warn pw-icon-leading" type="submit"><i class="icon-leading fa fa-trash fa-fw"></i>Confirm</button>
             </div>
           </form>
         </div>

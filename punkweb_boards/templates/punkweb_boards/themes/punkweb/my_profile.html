@@ -22,13 +22,13 @@
 </div>
 <div class="main">
   <div class="container">
-    <div class="panel">
-      <div class="panel__body padding">
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header">
+        <h1>{{user.profile.rendered_username}}</h1>
+      </div>
+      <div class="pw-card-body padding">
         <img src="{{user.profile.avatar}}">
-        <div></div><h2>{{user.profile.rendered_username}}</h2>
         <div class="thread__user__lastseen">Last Seen: {% if user.profile.last_seen %}{{ user.profile.last_seen|naturaltime }}{% else %}awhile ago{% endif %}</div>
-        <br>
-
         <h4>Gender</h4>
         <div>
           {% if user.profile.gender %}
@@ -37,9 +37,6 @@
           Not set
           {% endif %}
         </div>
-
-        <br>
-
         <h4>Birth date</h4>
         <div>
           {% if user.profile.birthday %}
@@ -48,15 +45,10 @@
           Not set
           {% endif %}
         </div>
-
-        <br>
-
         <h4>Post Count</h4>
         <div>
           {{user.profile.post_count}}
         </div>
-
-        <br>
         {% if BOARD_SETTINGS.SIGNATURES_ENABLED %}
         <h4>Signature</h4>
         <div>
@@ -66,11 +58,8 @@
           Not set
           {% endif %}
         </div>
-
-        <br>
         {% endif %}
         <h4>Threads</h4>
-        <br>
         <div class="profile__tables">
           <table class="table full-width">
             <thead>
@@ -120,7 +109,6 @@
           </table>
         </div>
         <h4>Posts</h4>
-        <br />
         <div class="profile__tables">
           <table class="table full-width">
             <thead>

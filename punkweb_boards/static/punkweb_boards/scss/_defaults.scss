@@ -1,7 +1,7 @@
 $rem-base: 16px;
 
 @mixin link($color, $hover: null, $bold: true, $underline: true) {
-  a, a:link, a:visited {
+  a {
     @if bold {
       @include bold;
     }

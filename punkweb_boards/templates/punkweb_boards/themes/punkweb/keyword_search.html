@@ -22,14 +22,14 @@
 </div>
 <div class="main">
   <div class="container">
-    <div class="panel">
-      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-users">
-        <div class="panel__title">Users</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header" data-role="collapsible-toggle" data-key="keyword-search-users">
+        <h4>Users</h4>
       </div>
-      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-users">
+      <div class="pw-card-body" data-role="collapsible" data-key="keyword-search-users">
         {% for item in matched_users %}
-        <div>
-          <img src="{{item.profile.avatar_smallest}}" />
+        <div class="flexrow flex__align-center">
+          <img class="margin-right" src="{{item.profile.avatar_smallest}}" />
           <a href="{% url 'board:profile' item.username %}">{{item.profile.rendered_username}}</a>
         </div>
         {% empty %}
@@ -37,11 +37,11 @@
         {% endfor %}
       </div>
     </div>
-    <div class="panel">
-      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-threads">
-        <div class="panel__title">Threads</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header" data-role="collapsible-toggle" data-key="keyword-search-threads">
+        <h4>Threads</h4>
       </div>
-      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-threads">
+      <div class="pw-card-body" data-role="collapsible" data-key="keyword-search-threads">
         {% for item in matched_threads %}
         <div>
           <a href="{{item.get_absolute_url}}">{{item}}</a>
@@ -52,11 +52,11 @@
         {% endfor %}
       </div>
     </div>
-    <div class="panel">
-      <div class="panel__header" data-role="collapsible-toggle" data-key="keyword-search-posts">
-        <div class="panel__title">Posts</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header" data-role="collapsible-toggle" data-key="keyword-search-posts">
+        <h4>Posts</h4>
       </div>
-      <div class="panel__body padding" data-role="collapsible" data-key="keyword-search-posts">
+      <div class="pw-card-body" data-role="collapsible" data-key="keyword-search-posts">
         {% for item in matched_posts %}
         <div>
           <a href="{{item.get_absolute_url}}">{{item}}</a>

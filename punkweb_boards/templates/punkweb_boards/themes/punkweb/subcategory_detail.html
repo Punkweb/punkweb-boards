@@ -25,15 +25,15 @@
   <div class="container">
     {% if can_post %}
     <div class="margin-bottom">
-      <a class="button" href="{% url 'board:thread-create' category.id %}">
-        <i class="fa fa-pencil-alt fa-fw" aria-hidden="true"></i> Post thread
+      <a class="pw-button-raised pw-icon-leading" href="{% url 'board:thread-create' category.id %}">
+        <i class="icon-leading fa fa-pencil-alt fa-fw" aria-hidden="true"></i>Post thread
       </a>
     </div>
     {% else %}
     <p>You do not have permission to create threads in this category.</p>
     {% endif %}
-    <div class="panel">
-      <div class="panel__body">
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-body">
         <table class="table full-width">
           <thead>
             <tr>
@@ -83,27 +83,28 @@
             {% endfor %}
           </tbody>
         </table>
+
         <ul class="pagination">
           {% if threads.has_previous %}
-          <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
-          <li><a href="?page={{threads.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+          <li><a class="pw-icon-button" href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+          <li><a class="pw-icon-button" href="?page={{threads.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
           {% else %}
-          <li class="disabled"><i class="fa fa-angle-double-left"></i></li>
-          <li class="disabled"><i class="fa fa-angle-left"></i></li>
+          <li class="pw-icon-button disabled"><i class="fa fa-angle-double-left"></i></li>
+          <li class="pw-icon-button disabled"><i class="fa fa-angle-left"></i></li>
           {% endif %}
           {% for page in threads.paginator.page_range %}
           {% if page == threads.number %}
           <li class="active"><a>{{page}}</a></li>
           {% else %}
-          <li><a href="?page={{page}}">{{page}}</a></li>
+          <li><a class="pw-icon-button" href="?page={{page}}">{{page}}</a></li>
           {% endif %}
           {% endfor %}
           {% if threads.has_next %}
-          <li><a href="?page={{threads.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
-          <li><a href="?page={{threads.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+          <li><a class="pw-icon-button" href="?page={{threads.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+          <li><a class="pw-icon-button" href="?page={{threads.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
           {% else %}
-          <li class="disabled"><i class="fa fa-angle-right"></i></li>
-          <li class="disabled"><i class="fa fa-angle-double-right"></i></li>
+          <li class="pw-icon-button disabled"><i class="fa fa-angle-right"></i></li>
+          <li class="pw-icon-button disabled"><i class="fa fa-angle-double-right"></i></li>
           {% endif %}
         </ul>
       </div>

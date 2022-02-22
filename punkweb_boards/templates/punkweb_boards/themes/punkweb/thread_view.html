@@ -25,40 +25,38 @@
 <div class="main">
   <div class="container">
     {% if posts.num_pages %}
-    <center>
-      <nav class="margin">
-        <ul class="pagination">
-          {% if posts.has_previous %}
-          <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
-          <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
-          {% else %}
-          <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
-          <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
-          {% endif %}
-          {% for page in posts.paginator.page_range %}
-          {% if page == posts.number %}
-          <li class="active"><a>{{page}}</a></li>
-          {% else %}
-          <li><a href="?page={{page}}">{{page}}</a></li>
-          {% endif %}
-          {% endfor %}
-          {% if posts.has_next %}
-          <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
-          <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
-          {% else %}
-          <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
-          <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
-          {% endif %}
-        </ul>
-      </nav>
-    </center>
+    <nav class="margin">
+      <ul class="pagination">
+        {% if posts.has_previous %}
+        <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+        <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+        {% else %}
+        <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+        <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+        {% endif %}
+        {% for page in posts.paginator.page_range %}
+        {% if page == posts.number %}
+        <li class="active"><a>{{page}}</a></li>
+        {% else %}
+        <li><a href="?page={{page}}">{{page}}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if posts.has_next %}
+        <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+        <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+        {% else %}
+        <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+        <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+        {% endif %}
+      </ul>
+    </nav>
     {% endif %}
     {% if posts.number == 1 %}
-    <div class="panel">
-      <div class="panel__header" data-role="collapsible-toggle" data-key="thread-{{thread.id}}">
-        <div class="panel__title">{{thread.title}}</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header" data-role="collapsible-toggle" data-key="thread-{{thread.id}}">
+        <h4>{{thread.title}}</h4>
       </div>
-      <div class="panel__body" data-role="collapsible" data-key="thread-{{thread.id}}">
+      <div class="pw-card-body" data-role="collapsible" data-key="thread-{{thread.id}}">
         <div class="thread">
           <div class="thread__user">
             <a href="{% url 'board:profile' thread.user.username %}">
@@ -95,17 +93,17 @@
             {% endif %}
             {% if user.is_authenticated %}
             <div class="thread__actions">
-              <a class="button" href="{% url 'board:report-thread' thread.id %}" name="button"><i class="fa fa-flag fa-fw"></i> Report</a>
+              <a class="pw-button-raised pw-icon-leading" href="{% url 'board:report-thread' thread.id %}"><i class="icon-leading fa fa-flag fa-fw"></i>Report</a>
               {% if user.id == thread.user.id or user.is_staff %}
-              <a class="button" href="{% url 'board:thread-update' thread.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>
-              <a class="button-red" href="{% url 'board:thread-delete' thread.id %}" name="button"><i class="fa fa-trash fa-fw"></i> Delete</a>
+              <a class="pw-button-raised pw-icon-leading" href="{% url 'board:thread-update' thread.id %}"><i class="icon-leading fa fa-edit fa-fw"></i>Update</a>
+              <a class="pw-button-raised pw-warn pw-icon-leading" href="{% url 'board:thread-delete' thread.id %}"><i class="icon-leading fa fa-trash fa-fw"></i>Delete</a>
               {% endif %}
             </div>
             {% endif %}
           </div>
         </div>
       </div>
-      <div class="panel__footer">
+      <div class="pw-card-footer">
         {{thread.created|date:"d M Y, g:i A"}}
       </div>
     </div>
@@ -113,11 +111,11 @@
     {% if posts %}
     {% for post in posts %}
     <a name="p{{post.post_number}}"></a>
-    <div class="panel">
-      <div class="panel__header" data-role="collapsible-toggle" data-key="post-{{post.id}}">
-        <div class="panel__title align-right">#{{post.post_number}}</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header" data-role="collapsible-toggle" data-key="post-{{post.id}}">
+        <h4>#{{post.post_number}}</h4>
       </div>
-      <div class="panel__body" data-role="collapsible" data-key="post-{{post.id}}">
+      <div class="pw-card-body" data-role="collapsible" data-key="post-{{post.id}}">
         <div class="thread">
           <div class="thread__user">
             <a href="{% url 'board:profile' post.user.username %}">
@@ -152,64 +150,62 @@
             {% endif %}
             {% if user.is_authenticated %}
             <div class="thread__actions">
-              <a class="button" href="{% url 'board:report-post' post.id %}" name="button"><i class="fa fa-flag fa-fw"></i> Report</a>
+              <a class="pw-button-raised pw-icon-leading" href="{% url 'board:report-post' post.id %}"><i class="icon-leading fa fa-flag fa-fw"></i>Report</a>
               {% if user.id == post.user.id or user.is_staff %}
-              <a class="button" href="{% url 'board:post-update' post.id %}" name="button"><i class="fa fa-edit fa-fw"></i> Update</a>
-              <a class="button-red" href="{% url 'board:post-delete' post.id %}" name="button"><i class="fa fa-trash fa-fw"></i> Delete</a>
+              <a class="pw-button-raised pw-icon-leading" href="{% url 'board:post-update' post.id %}"><i class="icon-leading fa fa-edit fa-fw"></i>Update</a>
+              <a class="pw-button-raised pw-warn pw-icon-leading" href="{% url 'board:post-delete' post.id %}"><i class="icon-leading fa fa-trash fa-fw"></i>Delete</a>
               {% endif %}
             </div>
             {% endif %}
           </div>
         </div>
       </div>
-      <div class="panel__footer">
+      <div class="pw-card-footer">
         {{post.created|date:"d M Y, g:i A"}}
       </div>
     </div>
     {% endfor %}
     {% endif %}
     {% if posts.num_pages %}
-    <center>
-      <nav class="margin">
-        <ul class="pagination">
-          {% if posts.has_previous %}
-          <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
-          <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
-          {% else %}
-          <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
-          <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
-          {% endif %}
-          {% for page in posts.paginator.page_range %}
-          {% if page == posts.number %}
-          <li class="active"><a>{{page}}</a></li>
-          {% else %}
-          <li><a href="?page={{page}}">{{page}}</a></li>
-          {% endif %}
-          {% endfor %}
-          {% if posts.has_next %}
-          <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
-          <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
-          {% else %}
-          <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
-          <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
-          {% endif %}
-        </ul>
-      </nav>
-    </center>
+    <nav class="margin">
+      <ul class="pagination">
+        {% if posts.has_previous %}
+        <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+        <li><a href="?page={{posts.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+        {% else %}
+        <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+        <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+        {% endif %}
+        {% for page in posts.paginator.page_range %}
+        {% if page == posts.number %}
+        <li class="active"><a>{{page}}</a></li>
+        {% else %}
+        <li><a href="?page={{page}}">{{page}}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if posts.has_next %}
+        <li><a href="?page={{posts.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+        <li><a href="?page={{posts.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+        {% else %}
+        <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+        <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+        {% endif %}
+      </ul>
+    </nav>
     {% endif %}
     {% if user.is_authenticated %}
-    <div class="panel">
-      <div class="panel__header" data-role="collapsible-toggle" data-key="thread-reply">
-        <div class="panel__title">Reply to this thread</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header" data-role="collapsible-toggle" data-key="thread-reply">
+        <h4>Reply to this thread</h4>
       </div>
-      <div class="panel__body padding" data-role="collapsible" data-key="thread-reply">
+      <div class="pw-card-body" data-role="collapsible" data-key="thread-reply">
         {% if not thread.closed %}
         <img src="{{user.profile.avatar_smaller}}" />
         <hr />
         <form method="post">
           {% csrf_token %}
           {{ post_form.as_p }}
-          <button class="button-green" type="submit"><i class="fa fa-pencil-alt"></i> Post Reply</button>
+          <button class="pw-button-raised pw-primary pw-icon-leading" type="submit"><i class="icon-leading fa fa-pencil-alt"></i>Post Reply</button>
         </form>
         {% else %}
         This thread has been closed.

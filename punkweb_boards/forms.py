@@ -23,7 +23,9 @@ class KeywordSearchForm(forms.Form):
 class RegistrationForm(forms.Form):
     username = forms.RegexField(
         regex=r"^\w+$",
-        widget=forms.TextInput(attrs=dict(required=True, max_length=30)),
+        widget=forms.TextInput(
+            attrs={"required": True, "max_length": 30, "class": "pw-input"}
+        ),
         label=_("Username"),
         error_messages={
             "invalid": _(
@@ -33,13 +35,23 @@ class RegistrationForm(forms.Form):
     )
     password1 = forms.CharField(
         widget=forms.PasswordInput(
-            attrs=dict(required=True, max_length=30, render_value=False)
+            attrs={
+                "required": True,
+                "max_length": 30,
+                "render_value": False,
+                "class": "pw-input",
+            }
         ),
         label=_("Password"),
     )
     password2 = forms.CharField(
         widget=forms.PasswordInput(
-            attrs=dict(required=True, max_length=30, render_value=False)
+            attrs={
+                "required": True,
+                "max_length": 30,
+                "render_value": False,
+                "class": "pw-input",
+            }
         ),
         label=_("Password (again)"),
     )
@@ -67,6 +79,7 @@ class RegistrationForm(forms.Form):
 class SettingsForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         super(SettingsForm, self).__init__(*args, **kwargs)
+        self.fields["image"].initial = request.user.profile.image
         self.fields["gender"].initial = request.user.profile.gender
         self.fields["birthday"].initial = request.user.profile.birthday
         if SIGNATURES_ENABLED:
@@ -81,9 +94,24 @@ class SettingsForm(forms.Form):
     GENDER_CHOICES = [("", ""), ("f", "Female"), ("m", "Male")]
     image = forms.ImageField(label=_("Profile Image"), required=False)
     gender = forms.ChoiceField(
-        choices=GENDER_CHOICES, label=_("Gender"), required=False
+        widget=forms.RadioSelect(attrs={"required": False}),
+        choices=GENDER_CHOICES,
+        label=_("Gender"),
+        required=False,
     )
-    birthday = forms.DateField(label=_("Birthday (yyyy-mm-dd)"), required=False)
+    birthday = forms.DateField(
+        widget=forms.DateInput(attrs={"class": "pw-input"}),
+        label=_("Birthday (yyyy-mm-dd)"),
+        required=False,
+    )
+    # birthday = forms.CharField(
+    #     widget=forms.SelectDateWidget(
+    #         attrs={
+    #             "required": False,
+    #             "class": "pw-input",
+    #         }
+    #     ),
+    # )
 
 
 class ThreadForm(forms.ModelForm):
@@ -92,6 +120,8 @@ class ThreadForm(forms.ModelForm):
         self.request = request
         self.fields["content"].label = ""
         self.fields["content"].widget.attrs["class"] = "post-editor"
+        self.fields["title"].widget.attrs["class"] = "pw-input"
+        self.fields["tags"].widget.attrs["class"] = "pw-input"
 
     def save(self, category=None, commit=True, set_user=False):
         obj = super(ThreadForm, self).save(commit=False)
@@ -190,6 +220,7 @@ class ReportForm(forms.ModelForm):
         self.fields["reason"].label = "Reason for report:"
         self.fields["reason"].widget.attrs["cols"] = "80"
         self.fields["reason"].widget.attrs["rows"] = "6"
+        self.fields["reason"].widget.attrs["class"] = "pw-input"
 
     def save(self, thread=None, post=None, set_user=False, commit=True):
         obj = super(ReportForm, self).save(commit=False)

@@ -7,7 +7,7 @@ class SpoilerTag(BBCodeTag):
     definition_string = "[spoiler={TEXT1}]{TEXT2}[/spoiler]"
     format_string = """
     <div class="spoiler">
-        <button class="button spoiler__open" type="button" name="button">
+        <button class="pw-button-raised spoiler__open" type="button">
             Spoiler: {TEXT1}
         </button>
         <div class="spoiler__content">

@@ -54,8 +54,8 @@ html, body {
 
   &--upper {
     @include bold;
-    @include font-range(10, 12);
     background-color: $upper-nav;
+    font-size: 12px;
     padding: 0.4rem 1rem;
 
     &__link {
@@ -97,13 +97,12 @@ html, body {
   &__title {
     @include noselect;
     @include bold;
-    @include font-range(20, 24);
-    // @include sans;
     color: $main-nav-title !important;
-    padding: 1.5rem 0;
-    margin: 0 0.5rem;
+    font-size: 24px;
     letter-spacing: 1.2px;
     line-height: 1.2em;
+    margin: 0 0.5rem;
+    padding: 1.5rem 0;
     text-transform: uppercase;
 
     a {
@@ -117,9 +116,9 @@ html, body {
 
   &__link {
     @include bold;
-    @include font-range(14, 16);
     color: $main-nav-link !important;
     cursor: pointer;
+    font-size: 16px;
     padding: 0 1rem;
   }
 }
@@ -132,8 +131,8 @@ html, body {
 
   &__title {
     @include bold;
-    @include font-range(16, 20);
     color: $page-header-text;
+    font-size: 20px;
     padding: 2rem 0;
   }
 
@@ -182,9 +181,9 @@ html, body {
 }
 
 .footer {
-  @include font-range(10, 12);
   background-color: $footer;
   color: $footer-text;
+  font-size: 12px;
   padding: 0.4rem 0;
   &__content {
     display: flex;
@@ -241,19 +240,13 @@ html, body {
 
 .search {
   position: relative;
-  input {
-    border: 1px solid rgba(255, 255, 255, .12);
-    color: $default-text-on-dark;
-    @include placeholder {
-      color: $default-text-on-dark;
-    }
-  }
 }
 
 .search .fa-search {
+  color: $default-text-on-light;
   position: absolute;
   pointer-events: none;
-  top: 5px;
+  top: 12px;
   right: 8px;
 }
 
@@ -285,14 +278,14 @@ html, body {
       margin: .25rem 0;
     }
     &__rank {
-      @include font-range(11, 13);
       background: mix(black, $primary, 30%);
       border-radius: 4px;
       color: $oc-gray-2;
-      padding: .75em .125em;
+      font-size: 12px;
       margin: .75em 0 0;
-      text-align: center;
       min-width: 125px;
+      padding: .75em .125em;
+      text-align: center;
     }
   }
   &__body {
@@ -356,26 +349,5 @@ html, body {
         border-bottom: 1px solid $hr;
       }
     }
-  }
-}
-
-.adminModeWarning {
-  display: block;
-  background-color: $oc-gray-9;
-  color: $default-text-on-dark;
-  border-radius: 4px;
-  opacity: .85;
-  width: 320px;
-  padding: .5rem .75rem;
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-
-  h1 {
-    font-size: 12px;
-  }
-  p {
-    font-size: 10px;
-    margin: .25rem 0;
   }
 }

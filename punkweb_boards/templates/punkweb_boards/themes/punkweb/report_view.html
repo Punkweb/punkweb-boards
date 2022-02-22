@@ -20,14 +20,14 @@
 </div>
 <div class="main">
   <div class="container">
-    <div class="panel">
-      <div class="panel__header">
-        <div class="panel__title">{{report}}</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header">
+        <h4>{{report}}</h4>
       </div>
-      <div class="panel__body padding">
+      <div class="pw-card-body">
         <div class="margin-bottom">
-          {% if report.post %}<a class="button" href="{% url 'board:thread' report.post.thread.id %}?page={{report.post.page_number}}#p{{report.post.post_number}}"><i class="fa fa-link fa-fw"></i> Jump to post</a>
-          {% elif report.thread %}<a class="button" href="{% url 'board:thread' report.thread.id %}"><i class="fa fa-link fa-fw"></i> Jump to thread</a>{% endif %}
+          {% if report.post %}<a class="pw-button-raised pw-icon-leading" href="{% url 'board:thread' report.post.thread.id %}?page={{report.post.page_number}}#p{{report.post.post_number}}"><i class="icon-leading fa fa-link fa-fw"></i>Jump to post</a>
+          {% elif report.thread %}<a class="pw-button-raised pw-icon-leading" href="{% url 'board:thread' report.thread.id %}"><i class="icon-leading fa fa-link fa-fw"></i>Jump to thread</a>{% endif %}
         </div>
         <div class="margin-bottom">
           <h2>Reason for Report</h2>
@@ -42,13 +42,13 @@
           <form method="post">
             {% csrf_token %}
             <div class="align-right">
-              <button class="button-green" type="submit"><i class="fa fa-check fa-fw"></i> Mark as Resolved</button>
+              <button class="pw-button-raised pw-primary pw-icon-leading" type="submit"><i class="icon-leading fa fa-check fa-fw"></i>Mark as Resolved</button>
               {% if report.post %}
-              <a class="button" href="{% url 'board:post-update' report.post.id %}"><i class="fa fa-edit fa-fw"></i> Update Post</a>
-              <a class="button-red" href="{% url 'board:post-delete' report.post.id %}"><i class="fa fa-trash fa-fw"></i> Delete Post</a>
+              <a class="pw-button-raised pw-primary pw-icon-leading" href="{% url 'board:post-update' report.post.id %}"><i class="icon-leading fa fa-edit fa-fw"></i>Update Post</a>
+              <a class="pw-button-raised pw-warn pw-icon-leading" href="{% url 'board:post-delete' report.post.id %}"><i class="icon-leading fa fa-trash fa-fw"></i>Delete Post</a>
               {% elif report.thread %}
-              <a class="button" href="{% url 'board:thread-update' report.thread.id %}"><i class="fa fa-edit fa-fw"></i> Update Thread</a>
-              <a class="button-red" href="{% url 'board:thread-delete' report.thread.id %}"><i class="fa fa-trash fa-fw"></i> Delete Thread</a>
+              <a class="pw-button-raised pw-primary pw-icon-leading" href="{% url 'board:thread-update' report.thread.id %}"><i class="icon-leading fa fa-edit fa-fw"></i>Update Thread</a>
+              <a class="pw-button-raised pw-warn pw-icon-leading" href="{% url 'board:thread-delete' report.thread.id %}"><i class="icon-leading fa fa-trash fa-fw"></i>Delete Thread</a>
             {% endif %}
             </div>
           </form>

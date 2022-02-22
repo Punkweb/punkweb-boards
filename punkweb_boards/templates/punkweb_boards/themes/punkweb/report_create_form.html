@@ -34,12 +34,12 @@
 </div>
 <div class="main">
   <div class="container">
-    <div class="panel">
-      <div class="panel__header">
-        <div class="panel__title">Create Report</div>
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-header">
+        <h1>Create Report</h1>
       </div>
-      <div class="panel__body padding">
-        <h1>Report {% if post %}post{% elif thread %}thread{% endif %} to the staff team</h1>
+      <div class="pw-card-body">
+        <h4>Report {% if post %}post{% elif thread %}thread{% endif %} to the staff team</h4>
         <p>A few <b>valid</b> reasons for creating a report:</p>
         <ul>
           <li>Valid BBCode syntax not rendering correctly.</li>
@@ -56,9 +56,9 @@
         <p>If you abuse this system your permissions may be revoked.</p>
         <div class="spoiler">
           {% if post %}
-          <button class="button spoiler__open" type="button" name="button">Toggle Post Content</button>
+          <button class="pw-button-raised spoiler__open">Toggle Post Content</button>
           {% elif thread %}
-          <button class="button spoiler__open" type="button" name="button">Toggle Thread Content</button>
+          <button class="pw-button-raised spoiler__open">Toggle Thread Content</button>
           {% endif %}
           <div class="spoiler__content">
             {% if post %}
@@ -75,7 +75,7 @@
         <form method="post">
           {% csrf_token %}
           {{ form.as_p }}
-          <button class="button-green" type="submit"><i class="fa fa-flag fa-fw"></i> Submit</button>
+          <button class="pw-button-raised pw-primary pw-icon-leading" type="submit"><i class="icon-leading fa fa-flag fa-fw"></i>Submit</button>
         </form>
       </div>
     </div>

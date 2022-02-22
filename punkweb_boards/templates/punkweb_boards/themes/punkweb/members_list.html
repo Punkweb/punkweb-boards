@@ -24,8 +24,8 @@
 <!-- TODO: Pagination -->
 <div class="main">
   <div class="container">
-    <div class="panel">
-      <div class="panel__body">
+    <div class="pw-card pw-fluid">
+      <div class="pw-card-body">
         <table class="table full-width">
           <thead>
             <tr>
@@ -47,8 +47,11 @@
             {% for user in users %}
             <tr>
               <td>
-                <img src="{{user.profile.avatar_smallest}}" alt="..." />
-                <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
+                <div class="flexrow flex__align-center">
+
+                  <img class="margin-right" src="{{user.profile.avatar_smallest}}" alt="..." />
+                  <a href="{% url 'board:profile' user.username %}">{{user.profile.rendered_username}}</a>
+                </div>
               </td>
               <td class="align-right">
                 {{user.profile.rank_title}}
