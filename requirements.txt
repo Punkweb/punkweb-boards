@@ -7,5 +7,5 @@ djangorestframework
 django-cors-headers
 django-compressor
 django-libsass
-python-memcached
+pymemcache
 psycopg2
