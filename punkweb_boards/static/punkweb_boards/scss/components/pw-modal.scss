@@ -6,8 +6,8 @@
   width: 100%;
   height: 100%;
   padding: 3rem;
-  background-color: $gray-dk;
-  background-color: rgba($gray-dk, 0.7);
+  background-color: $oc-gray-9;
+  background-color: rgba($oc-gray-9, 0.7);
 
   &--no-backdrop {
     background-color: transparent;
@@ -35,13 +35,7 @@
   }
 }
 
-@include breakpoint(840 down) {
-  .pw-modal {
-    padding: 2rem;
-  }
-}
-
-@include breakpoint(600 down) {
+@media only screen and (max-width: 840px) {
   .pw-modal {
     padding: 1rem 0;
 

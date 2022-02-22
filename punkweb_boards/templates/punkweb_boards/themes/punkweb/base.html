@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" href="{% static 'punkweb_boards/favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'punkweb_boards/sceditor/minified/themes/square.min.css' %}" />
     {% compress css %}
     <link href="{% static 'punkweb_boards/scss/punkweb.scss' %}" rel="stylesheet" type="text/x-scss" />
@@ -22,15 +23,14 @@
     </div>
     {% include 'punkweb_boards/themes/punkweb/includes/footer.html' %}
   </body>
-  <script src="{% static 'punkweb_boards/js/deps/jquery-3.1.1.min.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/deps/lodash.js' %}"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-  <script src="{% static 'punkweb_boards/js/run-prettify.js' %}"></script>
+  <script src="{% static 'punkweb_boards/js/deps/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'punkweb_boards/js/deps/lodash-4.17.21.min.js' %}"></script>
+  <script src="{% static 'punkweb_boards/js/deps/run-prettify.js' %}"></script>
   <script src="{% static 'punkweb_boards/sceditor/minified/jquery.sceditor.bbcode.min.js' %}"></script>
   <script src="{% static 'punkweb_boards/js/ui/spoiler.js' %}"></script>
   <script src="{% static 'punkweb_boards/js/editor-config.js' %}"></script>
+  <script src="{% static 'punkweb_boards/js/ui/collapse.js' %}"></script>
 
   {% block extrascript %}
-  <script src="{% static 'punkweb_boards/js/ui/collapse.js' %}"></script>
   {% endblock %}
 </html>
