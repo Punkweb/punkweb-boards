@@ -22,16 +22,16 @@
       {% block content %}{% endblock %}
     </div>
     {% include 'punkweb_boards/themes/punkweb/includes/footer.html' %}
+    <script src="{% static 'punkweb_boards/js/deps/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'punkweb_boards/js/deps/lodash-4.17.21.min.js' %}"></script>
+    <script src="{% static 'punkweb_boards/js/deps/run-prettify.js' %}"></script>
+    <script src="{% static 'punkweb_boards/js/deps/sceditor-3.1.1/minified/jquery.sceditor.bbcode.min.js' %}"></script>
+    <script src="{% static 'punkweb_boards/js/deps/sceditor-3.1.1/minified/icons/material.js' %}"></script>
+    <script src="{% static 'punkweb_boards/js/editor-config.js' %}"></script>
+    <script src="{% static 'punkweb_boards/js/ui/spoiler.js' %}"></script>
+    <script src="{% static 'punkweb_boards/js/ui/collapse.js' %}"></script>
+  
+    {% block extrascript %}
+    {% endblock %}
   </body>
-  <script src="{% static 'punkweb_boards/js/deps/jquery-3.6.0.min.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/deps/lodash-4.17.21.min.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/deps/run-prettify.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/deps/sceditor-3.1.1/minified/jquery.sceditor.bbcode.min.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/deps/sceditor-3.1.1/minified/icons/material.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/editor-config.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/ui/spoiler.js' %}"></script>
-  <script src="{% static 'punkweb_boards/js/ui/collapse.js' %}"></script>
-
-  {% block extrascript %}
-  {% endblock %}
 </html>

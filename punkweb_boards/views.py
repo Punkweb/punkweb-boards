@@ -199,18 +199,32 @@ def settings_view(request):
         if form.is_valid():
             if form.cleaned_data["first_name"]:
                 request.user.first_name = form.cleaned_data["first_name"]
+            else:
+                request.user.first_name = ""
             if form.cleaned_data["last_name"]:
                 request.user.last_name = form.cleaned_data["last_name"]
+            else:
+                request.user.last_name = ""
             # if form.cleaned_data["email"]:
             #     request.user.email = form.cleaned_data["email"]
+            # else:
+            #     request.user.email = None
             if form.cleaned_data["image"]:
                 request.user.profile.image = form.cleaned_data["image"]
+            else:
+                request.user.profile.image = None
             if form.cleaned_data["gender"]:
                 request.user.profile.gender = form.cleaned_data["gender"]
+            else:
+                request.user.profile.gender = None
             if form.cleaned_data["birthday"]:
                 request.user.profile.birthday = form.cleaned_data["birthday"]
+            else:
+                request.user.profile.birthday = None
             if SIGNATURES_ENABLED and form.cleaned_data["signature"]:
                 request.user.profile.signature = form.cleaned_data["signature"]
+            else:
+                request.user.profile.signature = ""
             request.user.save()
             return redirect("/board/me/")
     else:
