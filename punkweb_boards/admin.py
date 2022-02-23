@@ -17,9 +17,10 @@ from punkweb_boards.models import (
 )
 
 JAVASCRIPT_FILES = (
-    "punkweb_boards/js/deps/jquery-3.1.1.min.js",
+    "punkweb_boards/js/deps/jquery-3.6.0.min.js",
     "punkweb_boards/js/run-prettify.js",
-    "punkweb_boards/sceditor/minified/jquery.sceditor.bbcode.min.js",
+    "punkweb_boards/js/deps/sceditor-3.1.1/minified/jquery.sceditor.bbcode.min.js",
+    "punkweb_boards/js/deps/sceditor-3.1.1/minified/icons/material.js",
     "punkweb_boards/js/editor-config.js",
 )
 

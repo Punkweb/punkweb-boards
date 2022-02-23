@@ -39,17 +39,14 @@ def render_username(profile):
     parser = get_parser()
     if profile.is_banned:
         return "BANNED"
-
     if a and profile.username_modifier:
         modifier = profile.username_modifier
         replace_username = modifier.replace("{USER}", profile.user.username)
         return mark_safe(parser.render(replace_username))
-
     elif a and profile.rank and profile.rank.username_modifier:
         modifier = profile.rank.username_modifier
         replace_username = modifier.replace("{USER}", profile.user.username)
         return mark_safe(parser.render(replace_username))
-
     else:
         return profile.user.username
 
@@ -71,7 +68,6 @@ def has_gravatar(email):
         request = Request(url)
         request.get_method = lambda: "HEAD"
         return 200 == urlopen(request).code
-
     except (HTTPError, URLError):
         return False
 
