@@ -51,7 +51,12 @@ class RegistrationForm(forms.Form):
     username = forms.RegexField(
         regex=r"^\w+$",
         widget=forms.TextInput(
-            attrs={"required": True, "max_length": 30, "class": "pw-input"}
+            attrs={
+                "autofocus": True,
+                "required": True,
+                "max_length": 30,
+                "class": "pw-input",
+            }
         ),
         label=_("Username"),
         error_messages={
