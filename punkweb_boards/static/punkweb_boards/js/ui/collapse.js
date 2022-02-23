@@ -52,16 +52,36 @@ $(function() {
     }
 
     function toggle(key) {
-      var item = getItem(key).toggle('100', 'swing', function() {
+      getItem(key).toggle('100', 'swing', function() {
         $(this).is(':visible') ? removeFromCollapsed(key) : addToCollapsed(key);
       });
     }
 
     toggles.each(function() {
       var self = $(this);
+      var icon = self.find('.fa');
       setPointer(self);
+      if (icon) {
+        var index = _.findIndex(collapsed.keys, function(o) {
+          return o.key === self.attr('data-key');
+        });
+        if (index !== -1) {
+          icon.removeClass('fa-minus');
+          icon.addClass('fa-plus');
+        } else {
+          icon.removeClass('fa-plus');
+          icon.addClass('fa-minus');
+        }
+      }
       self.click(function() {
         toggle(self.attr('data-key'));
+        if (icon && icon.hasClass('fa-minus')) {
+          icon.removeClass('fa-minus');
+          icon.addClass('fa-plus');
+        } else if (icon && icon.hasClass('fa-plus')) {
+          icon.removeClass('fa-plus');
+          icon.addClass('fa-minus');
+        }
       });
     });
 

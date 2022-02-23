@@ -92,6 +92,9 @@
   &__justify-center {
     justify-content: center;
   }
+  &__justify-between {
+    justify-content: space-between;
+  }
   &__1 { flex: 1; }
   &__2 { flex: 2; }
   &__3 { flex: 3; }

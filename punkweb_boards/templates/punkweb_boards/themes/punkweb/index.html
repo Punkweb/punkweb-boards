@@ -16,8 +16,11 @@
         {% for category in categories %}
         <a name="{{category.parent.name}}"></a>
         <div class="pw-card pw-fluid">
-          <div class="pw-card-header" data-role="collapsible-toggle" data-key="index-category-{{category.parent.id}}">
-            <h4><a href="{% url 'board:category-detail' category.parent.id %}">{{category.parent.name}}</a></h4>
+          <div class="pw-card-header">
+            <div class="flexrow flex__align-center flex__justify-between">
+              <h4><a href="{% url 'board:category-detail' category.parent.id %}">{{category.parent.name}}</a></h4>
+              <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="index-category-{{category.parent.id}}"><i class="fa fa-minus fa-fw"></i></button>
+            </div>
           </div>
           <div class="pw-card-body" data-role="collapsible" data-key="index-category-{{category.parent.id}}">
             <table class="table full-width">
