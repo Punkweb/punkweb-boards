@@ -26,14 +26,14 @@ class LoginForm(AuthenticationForm):
         super(LoginForm, self).__init__(*args, **kwargs)
 
     username = UsernameField(
-        widget=forms.TextInput(attrs={"class": "pw-input", "autofocus": True})
+        widget=forms.TextInput(attrs={"class": "pw-input pw-fluid", "autofocus": True})
     )
     password = forms.CharField(
         label=_("Password"),
         strip=False,
         widget=forms.PasswordInput(
             attrs={
-                "class": "pw-input",
+                "class": "pw-input pw-fluid",
             }
         ),
     )
@@ -55,7 +55,7 @@ class RegistrationForm(forms.Form):
                 "autofocus": True,
                 "required": True,
                 "max_length": 30,
-                "class": "pw-input",
+                "class": "pw-input pw-fluid",
             }
         ),
         label=_("Username"),
@@ -71,7 +71,7 @@ class RegistrationForm(forms.Form):
                 "required": True,
                 "max_length": 30,
                 "render_value": False,
-                "class": "pw-input",
+                "class": "pw-input pw-fluid",
             }
         ),
         label=_("Password"),
@@ -82,7 +82,7 @@ class RegistrationForm(forms.Form):
                 "required": True,
                 "max_length": 30,
                 "render_value": False,
-                "class": "pw-input",
+                "class": "pw-input pw-fluid",
             }
         ),
         label=_("Password (again)"),

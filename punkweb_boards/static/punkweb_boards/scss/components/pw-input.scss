@@ -22,7 +22,7 @@
   @include pw-input-base;
 
   &:hover {
-    border: 2px solid $oc-gray-4;
+    border: 2px solid $oc-gray-6;
   }
 
   &:focus,
@@ -30,9 +30,9 @@
     border: 2px solid $primary;
   }
 
-  // &:invalid {
-  //   border: 2px solid $warn;
-  // }
+  &:user-invalid {
+    border: 2px solid $warn;
+  }
 }
 
 .pw-input-filled {
@@ -55,7 +55,7 @@
     border-bottom: 2px solid $primary;
   }
 
-  // &:invalid {
-  //   border-bottom: 2px solid $warn;
-  // }
+  &:user-invalid {
+    border-bottom: 2px solid $warn;
+  }
 }

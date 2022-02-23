@@ -32,7 +32,7 @@ $breadcrumb-active: $default-text-on-dark;
 $breadcrumb-separator: darken($default-text-on-dark, 20%);
 $breadcrumb-link: $default-text-on-dark;
 
-$hr: mix(black, $body-background, 10%);
+$hr: $oc-gray-4;
 
 $badge-background: $oc-red-9;
 $badge-text: $oc-white;
