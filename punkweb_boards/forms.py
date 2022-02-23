@@ -106,6 +106,9 @@ class RegistrationForm(forms.Form):
 class SettingsForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         super(SettingsForm, self).__init__(*args, **kwargs)
+        self.fields["first_name"].initial = request.user.first_name
+        self.fields["last_name"].initial = request.user.last_name
+        # self.fields["email"].initial = request.user.email
         self.fields["image"].initial = request.user.profile.image
         self.fields["gender"].initial = request.user.profile.gender
         self.fields["birthday"].initial = request.user.profile.birthday
@@ -119,26 +122,33 @@ class SettingsForm(forms.Form):
             self.fields["signature"] = signature
 
     GENDER_CHOICES = [("", ""), ("f", "Female"), ("m", "Male")]
-    image = forms.ImageField(label=_("Profile Image"), required=False)
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "pw-input"}),
+        max_length=150,
+        required=False,
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "pw-input"}),
+        max_length=150,
+        required=False,
+    )
+    # email = forms.EmailField(
+    #     widget=forms.EmailInput(attrs={"class": "pw-input"}),
+    #     max_length=150,
+    #     required=False,
+    # )
+    birthday = forms.DateField(
+        widget=forms.DateInput(attrs={"class": "pw-input"}),
+        label=_("Birthday (yyyy-mm-dd)"),
+        required=False,
+    )
     gender = forms.ChoiceField(
         widget=forms.RadioSelect(attrs={"required": False}),
         choices=GENDER_CHOICES,
         label=_("Gender"),
         required=False,
     )
-    birthday = forms.DateField(
-        widget=forms.DateInput(attrs={"class": "pw-input"}),
-        label=_("Birthday (yyyy-mm-dd)"),
-        required=False,
-    )
-    # birthday = forms.CharField(
-    #     widget=forms.SelectDateWidget(
-    #         attrs={
-    #             "required": False,
-    #             "class": "pw-input",
-    #         }
-    #     ),
-    # )
+    image = forms.ImageField(label=_("Profile Image"), required=False)
 
 
 class ThreadForm(forms.ModelForm):

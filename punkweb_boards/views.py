@@ -103,8 +103,11 @@ def keyword_search_view(request):
     query = SearchQuery(keyword)
 
     # Users
-    user_trigram = TrigramSimilarity("username", keyword) + TrigramSimilarity(
-        "email", keyword
+    user_trigram = (
+        TrigramSimilarity("username", keyword)
+        + TrigramSimilarity("email", keyword)
+        + TrigramSimilarity("first_name", keyword)
+        + TrigramSimilarity("last_name", keyword)
     )
     matched_users = (
         get_user_model()
@@ -165,7 +168,6 @@ def registration_view(request):
                 password=form.cleaned_data["password1"],
             )
             return redirect("/board/login/")
-
     else:
         form = RegistrationForm()
     context = {"form": form}
@@ -195,6 +197,12 @@ def settings_view(request):
     if request.method == "POST":
         form = SettingsForm(request, request.POST, request.FILES)
         if form.is_valid():
+            if form.cleaned_data["first_name"]:
+                request.user.first_name = form.cleaned_data["first_name"]
+            if form.cleaned_data["last_name"]:
+                request.user.last_name = form.cleaned_data["last_name"]
+            # if form.cleaned_data["email"]:
+            #     request.user.email = form.cleaned_data["email"]
             if form.cleaned_data["image"]:
                 request.user.profile.image = form.cleaned_data["image"]
             if form.cleaned_data["gender"]:
@@ -205,7 +213,6 @@ def settings_view(request):
                 request.user.profile.signature = form.cleaned_data["signature"]
             request.user.save()
             return redirect("/board/me/")
-
     else:
         form = SettingsForm(request)
     context = {"form": form}
@@ -227,8 +234,6 @@ def profile_view(request, username):
 
     # Redirect to /board/me/ if trying to view own profile.
     if request.user.id == user.id:
-        # TODO do not redirect so that users
-        # can view their profile as others see it.
         return redirect("board:me")
 
     context = {"this_user": user}
@@ -327,7 +332,6 @@ def thread_view(request, pk):
             new_post = form.save(thread=thread, set_user=True)
             # Redirect to this post
             return redirect(new_post)
-
     else:
         form = PostForm(request)
     context = {"thread": thread, "posts": posts, "post_form": form}
