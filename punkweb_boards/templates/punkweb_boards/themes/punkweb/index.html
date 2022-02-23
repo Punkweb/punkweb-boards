@@ -84,8 +84,13 @@
         <p>This board doesn't have any categories yet</p>
         {% endfor %}
         <div class="pw-card pw-fluid">
-          <div class="pw-card-header" data-role="collapsible-toggle" data-key="index-users-online">
-            <h4>Users Online</h4>
+          <div class="pw-card-header">
+            <div class="flexrow flex__align-center flex__justify-between">
+              <h4>Users Online</h4>
+              <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="index-users-online">
+                <i class="fa fa-minus fa-fw"></i>
+              </button>
+            </div>
           </div>
           <div class="pw-card-body" data-role="collapsible" data-key="index-users-online">
             {% for user in users_online %}
@@ -98,8 +103,13 @@
       </div>
       <div class="flexcol flex__1 sidebar">
         <div class="pw-card pw-fluid">
-          <div class="pw-card-header" data-role="collapsible-toggle" data-key="index-recent-threads">
-            <h4>Recent Threads</h4>
+          <div class="pw-card-header">
+            <div class="flexrow flex__align-center flex__justify-between">
+              <h4>Recent Threads</h4>
+              <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="index-recent-threads">
+                <i class="fa fa-minus fa-fw"></i>
+              </button>
+            </div>
           </div>
           <div class="pw-card-body" data-role="collapsible" data-key="index-recent-threads">
             {% if recent_threads %}
@@ -120,8 +130,13 @@
           </div>
         </div>
         <div class="pw-card pw-fluid">
-          <div class="pw-card-header" data-role="collapsible-toggle" data-key="index-recent-activity">
-            <h4>Recent Activity</h4>
+          <div class="pw-card-header">
+            <div class="flexrow flex__align-center flex__justify-between">
+              <h4>Recent Activity</h4>
+              <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="index-recent-activity">
+                <i class="fa fa-minus fa-fw"></i>
+              </button>
+            </div>
           </div>
           <div class="pw-card-body" data-role="collapsible" data-key="index-recent-activity">
             {% if recent_activity %}
@@ -150,8 +165,13 @@
           </div>
         </div>
         <div class="pw-card pw-fluid">
-          <div class="pw-card-header" data-role="collapsible-toggle" data-key="index-staff-online">
-            <h4>Staff Online</h4>
+          <div class="pw-card-header">
+            <div class="flexrow flex__align-center flex__justify-between">
+              <h4>Staff Online</h4>
+              <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="index-staff-online">
+                <i class="fa fa-minus fa-fw"></i>
+              </button>
+            </div>
           </div>
           <div class="pw-card-body" data-role="collapsible" data-key="index-staff-online">
             <table>
@@ -174,8 +194,13 @@
         </div>
         <a name="statistics"></a>
         <div class="pw-card pw-fluid statisticsPanel">
-          <div class="pw-card-header" data-role="collapsible-toggle" data-key="index-statistics">
-            <h4>Statistics</h4>
+          <div class="pw-card-header">
+            <div class="flexrow flex__align-center flex__justify-between">
+              <h4>Statistics</h4>
+              <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="index-statistics">
+                <i class="fa fa-minus fa-fw"></i>
+              </button>
+            </div>
           </div>
           <div class="pw-card-body" data-role="collapsible" data-key="index-statistics">
             <div class="statisticsPanel__list">

@@ -53,8 +53,13 @@
     {% endif %}
     {% if posts.number == 1 %}
     <div class="pw-card pw-fluid">
-      <div class="pw-card-header" data-role="collapsible-toggle" data-key="thread-{{thread.id}}">
-        <h4>{{thread.title}}</h4>
+      <div class="pw-card-header">
+        <div class="flexrow flex__align-center flex__justify-between">
+          <h4>{{thread.title}}</h4>
+          <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="thread-{{thread.id}}">
+            <i class="fa fa-minus fa-fw"></i>
+          </button>
+        </div>
       </div>
       <div class="pw-card-body" data-role="collapsible" data-key="thread-{{thread.id}}">
         <div class="thread">
@@ -112,8 +117,13 @@
     {% for post in posts %}
     <a name="p{{post.post_number}}"></a>
     <div class="pw-card pw-fluid">
-      <div class="pw-card-header" data-role="collapsible-toggle" data-key="post-{{post.id}}">
-        <h4>#{{post.post_number}}</h4>
+      <div class="pw-card-header">
+        <div class="flexrow flex__align-center flex__justify-between">
+          <h4>#{{post.post_number}}</h4>
+          <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="post-{{post.id}}">
+            <i class="fa fa-minus fa-fw"></i>
+          </button>
+        </div>
       </div>
       <div class="pw-card-body" data-role="collapsible" data-key="post-{{post.id}}">
         <div class="thread">
@@ -195,6 +205,14 @@
     {% endif %}
     {% if user.is_authenticated %}
     <div class="pw-card pw-fluid">
+      <div class="pw-card-header">
+        <div class="flexrow flex__align-center flex__justify-between">
+          <h4>Reply to this thread</h4>
+          <button class="pw-icon-button pw-primary" data-role="collapsible-toggle" data-key="thread-reply">
+            <i class="fa fa-minus fa-fw"></i>
+          </button>
+        </div>
+      </div>
       <div class="pw-card-header" data-role="collapsible-toggle" data-key="thread-reply">
         <h4>Reply to this thread</h4>
       </div>
