@@ -17,10 +17,3 @@ Supported BBCode tags
 Click `here <https://punkweb.net/board/page/supported-bbcodes/>`__ to see
 a list of all the supported BBCode tags on Punkweb and how to use
 them.
-
-
-Ready (somewhat) for use!
-~~~~~~~~~~~~~~~~~~~~~
-
-Check out the 'Ready' milestone under issues to see what's left before I release
-a solid v1.0.0.
