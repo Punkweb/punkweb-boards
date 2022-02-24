@@ -283,7 +283,8 @@ html, body {
       color: $oc-gray-2;
       font-size: 12px;
       margin: .75em 0 0;
-      min-width: 125px;
+      min-width: 120px;
+      max-width: 160px;
       padding: .75em .125em;
       text-align: center;
     }

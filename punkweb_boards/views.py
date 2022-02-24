@@ -567,7 +567,15 @@ def members_list(request):
     users = (
         get_user_model().objects.filter(profile__is_banned=False).order_by("username")
     )
-    context = {"users": users}
+    paginator = Paginator(users, 20)
+    page = request.GET.get("page")
+    try:
+        users_paged = paginator.page(page)
+    except PageNotAnInteger:
+        users_paged = paginator.page(1)
+    except EmptyPage:
+        users_paged = paginator.page(paginator.num_pages)
+    context = {"users": users_paged}
     return render(
         request,
         "punkweb_boards/themes/{}/members_list.html".format(BOARD_THEME),

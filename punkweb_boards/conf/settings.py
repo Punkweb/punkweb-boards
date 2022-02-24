@@ -48,5 +48,5 @@ USER_ONLINE_TIMEOUT = SETTINGS_OVERRIDES.get("USER_ONLINE_TIMEOUT", 300)
 # Number of seconds that we will keep track of inactive users for before
 # their last seen is removed from the cache
 USER_LASTSEEN_TIMEOUT = SETTINGS_OVERRIDES.get(
-    "USER_LASTSEEN_TIMEOUT", 60 * 60 * 24 * 7
+    "USER_LASTSEEN_TIMEOUT", 60 * 60 * 24 * 14
 )
