@@ -620,7 +620,7 @@ class Page(UUIDPrimaryKey, CreatedModifiedMixin):
         slug = slugify(self.title)
         unique_slug = slug
         num = 1
-        while Article.objects.filter(slug=unique_slug).exists():
+        while Page.objects.filter(slug=unique_slug).exists():
             unique_slug = "{}-{}".format(slug, num)
             num += 1
         return unique_slug
