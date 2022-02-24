@@ -655,7 +655,7 @@ def save_user_profile(sender, instance, **kwargs):
 @receiver(post_save, sender=Post)
 def notify_thread_owner_of_new_post(sender, instance, created, **kwargs):
     if created:
-        if instance.user is not instance.thread.user:
+        if instance.user.id is not instance.thread.user.id:
             notification = Notification(
                 user=instance.thread.user,
                 text="{} commented on your thread".format(instance.user.username),
