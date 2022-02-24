@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import include, re_path
+from django.urls import include, path
 from django.contrib import admin
 
 urlpatterns = [
-    re_path(r"^admin/", admin.site.urls),
-    re_path(r"^board/", include("punkweb_boards.urls")),
-    re_path(r"^api/", include("example_project.rest.urls")),
+    path("admin/", admin.site.urls),
+    path("board/", include("punkweb_boards.urls")),
+    path("api/", include("example_project.rest.urls")),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -25,7 +25,7 @@ SECRET_KEY = "tpye0s&&$uyc)hf_3rv@!a95ne*3e-dxt^9k^7!f+$jxkk+$k-"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -38,11 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
-    # Punkweb boards
+    # punkweb_boards apps
     "compressor",
     "easy_thumbnails",
     "rest_framework",
-    "corsheaders",
     "precise_bbcode",
     "punkweb_boards",
 ]
@@ -55,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # punkweb_boards middleware
     "punkweb_boards.middleware.ActiveUserMiddleware",
 ]
 
@@ -71,6 +71,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # punkweb_boards context_processors
                 "punkweb_boards.context_processors.settings",
                 "punkweb_boards.context_processors.base_context",
             ]
@@ -92,14 +93,6 @@ DATABASES = {
         "PASSWORD": os.environ.get("DATABASE_PASSWORD", "punkweb_boards"),
         "HOST": os.environ.get("DATABASE_HOST", "db"),
         "PORT": "5432",
-    }
-}
-
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        "LOCATION": os.environ.get("MEMCACHED_HOST", "cache") + ":11211",
     }
 }
 
@@ -144,6 +137,9 @@ STATIC_DIR = os.path.join(BASE_DIR, "example_project/static")
 
 STATICFILES_DIRS = (STATIC_DIR,)
 
+# TODO: Figure out if compressor is required to be configured for
+# projects using punkweb_boards
+
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -152,24 +148,23 @@ STATICFILES_FINDERS = (
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# Non default app configuration
-
-# admin.site.site_header = "Example Forum"
+# Set these if you want to login through punkweb_boards
 
 LOGIN_REDIRECT_URL = "/board/"
 LOGOUT_REDIRECT_URL = "/board/"
 
-CORS_ORIGIN_ALLOW_ALL = True
+# This is required for punkweb_boards to track who is online or when they were last seen
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.TokenAuthentication",
-        "example_project.rest.authentication.NoCSRFSessionAuthentication",
-    ),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 25,
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": os.environ.get("MEMCACHED_HOST", "cache") + ":11211",
+    }
 }
+
+# Everything below is required for punkweb_boards
 
 THUMBNAIL_ALIASES = {
     "": {
@@ -183,5 +178,3 @@ THUMBNAIL_ALIASES = {
 PUNKWEB_BOARDS = {
     "BOARD_NAME": "Example",
 }
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
