@@ -11,5 +11,26 @@ $(function() {
       emoticonsCompat: true,
       emoticonsRoot: '/media/precise_bbcode/smilies/'
     });
+
+    function initPrettify() {
+      $('.sceditor-container').each(function() {
+        var editor = $(this);
+        var iframe = $(editor).children('iframe')[0];
+        var iframeHead = $(iframe).contents().find('head');
+        var scriptUrl = '/static/punkweb_boards/js/deps/run-prettify.js';
+
+        if ($(iframeHead).find('#prettifyScript').length === 0) {
+          console.log('SCRIPT APPENDED');
+          iframeHead.append($('<script>', { id: 'prettifyScript', src: scriptUrl } ));
+        }
+      });
+    }
+
+    setTimeout(function() {
+      initPrettify();
+      $('.sceditor-button-source').click(function() {
+        initPrettify();
+      });
+    }, 1000);
   });
 });

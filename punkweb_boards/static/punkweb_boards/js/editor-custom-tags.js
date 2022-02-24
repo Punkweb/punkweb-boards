@@ -10,8 +10,6 @@ $(function() {
           'text-shadow': null
         },
         format: function(element, content) {
-          console.log(element);
-          console.log(content);
           var textShadow = element.style.textShadow;
           if (!textShadow) {
             return content;
@@ -20,11 +18,20 @@ $(function() {
           return '[shadow=' + shadowColor + ']' + content + '[/shadow]';
         },
         html: function(token, attrs, content) {
-          console.log('token', token);
-          console.log('attrs', attrs);
-          console.log('content', content);
           return '<span style="text-shadow: 0px 0px 1em ' + attrs.defaultattr + '">' + content + '</span>';
         }
+      }
+    );
+    sceditor.formats.bbcode.set(
+      'code',
+      {
+        tags: {
+          code: null
+        },
+        isInline: false,
+        allowedChildren: ['#', '#newline'],
+        format: '[code]{0}[/code]',
+        html: '<pre class="prettyprint"><code>{0}</code></pre>'
       }
     );
   });
