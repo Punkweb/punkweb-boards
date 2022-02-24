@@ -69,6 +69,31 @@
             {% endfor %}
           </tbody>
         </table>
+        {% if reports.paginator.num_pages > 1 %}
+        <ul class="pagination">
+          {% if reports.has_previous %}
+          <li><a class="pw-icon-button pw-primary" href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+          <li><a class="pw-icon-button pw-primary" href="?page={{reports.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+          {% else %}
+          <li class="pw-icon-button"><i class="fa fa-angle-double-left"></i></li>
+          <li class="pw-icon-button"><i class="fa fa-angle-left"></i></li>
+          {% endif %}
+          {% for page in reports.paginator.page_range %}
+          {% if page == reports.number %}
+          <li><a class="pw-icon-button">{{page}}</a></li>
+          {% else %}
+          <li><a class="pw-icon-button pw-primary" href="?page={{page}}">{{page}}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if reports.has_next %}
+          <li><a class="pw-icon-button pw-primary" href="?page={{reports.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+          <li><a class="pw-icon-button pw-primary" href="?page={{reports.paginator.num_pages}}"><i class="fa fa-angle-double-right"></i></a></li>
+          {% else %}
+          <li class="pw-icon-button"><i class="fa fa-angle-right"></i></li>
+          <li class="pw-icon-button"><i class="fa fa-angle-double-right"></i></li>
+          {% endif %}
+        </ul>
+        {% endif %}
       </div>
     </div>
   </div>

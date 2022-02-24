@@ -305,9 +305,7 @@ def subcategory_detail(request, pk):
         return redirect("board:unpermitted")
 
     # TODO: get correct ordering worked out
-    threads = paginate_qs(
-        request, category.threads.order_by("-pinned", "-modified"), 20
-    )
+    threads = paginate_qs(request, category.threads.order_by("-pinned", "-modified"))
     context = {
         "can_post": category.can_post(request.user),
         "category": category,
@@ -331,7 +329,7 @@ def thread_view(request, pk):
     if not thread.can_view(request.user):
         return redirect("board:unpermitted")
 
-    posts = paginate_qs(request, thread.posts.order_by("created"), 10)
+    posts = paginate_qs(request, thread.posts.order_by("created"), size=10)
     # Logic for creating a new post on a thread
     if request.method == "POST":
         # Redirect to unpermitted page if not logged in.
@@ -476,7 +474,9 @@ def reports_list(request):
     ):
         return redirect("board:unpermitted")
 
-    context = {"reports": Report.objects.all()}
+    reports = paginate_qs(request, Report.objects.order_by("-created"))
+
+    context = {"reports": reports}
     return render(
         request,
         "punkweb_boards/themes/{}/reports_list.html".format(BOARD_THEME),
@@ -564,7 +564,7 @@ def members_list(request):
     users = (
         get_user_model().objects.filter(profile__is_banned=False).order_by("username")
     )
-    users_paged = paginate_qs(request, users, 20)
+    users_paged = paginate_qs(request, users)
     context = {"users": users_paged}
     return render(
         request,
