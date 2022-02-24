@@ -19,7 +19,7 @@ class SpoilerTag(BBCodeTag):
 class SizeTag(BBCodeTag):
     name = "size"
     definition_string = "[size={RANGE=1,7}]{TEXT}[/size]"
-    format_string = '<font size="+{RANGE=1,7}">{TEXT}</font>'
+    format_string = '<font size="{RANGE=1,7}">{TEXT}</font>'
 
 
 class UserTag(BBCodeTag):
