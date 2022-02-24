@@ -30,6 +30,18 @@ from punkweb_boards.models import (
 )
 
 
+def paginate_qs(request, qs, size=20):
+    paginator = Paginator(qs, size)
+    page = request.GET.get("page")
+    try:
+        paged = paginator.page(page)
+    except PageNotAnInteger:
+        paged = paginator.page(1)
+    except EmptyPage:
+        paged = paginator.page(paginator.num_pages)
+    return paged
+
+
 def unpermitted_view(request):
     return render(
         request,
@@ -292,16 +304,10 @@ def subcategory_detail(request, pk):
     if not category.can_view(request.user):
         return redirect("board:unpermitted")
 
-    # Paginate threads
     # TODO: get correct ordering worked out
-    paginator = Paginator(category.threads.order_by("-pinned", "-modified"), 20)
-    page = request.GET.get("page")
-    try:
-        threads = paginator.page(page)
-    except PageNotAnInteger:
-        threads = paginator.page(1)
-    except EmptyPage:
-        threads = paginator.page(paginator.num_pages)
+    threads = paginate_qs(
+        request, category.threads.order_by("-pinned", "-modified"), 20
+    )
     context = {
         "can_post": category.can_post(request.user),
         "category": category,
@@ -325,16 +331,7 @@ def thread_view(request, pk):
     if not thread.can_view(request.user):
         return redirect("board:unpermitted")
 
-    # Paginate posts
-    page_size = 10
-    paginator = Paginator(thread.posts.order_by("created"), page_size)
-    page = request.GET.get("page")
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
+    posts = paginate_qs(request, thread.posts.order_by("created"), 10)
     # Logic for creating a new post on a thread
     if request.method == "POST":
         # Redirect to unpermitted page if not logged in.
@@ -567,14 +564,7 @@ def members_list(request):
     users = (
         get_user_model().objects.filter(profile__is_banned=False).order_by("username")
     )
-    paginator = Paginator(users, 20)
-    page = request.GET.get("page")
-    try:
-        users_paged = paginator.page(page)
-    except PageNotAnInteger:
-        users_paged = paginator.page(1)
-    except EmptyPage:
-        users_paged = paginator.page(paginator.num_pages)
+    users_paged = paginate_qs(request, users, 20)
     context = {"users": users_paged}
     return render(
         request,
