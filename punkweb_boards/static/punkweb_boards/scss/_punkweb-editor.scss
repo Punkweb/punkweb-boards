@@ -2,6 +2,7 @@
   background: $editor-container;
   border: 1px solid $editor-border;
   color: $editor-text;
+  width: 100% !important;
 }
 .sceditor-container iframe,
 .sceditor-container textarea {
