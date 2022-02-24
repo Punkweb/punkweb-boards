@@ -77,9 +77,7 @@ $(function() {
             id: 'bbcode-shadow',
           }
         },
-        style: {
-          'text-shadow': null
-        },
+        quoteType: 2,
         format: function(element, content) {
           var textShadow = element.style.textShadow;
           if (!textShadow) {
