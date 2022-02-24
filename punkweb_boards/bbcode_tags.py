@@ -37,6 +37,18 @@ class CodeTag(BBCodeTag):
         render_embedded = False
 
 
+class SubscriptTag(BBCodeTag):
+    name = "sub"
+    definition_string = "[sub]{TEXT}[/sub]"
+    format_string = "<sub>{TEXT}</sub>"
+
+
+class SuperscriptTag(BBCodeTag):
+    name = "sup"
+    definition_string = "[sup]{TEXT}[/sup]"
+    format_string = "<sup>{TEXT}</sup>"
+
+
 class FontTag(BBCodeTag):
     name = "font"
     definition_string = "[font={TEXT1}]{TEXT2}[/font]"
@@ -64,7 +76,7 @@ class LiTag(BBCodeTag):
 class TableTag(BBCodeTag):
     name = "table"
     definition_string = "[table]{TEXT}[/table]"
-    format_string = "<table>{TEXT}</table>"
+    format_string = """<table class="table full-width">{TEXT}</table>"""
 
 
 class TableTRTag(BBCodeTag):
@@ -159,10 +171,54 @@ class YoutubeTag(BBCodeTag):
     format_string = """<iframe width="560" height="315" frameborder="0" src="https://www.youtube-nocookie.com/embed/{TEXT}?wmode=opaque" data-youtube-id="{TEXT}" allowfullscreen></iframe>"""
 
 
+class EmailTag(BBCodeTag):
+    name = "email"
+    definition_string = "[email={TEXT1}]{TEXT2}[/email]"
+    format_string = """<a href="mailto:{TEXT1}">{TEXT2}</a>"""
+
+
+class EmailTag(BBCodeTag):
+    name = "email"
+    definition_string = "[email={TEXT1}]{TEXT2}[/email]"
+    format_string = """<a href="mailto:{TEXT1}">{TEXT2}</a>"""
+
+
+class LeftTag(BBCodeTag):
+    name = "left"
+    definition_string = "[left]{TEXT}[/left]"
+    format_string = """<div style="text-align: left">{TEXT}</div>"""
+
+
+class RightTag(BBCodeTag):
+    name = "right"
+    definition_string = "[right]{TEXT}[/right]"
+    format_string = """<div style="text-align: right">{TEXT}</div>"""
+
+
+class JustifyTag(BBCodeTag):
+    name = "justify"
+    definition_string = "[justify]{TEXT}[/justify]"
+    format_string = """<div style="text-align: justify">{TEXT}</div>"""
+
+
+class RTLTag(BBCodeTag):
+    name = "rtl"
+    definition_string = "[rtl]{TEXT}[/rtl]"
+    format_string = """<div style="direction: rtl">{TEXT}</div>"""
+
+
+class LTRTag(BBCodeTag):
+    name = "ltr"
+    definition_string = "[ltr]{TEXT}[/ltr]"
+    format_string = """<div style="direction: ltr">{TEXT}</div>"""
+
+
 tag_pool.register_tag(SpoilerTag)
 tag_pool.register_tag(SizeTag)
 tag_pool.register_tag(UserTag)
 tag_pool.register_tag(CodeTag)
+tag_pool.register_tag(SubscriptTag)
+tag_pool.register_tag(SuperscriptTag)
 tag_pool.register_tag(FontTag)
 tag_pool.register_tag(UlTag)
 tag_pool.register_tag(OlTag)
@@ -179,3 +235,9 @@ tag_pool.register_tag(UncheckedBoxTag)
 tag_pool.register_tag(CheckedBoxTag)
 tag_pool.register_tag(EscapeTag)
 tag_pool.register_tag(YoutubeTag)
+tag_pool.register_tag(EmailTag)
+tag_pool.register_tag(LeftTag)
+tag_pool.register_tag(RightTag)
+tag_pool.register_tag(JustifyTag)
+tag_pool.register_tag(RTLTag)
+tag_pool.register_tag(LTRTag)
