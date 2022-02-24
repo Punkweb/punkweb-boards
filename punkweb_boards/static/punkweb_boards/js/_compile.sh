@@ -1,3 +1,3 @@
 #!/bin/bash
-browserify bootstrap.js -o bundle.js
-uglifyjs bundle.js --compress --mangle -o bundle.min.js
+browserify bootstrap.js -o lib/punkweb-boards.js
+uglifyjs lib/punkweb-boards.js --compress --mangle -o lib/punkweb-boards.min.js
