@@ -105,6 +105,56 @@ div, p {
   min-height: 1.25em;
 }
 
+.spoiler__content {
+  background-color: #f1f3f5;
+  display: none;
+  padding: .25rem;
+}
+
+.spoiler__open {
+  cursor: pointer;
+}
+
+.pw-button-raised {
+  font-weight: 700;
+  appearance: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: #212529;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Open Sans';
+  font-size: 14px;
+  outline: none;
+  padding: 0.5rem 1rem;
+  position: relative;
+  min-width: 64px;
+  text-align: center;
+  text-decoration: none !important;
+  transition: all 0.1s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); }
+  .pw-button-raised:disabled {
+    cursor: not-allowed; }
+  .pw-button-raised.pw-fluid {
+    width: 100%; }
+  .pw-button-raised.pw-icon-leading {
+    padding-left: 3rem; }
+    .pw-button-raised.pw-icon-leading .icon-leading {
+      font-size: 16px;
+      left: 1rem;
+      margin: 0;
+      position: absolute;
+      top: 0.5rem; }
+  .pw-button-raised.pw-icon-trailing {
+    padding-right: 3rem; }
+    .pw-button-raised.pw-icon-trailing .icon-trailing {
+      font-size: 16px;
+      margin: 0;
+      position: absolute;
+      right: 1rem;
+      top: 0.5rem; }
+
 @font-face {
   font-family: 'Inconsolata';
   src: url('../fonts/Inconsolata-Regular.ttf');

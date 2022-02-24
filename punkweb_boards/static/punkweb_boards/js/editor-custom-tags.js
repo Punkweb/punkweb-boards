@@ -1,6 +1,27 @@
 $(function() {
   $(document).ready(function() {
     sceditor.formats.bbcode.set(
+      'spoiler',
+      {
+        tags: {
+          div: {
+            class: ['spoiler'],
+          },
+        },
+        quoteType: 2,
+        isInline: false,
+        format: function(element, content) {
+          var buttonText = $(element).find('button').text().substr(9);
+          var spoilerContent = $(element).find('.spoiler__content').html();
+          var spoilerContentBBCode = sceditor.instance($('.post-editor')[0]).toBBCode(spoilerContent);
+          return '[spoiler=' + buttonText +  ']' + spoilerContentBBCode + '[/spoiler]';
+        },
+        html: function(token, attrs, content) {
+          return '<div class="spoiler"><button class="pw-button-raised spoiler__open" type="button">Spoiler: ' + attrs.defaultattr + '</button><div class="spoiler__content">' + content + '</div></div>';
+        }
+      }
+    );
+    sceditor.formats.bbcode.set(
       'url',
       {
         allowEmpty: true,

@@ -12,6 +12,18 @@ $(function() {
       emoticonsRoot: '/media/precise_bbcode/smilies/'
     });
 
+    function initJQuery() {
+      setTimeout(function() {
+        $('.sceditor-container').each(function() {
+          var editor = $(this);
+          var iframe = $(editor).children('iframe')[0];
+          var iframeHead = $(iframe).contents().find('head');
+          var scriptUrl = '/static/punkweb_boards/js/deps/jquery-3.6.0.min.js';
+          $(iframeHead).append($('<script>', { id: 'jqueryScript', src: scriptUrl } ));
+        });
+      }, 500);
+    }
+
     function initPrettify() {
       setTimeout(function() {
         $('.sceditor-container').each(function() {
@@ -24,13 +36,27 @@ $(function() {
           $(iframeHead).find('#prettifyScript').remove();
           $(iframeHead).append($('<script>', { id: 'prettifyScript', src: scriptUrl } ));
         });
-      }, 1000);
+      }, 500);
+    }
+
+    function initSpoiler() {
+      setTimeout(function() {
+        $('.sceditor-container').each(function() {
+          var editor = $(this);
+          var iframe = $(editor).children('iframe')[0];
+          var iframeHead = $(iframe).contents().find('head');
+          var scriptUrl = '/static/punkweb_boards/js/ui/spoiler.js';
+          $(iframeHead).append($('<script>', { id: 'spoilerScript', src: scriptUrl } ));
+        });
+      }, 500);
     }
 
     $('.sceditor-button-source').click(function() {
       initPrettify();
     });
 
+    initJQuery();
     initPrettify();
+    initSpoiler();
   });
 });
