@@ -1,10 +1,14 @@
 /*! SCEditor | (C) 2011-2013, Sam Clarke | sceditor.com/license */
-html, body, p, code:before, table {
+html, body, p, table {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans';
   font-size: 16px;
-  color: black;
+  color: #212529;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
@@ -29,16 +33,19 @@ a {
   font-weight: 700;
   text-decoration: none;
   transition: text-decoration 0.3s ease-in-out;
+}
 
-  &:hover, &:active {
-    text-decoration: underline;
-  }
+a:hover, a:active {
+  text-decoration: underline;
 }
 
 hr {
+  background-color: #ced4da;
   border: 0;
-  height: 1px;
-  background: #495057;
+  border-radius: 2px;
+  color: #ced4da;
+  height: 2px;
+  width: 100%;
 }
 
 ul, ol {
@@ -64,18 +71,28 @@ pre code {
 }
 
 blockquote {
-  background: #eee;
+  background: #fff3bf;
   border: 1px solid #aaa;
-  margin: .25em 0;
-  padding: .25em;
+  border-radius: 4px;
+  margin: 0;
+  margin-bottom: 1rem;
+  padding: .5rem .75rem;
   position: relative;
 }
 
 blockquote cite {
-  border-bottom: 2px solid #ced4da;
+  font-weight: bold;
   display: block;
   font-size: 1em;
-  font-weight: bold;
+  border-bottom: 2px solid #ced4da;
+  margin-bottom: .5rem;
+}
+
+blockquote cite a {
+  color: #364fc7;
+  font-weight: 700;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease-in-out;
 }
 
 h1, h2, h3, h4, h5, h6 {
