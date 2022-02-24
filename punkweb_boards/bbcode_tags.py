@@ -61,6 +61,30 @@ class LiTag(BBCodeTag):
     format_string = "<li>{TEXT}</li>"
 
 
+class TableTag(BBCodeTag):
+    name = "table"
+    definition_string = "[table]{TEXT}[/table]"
+    format_string = "<table>{TEXT}</table>"
+
+
+class TableTRTag(BBCodeTag):
+    name = "tr"
+    definition_string = "[tr]{TEXT}[/tr]"
+    format_string = "<tr>{TEXT}</tr>"
+
+
+class TableTHTag(BBCodeTag):
+    name = "th"
+    definition_string = "[th]{TEXT}[/th]"
+    format_string = "<th>{TEXT}</th>"
+
+
+class TableTDTag(BBCodeTag):
+    name = "td"
+    definition_string = "[td]{TEXT}[/td]"
+    format_string = "<td>{TEXT}</td>"
+
+
 class HrTag(BBCodeTag):
     name = "hr"
     definition_string = "[hr]"
@@ -129,6 +153,12 @@ class EscapeTag(BBCodeTag):
         render_embedded = False
 
 
+class YoutubeTag(BBCodeTag):
+    name = "youtube"
+    definition_string = "[youtube]{TEXT}[/youtube]"
+    format_string = """<iframe width="560" height="315" frameborder="0" src="https://www.youtube-nocookie.com/embed/{TEXT}?wmode=opaque" data-youtube-id="{TEXT}" allowfullscreen></iframe>"""
+
+
 tag_pool.register_tag(SpoilerTag)
 tag_pool.register_tag(SizeTag)
 tag_pool.register_tag(UserTag)
@@ -137,6 +167,10 @@ tag_pool.register_tag(FontTag)
 tag_pool.register_tag(UlTag)
 tag_pool.register_tag(OlTag)
 tag_pool.register_tag(LiTag)
+tag_pool.register_tag(TableTag)
+tag_pool.register_tag(TableTRTag)
+tag_pool.register_tag(TableTHTag)
+tag_pool.register_tag(TableTDTag)
 tag_pool.register_tag(HrTag)
 tag_pool.register_tag(ShadowTag)
 tag_pool.register_tag(AnchorTag)
@@ -144,3 +178,4 @@ tag_pool.register_tag(QuoteTag)
 tag_pool.register_tag(UncheckedBoxTag)
 tag_pool.register_tag(CheckedBoxTag)
 tag_pool.register_tag(EscapeTag)
+tag_pool.register_tag(YoutubeTag)
