@@ -91,5 +91,24 @@ $(function() {
         }
       }
     );
+    sceditor.formats.bbcode.set(
+      'anchor',
+      {
+        tags: {
+          div: {
+            class: ['anchorPoint']
+          }
+        },
+        isInline: false,
+        format: function(element, content) {
+          var anchorName = $(element).find('a').attr('name');
+          return '[anchor]' + anchorName + '[/anchor]';
+        },
+        html: function(token, attrs, content) {
+          var contentSplit = content.split('<br />')[0];
+          return '<div class="anchorPoint"><a name="' + contentSplit + '"></a><i class="fa fa-anchor fa-fw"></i><span style="font-style: italic">#' + contentSplit + '</span></div>';
+        }
+      }
+    );
   });
 });

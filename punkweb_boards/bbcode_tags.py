@@ -115,7 +115,7 @@ class ShadowTag(BBCodeTag):
 class AnchorTag(BBCodeTag):
     name = "anchor"
     definition_string = "[anchor]{TEXT}[/anchor]"
-    format_string = """<a name="{TEXT}"></a><i class="fa fa-anchor fa-fw"></i><span style="font-style: italic">#{TEXT}</span>"""
+    format_string = """<div class="anchorPoint"><a name="{TEXT}"></a><i class="fa fa-anchor fa-fw"></i><span style="font-style: italic">#{TEXT}</span></div>"""
 
 
 class QuoteTag(BBCodeTag):
