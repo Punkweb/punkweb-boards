@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name="punkweb_boards",
     version="0.0.11",
-    packages=find_packages(),
+    packages=['punkweb_boards'],
     include_package_data=True,
     description="Django forum boards with bbcode support.",
     long_description=README,
