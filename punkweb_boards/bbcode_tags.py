@@ -159,7 +159,7 @@ class CheckedBoxTag(BBCodeTag):
 class EscapeTag(BBCodeTag):
     name = "escape"
     definition_string = "[escape]{TEXT}[/escape]"
-    format_string = "{TEXT}"
+    format_string = """<div class="escaped">{TEXT}</div>"""
 
     class Options:
         render_embedded = False

@@ -140,5 +140,22 @@ $(function() {
         html: '<input name="bbchecked" type="checkbox" disabled="disabled" checked="checked" />'
       }
     );
+    sceditor.formats.bbcode.set(
+      'escape',
+      {
+        tags: {
+          div: {
+            class: ['escaped']
+          },
+        },
+        isInline: false,
+        skipLastLineBreak: true,
+        format: '[escape]{0}[/escape]',
+        html: function(token, attrs, content) {
+          var escaped = sceditor.instance($('.post-editor')[0]).toBBCode(content);
+          return '<div class="escaped">' + escaped + '</div>'
+        }
+      }
+    );
   });
 });
