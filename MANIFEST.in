@@ -1,5 +1,5 @@
 include README.rst
 include requirements.txt
 global-exclude *.pyc
-recursive-exclude example_project *
-recursive-include punkweb_boards *
+recursive-exclude example_project/ *
+recursive-include punkweb_boards/ *
