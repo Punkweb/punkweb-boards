@@ -110,5 +110,35 @@ $(function() {
         }
       }
     );
+    sceditor.formats.bbcode.set(
+      'n',
+      {
+        tags: {
+          input: {
+            name: ['bbunchecked']
+          }
+        },
+        isSelfClosing: true,
+        excludeClosing: true,
+        // isInline: false,
+        format: '[n]',
+        html: '<input name="bbunchecked" type="checkbox" disabled="disabled" />'
+      }
+    );
+    sceditor.formats.bbcode.set(
+      'y',
+      {
+        tags: {
+          input: {
+            name: ['bbchecked']
+          }
+        },
+        isSelfClosing: true,
+        excludeClosing: true,
+        // isInline: false,
+        format: '[y]',
+        html: '<input name="bbchecked" type="checkbox" disabled="disabled" checked="checked" />'
+      }
+    );
   });
 });

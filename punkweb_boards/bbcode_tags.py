@@ -135,7 +135,7 @@ class UncheckedBoxTag(BBCodeTag):
     name = "n"
     definition_string = "[n]{TEXT}"
     format_string = """
-        <label><input type="checkbox" disabled="disabled" /> {TEXT}</label>"""
+        <label for="bbunchecked"><input name="bbunchecked" type="checkbox" disabled="disabled" /> {TEXT}</label>"""
 
     class Options:
         newline_closes = True
