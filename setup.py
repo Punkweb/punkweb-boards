@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name="punkweb_boards",
-    version="0.0.10",
+    version="0.0.11",
     packages=find_packages(),
     include_package_data=True,
     description="Django forum boards with bbcode support.",
@@ -23,11 +23,7 @@ setup(
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Topic :: Internet :: WWW/HTTP",
-        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
-    setup_requires=["django>=2.0"],
+    setup_requires=["django>=3.0"],
     install_requires=open("requirements.txt").readlines(),
 )
