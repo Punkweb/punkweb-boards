@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Postgres
   db:
-    image: postgres:11-alpine
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: punkweb_boards

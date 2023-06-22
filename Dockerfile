@@ -5,8 +5,7 @@ RUN mkdir /webapps
 WORKDIR /webapps
 
 # Installing OS Dependencies
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-  "postgresql-client=11+200+deb10u4"
+RUN apt-get update && apt-get upgrade -y
 
 RUN pip install -U pip setuptools
 
