@@ -38,7 +38,10 @@ class BoardProfile(
     UpvoteDownvoteMixin,
     AvatarImagesMixin,
 ):
-    GENDER_CHOICES = [("f", "Female"), ("m", "Male")]
+    GENDER_CHOICES = [
+        ("f", "Female"),
+        ("m", "Male"),
+    ]
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         related_name="profile",
@@ -66,6 +69,12 @@ class BoardProfile(
         "you want the username to be placed at. "
         "Setting this will override the UserRank modification",
     )
+
+    class Meta:
+        ordering = ("user",)
+
+    def __str__(self):
+        return self.user.username
 
     def last_seen(self):
         name = self.user.username.replace(" ", "_")

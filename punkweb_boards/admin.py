@@ -82,38 +82,60 @@ class MessageForm(forms.ModelForm):
         fields = "__all__"
 
 
+class PageForm(forms.ModelForm):
+    class Meta:
+        model = Page
+        widgets = {"content": forms.Textarea(attrs={"class": "post-editor"})}
+        fields = "__all__"
+
+
 # ModelAdmin
 
 
 class BoardProfileAdmin(admin.ModelAdmin):
     form = BoardProfileForm
-    list_display = ("get_username",)
-    ordering = ("user__username",)
-    fields = (
-        "get_username",
-        "gender",
-        "birthday",
-        "ranks",
+    list_display = [
+        "username",
+        "last_seen",
+        "post_count",
+        "rank_title",
+    ]
+    list_filter = [
+        "user__is_active",
+        "user__is_staff",
+        "user__is_superuser",
         "is_banned",
+        "ranks",
+    ]
+    search_fields = [
+        "user__username",
+        "user__email",
+    ]
+    fields = [
+        "username",
         "image",
         "avatar_thumbnail",
-        "signature",
-        "rendered_signature",
+        "gender",
+        "birthday",
+        "is_banned",
+        "ranks",
         "username_modifier",
         "rendered_username",
-    )
-    readonly_fields = (
-        "get_username",
+        "signature",
+        "rendered_signature",
+    ]
+    readonly_fields = [
+        "username",
         "avatar_thumbnail",
         "rendered_signature",
         "rendered_username",
-    )
+    ]
 
-    def get_username(self, obj):
+    def username(self, obj):
         return obj.user.username
 
-    get_username.short_description = "Username"
-    get_username.admin_order_field = "user__username"
+    username.short_description = "username"
+    username.admin_order_field = "user__username"
 
     class Media:
         js = JAVASCRIPT_FILES
@@ -122,9 +144,22 @@ class BoardProfileAdmin(admin.ModelAdmin):
 
 class UserRankAdmin(admin.ModelAdmin):
     form = UserRankForm
-    list_display = ("title", "order", "is_award", "award_type", "award_count")
-    ordering = ("order",)
-    fields = (
+    list_display = [
+        "title",
+        "order",
+        "is_award",
+        "award_type",
+        "award_count",
+    ]
+    list_filter = [
+        "is_award",
+        "award_type",
+    ]
+    search_fields = [
+        "title",
+        "description",
+    ]
+    fields = [
         "title",
         "description",
         "order",
@@ -133,14 +168,19 @@ class UserRankAdmin(admin.ModelAdmin):
         "award_count",
         "username_modifier",
         "example_name",
-    )
-    readonly_fields = ("example_name",)
+    ]
+    readonly_fields = [
+        "example_name",
+    ]
+
+    class Media:
+        js = JAVASCRIPT_FILES
+        css = {"all": CSS_FILES}
 
 
 class SubcategoryInline(admin.TabularInline):
-    form = SubcategoryForm
     model = Subcategory
-    ordering = ("order",)
+    form = SubcategoryForm
 
     class Media:
         js = JAVASCRIPT_FILES
@@ -150,8 +190,18 @@ class SubcategoryInline(admin.TabularInline):
 class CategoryAdmin(admin.ModelAdmin):
     form = CategoryForm
     inlines = [SubcategoryInline]
-    list_display = ("name", "order")
-    ordering = ("order",)
+    list_display = [
+        "name",
+        "order",
+        "auth_req",
+    ]
+    list_filter = [
+        "auth_req",
+    ]
+    search_fields = [
+        "name",
+        "description",
+    ]
 
     class Media:
         js = JAVASCRIPT_FILES
@@ -172,9 +222,15 @@ class PostInline(admin.TabularInline):
 class ThreadAdmin(admin.ModelAdmin):
     form = ThreadForm
     inlines = [PostInline]
-    list_display = ("title", "category", "user", "created")
-    ordering = ("-created", "title")
-    fields = (
+    list_display = [
+        "title",
+        "category",
+        "user",
+        "created",
+        "pinned",
+        "closed",
+    ]
+    fields = [
         "user",
         "category",
         "title",
@@ -186,8 +242,11 @@ class ThreadAdmin(admin.ModelAdmin):
         "tags",
         "upvoted_by",
         "downvoted_by",
-    )
-    readonly_fields = ("modified", "created")
+    ]
+    readonly_fields = [
+        "modified",
+        "created",
+    ]
 
     class Media:
         js = JAVASCRIPT_FILES
@@ -197,8 +256,10 @@ class ThreadAdmin(admin.ModelAdmin):
 class MessageInline(admin.TabularInline):
     form = MessageForm
     model = Message
-    fields = ("user", "content")
-    ordering = ("created",)
+    fields = [
+        "user",
+        "content",
+    ]
 
     class Media:
         js = JAVASCRIPT_FILES
@@ -207,8 +268,13 @@ class MessageInline(admin.TabularInline):
 
 class ConversationAdmin(admin.ModelAdmin):
     inlines = [MessageInline]
-    list_display = ("subject",)
-    ordering = ("created",)
+    list_display = [
+        "subject",
+        "message_count",
+    ]
+    search_fields = [
+        "subject",
+    ]
 
     class Media:
         js = JAVASCRIPT_FILES
@@ -216,37 +282,52 @@ class ConversationAdmin(admin.ModelAdmin):
 
 
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ("reporting_user", "thread", "post", "resolved")
-    ordering = ("-created",)
-    fields = (
+    list_display = [
         "reporting_user",
         "thread",
         "post",
-        "reason",
-        "created",
-        "modified",
         "resolved",
         "resolved_by",
         "date_resolved",
-    )
-    readonly_fields = ("created", "modified")
+    ]
+    list_filter = [
+        "resolved",
+    ]
+    search_fields = [
+        "reporting_user__username",
+        "reporting_user__email",
+    ]
+    readonly_fields = [
+        "created",
+        "modified",
+    ]
 
 
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ("user", "link", "created", "read")
-    ordering = ("-created",)
-
-
-class PageForm(forms.ModelForm):
-    class Meta:
-        model = Page
-        widgets = {"content": forms.Textarea(attrs={"class": "post-editor"})}
-        fields = "__all__"
+    list_display = [
+        "user",
+        "link",
+        "created",
+        "read",
+    ]
+    list_filter = [
+        "created",
+    ]
+    search_fields = [
+        "user__username",
+        "user__email",
+    ]
 
 
 class PageAdmin(admin.ModelAdmin):
     form = PageForm
-    list_display = ("title", "slug")
+    list_display = [
+        "title",
+        "slug",
+    ]
+    search_fields = [
+        "title",
+    ]
     prepopulated_fields = {"slug": ("title",)}
 
     class Media:
