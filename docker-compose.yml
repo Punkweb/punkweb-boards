@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  # Postgres
-  db:
-    image: postgres:15-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: punkweb_boards
-      POSTGRES_PASSWORD: punkweb_boards
-    ports:
-      - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
-
   cache:
     image: memcached
     ports:
@@ -25,20 +13,14 @@ services:
     build: .
     command: ["/webapps/run_web.sh"]
     environment:
-      DATABASE_NAME: punkweb_boards
-      DATABASE_USER: punkweb_boards
-      DATABASE_PASSWORD: punkweb_boards
-      DATABASE_HOST: db
       MEMCACHED_HOST: cache
     volumes:
       - .:/webapps
     ports:
       - "8000:8000"
     links:
-      - db
       - cache
     depends_on:
-      - db
       - cache
 
 volumes:

@@ -1,16 +1,19 @@
 @mixin pw-input-base {
   background: transparent;
   border: 2px solid $hr;
-  border-radius: 2px;
-  font-family: 'Open Sans';
+  border-radius: 4px;
+  font-family: "Open Sans";
   font-size: 16px;
-  line-height: 36px;
   outline: none;
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
   transition: all 0.1s ease-in-out;
 
   @include placeholder {
     color: $oc-gray-6;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 
   &.pw-fluid {
@@ -38,21 +41,16 @@
 .pw-input-filled {
   @include pw-input-base;
   background: $oc-gray-1;
-  border: 2px solid transparent;
-  border-bottom: 2px solid $hr;
-  border-radius: 0;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
 
   &:hover {
     background: $oc-gray-3;
-    border-bottom: 2px solid $oc-gray-9;
+    border: 2px solid $oc-gray-6;
   }
 
   &:focus,
   &:active {
     background: $oc-gray-3;
-    border-bottom: 2px solid $primary;
+    border: 2px solid $primary;
   }
 
   &:user-invalid {

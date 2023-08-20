@@ -1,5 +1,5 @@
 punkweb-boards
-=====================
+==============
 
 Django forum boards with bbcode support.
 
